@@ -20,3 +20,26 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([
+    'namespace' => 'Dashboard',
+], function () {
+
+
+    Route::group([
+        'namespace' => 'Dashboard',
+        'prefix' => 'admin',
+    ], function () {
+
+        Route::get('index', 'DashboardController@index');
+
+        Route::group([
+            'namespace' => 'Country',
+        ], function () {
+            Route::resource('countries', 'CountryController@index');
+        });
+
+
+    });
+});
+Route::get('/admin', 'HomeController@index')->name('home');
