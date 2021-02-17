@@ -4,10 +4,11 @@ namespace App\Models\Country;
 
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class Country extends Model
+class Country extends Model implements TranslatableContract
 {
-    use Translatable ;
+    use Translatable;
 
     /**
      * The translated attributes that are mass assignable.

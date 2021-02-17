@@ -39,6 +39,8 @@ Class CountryService extends AppRepository
 
     public function create(Request $request)
     {
+        $request['is_default'] = $request->is_default == 0 ? 0 : 1;
+
         return $this->model->create($request->all());
     }
 
