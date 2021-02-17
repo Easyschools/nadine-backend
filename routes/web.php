@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group([
     'namespace' => 'Dashboard',
-//    'prefix' => 'dashboard',
+    'middleware' => 'dashboard',
     'as' => 'dashboard.',
 ], function () {
 

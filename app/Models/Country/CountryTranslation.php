@@ -12,7 +12,7 @@ class CountryTranslation extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    public $fillable = ['name'];
 
     /**
      * Indicates if the model should be timestamped.

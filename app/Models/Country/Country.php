@@ -18,10 +18,16 @@ class Country extends Model
         'name'
     ];
 
+
     /**
-     * @var string
+     * The relations to eager load on every query.
+     *
+     * @var array
      */
-    protected $table = 'countries';
+    protected $with = [
+        'translations'
+    ];
+
 
 
     /**
@@ -42,8 +48,4 @@ class Country extends Model
         return 'country_id';
     }
 
-//    public function cities()
-//    {
-//
-//    }
 }
