@@ -23,20 +23,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group([
     'namespace' => 'Dashboard',
+//    'prefix' => 'dashboard',
+    'as' => 'dashboard.',
 ], function () {
 
 
     Route::group([
-        'namespace' => 'Dashboard',
         'prefix' => 'admin',
+        'as' => 'admin.',
     ], function () {
 
-        Route::get('index', 'DashboardController@index');
+        Route::get('index', 'DashboardController@index')->name('dashboard.home');
 
         Route::group([
             'namespace' => 'Country',
         ], function () {
-            Route::resource('countries', 'CountryController@index');
+            Route::resource('countries', 'CountryController');
         });
 
 

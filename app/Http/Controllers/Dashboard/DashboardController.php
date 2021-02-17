@@ -11,8 +11,11 @@ namespace App\Http\Controllers\Dashboard;
 
 class DashboardController
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('admin.index');
+        return view('admin.dashboard.index');
     }
 }

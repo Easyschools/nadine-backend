@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Country;
+namespace App\Http\Controllers\Dashboard\Country;
 
-use App\Country;
+
 use App\Http\Controllers\Controller;
+use App\Models\Country\Country;
 use App\Services\Payment\CountryService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->countryService->index($request);
+        $countries = Country::paginate();
+        return view('admin.countries.main.index',compact('countries'));
     }
 
     /**
@@ -32,7 +34,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.countries.main.create');
     }
 
     /**
