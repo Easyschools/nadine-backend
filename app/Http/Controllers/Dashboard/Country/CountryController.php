@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Country\Country;
 use App\Services\Payment\CountryService;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CountryController extends Controller
 {
@@ -23,7 +24,8 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $countries = Country::paginate();
+        $countries = $this->countryService->index($request);
+
         return view('admin.countries.main.index',compact('countries'));
     }
 
@@ -45,18 +47,21 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $country = $this->countryService->create($request);
+
+        return view('admin.countries.main.show',compact('country'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Country  $country
+     * @param    $country
      * @return \Illuminate\Http\Response
      */
     public function show(Country $country)
     {
-        //
+        return view('admin.countries.main.show',compact('country'));
     }
 
     /**
@@ -68,6 +73,8 @@ class CountryController extends Controller
     public function edit(Country $country)
     {
         //
+
+        return view('admin.countries.main.edit',compact('country'));
     }
 
     /**

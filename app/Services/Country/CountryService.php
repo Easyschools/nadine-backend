@@ -39,22 +39,9 @@ Class CountryService extends AppRepository
 
     public function create(Request $request)
     {
-        return $this->model->create($request->only([
-            'name_ar',
-            'name_en',
-            'icon',
-            'is_banned',
-        ]));
-    }
+        $request['is_default'] = $request->is_default == 0 ? 0 : 1;
 
-
-    public function updatePayment(Request $request)
-    {
-        $request['is_banned'] = $request->active ? 0 : 1;
-        $process = $this->update($request->id, $request->only([
-            'name_en', 'name_ar', 'is_banned', 'icon'
-        ]));
-        return $process;
+        return $this->model->create($request->all());
     }
 
 
