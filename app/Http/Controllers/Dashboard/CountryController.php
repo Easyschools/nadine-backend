@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Country;
+namespace App\Http\Controllers\Dashboard;
 
 
 use App\Http\Controllers\Controller;
 use App\Models\Country\Country;
-use App\Services\Payment\CountryService;
+use App\Services\Payment\CategoryService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -13,7 +13,7 @@ class CountryController extends Controller
 {
     private $countryService;
 
-    public function __construct(CountryService $countryService)
+    public function __construct(CategoryService $countryService)
     {
         $this->countryService = $countryService;
     }

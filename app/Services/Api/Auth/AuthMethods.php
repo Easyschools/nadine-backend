@@ -6,7 +6,7 @@
  * Time: 02:53 م
  */
 
-namespace App\Services\Auth;
+namespace App\Services\Api\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,9 +18,9 @@ trait AuthMethods
     public function login(Request $request, $type = 4 )
     {
         $this->setColumns(['id', 'name',
-            'phone_verified_at', 'password', 'type', 'is_ban', 'phone'
+            'phone_verified_at', 'password', 'type',  'phone'
         ]);
-        $this->setConditions([['type', $type]]);
+        $this->setConditions([['type', 2]]);
         $user = $this->findByColumn('phone', $request->phone);
         if (!$user) {
             return false;

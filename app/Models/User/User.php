@@ -6,10 +6,11 @@ use App\Models\User\Relations\UserRelations;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, UserRelations;
+    use Notifiable, UserRelations, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +18,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'password', 'type', 'phone', 'phone_verified_at'
+        'name', 'password', 'type', 'phone', 'phone_verified_at',
+        'email', 'email_verified_at'
     ];
 
     /**
@@ -27,6 +29,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $appends = [
+        'user_type'
     ];
 
     /**
@@ -39,6 +45,35 @@ class User extends Authenticatable
         'phone_verified_at' => 'datetime',
     ];
 
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getUserTypeAttribute()
+    {
+        $users = ['Admin', 'Customer'];
+        return $users[($this->type) ? $this->type - 1 : 0];
+    }
+//
+//    public function setVerifiedCodeAttribute($value)
+//    {
+////        $this->attributes['verified_code'] = ($value !== null) ? rand(10000, 99999) : null;
+//        $this->attributes['verified_code'] = ($value !== null) ? 55555 : null;
+//    }
+
+    public function getImageAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
+
+    public function setImageAttribute($value)
+    {
+        if (is_file($value)) {
+            $this->attributes['image'] = 'uploads/' . $value->store('User');
+        }
+    }
 
     /**
      * Get the number of models to return per page.

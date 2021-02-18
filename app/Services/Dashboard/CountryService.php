@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Payment;
+namespace App\Services\Dashboard;
 
 use App\Models\Country\Country;
 use App\Repositories\AppRepository;
