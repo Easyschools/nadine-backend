@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Models\Category;
+namespace App\Models\Option;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Color extends Model
 {
     protected $fillable =[
       'name_ar',
       'name_en',
+      'code',
     ];
 }

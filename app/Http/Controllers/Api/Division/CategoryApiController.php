@@ -6,12 +6,12 @@
  * Time: 11:57 ص
  */
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Division;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Category\CategoryRequest;
-use App\Services\Dashboard\CategoryApiService;
+use App\Http\Requests\CategoryRequest;
+use App\Services\Dashboard\Division\CategoryApiService;
 
 class CategoryApiController extends Controller
 {

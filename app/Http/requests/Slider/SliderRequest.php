@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Slider;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class SliderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -43,24 +43,26 @@ class CategoryRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name' => 'required|min:2',
+            'text' => 'required|min:2',
+            'image' => 'required|min:2',
         ];
     }
 
     private function updateValidation()
     {
         return [
-            'id' => 'required|exists:payment_types,id',
-            'name_en' => 'min:2',
-            'name_ar' => 'min:2',
+            'id' => 'required|exists:sliders,id',
+            'name' => 'min:2',
+            'text' => 'min:2',
+            'image' => 'required|min:2',
         ];
     }
 
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:payment_types,id'
+            'id' => 'required|exists:sliders,id'
         ];
     }
 

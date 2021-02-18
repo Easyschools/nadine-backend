@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Dashboard;
+namespace App\Services\Dashboard\Option;
 
-use App\Models\Category\Category;
+use App\Models\Option\Color;
 use App\Repositories\AppRepository;
 
 
-Class CategoryApiService extends AppRepository
+Class ColorApiService extends AppRepository
 {
 
-    public function __construct(Category $categry)
+    public function __construct(Color $color)
     {
-        parent::__construct($categry);
+        parent::__construct($color);
     }
 
     /**

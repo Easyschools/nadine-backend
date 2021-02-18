@@ -32,7 +32,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'user_type'
+        'user_type',
+        'image',
     ];
 
     /**
@@ -56,12 +57,7 @@ class User extends Authenticatable
         $users = ['Admin', 'Customer'];
         return $users[($this->type) ? $this->type - 1 : 0];
     }
-//
-//    public function setVerifiedCodeAttribute($value)
-//    {
-////        $this->attributes['verified_code'] = ($value !== null) ? rand(10000, 99999) : null;
-//        $this->attributes['verified_code'] = ($value !== null) ? 55555 : null;
-//    }
+
 
     public function getImageAttribute($value)
     {

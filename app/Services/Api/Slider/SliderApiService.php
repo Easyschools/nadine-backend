@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Dashboard;
+namespace App\Services\Dashboard\Slider;
 
-use App\Models\Category\Color;
+use App\Models\Slider\Slider;
 use App\Repositories\AppRepository;
 
 
-Class CategoryService extends AppRepository
+Class SliderApiService extends AppRepository
 {
 
-    public function __construct(Color $categry)
+    public function __construct(Slider $slider)
     {
-        parent::__construct($categry);
+        parent::__construct($slider);
     }
 
     /**

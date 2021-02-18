@@ -27,24 +27,65 @@ Route::group([
         Route::post('delete', 'CustomerApiController@delete');
     });
 
-//    Route::group([
-//        'prefix' => 'auth',
-//        'namespace' => 'Auth',
-//    ], function () {
-//        Route::post('register', 'AuthController@register');
-//        Route::post('login', 'AuthController@login');
-//        Route::post('logout', 'AuthController@logout');
-//        Route::post('change-password', 'AuthController@changePassword');
-//        Route::post('forgot-password', 'AuthController@forgetPassword');
-//        Route::post('reset-password', 'AuthController@resetPassword');
-//    });
-
 
     Route::group([
         'prefix' => 'category',
+        'namespace' => 'Division',
     ], function () {
         Route::get('all', 'CategoryApiController@all');
+        Route::get('get', 'CategoryApiController@read');
     });
+
+
+    Route::group([
+        'prefix' => 'color',
+        'namespace' => 'Option',
+    ], function () {
+        Route::get('all', 'ColorApiController@all');
+        Route::get('get', 'ColorApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'brand',
+        'namespace' => 'Feature',
+    ], function () {
+        Route::get('all', 'BrandApiController@all');
+        Route::get('get', 'BrandApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'collection',
+        'namespace' => 'Feature',
+    ], function () {
+        Route::get('all', 'CollectionApiController@all');
+        Route::get('get', 'CollectionApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'slider',
+        'namespace' => 'Slider',
+    ], function () {
+        Route::get('all', 'SliderApiController@all');
+        Route::get('get', 'SliderApiController@read');
+    });
+
+    Route::group([
+        'prefix' => 'city',
+        'namespace' => 'Region',
+    ], function () {
+        Route::get('all', 'CityApiController@all');
+        Route::get('get', 'CityApiController@read');
+    });
+
+//    Route::group([
+//        'prefix' => 'size',
+//    ], function () {
+//        Route::get('all', 'CategoryApiController@all');
+//        Route::get('get', 'CategoryApiController@read');
+//    });
 
 
 });
