@@ -11,32 +11,32 @@ namespace App\Http\Controllers\Api\Option;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Option\ColorRequest;
-use App\Services\Dashboard\Option\ColorApiService;
+use App\Services\Dashboard\Option\MaterialApiService;
 
-class ColorApiController extends Controller
+class MaterialApiController extends Controller
 {
 
-    private $colorApiService;
+    private $materialApiService;
 
-    public function __construct(ColorApiService $colorApiService)
+    public function __construct(MaterialApiService $materialApiService)
     {
 //        $this->middleware('auth:api');
 //        $this->middleware('check.role:1,2 ')
 //            ->only(['index','read']);
-        $this->colorApiService = $colorApiService;
+        $this->materialApiService = $materialApiService;
     }
 
 
     public function read(ColorRequest $request)
     {
-        $process = $this->colorApiService->get($request);
+        $process = $this->materialApiService->get($request);
         return $this->sendResponse($process);
     }
 
 
     public function all(ColorRequest $request)
     {
-        $process = $this->colorApiService->index($request);
+        $process = $this->materialApiService->index($request);
         return $this->sendResponse($process);
     }
 }

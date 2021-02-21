@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Services\Dashboard\Feature;
+namespace App\Services\Dashboard\Product;
 
-use App\Models\Feature\Brand;
-use App\Models\Feature\City;
+use App\Models\Option\Color;
+use App\Product\Product;
+use App\Product\Variant;
 use App\Repositories\AppRepository;
 
 
-Class BrandApiService extends AppRepository
+Class VariantApiService extends AppRepository
 {
 
-    public function __construct(Brand $brand)
+    public function __construct(Variant $variant)
     {
-         parent::__construct($brand);
+        parent::__construct($variant);
     }
 
     /**
@@ -21,6 +22,11 @@ Class BrandApiService extends AppRepository
      */
     public function index($request)
     {
+
+        $this->setConditions([
+            ['product_id',$request->product_id]
+        ]);
+
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }

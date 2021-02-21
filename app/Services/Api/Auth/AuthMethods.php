@@ -54,8 +54,7 @@ trait AuthMethods
         return false;
     }
 
-    public
-    function changePassword($oldPass, $newPass, $userId = null)
+    public function changePassword($oldPass, $newPass, $userId = null)
     {
         $user = Auth::user();
         if ($user->type == 1 && $userId) {

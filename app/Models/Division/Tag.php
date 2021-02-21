@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Option;
+namespace App\Models\Division;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Tag extends Model
 {
     protected $fillable =[
       'name_ar',
       'name_en',
-      'code',
+      'category_id',
     ];
 
 
@@ -22,5 +22,6 @@ class Color extends Model
     {
         return $this['name' . app()->getLocale()];
     }
+
 
 }

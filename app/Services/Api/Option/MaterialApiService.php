@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Services\Dashboard\Feature;
+namespace App\Services\Dashboard\Option;
 
-use App\Models\Feature\Brand;
-use App\Models\Feature\City;
+use App\Models\Option\Material;
 use App\Repositories\AppRepository;
 
 
-Class BrandApiService extends AppRepository
+Class MaterialApiService extends AppRepository
 {
 
-    public function __construct(Brand $brand)
+    public function __construct(Material $material)
     {
-         parent::__construct($brand);
+        parent::__construct($material);
     }
 
     /**

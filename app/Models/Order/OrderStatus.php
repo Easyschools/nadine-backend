@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Option;
+namespace App\Models\Order;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class OrderStatus extends Model
 {
-    protected $fillable =[
-      'name_ar',
-      'name_en',
-      'code',
+    protected $fillable = [
+        'type',
+        'name_ar',
+        'name_en',
     ];
 
 
@@ -22,5 +22,6 @@ class Color extends Model
     {
         return $this['name' . app()->getLocale()];
     }
+
 
 }

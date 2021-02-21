@@ -2,14 +2,14 @@
 
 namespace App\Models\Option;
 
+use App\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Material extends Model
 {
     protected $fillable =[
       'name_ar',
       'name_en',
-      'code',
     ];
 
 
@@ -21,6 +21,11 @@ class Color extends Model
     public function getNameAttribute()
     {
         return $this['name' . app()->getLocale()];
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
 }

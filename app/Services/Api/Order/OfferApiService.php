@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Services\Dashboard\Feature;
+namespace App\Services\Dashboard\Order;
 
-use App\Models\Feature\Brand;
-use App\Models\Feature\City;
+
+use App\Models\Order\Offer;
 use App\Repositories\AppRepository;
 
 
-Class BrandApiService extends AppRepository
+Class OfferApiService extends AppRepository
 {
 
-    public function __construct(Brand $brand)
+    public function __construct(Offer $offer)
     {
-         parent::__construct($brand);
+        parent::__construct($offer);
     }
 
     /**

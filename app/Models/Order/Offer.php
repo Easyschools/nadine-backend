@@ -1,15 +1,24 @@
 <?php
 
-namespace App\Models\Division;
+namespace App\Models\Order;
 
-use App\Traits\HelperFunctions;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Offer extends Model
 {
     protected $fillable = [
         'name_ar',
         'name_en',
+        'is_percentage',
+        'discount',
+        'model_type',
+        'model_id',
+        'expire_at',
+    ];
+
+
+    protected $dates = [
+        'expire_at'
     ];
 
     protected $appends = [

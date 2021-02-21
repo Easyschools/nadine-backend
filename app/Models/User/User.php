@@ -101,4 +101,10 @@ class User extends Authenticatable
         return $this->type == 2;
     }
 
+
+    public function authAccessToken()
+    {
+        return $this->hasMany(OauthAccessToken::class);
+    }
+
 }

@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Api\Feature;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BrandRequest;
+use App\Http\Requests\Feature\BrandRequest;
 use App\Services\Dashboard\Feature\BrandApiService;
 
 class BrandApiController extends Controller

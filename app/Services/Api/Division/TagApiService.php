@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Services\Dashboard\Feature;
+namespace App\Services\Dashboard\Division;
 
-use App\Models\Feature\Brand;
-use App\Models\Feature\City;
+use App\Models\Division\Category;
+use App\Models\Division\Tag;
 use App\Repositories\AppRepository;
 
 
-Class BrandApiService extends AppRepository
+Class TagApiService extends AppRepository
 {
 
-    public function __construct(Brand $brand)
+    public function __construct(Tag $tag)
     {
-         parent::__construct($brand);
+        parent::__construct($tag);
     }
 
     /**

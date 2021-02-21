@@ -61,4 +61,5 @@ trait HelperFunctions
 
         return str_limit($string, $lettersCount, '');
     }
+
 }

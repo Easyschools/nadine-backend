@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Division;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BrandRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -51,7 +51,7 @@ class BrandRequest extends FormRequest
     private function updateValidation()
     {
         return [
-            'id' => 'required|exists:brands,id',
+            'id' => 'required|exists:tags,id',
             'name_en' => 'min:2',
             'name_ar' => 'min:2',
         ];
@@ -60,7 +60,7 @@ class BrandRequest extends FormRequest
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:brands,id'
+            'id' => 'required|exists:tags,id'
         ];
     }
 

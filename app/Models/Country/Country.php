@@ -3,32 +3,9 @@
 namespace App\Models\Country;
 
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Translatable;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
-class Country extends Model implements TranslatableContract
+class Country extends Model
 {
-    use Translatable;
-
-    /**
-     * The translated attributes that are mass assignable.
-     *
-     * @var array
-     */
-    public $translatedAttributes = [
-        'name'
-    ];
-
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'translations'
-    ];
-
 
 
     /**
@@ -40,6 +17,18 @@ class Country extends Model implements TranslatableContract
         'code',
         'is_default',
     ];
+
+
+    protected $appends = [
+        'name'
+    ];
+
+
+    public function getNameAttribute()
+    {
+        return $this['name' . app()->getLocale()];
+    }
+
 
     /**
      * @return string

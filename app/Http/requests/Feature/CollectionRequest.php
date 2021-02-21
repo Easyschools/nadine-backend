@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Feature;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ColorRequest extends FormRequest
+class CollectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -45,16 +45,14 @@ class ColorRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
-            'code' => 'required|min:2',
         ];
     }
 
     private function updateValidation()
     {
         return [
-            'id' => 'required|exists:colors,id',
+            'id' => 'required|exists:collections,id',
             'name_en' => 'min:2',
-            'code' => 'min:2',
             'name_ar' => 'min:2',
         ];
     }
@@ -62,7 +60,7 @@ class ColorRequest extends FormRequest
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:colors,id'
+            'id' => 'required|exists:collections,id'
         ];
     }
 

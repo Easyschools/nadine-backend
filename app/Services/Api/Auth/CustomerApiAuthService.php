@@ -14,6 +14,7 @@ use App\Repositories\AppRepository;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -49,6 +50,7 @@ class CustomerApiAuthService extends AppRepository
         return $user;
     }
 
+
     public function forgetPassword(Request $request , $verified_code = 0)
     {
         $user = $this->findByColumn(
@@ -68,9 +70,9 @@ class CustomerApiAuthService extends AppRepository
 
     public function resetPassword(Request $request)
     {
-        $this->passwordReset->setConditions([[
-            'token', $request->code
-        ]]);
+//        $this->passwordReset->setConditions([[
+//            'token', $request->code
+//        ]]);
         $reset = $this->passwordReset->findByColumn(
             'phone', $request->phone
         );

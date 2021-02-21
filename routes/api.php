@@ -12,11 +12,13 @@ Route::group([
     ], function () {
         Route::post('register', 'CustomerApiAuthController@register');
         Route::post('login', 'CustomerApiAuthController@login');
+        Route::post('logout', 'CustomerApiAuthController@logout');
 
         Route::post('forget-password', 'CustomerApiAuthController@forgetPassword');
         Route::post('reset-password', 'CustomerApiAuthController@resetPassword');
+        Route::post('change-password', 'CustomerApiAuthController@changePassword');
 
-        Route::get('check-code', 'CustomerApiAuthController@checkCode');
+        Route::post('check-code', 'CustomerApiAuthController@checkCode');
         Route::post('confirm', 'VerificationController@confirmPhone');
         Route::post('resend-code', 'VerificationController@resend');
         Route::post('update-phone', 'VerificationController@updatePhone');
@@ -34,6 +36,16 @@ Route::group([
     ], function () {
         Route::get('all', 'CategoryApiController@all');
         Route::get('get', 'CategoryApiController@read');
+    });
+
+
+
+    Route::group([
+        'prefix' => 'tag',
+        'namespace' => 'Division',
+    ], function () {
+        Route::get('all', 'TagApiController@all');
+        Route::get('get', 'TagApiController@read');
     });
 
 
@@ -55,14 +67,6 @@ Route::group([
     });
 
 
-    Route::group([
-        'prefix' => 'collection',
-        'namespace' => 'Feature',
-    ], function () {
-        Route::get('all', 'CollectionApiController@all');
-        Route::get('get', 'CollectionApiController@read');
-    });
-
 
     Route::group([
         'prefix' => 'slider',
@@ -80,12 +84,78 @@ Route::group([
         Route::get('get', 'CityApiController@read');
     });
 
-//    Route::group([
-//        'prefix' => 'size',
-//    ], function () {
-//        Route::get('all', 'CategoryApiController@all');
-//        Route::get('get', 'CategoryApiController@read');
-//    });
+    Route::group([
+        'prefix' => 'product',
+        'namespace' => 'Product',
+    ], function () {
+        Route::get('all', 'ProductApiController@all');
+        Route::get('get', 'ProductApiController@read');
+    });
+
+
+
+
+    Route::group([
+        'prefix' => 'collection',
+        'namespace' => 'Feature',
+    ], function () {
+        Route::get('all', 'CollectionApiController@all');
+        Route::get('get', 'CollectionApiController@read');
+    });
+
+
+
+    Route::group([
+        'prefix' => 'dimension',
+        'namespace' => 'Option',
+    ], function () {
+        Route::get('all', 'DimensionApiController@all');
+        Route::get('get', 'DimensionApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'material',
+        'namespace' => 'Option',
+    ], function () {
+        Route::get('all', 'MaterialApiController@all');
+        Route::get('get', 'MaterialApiController@read');
+    });
+
+    Route::group([
+        'prefix' => 'variant',
+        'namespace' => 'Product',
+    ], function () {
+        Route::get('all', 'VariantApiController@all');
+        Route::get('get', 'VariantApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'coupon',
+        'namespace' => 'Order',
+    ], function () {
+        Route::get('all', 'CouponApiController@all');
+        Route::get('get', 'CouponApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'offer',
+        'namespace' => 'Order',
+    ], function () {
+        Route::get('all', 'OfferApiController@all');
+        Route::get('get', 'OfferApiController@read');
+    });
+
+    Route::group([
+        'prefix' => 'order-status',
+        'namespace' => 'Order',
+    ], function () {
+        Route::get('all', 'OrderStatusApiController@all');
+        Route::get('get', 'OrderStatusApiController@read');
+    });
+
 
 
 });

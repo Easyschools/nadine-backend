@@ -8,6 +8,9 @@ use App\Models\User\User;
 use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Traits\FirebaseFCM;
 use App\Traits\HelpersTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerApiAuthController extends Controller
@@ -20,7 +23,8 @@ class CustomerApiAuthController extends Controller
     public function __construct(CustomerApiAuthService $authService)
     {
         $this->verified_code = rand(10000, 99999);
-
+        $this->middleware('auth:api')
+            ->only('logout', 'changePassword');
         $this->authService = $authService;
     }
 
@@ -32,6 +36,13 @@ class CustomerApiAuthController extends Controller
 //        $this->sendSmsMessage($user->phone, $this->verified_code);
 
         return $this->sendResponse($user);
+    }
+
+    public function logout()
+    {
+        $process = $this->authService->logout();
+
+        return $this->sendResponse($process);
     }
 
     public function login(AuthRequest $request)
@@ -93,5 +104,31 @@ class CustomerApiAuthController extends Controller
         return $this->sendResponse($user);
     }
 
+
+    //changePassword
+    public function changePassword(Request $request)
+    {
+        $validator = Validator([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendError($validator->messages());
+        }
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            // The passwords matches
+            return $this->sendError(
+                "error",
+                "Your current password does not matches with the password you provided. Please try again.");
+        }
+
+        //Change Password
+        $user->password = $request->new_password;
+        $user->save();
+
+        return $this->sendResponse("success", "Password changed successfully !");
+    }
 
 }

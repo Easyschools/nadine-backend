@@ -81,7 +81,7 @@ class AuthRequest extends FormRequest
         return [
             'phone' => 'required|exists:users,phone',
             'password' => 'required|min:8|max:22|confirmed',
-            'code' => 'required|exists:password_resets,token',
+//            'code' => 'required|exists:password_resets,token',
         ];
     }
 

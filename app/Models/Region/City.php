@@ -12,4 +12,16 @@ class City extends Model
       'country_id',
       'is_default',
     ];
+
+
+    protected $appends = [
+        'name'
+    ];
+
+
+    public function getNameAttribute()
+    {
+        return $this['name' . app()->getLocale()];
+    }
+
 }
