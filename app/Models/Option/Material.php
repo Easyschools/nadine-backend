@@ -20,7 +20,7 @@ class Material extends Model
 
     public function getNameAttribute()
     {
-        return $this['name' . app()->getLocale()];
+        return $this['name_' . app()->getLocale()];
     }
 
     public function products()

@@ -20,6 +20,7 @@ Class CityApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->setRelations(['country']);
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }

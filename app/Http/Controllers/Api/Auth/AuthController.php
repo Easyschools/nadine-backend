@@ -57,6 +57,14 @@ class AuthController extends Controller
 
     public function changePassword(AuthRequest $request)
     {
+        $validator = Validator([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|same:new_password',
+        ]);
+        if ($validator->fails()) {
+            return $this->sendError($validator->messages());
+        }
         $user = $this->authService->changePassword(
             $request->old_password, $request->password, $request->user_id
         );

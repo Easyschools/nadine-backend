@@ -27,7 +27,7 @@ class Coupon extends Model
 
     public function getTypeAttribute()
     {
-        return $this['type' . app()->getLocale()];
+        return $this['type_' . app()->getLocale()];
     }
 
 

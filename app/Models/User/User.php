@@ -2,7 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Models\User\Relations\UserRelations;
+use App\Models\Order\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +10,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable, UserRelations, HasApiTokens;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'password', 'type', 'phone', 'phone_verified_at',
-        'email', 'email_verified_at'
+        'email', 'email_verified_at' , 'image'
     ];
 
     /**
@@ -33,7 +33,6 @@ class User extends Authenticatable
 
     protected $appends = [
         'user_type',
-        'image',
     ];
 
     /**
@@ -105,6 +104,17 @@ class User extends Authenticatable
     public function authAccessToken()
     {
         return $this->hasMany(OauthAccessToken::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+
     }
 
 }

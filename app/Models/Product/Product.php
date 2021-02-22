@@ -2,6 +2,10 @@
 
 namespace App\Product;
 
+use App\Models\Division\Category;
+use App\Models\Division\Tag;
+use App\Models\Feature\Collection;
+use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -30,17 +34,32 @@ class Product extends Model
 
     public function getNameAttribute()
     {
-        return $this['name' . app()->getLocale()];
+        return $this['name_' . app()->getLocale()];
     }
 
     public function getDescriptionAttribute()
     {
-        return $this['name' . app()->getLocale()];
+        return $this['type_' . app()->getLocale()];
     }
 
     public function material()
     {
-//        return $this->belongsTo()
+        return $this->belongsTo(Material::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class);
+    }
+
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
     }
 
 }

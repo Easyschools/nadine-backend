@@ -156,6 +156,23 @@ Route::group([
         Route::get('get', 'OrderStatusApiController@read');
     });
 
+    Route::group([
+        'prefix' => 'country',
+        'namespace' => 'Region',
+    ], function () {
+        Route::get('all', 'CountryApiController@all');
+        Route::get('get', 'CountryApiController@read');
+    });
+
+
+    Route::group([
+        'prefix' => 'cart',
+        'namespace' => 'Order'
+    ], function () {
+        Route::post('add-to-cart', 'CartApiController@create');
+        Route::post('delete', 'CartApiController@delete');
+        Route::get('all', 'CartApiController@index');
+    });
 
 
 });

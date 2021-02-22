@@ -20,9 +20,9 @@ class SliderApiController extends Controller
 
     public function __construct(SliderApiService $sliderApiService)
     {
-        $this->middleware('auth:api');
-        $this->middleware('check.role:1,2 ')
-            ->only(['index','read']);
+//        $this->middleware('auth:api');
+//        $this->middleware('check.role:1,2 ')
+//            ->only(['index','read']);
         $this->sliderApiService = $sliderApiService;
     }
 

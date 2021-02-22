@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     protected $fillable =[
-      'name',
+      'name_ar',
+      'name_en',
       'text',
       'image',
     ];
@@ -18,8 +19,14 @@ class Slider extends Model
      */
     protected $appends = [
         'image',
+        'name',
     ];
 
+
+    public function getNameAttribute()
+    {
+        return $this['name_' . app()->getLocale()];
+    }
 
     public function getImageAttribute($value)
     {

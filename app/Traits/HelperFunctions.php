@@ -8,6 +8,7 @@
 
 namespace App\Traits;
 
+use App\Models\User\Address;
 use Illuminate\Support\Facades\File;
 
 trait HelperFunctions
@@ -60,6 +61,38 @@ trait HelperFunctions
         //limit slug to  $lettersCount = (100)
 
         return str_limit($string, $lettersCount, '');
+    }
+
+
+    static function UpdateAddressesForUser($user, $request)
+    {
+
+        $addressOldIds = $user->addresses()->pluck('id')->toArray();
+
+        $arr = [];
+
+        foreach ($request->addresses as $address) {
+
+            if ((int)$address['address_id'] != 0) {
+                $user->addresses()->findOrFail((int)$address['address_id'])->update([
+                    'address' => $address['address'],
+                    'city_id' => (int)$address['city_id'],
+                ]);
+                $arr [] = (int)$address['address_id'];
+            } else {
+                $user->addresses()->create([
+                    'address' => $address['address'],
+                    'city_id' => (int)$address['city_id'],
+                ]);
+            }
+        }
+
+
+        // remove addresses
+        $NewIds = array_diff($addressOldIds, $arr);
+        Address::whereIn('id', $NewIds)->delete();
+
+
     }
 
 }

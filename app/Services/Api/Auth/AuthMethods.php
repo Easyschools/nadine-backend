@@ -43,10 +43,11 @@ trait AuthMethods
         if (Auth::check()) {
             $user = Auth::user();
 
-            $user->OauthAccessToken()->delete();
-            if ($user->firebaseToken()->count() > 0) {
-                $user->firebaseToken()->delete();
-            }
+            $user->authAccessToken()->delete();
+
+//            if ($user->firebaseToken()->count() > 0) {
+//                $user->firebaseToken()->delete();
+//            }
 
 
             return true;
@@ -54,19 +55,4 @@ trait AuthMethods
         return false;
     }
 
-    public function changePassword($oldPass, $newPass, $userId = null)
-    {
-        $user = Auth::user();
-        if ($user->type == 1 && $userId) {
-            $user = $this->find($userId);
-            return $user->update(['password' => $newPass]);
-        }
-        $check = Hash::check($oldPass, $user->password);
-        if (!$check) {
-            throw ValidationException::withMessages([
-                'old_password' => ['invalid old password'],
-            ]);
-        }
-        return $user->update(['password' => $newPass]);
-    }
 }

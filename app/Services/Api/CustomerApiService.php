@@ -2,13 +2,16 @@
 
 namespace App\Services\Api\Auth;
 
+use App\Models\User\Address;
 use App\Models\User\User;
 use App\Repositories\AppRepository;
+use App\Traits\HelperFunctions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerApiService extends AppRepository
 {
+
     public function __construct(User $user)
     {
         parent::__construct($user);
@@ -33,8 +36,8 @@ class CustomerApiService extends AppRepository
             'phone_verified_at' => ($request->phone && $request->phone != Auth::user()->phone) ?
                 null : Auth::user()->phone_verified_at
         ]);
-
-        $user = $this->update($userId,
+        $user = $this->find($userId);
+        $this->update($userId,
             $request->only([
                 'phone',
                 'name',
@@ -45,15 +48,36 @@ class CustomerApiService extends AppRepository
                 'email_verified_at',
             ]));
 
+        HelperFunctions::UpdateAddressesForUser($user, $request);
+
+
         return true;
     }
 
 
     public function get($id)
     {
+
         $userId = $this->getUserId($id);
 
-//        $this->setColumns(['id', 'name', 'phone', 'is_ban', 'type', 'phone_verified_at']);
+        $this->setRelations([
+            'addresses' => function ($address) {
+                $address->with([
+                    'city'
+                ]);
+            }
+        ]);
+
+        $this->setColumns([
+            'id',
+            'name',
+            'phone',
+            'email',
+            'is_ban',
+            'type',
+            'phone_verified_at',
+            'image'
+        ]);
         $user = $this->find($userId);
 
         return $user;

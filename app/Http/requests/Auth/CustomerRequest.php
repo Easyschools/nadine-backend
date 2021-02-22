@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class CustomerRequest extends FormRequest
 {
@@ -58,15 +59,15 @@ class CustomerRequest extends FormRequest
 
     private function updateValidation()
     {
-        $id = ($this->user_id) ? $this->user_id : Auth::id();
+        $id = Auth::id();
         return [
             'user_id' => 'exists:users,id',
             'name' => 'min:2|max:100',
             'image' => 'mimes:jpeg,jpg,png|image',
             'phone' => 'unique:users,phone,' . $id,
-            'age' => 'integer|between:18,100',
-//            'city_id' => 'exists:cities,id',
-//            'country_id' => 'exists:countries,id',
+            'addresses' => 'array',
+            'addresses.*.city_id' => 'nullable|integer|exists:cities,id',
+            'addresses.*.address' => 'nullable|min:2',
         ];
     }
 

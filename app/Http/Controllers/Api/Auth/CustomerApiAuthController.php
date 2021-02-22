@@ -70,7 +70,7 @@ class CustomerApiAuthController extends Controller
         $customer = User::where('phone', $request->phone)->first();
 
         // send sms message
-        $msg = ' كود تذكر الباسورد:  ';
+        $msg = ' forget password code:  ';
         $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
         if ($user == false) {
@@ -105,19 +105,19 @@ class CustomerApiAuthController extends Controller
     }
 
 
-    //changePassword
+//    changePassword
     public function changePassword(Request $request)
     {
-        $validator = Validator([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:6|confirmed',
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|string|min:8',
+            'password_confirmation' => 'required|same:new_password',
         ]);
-        if ($validator->fails()) {
-            return $this->sendError($validator->messages());
-        }
+
+
         $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (!Hash::check($request->old_password, $user->password)) {
             // The passwords matches
             return $this->sendError(
                 "error",
@@ -130,5 +130,7 @@ class CustomerApiAuthController extends Controller
 
         return $this->sendResponse("success", "Password changed successfully !");
     }
+
+
 
 }

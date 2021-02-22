@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Country;
+namespace App\Models\Region;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,9 @@ class Country extends Model
      */
     public $fillable = [
         'code',
-        'is_default',
+        'name_ar',
+        'name_en',
+        'currency',
     ];
 
 
@@ -26,7 +28,7 @@ class Country extends Model
 
     public function getNameAttribute()
     {
-        return $this['name' . app()->getLocale()];
+        return $this['name_' . app()->getLocale()];
     }
 
 
@@ -36,6 +38,11 @@ class Country extends Model
     public function getForeignKey()
     {
         return 'country_id';
+    }
+
+    public function cities()
+    {
+        return $this->hasMany(City::class);
     }
 
 }

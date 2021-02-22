@@ -26,7 +26,7 @@ trait HelpersTrait
      * @param $msg
      * @return bool
      */
-    public function sendSmsMessage($phone, $token, $msg = ' :كود التفعيل ')
+    public function sendSmsMessage($phone, $token, $msg = ' activation code: ')
     {
         $message = $token . $msg;
         $smsMasr = new SmsMasr($message, [$phone]);

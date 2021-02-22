@@ -20,9 +20,9 @@ class CityApiController extends Controller
 
     public function __construct(CityApiService $cityService)
     {
-        $this->middleware('auth:api');
-        $this->middleware('check.role:1,2 ')
-            ->only(['index','read']);
+//        $this->middleware('auth:api');
+//        $this->middleware('check.role:1,2 ')
+//            ->only(['index','read']);
         $this->cityService = $cityService;
     }
 
