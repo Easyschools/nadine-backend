@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\AuthRequest;;
+use App\Http\Requests\Auth\AuthRequest;
+
+;
+
 use App\Models\User\User;
 use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Traits\FirebaseFCM;
@@ -95,6 +98,9 @@ class CustomerApiAuthController extends Controller
     public function checkCode(AuthRequest $request)
     {
         $user = $this->authService->checkCode($request);
+        if (!$user) {
+            $this->sendError($user, 'code is wrong!');
+        }
         return $this->sendResponse($user);
     }
 
@@ -130,7 +136,6 @@ class CustomerApiAuthController extends Controller
 
         return $this->sendResponse("success", "Password changed successfully !");
     }
-
 
 
 }

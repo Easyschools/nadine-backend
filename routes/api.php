@@ -39,7 +39,6 @@ Route::group([
     });
 
 
-
     Route::group([
         'prefix' => 'tag',
         'namespace' => 'Division',
@@ -67,7 +66,6 @@ Route::group([
     });
 
 
-
     Route::group([
         'prefix' => 'slider',
         'namespace' => 'Slider',
@@ -93,8 +91,6 @@ Route::group([
     });
 
 
-
-
     Route::group([
         'prefix' => 'collection',
         'namespace' => 'Feature',
@@ -102,7 +98,6 @@ Route::group([
         Route::get('all', 'CollectionApiController@all');
         Route::get('get', 'CollectionApiController@read');
     });
-
 
 
     Route::group([
@@ -164,6 +159,58 @@ Route::group([
         Route::get('get', 'CountryApiController@read');
     });
 
+    Route::group([
+        'prefix' => 'review',
+        'namespace' => 'Review',
+    ], function () {
+        Route::get('all', 'ReviewApiController@all');
+        Route::get('get', 'ReviewApiController@read');
+        Route::post('create', 'ReviewApiController@create');
+        Route::post('update', 'ReviewApiController@update');
+        Route::get('delete', 'ReviewApiController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'favourite',
+        'namespace' => 'Auth',
+    ], function () {
+        Route::get('all', 'FavouriteApiController@all');
+        Route::get('get', 'FavouriteApiController@read');
+        Route::post('create', 'FavouriteApiController@create');
+        Route::get('delete', 'FavouriteApiController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'contact-info',
+        'namespace' => 'Other',
+    ], function () {
+        Route::get('all', 'ContactInfoApiController@all');
+        Route::get('get', 'ContactInfoApiController@read');
+        Route::post('create', 'ContactInfoApiController@create');
+        Route::post('update', 'ContactInfoApiController@update');
+        Route::get('delete', 'ContactInfoApiController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'contact',
+        'namespace' => 'Other',
+    ], function () {
+        Route::get('all', 'ContactApiController@all');
+        Route::get('get', 'ContactApiController@read');
+        Route::post('create', 'ContactApiController@create');
+        Route::get('delete', 'ContactApiController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'payment-type',
+        'namespace' => 'Payment',
+    ], function () {
+        Route::get('all', 'PaymentTypeApiController@all');
+        Route::get('get', 'PaymentTypeApiController@read');
+        Route::post('create', 'PaymentTypeApiController@create');
+        Route::post('update', 'PaymentTypeApiController@update');
+        Route::get('delete', 'PaymentTypeApiController@delete');
+    });
 
     Route::group([
         'prefix' => 'cart',

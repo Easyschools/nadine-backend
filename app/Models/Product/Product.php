@@ -6,6 +6,7 @@ use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
 use App\Models\Option\Material;
+use App\Models\Region\Country;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -28,6 +29,8 @@ class Product extends Model
 
     protected $appends = [
         'name',
+        'currency',
+        'image',
         'description',
     ];
 
@@ -39,7 +42,7 @@ class Product extends Model
 
     public function getDescriptionAttribute()
     {
-        return $this['type_' . app()->getLocale()];
+        return $this['description_' . app()->getLocale()];
     }
 
     public function material()
@@ -60,6 +63,21 @@ class Product extends Model
     public function collection()
     {
         return $this->belongsTo(Collection::class);
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->variants()->first() ? $this->variants()->first()->image : "";
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return Country::first()->currency;
     }
 
 }

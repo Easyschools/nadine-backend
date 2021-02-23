@@ -32,9 +32,13 @@ Class CategoryApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations([
+            'tags' => function ($tag) {
+                $tag->select('id', 'name_ar', 'name_en', 'category_id');
+            },
+        ]);
         return $this->find($request->id);
     }
-
 
 
 }

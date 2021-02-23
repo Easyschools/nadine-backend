@@ -9,7 +9,8 @@ class Slider extends Model
     protected $fillable =[
       'name_ar',
       'name_en',
-      'text',
+      'text_en',
+      'text_ar',
       'image',
     ];
 
@@ -18,7 +19,6 @@ class Slider extends Model
      * @var array
      */
     protected $appends = [
-        'image',
         'name',
     ];
 
@@ -26,6 +26,11 @@ class Slider extends Model
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
+    }
+
+    public function getTextAttribute()
+    {
+        return $this['text_' . app()->getLocale()];
     }
 
     public function getImageAttribute($value)
@@ -36,7 +41,7 @@ class Slider extends Model
     public function setImageAttribute($value)
     {
         if (is_file($value)) {
-            $this->attributes['image'] = 'uploads/' . $value->store('User');
+            $this->attributes['image'] = 'uploads/' . $value->store('Slider');
         }
     }
 }

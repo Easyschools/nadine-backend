@@ -2,6 +2,8 @@
 
 namespace App\Models\Order;
 
+use App\Models\Division\Category;
+use App\Models\Division\Tag;
 use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
@@ -14,6 +16,7 @@ class Offer extends Model
         'model_type',
         'model_id',
         'expire_at',
+        'image',
     ];
 
 
@@ -29,6 +32,29 @@ class Offer extends Model
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
+    }
+
+
+    public function getImageAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
+
+    public function setImageAttribute($value)
+    {
+        if (is_file($value)) {
+            $this->attributes['image'] = 'uploads/' . $value->store('Offer');
+        }
+    }
+
+    public function category()
+    {
+        if ($this->model_type == 'Category') {
+            return $this->belongsTo(Category::class, 'model_id');
+        } else {
+            return $this->belongsTo(Tag::class, 'model_id');
+
+        }
     }
 
 

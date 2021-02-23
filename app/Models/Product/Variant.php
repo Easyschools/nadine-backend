@@ -2,6 +2,8 @@
 
 namespace App\Product;
 
+use App\Models\Option\Color;
+use App\Models\Option\Dimension;
 use Illuminate\Database\Eloquent\Model;
 
 class Variant extends Model
@@ -15,13 +17,6 @@ class Variant extends Model
     ];
 
 
-    /**
-     * @var array
-     */
-    protected $appends = [
-        'image',
-    ];
-
     public function getImageAttribute($value)
     {
         return ($value) ? url($value) : $value;
@@ -30,7 +25,7 @@ class Variant extends Model
     public function setImageAttribute($value)
     {
         if (is_file($value)) {
-            $this->attributes['image'] = 'uploads/' . $value->store('User');
+            $this->attributes['image'] = 'uploads/' . $value->store('Variant');
         }
     }
 
@@ -41,7 +36,12 @@ class Variant extends Model
 
     public function Dimension()
     {
-        return $this->belongsTo(Dimen::class);
+        return $this->belongsTo(Dimension::class);
+    }
+
+    public function Color()
+    {
+        return $this->belongsTo(Color::class);
     }
 
 }

@@ -90,7 +90,7 @@ class AuthRequest extends FormRequest
     {
         return [
             'phone' => 'required|min:11|exists:users,phone',
-            'code' => 'required',
+            'code' => 'required|exists:password_resets,token',
         ];
     }
 }

@@ -22,7 +22,10 @@ Class VariantApiService extends AppRepository
      */
     public function index($request)
     {
-
+        $this->setRelations([
+            'color',
+            'dimension',
+        ]);
         $this->setConditions([
             ['product_id',$request->product_id]
         ]);
@@ -39,6 +42,10 @@ Class VariantApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations([
+            'color',
+            'dimension',
+        ]);
         return $this->find($request->id);
     }
 

@@ -34,6 +34,9 @@ Class ProductApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations([
+           'variants'
+        ]);
         return $this->find($request->id);
     }
 

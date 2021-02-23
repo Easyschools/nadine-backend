@@ -28,7 +28,7 @@ trait HelpersTrait
      */
     public function sendSmsMessage($phone, $token, $msg = ' activation code: ')
     {
-        $message = $token . $msg;
+        $message = $msg . $token ;
         $smsMasr = new SmsMasr($message, [$phone]);
         $smsMasr->sendMessage();
         return true;

@@ -2,7 +2,6 @@
 
 namespace App\Models\Division;
 
-use App\Traits\HelperFunctions;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -22,5 +21,10 @@ class Category extends Model
         return $this['name_' . app()->getLocale()];
     }
 
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
 }

@@ -3,13 +3,9 @@
 namespace App\Models\User;
 
 use App\Models\Region\City;
-use App\Models\User\Relations\UserRelations;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class Address extends Authenticatable
+class Address extends Model
 {
     /**
      * The attributes that are mass assignable.

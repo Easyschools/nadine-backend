@@ -20,9 +20,9 @@ class BrandApiController extends Controller
 
     public function __construct(BrandApiService $brandService)
     {
-        $this->middleware('auth:api');
-        $this->middleware('check.role:1,2 ')
-            ->only(['index','read']);
+//        $this->middleware('auth:api');
+//        $this->middleware('check.role:1,2 ')
+//            ->only(['index','read']);
         $this->brandService = $brandService;
     }
 
