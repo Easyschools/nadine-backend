@@ -39,4 +39,20 @@ class CategoryApiController extends Controller
         $process = $this->categoryService->index($request);
         return $this->sendResponse($process);
     }
+
+    public function delete(CategoryRequest $request)
+    {
+        $process = $this->categoryService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+    public function create(CategoryRequest $request)
+    {
+        $process = $this->categoryService->createCategory($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(CategoryRequest $request)
+    {
+        $process = $this->categoryService->editCategory($request);
+        return $this->sendResponse($process);
+    }
 }

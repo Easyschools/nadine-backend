@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Api\Division;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Division\CategoryRequest;
+use App\Http\Requests\Division\TagRequest;
 use App\Services\Dashboard\Division\TagApiService;
 
 class TagApiController extends Controller
@@ -27,16 +27,33 @@ class TagApiController extends Controller
     }
 
 
-    public function read(CategoryRequest $request)
+    public function read(TagRequest $request)
     {
         $process = $this->tagService->get($request);
         return $this->sendResponse($process);
     }
 
 
-    public function all(CategoryRequest $request)
+    public function all(TagRequest $request)
     {
         $process = $this->tagService->index($request);
+        return $this->sendResponse($process);
+    }
+
+    public function delete(TagRequest $request)
+    {
+        $process = $this->tagService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+
+    public function create(TagRequest $request)
+    {
+        $process = $this->tagService->createTag($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(TagRequest $request)
+    {
+        $process = $this->tagService->editTag($request);
         return $this->sendResponse($process);
     }
 }

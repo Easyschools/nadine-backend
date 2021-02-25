@@ -46,12 +46,8 @@ class CouponRequest extends FormRequest
             'is_percentage' => 'required|boolean',
             'max_usage_per_order' => '',
             'max_usage_per_user' => '',
-            'discount' => 'required|min:1',
+            'value' => 'required|min:1',
             'min_total' => 'required|min:1',
-            'type_ar' => 'required|min:1',
-            'type_en' => 'required|min:1',
-            'model_type' => 'required|min:1',
-            'model_id' => 'required',
         ];
     }
 
@@ -62,7 +58,7 @@ class CouponRequest extends FormRequest
             'is_percentage' => 'required|boolean',
             'max_usage_per_order' => '',
             'max_usage_per_user' => '',
-            'discount' => 'required|min:1',
+            'value' => 'required|min:1',
             'min_total' => 'required|min:1',
             'type_ar' => 'required|min:1',
             'type_en' => 'required|min:1',

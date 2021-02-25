@@ -13,16 +13,15 @@ class Offer extends Model
         'name_en',
         'is_percentage',
         'discount',
-        'model_type',
-        'model_id',
+        'category_id',
         'expire_at',
         'image',
     ];
 
 
-    protected $dates = [
-        'expire_at'
-    ];
+//    protected $dates = [
+//        'expire_at'
+//    ];
 
     protected $appends = [
         'name'
@@ -49,12 +48,8 @@ class Offer extends Model
 
     public function category()
     {
-        if ($this->model_type == 'Category') {
-            return $this->belongsTo(Category::class, 'model_id');
-        } else {
-            return $this->belongsTo(Tag::class, 'model_id');
+        return $this->belongsTo(Category::class, 'category_id');
 
-        }
     }
 
 

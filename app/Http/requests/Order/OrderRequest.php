@@ -27,126 +27,78 @@ class OrderRequest extends FormRequest
         $k = count($this->segments());
         $endPoint = $this->segment($k);
         switch ($endPoint) {
+            case 'status':
+                return $this->updateStatusRules();
             case 'grand-total':
-                return $this->grandTotalValidation();
+                return $this->grandTotal();
             case 'checkout':
-                return $this->checkoutValidation();
+                return $this->checkout();
             case 'order-details':
-                return $this->orderIdValidation();
-            case 'user-orders':
-                return $this->userIdValidation();
-            case 'assign-technician':
-                return $this->assignTechnicianValidation();
-            case 'update-status':
-                return $this->updateStatusValidation();
-            case 'update-payment':
-                return $this->updatePaymentValidation();
-            case 'recalculate':
-            case 'update':
-                return $this->recalculateValidation();
-            case 'confirm-slots':
-                return $this->confirmSlotsValidation();
-            case 'filter':
-                return $this->filter();
+                return $this->orderDetails();
+            case 'search':
+                return $this->search();
+            case 'delete':
+                return $this->orderIdRules();
             default:
                 return [];
         }
     }
 
-    private function grandTotalValidation()
+    private function orderIdRules()
     {
         return [
-            'day' => 'required|date_format:Y-m-d|date|after_or_equal:today',
-            'address_id' => 'required|exists:addresses,id',
-            'code' => 'exists:coupons,code',
-            'slot_id' => 'required|exists:slots,id',
+            'order_id' => 'required|exists:orders,id'
         ];
     }
 
-    private function checkoutValidation()
+    private function updateStatusRules()
     {
         return [
-            'day' => 'required|date_format:Y-m-d|date|after_or_equal:today',
-            'address_id' => 'required|exists:addresses,id',
-            'code' => 'exists:coupons,code',
-            'car_id' => 'required|exists:cars,id',
-            'slot_id' => 'required|exists:slots,id',
-            'payment_type_id' => 'required|exists:payment_types,id',
-            'note' => 'min:2|max:400',
-        ];
-    }
-
-    private function orderIdValidation()
-    {
-        return [
+            'status' => 'required|in:1,2,3,4,5',
             'id' => 'required|exists:orders,id',
         ];
     }
-
-    private function assignTechnicianValidation()
+    private function grandTotal()
     {
         return [
-//            'technician_id' => 'exists:users,id',
+            'payment_type_id' => 'exists:payment_methods,code',
+            'code' => 'exists:coupons,code',
+            'address_id' => 'required|exists:addresses,id',
+        ];
+    }
+
+    private function checkout()
+    {
+        return [
+//            'token' => 'required|exists:users,hash_token',
+            'address_id' => 'required|exists:addresses,id',
+            'code' => 'exists:coupons,code',
+            'payment_type_id' => 'required|exists:payment_types,id',
+//            'Amount' => 'required',
+//            'Currency' => 'required',
+//            'MerchantReference' => 'required',
+//            'NetworkReference' => 'required',
+//            'PaidThrough' => 'required',
+//            'PayerAccount' => 'required',
+//            'PayerName' => 'required',
+//            'SecureHash' => 'required',
+//            'SystemReference' => 'required',
+//            'TxnDate' => 'required',
+        ];
+    }
+
+    private function orderDetails()
+    {
+        return [
             'order_id' => 'required|exists:orders,id',
         ];
     }
 
-
-    private function updateStatusValidation()
+    private function search()
     {
         return [
-            'status' => 'required|between:1,13',
-            'id' => 'required|exists:orders,id',
-        ];
-    }
-
-    private function updatePaymentValidation()
-    {
-
-        return [
-            'payment_type_id' => 'required|exists:payment_types,id',
-            'id' => 'required|exists:orders,id',
-        ];
-    }
-
-    private function recalculateValidation()
-    {
-        return [
-            'note' => 'min:2|max:400',
-            'day' => 'date_format:Y-m-d|date|after_or_equal:today',
-            'id' => 'required|exists:orders,id',
-            'car_id' => 'exists:cars,id',
-            'slot_id' => 'exists:slots,id',
-            'items' => 'required|array',
-            'items.*' => 'required|exists:model_service,id',
-            'address_id' => 'exists:addresses,id',
-        ];
-    }
-
-
-    private function confirmSlotsValidation()
-    {
-        return [
-            'order_id' => 'required|exists:orders,id',
-            'slot_id' => 'required|exists:slots,id',
-        ];
-    }
-
-    private function filter()
-    {
-        return [
-            'from' => 'date_format:Y-m-d|date',
-            'to' => 'date_format:Y-m-d|date',
-            'slot_id' => 'exists:slots,id',
-            'status' => 'between:1,13',
-            'waiting_orders' => 'boolean',
-        ];
-    }
-
-    private function userIdValidation()
-    {
-        return [
-            'user_id' => 'required|integer|exists:users,id',
+            'status' => 'in:1,2,3,4,5',
+            'key' => 'min:1',
         ];
     }
 

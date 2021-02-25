@@ -2,6 +2,7 @@
 
 namespace App\Models\Order;
 
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
@@ -9,25 +10,40 @@ class Coupon extends Model
     protected $fillable = [
         'code',
         'is_percentage',
-        'discount',
+        'value',
         'max_usage_per_order',
         'max_usage_per_user',
         'min_total',
-        'model_type',
-        'model_id',
-        'type_ar',
-        'type_en',
+        'all_users',
+        'users',
     ];
 
 
-    protected $appends = [
-        'type'
-    ];
-
-
-    public function getTypeAttribute()
+    public function getUsersAttribute($value)
     {
-        return $this['type_' . app()->getLocale()];
+        return json_decode($value);
+    }
+
+    public function setUsersAttribute($value)
+    {
+        $this->attributes['users'] = json_encode($value);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'coupon_user')
+            ->withPivot('used');
+    }
+
+    public function getUsers()
+    {
+        return $this->belongsToMany(User::class, 'coupon_user')
+            ->withPivot('used');
     }
 
 

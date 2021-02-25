@@ -21,6 +21,11 @@ Class ProductApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->setRelations([
+            'variants',
+            'tag',
+            'category'
+        ]);
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
@@ -35,11 +40,12 @@ Class ProductApiService extends AppRepository
     public function get($request)
     {
         $this->setRelations([
-           'variants'
+            'variants',
+            'tag',
+            'category'
         ]);
         return $this->find($request->id);
     }
-
 
 
 }

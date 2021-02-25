@@ -89,11 +89,9 @@ class ContactInfoApiService extends AppRepository
     public function get(Request $request)
     {
         $addresses = $this->contactAddressService->all();
-
-        return [
-            $this->find(1),
-            'addresses' => $addresses
-        ];
+        $result = $this->find(1);
+        $result['addresses'] = $addresses;
+        return $result;
     }
 
 

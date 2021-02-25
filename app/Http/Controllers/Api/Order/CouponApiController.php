@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Api\Order;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\CouponRequest;
 use App\Services\Dashboard\Order\CouponApiService;
 
 class CouponApiController extends Controller
@@ -26,16 +27,22 @@ class CouponApiController extends Controller
     }
 
 
-    public function read(\App\Http\Requests\Order\CouponRequest $request)
+    public function read(CouponRequest $request)
     {
         $process = $this->couponApiService->get($request);
         return $this->sendResponse($process);
     }
 
 
-    public function all(\App\Http\Requests\Order\CouponRequest $request)
+    public function all(CouponRequest $request)
     {
         $process = $this->couponApiService->index($request);
         return $this->sendResponse($process);
     }
+
+//    public function create(\App\Http\Requests\Order\CouponRequest $request)
+//    {
+//        $process = $this->couponApiService->createCoupon($request);
+//        return $this->sendResponse($process);
+//    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Order\Coupon;
 use App\Models\Order\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -115,6 +116,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
 
+    }
+
+    public function coupon()
+    {
+        return $this->belongsToMany(Coupon::class , 'coupon_user');
     }
 
 }

@@ -30,7 +30,7 @@ class CategoryRequest extends FormRequest
                 return $this->createValidation();
             case 'update':
                 return $this->updateValidation();
-            case 'delete':
+//            case 'delete':
             case 'get':
                 return $this->idValidation();
             case 'all':

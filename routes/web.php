@@ -17,31 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+Route::group([
+    'prefix' => 'admin',
+], function () {
+
+    Route::get('{any?}', function () {
+        return view('index');
+    })
+        ->where('any', '^(?!(api|xyz).*$).*');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group([
-    'namespace' => 'Dashboard',
-    'middleware' => 'dashboard',
-    'as' => 'dashboard.',
-], function () {
-
-
-    Route::group([
-        'prefix' => 'admin',
-        'as' => 'admin.',
-    ], function () {
-
-        Route::get('index', 'DashboardController@index')->name('dashboard.home');
-
-        Route::group([
-            'namespace' => 'Country',
-        ], function () {
-            Route::resource('countries', 'CountryController');
-        });
-
-
-    });
-});
-Route::get('/admin', 'HomeController@index')->name('home');

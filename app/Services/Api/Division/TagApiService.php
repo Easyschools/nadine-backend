@@ -36,6 +36,32 @@ Class TagApiService extends AppRepository
         return $this->find($request->id);
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createTag($request)
+    {
+        return $this->model->create($request->only([
+            'name_ar','name_en','image',
+            'category_id'
+        ]));
+    }
+
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editTag($request)
+    {
+        $tag = $this->find($request->id);
+        return $tag->update($request->only([
+            'name_ar','name_en','image',
+            'category_id'
+        ]));
+    }
+
 
 
 }

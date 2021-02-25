@@ -2,6 +2,7 @@
 
 namespace App\Models\Division;
 
+use App\Models\Order\Offer;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -16,6 +17,7 @@ class Category extends Model
     ];
 
 
+
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
@@ -27,4 +29,9 @@ class Category extends Model
         return $this->hasMany(Tag::class);
     }
 
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class,'category_id');
+    }
 }

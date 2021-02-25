@@ -1,6 +1,54 @@
 <?php
 
 
+
+Route::group([
+    'namespace' => 'Api',
+], function () {
+
+
+
+
+    Route::group([
+        'prefix' => 'admin',
+    'namespace' => 'Auth',
+    ], function () {
+        Route::post('/login', 'AdminApiController@login');
+        Route::post('/logout', 'AdminApiController@logout');
+    });
+    Route::group([
+        'prefix' => 'auth',
+    ], function () {
+        Route::post('register', 'AuthController@register');
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('change-password', 'AuthController@changePassword');
+        Route::post('forgot-password', 'AuthController@forgetPassword');
+        Route::post('reset-password', 'AuthController@resetPassword');
+    });
+    Route::group([
+        'prefix' => '/',
+    ], function () {
+        Route::get('/', 'UserController@index');
+        Route::get('/get', 'UserController@read');
+        Route::get('/get-by-slug', 'UserController@readBySlug');
+        Route::post('/update-slug', 'UserController@updateSlug');
+        Route::get('/hash-token', 'UserController@hashToken');
+        Route::post('/create', 'UserController@create');
+        Route::post('/update', 'UserController@update');
+        Route::post('/delete', 'UserController@delete');
+        Route::post('/add-socials', 'UserController@addSocials');
+        Route::post('/delete-social', 'UserController@deleteSocial');
+        Route::post('/upload-file', 'UserController@uploadFiles');
+        Route::post('/delete-file', 'UserController@deleteFile');
+        Route::post('/add-address', 'UserController@addAddress');
+        Route::post('/delete-address', 'UserController@deleteAddress');
+        Route::post('/update-address', 'UserController@updateAddress');
+        Route::get('/get-addresses', 'UserController@getUserAddresses');
+    });
+});
+
+
 Route::group([
     'namespace' => 'Api',
 ], function () {
@@ -36,6 +84,9 @@ Route::group([
     ], function () {
         Route::get('all', 'CategoryApiController@all');
         Route::get('get', 'CategoryApiController@read');
+        Route::delete('delete', 'CategoryApiController@delete');
+        Route::post('create', 'CategoryApiController@create');
+        Route::post('edit', 'CategoryApiController@edit');
     });
 
 
@@ -45,6 +96,8 @@ Route::group([
     ], function () {
         Route::get('all', 'TagApiController@all');
         Route::get('get', 'TagApiController@read');
+        Route::post('create', 'TagApiController@create');
+        Route::post('edit', 'TagApiController@edit');
     });
 
 
@@ -221,6 +274,23 @@ Route::group([
         Route::get('all', 'CartApiController@index');
     });
 
+
+    Route::group([
+        'prefix' => 'order',
+        'namespace' => 'Order'
+    ], function () {
+        Route::post('/status', 'OrderApiController@updateStatus');
+        Route::get('/calculate', 'OrderApiController@calculate');
+        Route::get('/grand-total', 'OrderApiController@grandTotal');
+        Route::post('/checkout', 'OrderApiController@checkout');
+
+
+        Route::get('/get-orders', 'OrderInfoApiController@getUserOrders');
+        Route::get('/order-details', 'OrderInfoApiController@orderDetails');
+        Route::get('/', 'OrderInfoApiController@allOrders');
+        Route::get('/search', 'OrderInfoApiController@search');
+        Route::post('/delete', 'OrderApiController@delete');
+    });
 
 });
 
