@@ -141,6 +141,8 @@ Route::group([
     ], function () {
         Route::get('all', 'ProductApiController@all');
         Route::get('get', 'ProductApiController@read');
+        Route::post('create', 'ProductApiController@create');
+        Route::post('edit', 'ProductApiController@edit');
     });
 
 

@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Feature;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Feature\CollectionRequest;
-use App\Services\Dashboard\Feature\CollectionApiService;
+use App\Services\Api\Feature\CollectionApiService;
 
 class CollectionApiController extends Controller
 {

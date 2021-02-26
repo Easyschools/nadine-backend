@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Product;
+namespace App\Models\Product;
 
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
@@ -23,7 +23,6 @@ class Product extends Model
         'collection_id',
         'category_id',
         'tag_id',
-        'dimension_id',
         'material_id',
         'tag_id',
     ];
@@ -79,7 +78,7 @@ class Product extends Model
 
     public function getCurrencyAttribute()
     {
-        return Country::first()->currency;
+        return Country::first() ? Country::first()->currency : 'pound';
     }
 
 }

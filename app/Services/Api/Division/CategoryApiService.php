@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Division;
+namespace App\Services\Api\Division;
 
 use App\Models\Division\Category;
 use App\Repositories\AppRepository;

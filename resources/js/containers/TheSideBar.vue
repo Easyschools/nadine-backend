@@ -39,7 +39,15 @@
                         </router-link>
                     </li>
                     <li class="nav-item pcoded-menu-caption">
-                        <label>المحتوى</label>
+                        <label>Products</label>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/product">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-book-open"></i>
+                            </span>
+                            <span class="pcoded-mtext">Products</span>
+                        </router-link>
                     </li>
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/lesson">

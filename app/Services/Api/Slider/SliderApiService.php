@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Slider;
+namespace App\Services\Api\Slider;
 
 use App\Models\Slider\Slider;
 use App\Repositories\AppRepository;

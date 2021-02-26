@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Region;
+namespace App\Services\Api\Region;
 
 use App\Models\Region\City;
 use App\Repositories\AppRepository;

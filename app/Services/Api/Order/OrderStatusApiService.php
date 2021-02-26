@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Order;
+namespace App\Services\Api\Order;
 
 
 use App\Models\Order\Offer;

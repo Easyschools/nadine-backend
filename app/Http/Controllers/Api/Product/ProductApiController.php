@@ -11,7 +11,8 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
-use App\Services\Dashboard\Product\ProductApiService;
+use App\Services\Api\Product\ProductApiService;
+use Illuminate\Http\Request;
 
 class ProductApiController extends Controller
 {
@@ -37,6 +38,20 @@ class ProductApiController extends Controller
     public function all(ProductRequest $request)
     {
         $process = $this->productApiService->index($request);
+        return $this->sendResponse($process);
+    }
+
+    public function create(Request $request)
+    {
+//        dd($request->all());
+        $process = $this->productApiService->createProduct($request);
+        return $this->sendResponse($process);
+    }
+
+    public function edit(Request $request)
+    {
+//        dd($request->all());
+        $process = $this->productApiService->updateProduct($request);
         return $this->sendResponse($process);
     }
 }

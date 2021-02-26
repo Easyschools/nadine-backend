@@ -8,9 +8,12 @@ import TypeList from './../views/type/List';
 import TypeEdit from './../views/type/Edit';
 import Home from './../views/Home';
 import Login from './../views/Login';
-import syntaxList from './../views/tag/List';
-import syntaxCreate from './../views/tag/Create';
-import syntaxEdit from './../views/tag/Edit';
+import tagList from './../views/tag/List';
+import tagCreate from './../views/tag/Create';
+import tagEdit from './../views/tag/Edit';
+import productList from '../views/product/List';
+import productCreate from '../views/product/Create';
+import productEdit from '../views/product/Edit';
 import definitionList from './../views/definition/List';
 import definitionCreate from './../views/definition/Create';
 import definitionEdit from './../views/definition/Edit';
@@ -36,7 +39,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        AuthMiddleware(to,from,next);
+        AuthMiddleware(to, from, next);
     }
     next() // make sure to always call next()!
 });
@@ -93,15 +96,35 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: syntaxList,
+                    component: tagList,
                 },
                 {
                     path: 'create',
-                    component: syntaxCreate,
+                    component: tagCreate,
                 },
                 {
                     path: 'edit/:id',
-                    component: syntaxEdit,
+                    component: tagEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/product",
+            component: View,
+            redirect: "/admin/product/list",
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: productList,
+                },
+                {
+                    path: 'create',
+                    component: productCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: productEdit,
                 }
             ]
         },
@@ -124,7 +147,7 @@ function configRoutes() {
                     component: definitionEdit,
                 }
             ]
-        }, ,
+        },
         {
             path: "/admin/preposition",
             component: View,

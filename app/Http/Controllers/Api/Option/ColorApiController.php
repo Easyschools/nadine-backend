@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Option;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Option\ColorRequest;
-use App\Services\Dashboard\Option\ColorApiService;
+use App\Services\Api\Option\ColorApiService;
 
 class ColorApiController extends Controller
 {

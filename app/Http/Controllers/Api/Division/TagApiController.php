@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Division;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Division\TagRequest;
-use App\Services\Dashboard\Division\TagApiService;
+use App\Services\Api\Division\TagApiService;
 
 class TagApiController extends Controller
 {

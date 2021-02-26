@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Option;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Option\DimensionRequest;
-use App\Services\Dashboard\Option\DimensionApiService;
+use App\Services\Api\Option\DimensionApiService;
 
 class DimensionApiController extends Controller
 {

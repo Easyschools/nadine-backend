@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Slider;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slider\SliderRequest;
-use App\Services\Dashboard\Slider\SliderApiService;
+use App\Services\Api\Slider\SliderApiService;
 
 class SliderApiController extends Controller
 {

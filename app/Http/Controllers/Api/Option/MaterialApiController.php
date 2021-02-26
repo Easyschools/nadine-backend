@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Option;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Option\ColorRequest;
-use App\Services\Dashboard\Option\MaterialApiService;
+use App\Services\Api\Option\MaterialApiService;
 
 class MaterialApiController extends Controller
 {

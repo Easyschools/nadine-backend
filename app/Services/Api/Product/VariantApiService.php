@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Dashboard\Product;
+namespace App\Services\Api\Product;
 
 use App\Models\Option\Color;
-use App\Product\Product;
-use App\Product\Variant;
+use App\Models\Product\Product;
+use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 
 

@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Region;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Region\DistrictRequest;
-use App\Services\Dashboard\Region\DistrictApiService;
+use App\Services\Api\Region\DistrictApiService;
 
 class DistrictApiController extends Controller
 {

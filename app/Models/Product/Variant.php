@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Product;
+namespace App\Models\Product;
 
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;

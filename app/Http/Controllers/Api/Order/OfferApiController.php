@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OfferRequest;
-use App\Services\Dashboard\Order\OfferApiService;
+use App\Services\Api\Order\OfferApiService;
 
 class OfferApiController extends Controller
 {

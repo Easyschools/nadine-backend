@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Option;
+namespace App\Services\Api\Option;
 
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;

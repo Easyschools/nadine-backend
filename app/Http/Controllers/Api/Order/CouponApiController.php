@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CouponRequest;
-use App\Services\Dashboard\Order\CouponApiService;
+use App\Services\Api\Order\CouponApiService;
 
 class CouponApiController extends Controller
 {

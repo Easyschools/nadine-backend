@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Feature;
+namespace App\Services\Api\Feature;
 
 
 use App\Models\Feature\Collection;

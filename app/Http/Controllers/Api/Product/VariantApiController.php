@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\VariantRequest;
-use App\Services\Dashboard\Product\VariantApiService;
+use App\Services\Api\Product\VariantApiService;
 
 class VariantApiController extends Controller
 {

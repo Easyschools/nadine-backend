@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Dashboard\Option;
+namespace App\Services\Api\Option;
 
 use App\Models\Option\Material;
 use App\Repositories\AppRepository;
