@@ -206,8 +206,10 @@
 
                                                 <div class="row form-group">
 
-                                                    <img v-if="variant.image" src="" :ref="'imageDisplay_'+index"
-                                                         class="mr-auto imageDisplay"/>
+                                                    <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
+                                                        <img  :src="variant.image" :ref="'imageDisplay_'+ index"
+                                                              class="mr-auto imageDisplay"/>
+                                                    </div>
 
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
@@ -494,7 +496,7 @@ export default {
 
             let reader = new FileReader();
             reader.addEventListener('load', function () {
-                this.$refs['imageDisplay_' + index].src = reader.result;
+                this.$refs['imageDisplay_' + index][0].src = reader.result;
             }.bind(this), false);
 
             reader.readAsDataURL(this.item.variants[index].image);

@@ -145,25 +145,6 @@
 
                         </div>
 
-                        <!--                        <div class="row form-group " v-if="item.image">-->
-                        <!--                            <img src="" ref="imageDisplay +'-'+ index" class="mr-auto imageDisplay"/>-->
-                        <!--                        </div>-->
-
-                        <!--                        <div class="row form-group">-->
-
-                        <!--                            <div class="col-sm-3">-->
-                        <!--                                <label class="col-form-label ">Image</label>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="col-sm-9">-->
-                        <!--                                <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">-->
-                        <!--                            </div>-->
-
-                        <!--                        </div>-->
-
-                        <!--                        <div class="text-center mt-5">-->
-                        <!--                            <router-link to="/admin/product" class="btn btn-secondary">ألغاء</router-link>-->
-                        <!--                            <button type="button" @click="createItem()" class="btn btn-primary">اضافه</button>-->
-                        <!--                        </div>-->
                     </form>
                 </div>
             </div>
@@ -221,8 +202,10 @@
 
                                                 <div class="row form-group">
 
-                                                    <img v-if="variant.image" src="" :ref="'imageDisplay_'+ index"
-                                                         class="mr-auto imageDisplay"/>
+                                                    <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
+                                                        <img  src="" :ref="'imageDisplay_'+ index"
+                                                             class="mr-auto imageDisplay"/>
+                                                    </div>
 
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
@@ -439,12 +422,6 @@ export default {
         },
         createItem() {
 
-            // let formData = new FormData();
-            // for (const property in this.item) {
-            //     if (this.item[property] != null) {
-            //         formData.append(property, this.item[property])
-            //     }
-            // }
             this.disableButton = true;
             let data = this.getFormData();
             axios.post('/product/create', data)
@@ -481,12 +458,13 @@ export default {
 
             let reader = new FileReader();
 
+            reader.readAsDataURL(this.item.variants[index].image);
+
             reader.addEventListener('load', function () {
-                this.$refs['imageDisplay_' + index].src = reader.result;
-                console.log(this.$refs['imageDisplay_' + index].src);
+                this.$refs['imageDisplay_' + index][0].src = reader.result;
+                console.log(reader);
             }.bind(this), false);
 
-            reader.readAsDataURL(this.item.variants[index].image);
         },
         getFormData() {
             let formData = new FormData();
