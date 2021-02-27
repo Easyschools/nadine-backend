@@ -95,4 +95,34 @@ trait HelperFunctions
 
     }
 
+    static function CurdOperation($request, $parent, $model, $childName, $parentName, $oldIDs)
+    {
+
+        $arr = [];
+
+        foreach ($request[$childName] as $child) {
+
+            if ($child['id']) {
+
+                $childModel = $model->findOrFail($child['id']);
+                $childModel->update($child);
+
+                $arr[] = $child['id'];
+
+            } else {
+                $model->create(array_merge($child, [
+                    $parentName . '_id' => $parent->id
+                ]));
+            }
+        }
+
+        //delete variants
+        $deletedIds = array_diff($oldIDs, $arr);
+        $model->whereIn('id', $deletedIds)->delete();
+
+        return $parent;
+
+
+    }
+
 }

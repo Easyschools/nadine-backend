@@ -10,6 +10,7 @@ import MaterialList from './../views/material/List';
 import MaterialEdit from './../views/material/Edit';
 import CollectionList from './../views/collection/List';
 import CollectionEdit from './../views/collection/Edit';
+
 import DimensionList from './../views/dimension/List';
 import DimensionEdit from './../views/dimension/Edit';
 import ColorList from './../views/color/List';
@@ -19,6 +20,9 @@ import Login from './../views/Login';
 import tagList from './../views/tag/List';
 import tagCreate from './../views/tag/Create';
 import tagEdit from './../views/tag/Edit';
+import CityList from './../views/city/List';
+import CityCreate from './../views/city/Create';
+import CityEdit from './../views/city/Edit';
 import productList from '../views/product/List';
 import productCreate from '../views/product/Create';
 import productEdit from '../views/product/Edit';
@@ -77,6 +81,22 @@ function configRoutes() {
                 {
                     path: '/',
                     component: Messages,
+                }
+            ]
+        },
+        {
+            path: "/admin/city",
+            component: View,
+            redirect: 'admin/city/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: CityList,
+                },
+                {
+                    path: 'edit/:id',
+                    component: CityEdit,
                 }
             ]
         },
@@ -177,6 +197,26 @@ function configRoutes() {
                 {
                     path: 'edit/:id',
                     component: tagEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/city",
+            component: View,
+            redirect: 'admin/city/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: CityList,
+                },
+                {
+                    path: 'create',
+                    component: CityCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: CityEdit,
                 }
             ]
         },

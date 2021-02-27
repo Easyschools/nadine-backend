@@ -138,6 +138,9 @@ Route::group([
     ], function () {
         Route::get('all', 'CityApiController@all');
         Route::get('get', 'CityApiController@read');
+        Route::post('create', 'CityApiController@create');
+        Route::post('edit', 'CityApiController@edit');
+        Route::delete('delete', 'CityApiController@delete');
     });
 
     Route::group([

@@ -91,7 +91,7 @@
                                 <label class="col-form-label">Category</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" v-model="item.category_id">
+                                <select class="form-control" v-on:change="selectCategory" v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
@@ -203,7 +203,7 @@
                                                 <div class="row form-group">
 
                                                     <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
-                                                        <img  src="" :ref="'imageDisplay_'+ index"
+                                                        <img src="" :ref="'imageDisplay_'+ index"
                                                              class="mr-auto imageDisplay"/>
                                                     </div>
 
@@ -249,8 +249,7 @@
                                             <div class="col-md-9 mt-3">
                                                 <select class="form-control" v-model="variant.dimension_id">
                                                     <option v-for="dimension in dimensions" :value="dimension.id">
-                                                        {{ dimension.name_ar }} -
-                                                        {{ dimension.name_en }}
+                                                        {{ dimension.dimension }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -399,8 +398,8 @@ export default {
                 })
                 .catch(err => console.log(err))
         },
-        getTag() {
-            axios.get('tag/all')
+        getTag(value = null) {
+            axios.get('tag/all?category_id=' + (value ? value : 0))
                 .then(response => {
                     this.tags = response.data.data
                 })
@@ -442,6 +441,10 @@ export default {
                 dimension_id: null,
 
             })
+        },
+        selectCategory: function (e) {
+            this.getTag(e.target.value);
+            // console.log(e.target.value);
         },
         // attachImage() {
         //     this.item.image = this.$refs.myImage.files[0];

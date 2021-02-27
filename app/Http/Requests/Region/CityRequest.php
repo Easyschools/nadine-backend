@@ -44,27 +44,23 @@ class CityRequest extends FormRequest
     {
         return [
             'name_en' => 'required|min:2',
-//            'is_default' => 'required|in:0,1',
             'name_ar' => 'required|min:2',
-            'country_id' => 'required|exists:countries,id',
         ];
     }
 
     private function updateValidation()
     {
         return [
-            'id' => 'required|exists:categories,id',
+            'id' => 'required|exists:cities,id',
             'name_en' => 'required|min:2',
-            'is_default' => 'in:0,1',
             'name_ar' => 'required|min:2',
-            'country_id' => 'required|exists:countries,id',
         ];
     }
 
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:categories,id'
+            'id' => 'required|exists:cities,id'
         ];
     }
 

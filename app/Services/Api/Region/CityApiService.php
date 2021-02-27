@@ -3,10 +3,12 @@
 namespace App\Services\Api\Region;
 
 use App\Models\Region\City;
+use App\Models\Region\District;
 use App\Repositories\AppRepository;
+use App\Traits\HelperFunctions;
 
 
-Class CityApiService extends AppRepository
+class CityApiService extends AppRepository
 {
 
     public function __construct(City $city)
@@ -20,7 +22,7 @@ Class CityApiService extends AppRepository
      */
     public function index($request)
     {
-        $this->setRelations(['country','districts']);
+        $this->setRelations([ 'districts']);
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
@@ -34,10 +36,74 @@ Class CityApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations([ 'districts']);
 
         return $this->find($request->id);
     }
 
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createCity($request)
+    {
+        $city = City::create($request->only([
+            'name_ar',
+            'name_en',
+        ]));
+
+        foreach ($request->districts as $district) {
+            District::create(array_merge($district, [
+                'city_id' => $city->id
+            ]));
+        }
+
+        return $city;
+    }
+
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editCity($request)
+    {
+        $city = $this->find($request->id);
+
+        $city->update($request->only([
+            'name_ar',
+            'name_en',
+        ]));
+
+        $oldVariantsIds = $city->districts()->pluck('id')->toArray();
+
+        HelperFunctions::CurdOperation($request, $city, new District, 'districts', 'city', $oldVariantsIds);
+
+//        $arr = [];
+////        dd($request->variants);
+//        foreach ($request->variants as $variant) {
+//
+//            if ($variant['id']) {
+//
+//                $variantModel = $this->variantRepo->find($variant['id']);
+//                $variantModel->update($variant);
+//
+//                $arr[] = $variant['id'];
+//
+//            } else {
+//                Variant::create(array_merge($variant, [
+//                    'city_id' => $city->id
+//                ]));
+//            }
+//        }
+//
+//        //delete variants
+//        $deletedIds = array_diff($oldVariantsIds, $arr);
+//        $this->variantRepo->model->whereIn('id', $deletedIds)->delete();
+//
+//        return $city;
+    }
 
 
 }

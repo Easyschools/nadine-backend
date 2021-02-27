@@ -9,8 +9,6 @@ class City extends Model
     protected $fillable =[
       'name_ar',
       'name_en',
-      'country_id',
-      'is_default',
     ];
 
 
@@ -24,10 +22,6 @@ class City extends Model
         return $this['name_' . app()->getLocale()];
     }
 
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
 
     public function districts()
     {

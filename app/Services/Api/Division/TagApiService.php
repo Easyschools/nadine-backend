@@ -7,7 +7,7 @@ use App\Models\Division\Tag;
 use App\Repositories\AppRepository;
 
 
-Class TagApiService extends AppRepository
+class TagApiService extends AppRepository
 {
 
     public function __construct(Tag $tag)
@@ -21,6 +21,8 @@ Class TagApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->filter($request);
+
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
@@ -43,7 +45,7 @@ Class TagApiService extends AppRepository
     public function createTag($request)
     {
         return $this->model->create($request->only([
-            'name_ar','name_en','image',
+            'name_ar', 'name_en', 'image',
             'category_id'
         ]));
     }
@@ -57,11 +59,21 @@ Class TagApiService extends AppRepository
     {
         $tag = $this->find($request->id);
         return $tag->update($request->only([
-            'name_ar','name_en','image',
+            'name_ar', 'name_en', 'image',
             'category_id'
         ]));
     }
 
 
+    public function filter($request)
+    {
+        $conditions = [];
+
+        if ($request->category_id) {
+            $conditions[] = ['category_id', $request->category_id];
+        }
+
+        $this->setConditions($conditions);
+    }
 
 }

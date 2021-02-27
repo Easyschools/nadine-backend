@@ -147,7 +147,7 @@ export default {
             }).then(willDelete => {
                 if (willDelete) {
                     axios
-                        .delete("product/delete/" + id)
+                        .delete("product/delete?id=" + id)
                         .then(res => {
                             this.items.splice(index, 1);
                             swal("تم الحذف بنجاح", {

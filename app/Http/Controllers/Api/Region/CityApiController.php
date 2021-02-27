@@ -39,4 +39,23 @@ class CityApiController extends Controller
         $process = $this->cityService->index($request);
         return $this->sendResponse($process);
     }
+
+
+    public function delete(CityRequest $request)
+    {
+        $process = $this->cityService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+
+    public function create(CityRequest $request)
+    {
+        $process = $this->cityService->createCity($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(CityRequest $request)
+    {
+        $process = $this->cityService->editCity($request);
+        return $this->sendResponse($process);
+    }
+
 }
