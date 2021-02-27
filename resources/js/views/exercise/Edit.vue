@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل التدريب</h5>
+                    <h5>Edit التدريب</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -145,7 +145,7 @@
                         </div>
                         <div class="text-center mt-5">
                             <router-link to="/admin/exercise" class="btn btn-secondary">ألغاء</router-link>
-                            <button type="button" :disabled="disableButton" @click="editItem()" class="btn btn-primary">تعديل</button>
+                            <button type="button" :disabled="disableButton" @click="editItem()" class="btn btn-primary">Edit</button>
                         </div>
                     </form>
                 </div>

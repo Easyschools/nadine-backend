@@ -39,4 +39,23 @@ class DimensionApiController extends Controller
         $process = $this->dimensionApiService->index($request);
         return $this->sendResponse($process);
     }
+
+
+
+    public function create(DimensionRequest $request)
+    {
+        $process = $this->dimensionApiService->createDimension($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(DimensionRequest $request)
+    {
+        $process = $this->dimensionApiService->editDimension($request);
+        return $this->sendResponse($process);
+    }
+    public function delete(DimensionRequest $request)
+    {
+        $process = $this->dimensionApiService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+
 }

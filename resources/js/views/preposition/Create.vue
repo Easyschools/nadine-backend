@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/preposition" class="btn btn-secondary">الغاء</router-link>
+                            <router-link to="/admin/preposition" class="btn btn-secondary">Cancel</router-link>
                             <button type="button" @click="createItem()" class="btn btn-primary">اضافه</button>
                         </div>
                     </form>

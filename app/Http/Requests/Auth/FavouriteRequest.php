@@ -5,7 +5,7 @@ namespace App\Http\Requests\Auth;
 use App\Models\Order\Operator;
 use App\Models\Order\Order;
 use App\Models\User\User;
-use App\Product\Product;
+use App\Models\Product\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 

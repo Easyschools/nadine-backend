@@ -2,7 +2,7 @@
 
 namespace App\Models\Review;
 
-use App\Product\Product;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model

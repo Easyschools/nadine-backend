@@ -98,6 +98,8 @@ Route::group([
         Route::get('get', 'TagApiController@read');
         Route::post('create', 'TagApiController@create');
         Route::post('edit', 'TagApiController@edit');
+        Route::delete('delete', 'TagApiController@delete');
+
     });
 
 
@@ -107,6 +109,9 @@ Route::group([
     ], function () {
         Route::get('all', 'ColorApiController@all');
         Route::get('get', 'ColorApiController@read');
+        Route::delete('delete', 'ColorApiController@delete');
+        Route::post('create', 'ColorApiController@create');
+        Route::post('edit', 'ColorApiController@edit');
     });
 
 
@@ -152,6 +157,9 @@ Route::group([
     ], function () {
         Route::get('all', 'CollectionApiController@all');
         Route::get('get', 'CollectionApiController@read');
+        Route::delete('delete', 'CollectionApiController@delete');
+        Route::post('create', 'CollectionApiController@create');
+        Route::post('edit', 'CollectionApiController@edit');
     });
 
 
@@ -161,6 +169,9 @@ Route::group([
     ], function () {
         Route::get('all', 'DimensionApiController@all');
         Route::get('get', 'DimensionApiController@read');
+        Route::delete('delete', 'DimensionApiController@delete');
+        Route::post('create', 'DimensionApiController@create');
+        Route::post('edit', 'DimensionApiController@edit');
     });
 
 
@@ -170,6 +181,9 @@ Route::group([
     ], function () {
         Route::get('all', 'MaterialApiController@all');
         Route::get('get', 'MaterialApiController@read');
+        Route::delete('delete', 'MaterialApiController@delete');
+        Route::post('create', 'MaterialApiController@create');
+        Route::post('edit', 'MaterialApiController@edit');
     });
 
     Route::group([

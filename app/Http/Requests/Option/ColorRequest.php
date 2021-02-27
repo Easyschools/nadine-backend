@@ -54,7 +54,7 @@ class ColorRequest extends FormRequest
         return [
             'id' => 'required|exists:colors,id',
             'name_en' => 'min:2',
-            'code' => 'min:2',
+            'code' => 'required|min:2',
             'name_ar' => 'min:2',
         ];
     }

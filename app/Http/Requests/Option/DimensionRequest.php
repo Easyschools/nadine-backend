@@ -43,9 +43,7 @@ class DimensionRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
-            'code' => 'required|min:2',
+            'dimension' => 'required|min:2',
         ];
     }
 
@@ -53,9 +51,7 @@ class DimensionRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:dimensions,id',
-            'name_en' => 'min:2',
-            'code' => 'min:2',
-            'name_ar' => 'min:2',
+            'dimension' => 'required|min:2',
         ];
     }
 

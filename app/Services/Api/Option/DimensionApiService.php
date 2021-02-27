@@ -37,5 +37,30 @@ Class DimensionApiService extends AppRepository
     }
 
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createDimension($request)
+    {
+        return $this->model->create($request->only([
+            'dimension',
+        ]));
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editDimension($request)
+    {
+        $material = $this->find($request->id);
+
+        return $material->update($request->only([
+            'dimension',
+        ]));
+    }
+
+
 
 }

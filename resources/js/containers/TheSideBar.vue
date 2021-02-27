@@ -7,7 +7,7 @@
                         <label>Types</label>
                     </li>
                     <li class="nav-item pcoded-hasmenu">
-                        <router-link to="/admin/type">
+                        <router-link to="/admin/category">
                             <span class="pcoded-micon">
                                 <i class="fas fa-list-ol"></i>
                             </span>
@@ -22,6 +22,7 @@
                             <span class="pcoded-mtext">Tags</span>
                         </router-link>
                     </li>
+
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/definition">
                             <span class="pcoded-micon">
@@ -38,6 +39,46 @@
                             <span class="pcoded-mtext">الادوات العامله</span>
                         </router-link>
                     </li>
+
+
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Features</label>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/material">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-edit-1"></i>
+                            </span>
+                            <span class="pcoded-mtext">Materials</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/collection">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-edit-1"></i>
+                            </span>
+                            <span class="pcoded-mtext">Collections</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/dimension">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-edit-1"></i>
+                            </span>
+                            <span class="pcoded-mtext">Dimensions</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/color">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-edit-1"></i>
+                            </span>
+                            <span class="pcoded-mtext">Colors</span>
+                        </router-link>
+                    </li>
+
+
                     <li class="nav-item pcoded-menu-caption">
                         <label>Products</label>
                     </li>

@@ -35,6 +35,31 @@ Class MaterialApiService extends AppRepository
         return $this->find($request->id);
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createMaterial($request)
+    {
+        return $this->model->create($request->only([
+            'name_en',
+            'name_ar',
+        ]));
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editMaterial($request)
+    {
+        $material = $this->find($request->id);
+        return $material->update($request->only([
+            'name_en',
+            'name_ar',
+        ]));
+    }
+
 
 
 }

@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5> تعديل بيانات المستخدم</h5>
+                    <h5> Edit بيانات المستخدم</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -66,8 +66,8 @@
                             </div>
 
                         <div class="text-center mt-5">
-                            <button type="button" @click="$router.go(-1)" class="btn btn-secondary">الغاء</button>
-                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
+                            <button type="button" @click="$router.go(-1)" class="btn btn-secondary">Cancel</button>
+                            <button type="button" @click="editItem()" class="btn btn-primary">Edit</button>
                         </div>
                     </form>
                 </div>

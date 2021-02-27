@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5>تعديل الدرس</h5>
+                <h5>Edit الدرس</h5>
             </div>
             <div class="card-body">
                 <form>
@@ -173,10 +173,10 @@
                                 </div>
                                 <div class="text-center">
                                     <router-link to="/admin/lesson" class="btn btn-secondary">
-                                        الغاء
+                                        Cancel
                                     </router-link>
                                     <button type="button" :disabled="disableButton" @click="editItem" class="btn btn-primary">
-                                        تعديل
+                                        Edit
                                     </button>
                                 </div>
                             </div>

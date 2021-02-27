@@ -45,7 +45,6 @@ class MaterialRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
-            'code' => 'required|min:2',
         ];
     }
 
@@ -54,7 +53,6 @@ class MaterialRequest extends FormRequest
         return [
             'id' => 'required|exists:materials,id',
             'name_en' => 'min:2',
-            'code' => 'min:2',
             'name_ar' => 'min:2',
         ];
     }

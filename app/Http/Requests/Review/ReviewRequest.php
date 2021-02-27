@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Review;
 
-use App\Product\Product;
+use App\Models\Product\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 

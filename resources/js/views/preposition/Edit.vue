@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل على درس الادوات العامله</h5>
+                    <h5>Edit على درس الادوات العامله</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -32,8 +32,8 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/preposition" class="btn btn-secondary">الغاء</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
+                            <router-link to="/admin/preposition" class="btn btn-secondary">Cancel</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">Edit</button>
                         </div>
                     </form>
                 </div>

@@ -35,7 +35,7 @@
                                 <router-link
                                     :to="{path:'/admin/user/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >Edit
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"

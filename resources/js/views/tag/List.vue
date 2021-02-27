@@ -112,7 +112,7 @@
                 }).then(willDelete => {
                     if (willDelete) {
                         axios
-                            .delete("tag/delete/" + id)
+                            .delete("tag/delete?id=" + id)
                             .then(res => {
                                 this.items.splice(index, 1);
                                 swal("تم الحذف بنجاح", {

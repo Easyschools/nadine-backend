@@ -4,8 +4,16 @@ import AuthMiddleware from '../router/middleware/auth';
 
 Vue.use(Router);
 
-import TypeList from './../views/type/List';
-import TypeEdit from './../views/type/Edit';
+import CategoryList from './../views/category/List';
+import CategoryEdit from './../views/category/Edit';
+import MaterialList from './../views/material/List';
+import MaterialEdit from './../views/material/Edit';
+import CollectionList from './../views/collection/List';
+import CollectionEdit from './../views/collection/Edit';
+import DimensionList from './../views/dimension/List';
+import DimensionEdit from './../views/dimension/Edit';
+import ColorList from './../views/color/List';
+import ColorEdit from './../views/color/Edit';
 import Home from './../views/Home';
 import Login from './../views/Login';
 import tagList from './../views/tag/List';
@@ -73,18 +81,82 @@ function configRoutes() {
             ]
         },
         {
-            path: "/admin/type",
+            path: "/admin/category",
             component: View,
-            redirect: 'admin/type/list',
+            redirect: 'admin/category/list',
             meta: {requiresAuth: true},
             children: [
                 {
                     path: 'list',
-                    component: TypeList,
+                    component: CategoryList,
                 },
                 {
                     path: 'edit/:id',
-                    component: TypeEdit,
+                    component: CategoryEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/material",
+            component: View,
+            redirect: 'admin/material/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: MaterialList,
+                },
+                {
+                    path: 'edit/:id',
+                    component: MaterialEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/collection",
+            component: View,
+            redirect: 'admin/collection/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: CollectionList,
+                },
+                {
+                    path: 'edit/:id',
+                    component: CollectionEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/color",
+            component: View,
+            redirect: 'admin/color/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: ColorList,
+                },
+                {
+                    path: 'edit/:id',
+                    component: ColorEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/dimension",
+            component: View,
+            redirect: 'admin/dimension/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: DimensionList,
+                },
+                {
+                    path: 'edit/:id',
+                    component: DimensionEdit,
                 }
             ]
         },

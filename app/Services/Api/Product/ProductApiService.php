@@ -109,6 +109,7 @@ class ProductApiService extends AppRepository
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr = [];
+//        dd($request->variants);
         foreach ($request->variants as $variant) {
 
             if ($variant['id']) {

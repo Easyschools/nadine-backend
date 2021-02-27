@@ -37,5 +37,35 @@ Class ColorApiService extends AppRepository
     }
 
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createColor($request)
+    {
+        $category = $this->model->create($request->only([
+            'name_ar', 'name_en',
+            'code'
+        ]));
+        return $category;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editColor($request)
+    {
+        $category = $this->find($request->id);
+        $result = $category->update($request->only([
+            'name_ar',
+            'name_en',
+            'code'
+
+        ]));
+        return $result;
+    }
+
+
 
 }

@@ -172,7 +172,7 @@
 
                                 <div class="text-center">
                                     <router-link to="/admin/lesson" class="btn btn-secondary">
-                                        الغاء
+                                        Cancel
                                     </router-link>
                                     <button type="button" @click="createItem" :disabled="disableButton" class="btn btn-primary">
                                         اضافه

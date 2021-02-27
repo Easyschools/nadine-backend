@@ -2,7 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Product\Product;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Favourite extends Model

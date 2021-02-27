@@ -50,4 +50,32 @@ Class CollectionApiService extends AppRepository
     }
 
 
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createCollection($request)
+    {
+        return $this->model->create($request->only([
+            'name_en',
+            'name_ar',
+        ]));
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editCollection($request)
+    {
+        $material = $this->find($request->id);
+
+        return $material->update($request->only([
+            'name_en',
+            'name_ar',
+        ]));
+    }
+
+
 }

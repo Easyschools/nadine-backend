@@ -39,4 +39,22 @@ class CollectionApiController extends Controller
         $process = $this->collectionApiService->index($request);
         return $this->sendResponse($process);
     }
+
+
+    public function create(CollectionRequest $request)
+    {
+        $process = $this->collectionApiService->createCollection($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(CollectionRequest $request)
+    {
+        $process = $this->collectionApiService->editCollection($request);
+        return $this->sendResponse($process);
+    }
+    public function delete(CollectionRequest $request)
+    {
+        $process = $this->collectionApiService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+
 }
