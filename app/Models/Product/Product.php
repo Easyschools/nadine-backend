@@ -6,7 +6,6 @@ use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
 use App\Models\Option\Material;
-use App\Models\Region\Country;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -78,7 +77,7 @@ class Product extends Model
 
     public function getCurrencyAttribute()
     {
-        return Country::first() ? Country::first()->currency : 'pound';
+        return 'pound';
     }
 
 }

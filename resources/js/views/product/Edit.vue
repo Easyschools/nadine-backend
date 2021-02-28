@@ -253,8 +253,7 @@
                                             <div class="col-md-9 mt-3">
                                                 <select class="form-control" v-model="variant.dimension_id">
                                                     <option v-for="dimension in dimensions" :value="dimension.id">
-                                                        {{ dimension.name_ar }} -
-                                                        {{ dimension.name_en }}
+                                                        {{ dimension.dimension }}
                                                     </option>
                                                 </select>
                                             </div>

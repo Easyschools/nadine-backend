@@ -26,6 +26,7 @@ Route::group([
         Route::post('forgot-password', 'AuthController@forgetPassword');
         Route::post('reset-password', 'AuthController@resetPassword');
     });
+
     Route::group([
         'prefix' => '/',
     ], function () {
@@ -121,6 +122,9 @@ Route::group([
     ], function () {
         Route::get('all', 'BrandApiController@all');
         Route::get('get', 'BrandApiController@read');
+        Route::post('create', 'BrandApiController@create');
+        Route::post('edit', 'BrandApiController@edit');
+        Route::delete('delete', 'BrandApiController@delete');
     });
 
 
@@ -130,6 +134,9 @@ Route::group([
     ], function () {
         Route::get('all', 'SliderApiController@all');
         Route::get('get', 'SliderApiController@read');
+        Route::post('create', 'SliderApiController@create');
+        Route::post('edit', 'SliderApiController@edit');
+        Route::delete('delete', 'SliderApiController@delete');
     });
 
     Route::group([

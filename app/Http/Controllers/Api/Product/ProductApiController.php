@@ -22,8 +22,8 @@ class ProductApiController extends Controller
     public function __construct(ProductApiService $productApiService)
     {
 //        $this->middleware('auth:api');
-//        $this->middleware('check.role:1,2 ')
-//            ->only(['index','read']);
+        $this->middleware(['auth:api','check.role:1,2 '])
+            ->only(['create','update']);
         $this->productApiService = $productApiService;
     }
 
@@ -38,19 +38,20 @@ class ProductApiController extends Controller
     public function all(ProductRequest $request)
     {
         $process = $this->productApiService->index($request);
-        return $this->sendResponse($process);
+        if ($request->sendResponse) {
+            return $this->sendResponse($process);
+        }
+        return $process;
     }
 
     public function create(Request $request)
     {
-//        dd($request->all());
         $process = $this->productApiService->createProduct($request);
         return $this->sendResponse($process);
     }
 
     public function edit(Request $request)
     {
-//        dd($request->all());
         $process = $this->productApiService->updateProduct($request);
         return $this->sendResponse($process);
     }

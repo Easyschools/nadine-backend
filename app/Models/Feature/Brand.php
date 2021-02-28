@@ -9,6 +9,7 @@ class Brand extends Model
     protected $fillable =[
       'name_ar',
       'name_en',
+      'image',
     ];
 
 
@@ -17,9 +18,24 @@ class Brand extends Model
     ];
 
 
+
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
     }
+
+
+    public function getImageAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
+
+    public function setImageAttribute($value)
+    {
+        if (is_file($value)) {
+            $this->attributes['image'] = 'uploads/' . $value->store('Brand');
+        }
+    }
+
 
 }

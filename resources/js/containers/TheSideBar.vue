@@ -17,6 +17,18 @@
                     </li>
 
                     <li class="nav-item pcoded-menu-caption">
+                        <label>Sliders</label>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/slider">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-list-ol"></i>
+                            </span>
+                            <span class="pcoded-mtext">Sliders</span>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item pcoded-menu-caption">
                         <label>Types</label>
                     </li>
                     <li class="nav-item pcoded-hasmenu">
@@ -88,6 +100,15 @@
                                 <i class="feather icon-edit-1"></i>
                             </span>
                             <span class="pcoded-mtext">Colors</span>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/brand">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-edit-1"></i>
+                            </span>
+                            <span class="pcoded-mtext">Brands</span>
                         </router-link>
                     </li>
 

@@ -43,8 +43,10 @@ class SliderRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name' => 'required|min:2',
-            'text' => 'required|min:2',
+            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2',
+            'text_ar' => 'required|min:2',
+            'text_en' => 'required|min:2',
             'image' => 'required|min:2',
         ];
     }
@@ -53,8 +55,10 @@ class SliderRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:sliders,id',
-            'name' => 'min:2',
-            'text' => 'min:2',
+            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2',
+            'text_ar' => 'required|min:2',
+            'text_en' => 'required|min:2',
             'image' => 'required|min:2',
         ];
     }

@@ -39,4 +39,22 @@ class BrandApiController extends Controller
         $process = $this->brandService->index($request);
         return $this->sendResponse($process);
     }
+
+
+
+    public function delete(BrandRequest $request)
+    {
+        $process = $this->brandService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+    public function create(BrandRequest $request)
+    {
+        $process = $this->brandService->createBrand($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(BrandRequest $request)
+    {
+        $process = $this->brandService->editBrand($request);
+        return $this->sendResponse($process);
+    }
 }

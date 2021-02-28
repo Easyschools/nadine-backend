@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>اضافه تعريف</h5>
+                    <h5>Add تعريف</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="text-center mt-5">
                             <router-link to="/admin/definition" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">اضافه</button>
+                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </form>
                 </div>

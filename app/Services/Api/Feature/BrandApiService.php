@@ -38,4 +38,37 @@ Class BrandApiService extends AppRepository
 
 
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createBrand($request)
+    {
+        $model = $this->model->create($request->only([
+            'name_ar',
+            'name_en',
+            'image'
+        ]));
+        return $model;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editBrand($request)
+    {
+        $model = $this->find($request->id);
+        $result = $model->update($request->only([
+            'name_ar',
+            'name_en',
+            'image'
+
+        ]));
+        return $result;
+    }
+
+
+
+
 }

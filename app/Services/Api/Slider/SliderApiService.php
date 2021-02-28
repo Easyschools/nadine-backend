@@ -37,4 +37,38 @@ Class SliderApiService extends AppRepository
 
 
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createSlider($request)
+    {
+        $model = $this->model->create($request->only([
+            'name_ar',
+            'name_en',
+            'text_ar',
+            'text_en',
+            'image'
+        ]));
+        return $model;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editSlider($request)
+    {
+        $model = $this->find($request->id);
+        $result = $model->update($request->only([
+            'name_ar',
+            'name_en',
+            'text_ar',
+            'text_en',
+            'image'
+
+        ]));
+        return $result;
+    }
+
 }

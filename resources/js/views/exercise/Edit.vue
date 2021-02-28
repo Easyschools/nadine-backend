@@ -144,7 +144,7 @@
 
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/exercise" class="btn btn-secondary">ألغاء</router-link>
+                            <router-link to="/admin/exercise" class="btn btn-secondary">Cancel</router-link>
                             <button type="button" :disabled="disableButton" @click="editItem()" class="btn btn-primary">Edit</button>
                         </div>
                     </form>

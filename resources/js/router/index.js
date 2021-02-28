@@ -17,6 +17,12 @@ import ColorList from './../views/color/List';
 import ColorEdit from './../views/color/Edit';
 import Home from './../views/Home';
 import Login from './../views/Login';
+import SliderList from './../views/slider/List';
+import SliderCreate from './../views/slider/Create';
+import SliderEdit from './../views/slider/Edit';
+import BrandList from './../views/brand/List';
+import BrandCreate from './../views/brand/Create';
+import BrandEdit from './../views/brand/Edit';
 import tagList from './../views/tag/List';
 import tagCreate from './../views/tag/Create';
 import tagEdit from './../views/tag/Edit';
@@ -197,6 +203,46 @@ function configRoutes() {
                 {
                     path: 'edit/:id',
                     component: tagEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/slider",
+            component: View,
+            redirect: 'admin/slider/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: SliderList,
+                },
+                {
+                    path: 'create',
+                    component: SliderCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: SliderEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/brand",
+            component: View,
+            redirect: 'admin/brand/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: BrandList,
+                },
+                {
+                    path: 'create',
+                    component: BrandCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: BrandEdit,
                 }
             ]
         },

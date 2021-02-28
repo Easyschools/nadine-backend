@@ -20,9 +20,8 @@ class VariantApiController extends Controller
 
     public function __construct(VariantApiService $variantApiService)
     {
-//        $this->middleware('auth:api');
-//        $this->middleware('check.role:1,2 ')
-//            ->only(['index','read']);
+        $this->middleware(['auth:api', 'check.role:1,2 '])
+            ->only(['create', 'update']);
         $this->variantApiService = $variantApiService;
     }
 

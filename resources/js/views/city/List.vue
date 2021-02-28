@@ -10,8 +10,28 @@
                 </router-link>
             </div>
             <div class="card-body table-border-style">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="report-table_length"><label>Show <select
+                            name="report-table_length" aria-controls="report-table"
+                            class="custom-select custom-select-sm form-control form-control-sm">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select> entries</label></div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="report-table_filter" class="dataTables_filter"><label>Search:
+                            <input type="search"
+                                     class="form-control form-control-sm"
+                                   placeholder=""
+                                   aria-controls="report-table"></label>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive text-center">
-                    <table class="table">
+                    <table id="report-table" class="table">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -59,67 +79,71 @@
     </div>
 </template>
 
+
 <script>
 
-export default {
-    name: "List",
-    data() {
-        return {
-            perPage: 3,
-            currentPage: 1,
-            rows: 15,
-            items: [],
-            show: false,
-            item: {
-                id: null,
-                name_ar: '',
-                name_en: '',
+    // $('#report-table').DataTable();
+
+
+    export default {
+        name: "List",
+        data() {
+            return {
+                perPage: 3,
+                currentPage: 1,
+                rows: 15,
+                items: [],
+                show: false,
+                item: {
+                    id: null,
+                    name_ar: '',
+                    name_en: '',
+                },
+                newItem: {
+                    name_ar: '',
+                    name_en: '',
+                }
+            }
+        },
+        created() {
+            this.show = true;
+            this.getAll();
+        },
+        methods: {
+            getAll() {
+                axios.get('/city/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
+                    this.items = response.data.data.data;
+                    this.currentPage = response.data.data.current_page
+                    this.perPage = response.data.data.per_page
+                    this.rows = response.data.data.total
+                })
+                    .catch(err => console.log(err));
             },
-            newItem: {
-                name_ar: '',
-                name_en: '',
+            deleteItem(id, index) {
+                swal({
+                    title: "Are you sure ?",
+                    text: "you will not be able to revert deleted items.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then(willDelete => {
+                    if (willDelete) {
+                        axios
+                            .delete("city/delete?id=" + id)
+                            .then(res => {
+                                this.items.splice(index, 1);
+                                swal("Deleted Successfully", {
+                                    icon: "success"
+                                });
+                            })
+                            .catch(error => console.log(error));
+                    } else {
+                        swal("Items are not deleted, please check again!");
+                    }
+                });
             }
         }
-    },
-    created() {
-        this.show = true;
-        this.getAll();
-    },
-    methods: {
-        getAll() {
-            axios.get('/city/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
-                this.items = response.data.data.data;
-                this.currentPage = response.data.data.current_page
-                this.perPage = response.data.data.per_page
-                this.rows = response.data.data.total
-            })
-                .catch(err => console.log(err));
-        },
-        deleteItem(id, index) {
-            swal({
-                title: "Are you sure ?",
-                text: "you will not be able to revert deleted items.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then(willDelete => {
-                if (willDelete) {
-                    axios
-                        .delete("city/delete?id=" + id)
-                        .then(res => {
-                            this.items.splice(index, 1);
-                            swal("Deleted Successfully", {
-                                icon: "success"
-                            });
-                        })
-                        .catch(error => console.log(error));
-                } else {
-                    swal("Items are not deleted, please check again!");
-                }
-            });
-        }
     }
-}
 </script>
 
 <style scoped>

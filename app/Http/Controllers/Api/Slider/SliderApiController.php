@@ -39,4 +39,20 @@ class SliderApiController extends Controller
         $process = $this->sliderApiService->index($request);
         return $this->sendResponse($process);
     }
+
+    public function delete(SliderRequest $request)
+    {
+        $process = $this->sliderApiService->delete($request->id);
+        return $this->sendResponse($process);
+    }
+    public function create(SliderRequest $request)
+    {
+        $process = $this->sliderApiService->createSlider($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(SliderRequest $request)
+    {
+        $process = $this->sliderApiService->editSlider($request);
+        return $this->sendResponse($process);
+    }
 }

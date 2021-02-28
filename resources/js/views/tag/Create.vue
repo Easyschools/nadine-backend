@@ -66,8 +66,8 @@
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/tag" class="btn btn-secondary">ألغاء</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">اضافه</button>
+                            <router-link to="/admin/tag" class="btn btn-secondary">Cancel</router-link>
+                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </form>
                 </div>

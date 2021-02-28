@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>اضافه درس للادوات العامله</h5>
+                    <h5>Add درس للادوات العامله</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="text-center mt-5">
                             <router-link to="/admin/preposition" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">اضافه</button>
+                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </form>
                 </div>

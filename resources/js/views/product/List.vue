@@ -72,96 +72,102 @@
 
 <script>
 
-export default {
-    name: "List",
-    data() {
-        return {
-            perPage: 3,
-            currentPage: 1,
-            rows: 15,
-            items: [],
-            show: false,
-            colors: "#194d33",
-            item: {
-                id: null,
-                name_ar: '',
-                name_en: '',
-                tag: '',
-                category: '',
-                slug: '',
-                price: '',
-                image: null,
-                variants: [
-                    {
-                        id: null,
-                        image: null,
-                        stock: 1,
-                        additional_price: 0,
-                        color_id: null,
-                        dimension_id: null,
-                    },
-                ]
+    export default {
+        name: "List",
+        data() {
+            return {
+                perPage: 3,
+                currentPage: 1,
+                rows: 15,
+                items: [],
+                show: false,
+                colors: "#194d33",
+                item: {
+                    id: null,
+                    name_ar: '',
+                    name_en: '',
+                    tag: '',
+                    category: '',
+                    slug: '',
+                    price: '',
+                    image: null,
+                    variants: [
+                        {
+                            id: null,
+                            image: null,
+                            stock: 1,
+                            additional_price: 0,
+                            color_id: null,
+                            dimension_id: null,
+                        },
+                    ]
+                },
+                newItem: {
+                    name_ar: '',
+                    name_en: '',
+                    tag: '',
+                    category: '',
+                    slug: '',
+                    price: '',
+                    variants: [
+                        {
+                            id: null,
+                            image: null,
+                            stock: 1,
+                            additional_price: 0,
+                            color_id: null,
+                            dimension_id: null,
+                        },
+                    ]
+                }
+            }
+        },
+        created() {
+            this.show = true;
+            this.getAll();
+        },
+        methods: {
+            getAll() {
+                axios.get('/product/all', {
+                    params: {
+                        page: this.currentPage,
+                        is_paginate: 1,
+                        sendResponse: 1
+                    }
+                }).then(response => {
+                    this.items = response.data.data.data;
+                    this.currentPage = response.data.data.current_page
+                    this.perPage = response.data.data.per_page
+                    this.rows = response.data.data.total
+                })
+                    .catch(err => console.log(err));
             },
-            newItem: {
-                name_ar: '',
-                name_en: '',
-                tag: '',
-                category: '',
-                slug: '',
-                price: '',
-                variants: [
-                    {
-                        id: null,
-                        image: null,
-                        stock: 1,
-                        additional_price: 0,
-                        color_id: null,
-                        dimension_id: null,
-                    },
-                ]
+            deleteItem(id, index) {
+                swal({
+                    title: "هل انت متاكد ؟",
+                    text:
+                        "بمجرد الحذف لا يمكنك استرجاعه مره اخره, تاكيد؟",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then(willDelete => {
+                    if (willDelete) {
+                        axios
+                            .delete("product/delete?id=" + id)
+                            .then(res => {
+                                this.items.splice(index, 1);
+                                swal("تم الحذف بنجاح", {
+                                    icon: "success"
+                                });
+                            })
+                            .catch(error => console.log(error));
+                    } else {
+                        swal("لم يتم الحذف يرجى التاكد من البيانات!");
+                    }
+                });
             }
         }
-    },
-    created() {
-        this.show = true;
-        this.getAll();
-    },
-    methods: {
-        getAll() {
-            axios.get('/product/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
-                this.items = response.data.data.data;
-                this.currentPage = response.data.data.current_page
-                this.perPage = response.data.data.per_page
-                this.rows = response.data.data.total
-            })
-                .catch(err => console.log(err));
-        },
-        deleteItem(id, index) {
-            swal({
-                title: "هل انت متاكد ؟",
-                text:
-                    "بمجرد الحذف لا يمكنك استرجاعه مره اخره, تاكيد؟",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then(willDelete => {
-                if (willDelete) {
-                    axios
-                        .delete("product/delete?id=" + id)
-                        .then(res => {
-                            this.items.splice(index, 1);
-                            swal("تم الحذف بنجاح", {
-                                icon: "success"
-                            });
-                        })
-                        .catch(error => console.log(error));
-                } else {
-                    swal("لم يتم الحذف يرجى التاكد من البيانات!");
-                }
-            });
-        }
     }
-}
 </script>
 
 <style scoped>
