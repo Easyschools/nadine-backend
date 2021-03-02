@@ -28,7 +28,7 @@ class DimensionRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
-            case 'update':
+            case 'edit':
                 return $this->updateValidation();
             case 'delete':
             case 'get':
@@ -43,7 +43,7 @@ class DimensionRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'dimension' => 'required|min:2',
+            'dimension' => 'required|min:2|unique:dimensions,dimension',
         ];
     }
 
@@ -51,7 +51,8 @@ class DimensionRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:dimensions,id',
-            'dimension' => 'required|min:2',
+            'dimension' => 'required|min:2|unique:dimensions,dimension,' . $this->id,
+//            'dimension' => ['required', \Illuminate\Validation\Rule::unique('dimensions')->ignore($this->id)],
         ];
     }
 

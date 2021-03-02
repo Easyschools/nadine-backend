@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CustomerRequest;
 use App\Services\Api\Auth\CustomerApiService;
+use Illuminate\Http\Request;
 
 class CustomerApiController extends Controller
 {

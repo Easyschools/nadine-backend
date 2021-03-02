@@ -14360,3 +14360,8 @@ input[type=color].form-control:disabled {
   margin: auto;
 }
 
+.pcoded-navbar .pcoded-inner-navbar {
+  background-color: white !important;
+  padding: 30px 0px;
+}
+

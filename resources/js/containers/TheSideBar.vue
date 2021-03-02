@@ -27,6 +27,14 @@
                             <span class="pcoded-mtext">Sliders</span>
                         </router-link>
                     </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/information">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-list-ol"></i>
+                            </span>
+                            <span class="pcoded-mtext">Contact Info</span>
+                        </router-link>
+                    </li>
 
                     <li class="nav-item pcoded-menu-caption">
                         <label>Types</label>
@@ -66,9 +74,9 @@
 <!--                    </li>-->
 
 
-                    <li class="nav-item pcoded-menu-caption">
-                        <label>Features</label>
-                    </li>
+                    <!--<li class="nav-item pcoded-menu-caption">-->
+                        <!--<label>Features</label>-->
+                    <!--</li>-->
 
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/material">
@@ -124,6 +132,22 @@
                             <span class="pcoded-mtext">Products</span>
                         </router-link>
                     </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/favourite">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-book-open"></i>
+                            </span>
+                            <span class="pcoded-mtext">Favourites</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/coupon">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-book-open"></i>
+                            </span>
+                            <span class="pcoded-mtext">Coupons</span>
+                        </router-link>
+                    </li>
 <!--                    <li class="nav-item pcoded-hasmenu">-->
 <!--                        <router-link to="/admin/lesson">-->
 <!--                            <span class="pcoded-micon">-->
@@ -142,34 +166,40 @@
 <!--                        </router-link>-->
 <!--                    </li>-->
 
-<!--                    <li class="nav-item pcoded-menu-caption">-->
-<!--                        <label>المستخدمين</label>-->
-<!--                    </li>-->
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Orders</label>
+                    </li>
 
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/user">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="feather icon-users"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">المستخدمين</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/message">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="fas fa-mail-bulk"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">الرسائل</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
-                    <!--<li class="nav-item pcoded-hasmenu">-->
-                        <!--<router-link to="/admin/admin">-->
-                            <!--<span class="pcoded-micon">-->
-                                <!--<i class="fas fa-chalkboard-teacher"></i>-->
-                            <!--</span>-->
-                            <!--<span class="pcoded-mtext">Admins</span>-->
-                        <!--</router-link>-->
-                    <!--</li>-->
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/offer">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-users"></i>
+                            </span>
+                            <span class="pcoded-mtext">Offers</span>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Users</label>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/customer">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-users"></i>
+                            </span>
+                            <span class="pcoded-mtext">Customers</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/message">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-mail-bulk"></i>
+                            </span>
+                            <span class="pcoded-mtext">Messages</span>
+                        </router-link>
+                    </li>
+
                 </ul>
 
             </div>

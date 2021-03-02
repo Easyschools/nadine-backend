@@ -26,7 +26,8 @@ class CustomerApiService extends AppRepository
 
     public function updateCustomer(Request $request)
     {
-        $userId = $this->getUserId($request->user_id);
+//        dd($request->all());
+        $userId = $this->getUserId($request->id);
 
         $this->setConditions([['type', 2]]);
 
@@ -36,6 +37,7 @@ class CustomerApiService extends AppRepository
             'phone_verified_at' => ($request->phone && $request->phone != Auth::user()->phone) ?
                 null : Auth::user()->phone_verified_at
         ]);
+
         $user = $this->find($userId);
         $this->update($userId,
             $request->only([
@@ -78,6 +80,7 @@ class CustomerApiService extends AppRepository
             'phone_verified_at',
             'image'
         ]);
+
         $user = $this->find($userId);
 
         return $user;

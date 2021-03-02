@@ -25,12 +25,12 @@ class ContactInfoApiService extends AppRepository
 
     public function updateOrCreateContactAddress($request)
     {
+        ContactAddress::truncate();
+
         if ($request->addresses) {
 
             foreach ($request->addresses as $address) {
-                $this->contactAddressService->model->firstOrCreate([
-                    'latitude' => $address['latitude'],
-                    'longitude' => $address['longitude'],
+                $this->contactAddressService->model->Create([
                     'address' => $address['address'],
                 ]);
             }
@@ -64,8 +64,10 @@ class ContactInfoApiService extends AppRepository
         $contactInfo = $this->find(1);
 
         return $contactInfo->update([
-            'phones' => $request->phones,
-            'emails' => $request->emails,
+//            'phones' => implode(',', $request->phone),
+//            'emails' => implode(',', $request->email),
+            'phones' => $request->phone,
+            'emails' => $request->email,
         ]);
     }
 
@@ -89,7 +91,7 @@ class ContactInfoApiService extends AppRepository
     public function get(Request $request)
     {
         $addresses = $this->contactAddressService->all();
-        $result = $this->find(1);
+        $result = $this->model->first();
         $result['addresses'] = $addresses;
         return $result;
     }

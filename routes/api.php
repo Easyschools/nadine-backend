@@ -27,26 +27,7 @@ Route::group([
         Route::post('reset-password', 'AuthController@resetPassword');
     });
 
-    Route::group([
-        'prefix' => '/',
-    ], function () {
-        Route::get('/', 'UserController@index');
-        Route::get('/get', 'UserController@read');
-        Route::get('/get-by-slug', 'UserController@readBySlug');
-        Route::post('/update-slug', 'UserController@updateSlug');
-        Route::get('/hash-token', 'UserController@hashToken');
-        Route::post('/create', 'UserController@create');
-        Route::post('/update', 'UserController@update');
-        Route::post('/delete', 'UserController@delete');
-        Route::post('/add-socials', 'UserController@addSocials');
-        Route::post('/delete-social', 'UserController@deleteSocial');
-        Route::post('/upload-file', 'UserController@uploadFiles');
-        Route::post('/delete-file', 'UserController@deleteFile');
-        Route::post('/add-address', 'UserController@addAddress');
-        Route::post('/delete-address', 'UserController@deleteAddress');
-        Route::post('/update-address', 'UserController@updateAddress');
-        Route::get('/get-addresses', 'UserController@getUserAddresses');
-    });
+
 });
 
 
@@ -211,6 +192,9 @@ Route::group([
     ], function () {
         Route::get('all', 'CouponApiController@all');
         Route::get('get', 'CouponApiController@read');
+        Route::delete('delete', 'CouponApiController@delete');
+        Route::post('create', 'CouponApiController@create');
+        Route::post('edit', 'CouponApiController@edit');
     });
 
 
@@ -277,7 +261,7 @@ Route::group([
         Route::get('all', 'ContactApiController@all');
         Route::get('get', 'ContactApiController@read');
         Route::post('create', 'ContactApiController@create');
-        Route::get('delete', 'ContactApiController@delete');
+        Route::delete('delete', 'ContactApiController@delete');
     });
 
     Route::group([

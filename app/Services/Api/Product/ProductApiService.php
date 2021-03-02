@@ -25,6 +25,7 @@ class ProductApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->filter($request);
         $this->setRelations([
             'variants',
             'tag',
@@ -32,7 +33,13 @@ class ProductApiService extends AppRepository
         ]);
 
         if ($request->is_paginate == 1) {
-            return $this->paginate();
+            if ($request->tag) {
+                return $this->paginateOfTag(15, $request->tag);
+            } elseif ($request->category) {
+                return $this->paginateOfCategory(15, $request->category);
+            } else {
+                return $this->paginate();
+            }
         }
         return $this->all();
     }
@@ -133,5 +140,25 @@ class ProductApiService extends AppRepository
         return $product;
     }
 
+
+    public function filter($request)
+    {
+        $conditions = [];
+        $orConditions = [];
+
+        if ($request->name) {
+
+            $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
+            $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
+        }
+        if ($request->tag) {
+
+            $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
+            $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
+        }
+
+        $this->setConditions($conditions);
+        $this->setOrConditions($orConditions);
+    }
 
 }

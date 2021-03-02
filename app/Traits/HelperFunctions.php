@@ -71,19 +71,22 @@ trait HelperFunctions
 
         $arr = [];
 
-        foreach ($request->addresses as $address) {
+        if ($request->addresses){
 
-            if ((int)$address['address_id'] != 0) {
-                $user->addresses()->findOrFail((int)$address['address_id'])->update([
-                    'address' => $address['address'],
-                    'city_id' => (int)$address['city_id'],
-                ]);
-                $arr [] = (int)$address['address_id'];
-            } else {
-                $user->addresses()->create([
-                    'address' => $address['address'],
-                    'city_id' => (int)$address['city_id'],
-                ]);
+            foreach ($request->addresses as $address) {
+
+                if ((int)$address['id'] != 0) {
+                    $user->addresses()->findOrFail((int)$address['id'])->update([
+                        'address' => $address['address'],
+                        'city_id' => (int)$address['city_id'],
+                    ]);
+                    $arr [] = (int)$address['id'];
+                } else {
+                    $user->addresses()->create([
+                        'address' => $address['address'],
+                        'city_id' => (int)$address['city_id'],
+                    ]);
+                }
             }
         }
 

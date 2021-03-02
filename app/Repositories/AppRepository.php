@@ -73,8 +73,8 @@ class AppRepository
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
-            ->whereHas('addresses',function ($q) use ($area_id){
-                $q->where('area_id' , $area_id);
+            ->whereHas('addresses', function ($q) use ($area_id) {
+                $q->where('area_id', $area_id);
             })
             ->get();
     }
@@ -89,15 +89,28 @@ class AppRepository
             ->paginate($pageCount);
     }
 
-    public function paginateUserOfOperator($pageCount = 15 , $area_id = 1)
+    public function paginateOfCategory($pageCount = 15, $category = null)
     {
         return $this->model->select($this->columns)
             ->with($this->relations)
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
-            ->whereHas('addresses',function ($q) use ($area_id){
-                $q->where('area_id' , $area_id);
+            ->whereHas('category', function ($q) use ($category) {
+                $q->where('name_en', 'like', '%' . $category . '%');
+            })
+            ->paginate($pageCount);
+    }
+
+    public function paginateOfTag($pageCount = 15, $tag = null)
+    {
+        return $this->model->select($this->columns)
+            ->with($this->relations)
+            ->where($this->conditions)
+            ->orWhere($this->orConditions)
+            ->orderBy($this->sortBy, $this->sortOrder)
+            ->whereHas('tag', function ($q) use ($tag) {
+                $q->where('name_en', 'like', '%' . $tag . '%');
             })
             ->paginate($pageCount);
     }

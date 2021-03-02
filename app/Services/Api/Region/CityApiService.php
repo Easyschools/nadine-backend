@@ -22,7 +22,9 @@ class CityApiService extends AppRepository
      */
     public function index($request)
     {
-        $this->setRelations([ 'districts']);
+        $this->filter($request);
+//        dd($this->conditions);
+        $this->setRelations(['districts']);
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
@@ -36,7 +38,7 @@ class CityApiService extends AppRepository
      */
     public function get($request)
     {
-        $this->setRelations([ 'districts']);
+        $this->setRelations(['districts']);
 
         return $this->find($request->id);
     }
@@ -80,29 +82,23 @@ class CityApiService extends AppRepository
 
         HelperFunctions::CurdOperation($request, $city, new District, 'districts', 'city', $oldVariantsIds);
 
-//        $arr = [];
-////        dd($request->variants);
-//        foreach ($request->variants as $variant) {
-//
-//            if ($variant['id']) {
-//
-//                $variantModel = $this->variantRepo->find($variant['id']);
-//                $variantModel->update($variant);
-//
-//                $arr[] = $variant['id'];
-//
-//            } else {
-//                Variant::create(array_merge($variant, [
-//                    'city_id' => $city->id
-//                ]));
-//            }
-//        }
-//
-//        //delete variants
-//        $deletedIds = array_diff($oldVariantsIds, $arr);
-//        $this->variantRepo->model->whereIn('id', $deletedIds)->delete();
-//
-//        return $city;
+
+        return $city;
+    }
+
+    public function filter($request)
+    {
+        $conditions = [];
+        $orConditions = [];
+
+        if ($request->name) {
+
+            $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
+            $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
+        }
+
+        $this->setConditions($conditions);
+        $this->setOrConditions($orConditions);
     }
 
 

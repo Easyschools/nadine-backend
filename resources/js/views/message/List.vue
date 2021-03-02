@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">الرسائل</h5>
+                <h5 style="font-size: 35px">Messages</h5>
 
             </div>
             <div class="card-body table-border-style">
@@ -11,27 +11,33 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم</th>
-                            <th>التليفون</th>
-                            <th>البريد الاكترونى</th>
-                            <th>الخيارات</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>email</th>
+                            <th>message</th>
+                            <th>Options</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="(item,index) in items">
                             <td>{{item.id}}</td>
-                            <td>{{item.name}}</td>
+                            <td>{{item.first_name}}</td>
+                            <td>{{item.last_name}}</td>
                             <td>{{item.phone}}</td>
                             <td>{{item.email}}</td>
+                            <td>
+                                {{ substringMessage(item.message)}}
+                            </td>
                             <td>
                                 <button
                                     @click="showMessage(item.message)"
                                     class="btn btn-outline-success"
-                                >اظهار
+                                >Show
                                 </button>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">Delete
                                 </button>
                             </td>
                         </tr>
@@ -46,10 +52,10 @@
                     @input="getAll"
                     :total-rows="rows"
                     :per-page="perPage"
-                    first-text="الاولى"
-                    prev-text="السابق"
-                    next-text="التالى"
-                    last-text="الاخير"
+                    first-text="First"
+                    prev-text="Previous"
+                    next-text="Next"
+                    last-text="Last"
                 ></b-pagination>
             </div>
 
@@ -81,7 +87,7 @@
         },
         methods: {
             getAll() {
-                axios.get('/messages', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
+                axios.get('/contact/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
                     this.items = response.data.data.data;
                     this.currentPage = response.data.data.current_page
                     this.perPage = response.data.data.per_page
@@ -89,32 +95,34 @@
                 })
                     .catch(err => console.log(err));
             },
-            showMessage(message){
+            showMessage(message) {
                 swal(message);
             },
             deleteItem(id, index) {
                 swal({
-                    title: "هل انت متاكد ؟",
-                    text:
-                        "بمجرد الحذف لا يمكنك استرجاعه مره اخره, تاكيد؟",
+                    title: "Are you sure ?",
+                    text: "you will not be able to revert deleted items.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
                 }).then(willDelete => {
                     if (willDelete) {
                         axios
-                            .delete("messages/" + id)
+                            .delete("contact/delete?id=" + id)
                             .then(res => {
                                 this.items.splice(index, 1);
-                                swal("تم الحذف بنجاح", {
+                                swal("Deleted Successfully", {
                                     icon: "success"
                                 });
                             })
                             .catch(error => console.log(error));
                     } else {
-                        swal("لم يتم الحذف يرجى التاكد من البيانات!");
+                        swal("Items are not deleted, please check again!");
                     }
                 });
+            },
+            substringMessage(message) {
+                return message.length > 30 ? message.substring(0, 30) + '....' : message;
             }
         }
     }

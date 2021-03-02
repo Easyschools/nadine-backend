@@ -10,27 +10,21 @@
                 </router-link>
             </div>
             <div class="card-body table-border-style">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="dataTables_length" id="report-table_length"><label>Show <select
-                            name="report-table_length" aria-controls="report-table"
-                            class="custom-select custom-select-sm form-control form-control-sm">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select> entries</label></div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div id="report-table_filter" class="dataTables_filter"><label>Search:
-                            <input type="search"
-                                     class="form-control form-control-sm"
-                                   placeholder=""
-                                   aria-controls="report-table"></label>
+
+                <div class="table-responsive text-center">
+                    <div class="row ">
+
+                        <div class="col-md-4">
+                            <div id="report-table_filter" class="dataTables_filter"><label>Name:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="name"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive text-center">
                     <table id="report-table" class="table">
                         <thead>
                         <tr>
@@ -91,6 +85,7 @@
             return {
                 perPage: 3,
                 currentPage: 1,
+                name: '',
                 rows: 15,
                 items: [],
                 show: false,
@@ -110,8 +105,15 @@
             this.getAll();
         },
         methods: {
-            getAll() {
-                axios.get('/city/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
+
+            getAll(entry = null) {
+                console.log(entry);
+                axios.get('/city/all?name=' + this.name, {
+                    params: {
+                        page: this.currentPage,
+                        is_paginate: 1
+                    }
+                }).then(response => {
                     this.items = response.data.data.data;
                     this.currentPage = response.data.data.current_page
                     this.perPage = response.data.data.per_page

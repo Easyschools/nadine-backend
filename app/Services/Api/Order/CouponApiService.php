@@ -36,6 +36,43 @@ Class CouponApiService extends AppRepository
         return $this->find($request->id);
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createCoupon($request)
+    {
+        $model = $this->model->create($request->only(
+            'code', 'is_percentage',
+            'max_usage',
+            'value', 'all_users'
+            , 'users'
+            , 'min_total'
+        ));
+
+        return $model;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editCoupon($request)
+    {
+
+        $model = $this->find($request->id);
+        $model->update($request->only(
+            'code',
+            'is_percentage',
+            'max_usage',
+            'value',
+            'all_users'
+            , 'users'
+            , 'min_total'
+        ));
+
+        return $model;
+    }
 
 
 }

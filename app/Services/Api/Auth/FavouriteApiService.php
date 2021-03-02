@@ -39,16 +39,28 @@ class FavouriteApiService extends AppRepository
     public function index($request)
     {
 
-        $user_id = $request->user_id ?? Auth::id();
+        if (Auth::user()->type != 1) {
 
-        $this->setConditions([
-            ['user_id', $user_id]
-        ]);
+            $user_id = $request->user_id ?? Auth::id();
 
-        $this->setRelations([
-            'product'
-        ]);
+            $this->setConditions([
+                ['user_id', $user_id]
+            ]);
 
+            $this->setRelations([
+                'product'
+            ]);
+
+        }else{
+            $this->setRelations([
+               'product'=>function($product){
+                    $product->select('id','slug');
+               },
+                'user'=>function($user){
+                    $user->select('id','name' , 'phone');
+                },
+            ]);
+        }
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }

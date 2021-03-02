@@ -63,8 +63,8 @@ class CustomerRequest extends FormRequest
         return [
             'user_id' => 'exists:users,id',
             'name' => 'min:2|max:100',
-            'image' => 'mimes:jpeg,jpg,png|image',
-            'phone' => 'unique:users,phone,' . $id,
+//            'image' => 'mimes:jpg,png,jpeg',
+            'phone' => 'unique:users,phone,' . $this->id,
             'addresses' => 'array',
             'addresses.*.city_id' => 'nullable|integer|exists:cities,id',
             'addresses.*.address' => 'nullable|min:2',

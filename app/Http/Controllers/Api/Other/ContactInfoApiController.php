@@ -20,9 +20,8 @@ class ContactInfoApiController extends Controller
 
     public function __construct(ContactInfoApiService $contactInfoService)
     {
-//        $this->middleware('auth:api');
-//        $this->middleware('check.role:1,2 ')
-//            ->only(['index','read']);
+        $this->middleware(['auth:api','check.role:1,2 '])
+            ->only(['update','delete','create']);
         $this->contactInfoService = $contactInfoService;
     }
 

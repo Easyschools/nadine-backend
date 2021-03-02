@@ -40,9 +40,14 @@ class CouponApiController extends Controller
         return $this->sendResponse($process);
     }
 
-//    public function create(\App\Http\Requests\Order\CouponRequest $request)
-//    {
-//        $process = $this->couponApiService->createCoupon($request);
-//        return $this->sendResponse($process);
-//    }
+    public function create(CouponRequest $request)
+    {
+        $process = $this->couponApiService->createCoupon($request);
+        return $this->sendResponse($process);
+    }
+    public function edit(CouponRequest $request)
+    {
+        $process = $this->couponApiService->editCoupon($request);
+        return $this->sendResponse($process);
+    }
 }

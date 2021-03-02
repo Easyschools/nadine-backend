@@ -103,9 +103,8 @@
             },
             deleteItem(id, index) {
                 swal({
-                    title: "هل انت متاكد ؟",
-                    text:
-                        "بمجرد الحذف لا يمكنك استرجاعه مره اخره, تاكيد؟",
+                    title: "Are you sure ?",
+                    text: "you will not be able to revert deleted items.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
@@ -115,13 +114,13 @@
                             .delete("tag/delete?id=" + id)
                             .then(res => {
                                 this.items.splice(index, 1);
-                                swal("تم الحذف بنجاح", {
+                                swal("Deleted Successfully", {
                                     icon: "success"
                                 });
                             })
                             .catch(error => console.log(error));
                     } else {
-                        swal("لم يتم الحذف يرجى التاكد من البيانات!");
+                        swal("Items are not deleted, please check again!");
                     }
                 });
             }

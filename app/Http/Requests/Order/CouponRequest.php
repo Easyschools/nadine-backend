@@ -44,10 +44,12 @@ class CouponRequest extends FormRequest
     {
         return [
             'is_percentage' => 'required|boolean',
-            'max_usage_per_order' => '',
-            'max_usage_per_user' => '',
-            'value' => 'required|min:1',
-            'min_total' => 'required|min:1',
+            'max_usage' => 'required|min:1',
+            'used_times' => 'numeric:',
+            'value' => 'required|numeric|min:1',
+            'users' => 'array',
+            'all_users' => 'required',
+            'min_total' => 'required|numeric|min:1',
         ];
     }
 
@@ -56,14 +58,12 @@ class CouponRequest extends FormRequest
         return [
             'id' => 'required|exists:coupons,id',
             'is_percentage' => 'required|boolean',
-            'max_usage_per_order' => '',
-            'max_usage_per_user' => '',
-            'value' => 'required|min:1',
-            'min_total' => 'required|min:1',
-            'type_ar' => 'required|min:1',
-            'type_en' => 'required|min:1',
-            'model_type' => 'required|min:1',
-            'model_id' => 'required',
+            'max_usage' => 'required|min:1',
+            'used_times' => 'numeric:',
+            'value' => 'required|numeric|min:1',
+            'users' => 'array',
+            'all_users' => 'required',
+            'min_total' => 'required|numeric|min:1',
         ];
     }
 

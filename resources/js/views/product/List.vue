@@ -11,6 +11,39 @@
             </div>
             <div class="card-body table-border-style">
                 <div class="table-responsive text-center">
+                    <div class="row ">
+
+                        <div class="col-md-4">
+                            <div id="report-table_filter" class="dataTables_filter"><label>Name:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.name"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="" class="dataTables_filter"><label>Category:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.category"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="" class="dataTables_filter"><label>Tag:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.tag"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table">
                         <thead>
                         <tr>
@@ -80,6 +113,11 @@
                 currentPage: 1,
                 rows: 15,
                 items: [],
+                search: {
+                    name: null,
+                    tag: null,
+                    category: null
+                },
                 show: false,
                 colors: "#194d33",
                 item: {
@@ -131,6 +169,9 @@
                 axios.get('/product/all', {
                     params: {
                         page: this.currentPage,
+                        name: this.search.name,
+                        tag: this.search.tag,
+                        category: this.search.category,
                         is_paginate: 1,
                         sendResponse: 1
                     }
@@ -144,9 +185,8 @@
             },
             deleteItem(id, index) {
                 swal({
-                    title: "هل انت متاكد ؟",
-                    text:
-                        "بمجرد الحذف لا يمكنك استرجاعه مره اخره, تاكيد؟",
+                    title: "Are you sure ?",
+                    text: "you will not be able to revert deleted items.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
@@ -156,13 +196,13 @@
                             .delete("product/delete?id=" + id)
                             .then(res => {
                                 this.items.splice(index, 1);
-                                swal("تم الحذف بنجاح", {
+                                swal("Deleted Successfully", {
                                     icon: "success"
                                 });
                             })
                             .catch(error => console.log(error));
                     } else {
-                        swal("لم يتم الحذف يرجى التاكد من البيانات!");
+                        swal("Items are not deleted, please check again!");
                     }
                 });
             }

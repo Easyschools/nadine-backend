@@ -4,31 +4,40 @@ import AuthMiddleware from '../router/middleware/auth';
 
 Vue.use(Router);
 
-import CategoryList from './../views/category/List';
-import CategoryEdit from './../views/category/Edit';
-import MaterialList from './../views/material/List';
-import MaterialEdit from './../views/material/Edit';
-import CollectionList from './../views/collection/List';
-import CollectionEdit from './../views/collection/Edit';
+import categoryList from './../views/category/List';
+import categoryEdit from './../views/category/Edit';
+import materialList from './../views/material/List';
+import materialEdit from './../views/material/Edit';
+import collectionList from './../views/collection/List';
+import collectionEdit from './../views/collection/Edit';
 
-import DimensionList from './../views/dimension/List';
-import DimensionEdit from './../views/dimension/Edit';
-import ColorList from './../views/color/List';
-import ColorEdit from './../views/color/Edit';
+import dimensionList from './../views/dimension/List';
+import dimensionEdit from './../views/dimension/Edit';
+import informationList from './../views/information/List';
+import informationEdit from './../views/information/Edit';
+import informationCreate from './../views/information/Create';
+import colorList from './../views/color/List';
+import colorEdit from './../views/color/Edit';
 import Home from './../views/Home';
 import Login from './../views/Login';
-import SliderList from './../views/slider/List';
-import SliderCreate from './../views/slider/Create';
-import SliderEdit from './../views/slider/Edit';
-import BrandList from './../views/brand/List';
-import BrandCreate from './../views/brand/Create';
-import BrandEdit from './../views/brand/Edit';
+import sliderList from './../views/slider/List';
+import sliderCreate from './../views/slider/Create';
+import sliderEdit from './../views/slider/Edit';
+import brandList from './../views/brand/List';
+import brandCreate from './../views/brand/Create';
+import brandEdit from './../views/brand/Edit';
+import couponList from './../views/coupon/List';
+import couponCreate from './../views/coupon/Create';
+import couponEdit from './../views/coupon/Edit';
 import tagList from './../views/tag/List';
 import tagCreate from './../views/tag/Create';
 import tagEdit from './../views/tag/Edit';
-import CityList from './../views/city/List';
-import CityCreate from './../views/city/Create';
-import CityEdit from './../views/city/Edit';
+import offerList from './../views/offer/List';
+import offerCreate from './../views/offer/Create';
+import offerEdit from './../views/offer/Edit';
+import cityList from './../views/city/List';
+import cityCreate from './../views/city/Create';
+import cityEdit from './../views/city/Edit';
 import productList from '../views/product/List';
 import productCreate from '../views/product/Create';
 import productEdit from '../views/product/Edit';
@@ -41,13 +50,14 @@ import prepositionEdit from './../views/preposition/Edit';
 import lessonList from './../views/lesson/List';
 import lessonCreate from './../views/lesson/Create';
 import lessonEdit from './../views/lesson/Edit';
-import userList from './../views/user/List';
-import userCreate from './../views/user/Create';
-import userEdit from './../views/user/Edit';
+import customerList from './../views/customer/List';
+import customerCreate from './../views/customer/Create';
+import customerEdit from './../views/customer/Edit';
 import exerciseList from './../views/exercise/List';
 import exerciseCreate from './../views/exercise/Create';
 import exerciseEdit from './../views/exercise/Edit';
 import Messages from './../views/message/List';
+import Favourites from './../views/favourite/List';
 
 const View = () => import('./../components/View');
 
@@ -91,6 +101,17 @@ function configRoutes() {
             ]
         },
         {
+            path: "/admin/favourite",
+            component: View,
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: '/',
+                    component: Favourites,
+                }
+            ]
+        },
+        {
             path: "/admin/city",
             component: View,
             redirect: 'admin/city/list',
@@ -98,11 +119,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: CityList,
+                    component: cityList,
                 },
                 {
                     path: 'edit/:id',
-                    component: CityEdit,
+                    component: cityEdit,
                 }
             ]
         },
@@ -114,11 +135,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: CategoryList,
+                    component: categoryList,
                 },
                 {
                     path: 'edit/:id',
-                    component: CategoryEdit,
+                    component: categoryEdit,
                 }
             ]
         },
@@ -130,11 +151,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: MaterialList,
+                    component: materialList,
                 },
                 {
                     path: 'edit/:id',
-                    component: MaterialEdit,
+                    component: materialEdit,
                 }
             ]
         },
@@ -146,11 +167,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: CollectionList,
+                    component: collectionList,
                 },
                 {
                     path: 'edit/:id',
-                    component: CollectionEdit,
+                    component: collectionEdit,
                 }
             ]
         },
@@ -162,11 +183,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: ColorList,
+                    component: colorList,
                 },
                 {
                     path: 'edit/:id',
-                    component: ColorEdit,
+                    component: colorEdit,
                 }
             ]
         },
@@ -178,11 +199,11 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: DimensionList,
+                    component: dimensionList,
                 },
                 {
                     path: 'edit/:id',
-                    component: DimensionEdit,
+                    component: dimensionEdit,
                 }
             ]
         },
@@ -207,6 +228,26 @@ function configRoutes() {
             ]
         },
         {
+            path: "/admin/offer",
+            component: View,
+            redirect: 'admin/offer/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: offerList,
+                },
+                {
+                    path: 'create',
+                    component: offerCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: offerEdit,
+                }
+            ]
+        },
+        {
             path: "/admin/slider",
             component: View,
             redirect: 'admin/slider/list',
@@ -214,15 +255,15 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: SliderList,
+                    component: sliderList,
                 },
                 {
                     path: 'create',
-                    component: SliderCreate,
+                    component: sliderCreate,
                 },
                 {
                     path: 'edit/:id',
-                    component: SliderEdit,
+                    component: sliderEdit,
                 }
             ]
         },
@@ -234,15 +275,35 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: BrandList,
+                    component: brandList,
                 },
                 {
                     path: 'create',
-                    component: BrandCreate,
+                    component: brandCreate,
                 },
                 {
                     path: 'edit/:id',
-                    component: BrandEdit,
+                    component: brandEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/coupon",
+            component: View,
+            redirect: 'admin/coupon/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: couponList,
+                },
+                {
+                    path: 'create',
+                    component: couponCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: couponEdit,
                 }
             ]
         },
@@ -254,15 +315,15 @@ function configRoutes() {
             children: [
                 {
                     path: 'list',
-                    component: CityList,
+                    component: cityList,
                 },
                 {
                     path: 'create',
-                    component: CityCreate,
+                    component: cityCreate,
                 },
                 {
                     path: 'edit/:id',
-                    component: CityEdit,
+                    component: cityEdit,
                 }
             ]
         },
@@ -347,22 +408,42 @@ function configRoutes() {
             ]
         },
         {
-            path: "/admin/user",
+            path: "/admin/customer",
             component: View,
-            redirect: 'admin/user/list',
+            redirect: 'admin/customer/list',
             meta: {requiresAuth: true},
             children: [
                 {
                     path: 'list',
-                    component: userList,
+                    component: customerList,
                 },
                 {
                     path: 'create',
-                    component: userCreate,
+                    component: customerCreate,
                 },
                 {
                     path: 'edit/:id',
-                    component: userEdit,
+                    component: customerEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/information",
+            component: View,
+            redirect: 'admin/information/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: informationList,
+                },
+                {
+                    path: 'create',
+                    component: informationCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: informationEdit,
                 }
             ]
         },

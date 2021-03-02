@@ -39,4 +39,10 @@ class OfferApiController extends Controller
         $process = $this->offerApiService->index($request);
         return $this->sendResponse($process);
     }
+
+    public function create(OfferRequest $request)
+    {
+        $process = $this->offerApiService->createOffer($request);
+        return $this->sendResponse($process);
+    }
 }
