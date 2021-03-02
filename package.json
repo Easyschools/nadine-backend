@@ -25,11 +25,16 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.21.2",
+        "luxon": "^1.26.0",
+        "perfect-scrollbar": "^1.4.0",
         "store": "^2.0.12",
         "sweetalert": "^2.1.2",
         "vue-color": "^2.8.1",
+        "vue-datetime": "^1.0.0-beta.14",
         "vue-router": "^3.5.1",
+        "vue2-datepicker": "^3.9.0",
         "vue2-editor": "^2.10.2",
-        "vuex": "^3.6.2"
+        "vuex": "^3.6.2",
+        "weekstart": "^1.0.1"
     }
 }

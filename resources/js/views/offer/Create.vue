@@ -20,12 +20,42 @@
 
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
                             </div>
                             <div class="col-sm-3">
                                 <label class="col-form-label">Name En</label>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+
+                            <div class="col-sm-9">
+                                <input type="checkbox"
+                                       class="form-control " v-model="item.is_percentage">
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Is Percentage</label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-9">
+                                <input type="number" autocomplete="off" class="form-control" v-model="item.discount">
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Discount</label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-9 text-center">
+                                <date-picker v-model="item.expire_at" valueType="format"></date-picker>
+                                <!--<datetime ></datetime>-->
+                                <!--<input type="date" class="form-control" v-model="item.expire_at">-->
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Expire At</label>
                             </div>
                         </div>
 
@@ -34,7 +64,8 @@
 
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
-                                    <option v-for="category in categories" :value="category.id">{{category.name_ar }} - {{category.name_en}}
+                                    <option v-for="category in categories" :value="category.id">{{category.name_ar }} -
+                                        {{category.name_en}}
                                     </option>
                                 </select>
                             </div>
@@ -57,12 +88,6 @@
                             <div class="col-sm-3">
                                 <label class="col-form-label ">Image</label>
                             </div>
-                            <!--<div class="col-sm-9">-->
-                            <!--<b-form-offers input-id="offers-basic" v-model="item.text" class="mb-2"></b-form-offers>-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-3">-->
-                            <!--<label class="col-form-label">النص</label>-->
-                            <!--</div>-->
                         </div>
 
                         <div class="text-center mt-5">
@@ -78,15 +103,26 @@
 </template>
 
 <script>
+    import {Datetime} from 'vue-datetime';
+    import DatePicker from 'vue2-datepicker';
+    import 'vue2-datepicker/index.css';
+
     export default {
         name: "Create",
+        template: '...',
+        components: {
+            datetime: Datetime,
+            DatePicker
+        },
         data() {
             return {
                 show: false,
                 item: {
-                    name_en: null,
-                    name_ar: null,
-                    category_id: null,
+                    name_ar: '',
+                    name_en: '',
+                    discount: '',
+                    is_percentage: 1,
+                    expire_at: '',
                     image: null
                 },
                 categories: [{
@@ -113,7 +149,13 @@
                 let formData = new FormData();
                 for (const property in this.item) {
                     if (this.item[property] != null) {
-                        formData.append(property, this.item[property])
+                        if (property == 'is_percentage') {
+
+                            formData.append(property, (this.item[property]) ? 1 : 0)
+                        } else {
+
+                            formData.append(property, this.item[property])
+                        }
                     }
                 }
 

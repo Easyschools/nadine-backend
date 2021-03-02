@@ -5,7 +5,6 @@ import swal from 'sweetalert';
 import alertsMixin from "./mixins/alertsMixin";
 import {PaginationPlugin, FormTagsPlugin} from 'bootstrap-vue'
 import store from "./store";
-
 require('./store/subscriber');
 // import {VueEditor} from "vue2-editor";
 

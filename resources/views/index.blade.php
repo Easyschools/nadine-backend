@@ -20,6 +20,7 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset("/css/app.css")}}">
 
+    <link rel="stylesheet" href="{{asset("assets/css/perfect-scrollbar.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/style.css")}}">
 
     {{--<link rel="stylesheet" href="{{asset("assets/css/layout-rtl.css")}}">--}}
@@ -33,6 +34,9 @@
 {{--<script src="{{asset("assets/js/vendor-all.min.js")}}"></script>--}}
 <script src="{{asset("/js/app.js")}}"></script>
 <script src="{{asset("assets/js/plugins/bootstrap.min.js")}}"></script>
+<script src="{{asset('assets/js/plugins/prism.js')}}"></script>
+<script src="{{asset('assets/js/perfect-scrollbar.min.js')}}"></script>
+
 {{--<script src="{{asset("assets/js/ripple.js")}}"></script>--}}
 {{--<script src="{{asset("assets/js/pcoded.min.js")}}"></script>--}}
 {{--<script src="{{asset("assets/js/menu-setting.min.js")}}"></script>--}}

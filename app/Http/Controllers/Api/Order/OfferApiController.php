@@ -45,4 +45,15 @@ class OfferApiController extends Controller
         $process = $this->offerApiService->createOffer($request);
         return $this->sendResponse($process);
     }
+
+    public function edit(OfferRequest $request)
+    {
+        $process = $this->offerApiService->editOffer($request);
+        return $this->sendResponse($process);
+    }
+    public function delete(OfferRequest $request)
+    {
+        $process = $this->offerApiService->delete($request->id);
+        return $this->sendResponse($process);
+    }
 }

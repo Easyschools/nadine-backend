@@ -204,6 +204,9 @@ Route::group([
     ], function () {
         Route::get('all', 'OfferApiController@all');
         Route::get('get', 'OfferApiController@read');
+        Route::delete('delete', 'OfferApiController@delete');
+        Route::post('create', 'OfferApiController@create');
+        Route::post('edit', 'OfferApiController@edit');
     });
 
     Route::group([

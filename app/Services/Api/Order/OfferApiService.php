@@ -49,11 +49,30 @@ Class OfferApiService extends AppRepository
             'name_ar',
             'name_en',
             'is_percentage',
-            'value',
+            'discount',
             'image',
             'category_id',
             'expire_at'
         ));
+    }
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function editOffer($request)
+    {
+        $model = $this->find($request->id);
+        $model = $model->update($request->only(
+            'name_ar',
+            'name_en',
+            'is_percentage',
+            'discount',
+            'image',
+            'category_id',
+            'expire_at'
+        ));
+
+        return $model;
     }
 
 

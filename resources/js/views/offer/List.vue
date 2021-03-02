@@ -84,7 +84,7 @@
                     name_ar: '',
                     name_en: '',
                     discount: '',
-                    value: '',
+                    is_percentage: '',
                     category: '',
                     image: null
                 },
@@ -92,7 +92,7 @@
                     name_ar: '',
                     name_en: '',
                     discount: '',
-                    value: '',
+                    is_percentage: '',
                     category: '',
                     image: null
                 }

@@ -43,14 +43,12 @@ class OfferRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'is_percentage' => 'required|min:2',
+            'is_percentage' => 'required|boolean',
             'name_en' => 'required|min:2',
-            'discount' => 'min:1',
             'name_ar' => 'required|min:2',
-            'model_type' => 'required',
-            'model_id' => 'required',
+            'discount' => 'required|min:1',
+            'category_id' => 'required|exists:categories,id',
             'expire_at' => 'required',
-
         ];
     }
 
