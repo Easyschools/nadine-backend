@@ -4,6 +4,7 @@ namespace App\Models\Order;
 
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
@@ -50,6 +51,11 @@ class Offer extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
 
+    }
+
+    public function getExpireAtAttribute()
+    {
+        return Carbon::createFromTimestamp($this->attributes['expire_at'])->format('l jS \\of F Y h:i:s A');;
     }
 
 

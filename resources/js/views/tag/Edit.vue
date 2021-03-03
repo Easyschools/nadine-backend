@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit الاعراب</h5>
+                    <h5>Edit Tag</h5>
                 </div>
                 <div class="card-body">
                     <form>

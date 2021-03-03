@@ -2,10 +2,8 @@
 
 namespace App\Models\Order;
 
-use App\Models\Payment\PaymentType;
-use App\Models\User\Address;
+use App\Models\Product\Variant;
 use App\Models\User\User;
-use App\Product\Variant;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model

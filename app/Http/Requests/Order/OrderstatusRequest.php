@@ -45,24 +45,22 @@ class OrderstatusRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
-            'type' => 'required',
         ];
     }
 
     private function updateValidation()
     {
         return [
-            'id' => 'required|exists:order_Statuses,id',
+            'id' => 'required|exists:order_statuses,id',
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
-            'type' => 'required',
         ];
     }
 
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:order_Statuses,id'
+            'id' => 'required|exists:order_statuses,id'
         ];
     }
 

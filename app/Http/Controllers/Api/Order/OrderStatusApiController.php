@@ -10,8 +10,7 @@ namespace App\Http\Controllers\Api\Order;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\OfferRequest;
-use App\Services\Api\Order\OfferApiService;
+use App\Http\Requests\Order\OrderstatusRequest;
 use App\Services\Api\Order\OrderStatusApiService;
 
 class OrderStatusApiController extends Controller
@@ -28,16 +27,33 @@ class OrderStatusApiController extends Controller
     }
 
 
-    public function read(OfferRequest $request)
+    public function read(OrderstatusRequest $request)
     {
         $process = $this->orderStatusApiService->get($request);
         return $this->sendResponse($process);
     }
 
 
-    public function all(OfferRequest $request)
+    public function all(OrderstatusRequest $request)
     {
         $process = $this->orderStatusApiService->index($request);
+        return $this->sendResponse($process);
+    }
+
+    public function create(OrderstatusRequest $request)
+    {
+        $process = $this->orderStatusApiService->createOffer($request);
+        return $this->sendResponse($process);
+    }
+
+    public function edit(OrderstatusRequest $request)
+    {
+        $process = $this->orderStatusApiService->editOffer($request);
+        return $this->sendResponse($process);
+    }
+    public function delete(OrderstatusRequest $request)
+    {
+        $process = $this->orderStatusApiService->delete($request->id);
         return $this->sendResponse($process);
     }
 }

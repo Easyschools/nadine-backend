@@ -35,11 +35,20 @@ class OrderInfoApiService extends AppRepository
             'orderItems' => function ($item) {
                 $item->with([
                     'variant' => function($variant){
-                        $variant->with('product');
+                        $variant->with([
+                            'product' => function ($product) {
+                                $product->with([
+                                    'variants' => function($variantNest1){
+                                        $variantNest1->with('color','dimension');
+                                    }
+                                ]);
+                            }
+                        ]);
                     }
                 ]);
             },
-            'address', 'coupon', 'user'
+            'address', 'coupon',
+            'user'
         ]);
         return $this->order->find($orderId);
     }
@@ -48,7 +57,14 @@ class OrderInfoApiService extends AppRepository
     {
         $this->order->setSortBy('id');
         $this->order->setSortOrder('desc');
-        $this->order->setRelations(['coupon', 'user']);
+        $this->order->setRelations([
+            'coupon',
+            'user',
+            'paymentType',
+            'address',
+            'orderItems',
+            'orderStatus'
+            ]);
         return $this->order->paginate();
     }
 

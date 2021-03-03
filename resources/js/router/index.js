@@ -32,6 +32,9 @@ import couponEdit from './../views/coupon/Edit';
 import tagList from './../views/tag/List';
 import tagCreate from './../views/tag/Create';
 import tagEdit from './../views/tag/Edit';
+import statusList from './../views/status/List';
+import statusCreate from './../views/status/Create';
+import statusEdit from './../views/status/Edit';
 import offerList from './../views/offer/List';
 import offerCreate from './../views/offer/Create';
 import offerEdit from './../views/offer/Edit';
@@ -41,6 +44,9 @@ import cityEdit from './../views/city/Edit';
 import productList from '../views/product/List';
 import productCreate from '../views/product/Create';
 import productEdit from '../views/product/Edit';
+import orderList from '../views/order/List';
+import orderCreate from '../views/order/Create';
+import orderEdit from '../views/order/Edit';
 import definitionList from './../views/definition/List';
 import definitionCreate from './../views/definition/Create';
 import definitionEdit from './../views/definition/Edit';
@@ -228,6 +234,26 @@ function configRoutes() {
             ]
         },
         {
+            path: "/admin/status",
+            component: View,
+            redirect: 'admin/status/list',
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: statusList,
+                },
+                {
+                    path: 'create',
+                    component: statusCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: statusEdit,
+                }
+            ]
+        },
+        {
             path: "/admin/offer",
             component: View,
             redirect: 'admin/offer/list',
@@ -344,6 +370,26 @@ function configRoutes() {
                 {
                     path: 'edit/:id',
                     component: productEdit,
+                }
+            ]
+        },
+        {
+            path: "/admin/order",
+            component: View,
+            redirect: "/admin/order/list",
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'list',
+                    component: orderList,
+                },
+                {
+                    path: 'create',
+                    component: orderCreate,
+                },
+                {
+                    path: 'edit/:id',
+                    component: orderEdit,
                 }
             ]
         },

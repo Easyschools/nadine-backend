@@ -103,7 +103,6 @@
 </template>
 
 <script>
-    import {Datetime} from 'vue-datetime';
     import DatePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
 
@@ -111,7 +110,6 @@
         name: "Create",
         template: '...',
         components: {
-            datetime: Datetime,
             DatePicker
         },
         data() {
@@ -123,7 +121,8 @@
                     discount: '',
                     is_percentage: 1,
                     expire_at: '',
-                    image: null
+                    image: null,
+                    category_id: null
                 },
                 categories: [{
                     id: null,

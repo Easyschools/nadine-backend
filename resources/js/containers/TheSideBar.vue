@@ -56,26 +56,26 @@
                         </router-link>
                     </li>
 
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/definition">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="feather icon-align-center"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">التعريفات</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/preposition">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="feather icon-sliders"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">الادوات العامله</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
+                    <!--                    <li class="nav-item pcoded-hasmenu">-->
+                    <!--                        <router-link to="/admin/definition">-->
+                    <!--                            <span class="pcoded-micon">-->
+                    <!--                                <i class="feather icon-align-center"></i>-->
+                    <!--                            </span>-->
+                    <!--                            <span class="pcoded-mtext">التعريفات</span>-->
+                    <!--                        </router-link>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item pcoded-hasmenu">-->
+                    <!--                        <router-link to="/admin/preposition">-->
+                    <!--                            <span class="pcoded-micon">-->
+                    <!--                                <i class="feather icon-sliders"></i>-->
+                    <!--                            </span>-->
+                    <!--                            <span class="pcoded-mtext">الادوات العامله</span>-->
+                    <!--                        </router-link>-->
+                    <!--                    </li>-->
 
 
                     <!--<li class="nav-item pcoded-menu-caption">-->
-                        <!--<label>Features</label>-->
+                    <!--<label>Features</label>-->
                     <!--</li>-->
 
                     <li class="nav-item pcoded-hasmenu">
@@ -148,23 +148,23 @@
                             <span class="pcoded-mtext">Coupons</span>
                         </router-link>
                     </li>
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/lesson">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="fas fa-book-open"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">الدروس</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
+                    <!--                    <li class="nav-item pcoded-hasmenu">-->
+                    <!--                        <router-link to="/admin/lesson">-->
+                    <!--                            <span class="pcoded-micon">-->
+                    <!--                                <i class="fas fa-book-open"></i>-->
+                    <!--                            </span>-->
+                    <!--                            <span class="pcoded-mtext">الدروس</span>-->
+                    <!--                        </router-link>-->
+                    <!--                    </li>-->
 
-<!--                    <li class="nav-item pcoded-hasmenu">-->
-<!--                        <router-link to="/admin/exercise">-->
-<!--                            <span class="pcoded-micon">-->
-<!--                                <i class="fas fa-file-excel"></i>-->
-<!--                            </span>-->
-<!--                            <span class="pcoded-mtext">التدريبات</span>-->
-<!--                        </router-link>-->
-<!--                    </li>-->
+                    <!--                    <li class="nav-item pcoded-hasmenu">-->
+                    <!--                        <router-link to="/admin/exercise">-->
+                    <!--                            <span class="pcoded-micon">-->
+                    <!--                                <i class="fas fa-file-excel"></i>-->
+                    <!--                            </span>-->
+                    <!--                            <span class="pcoded-mtext">التدريبات</span>-->
+                    <!--                        </router-link>-->
+                    <!--                    </li>-->
 
                     <li class="nav-item pcoded-menu-caption">
                         <label>Orders</label>
@@ -176,6 +176,24 @@
                                 <i class="feather icon-users"></i>
                             </span>
                             <span class="pcoded-mtext">Offers</span>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/status">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-battery-quarter"></i>
+                            </span>
+                            <span class="pcoded-mtext">Statuses</span>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/order">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-shopping-cart"></i>
+                            </span>
+                            <span class="pcoded-mtext">Orders</span>
                         </router-link>
                     </li>
 
@@ -208,9 +226,9 @@
 </template>
 
 <script>
-export default {
-    name: "TheSideBar"
-}
+    export default {
+        name: "TheSideBar"
+    }
 </script>
 
 <style scoped>

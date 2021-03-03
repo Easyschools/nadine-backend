@@ -3,29 +3,65 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit الاعراب</h5>
+                    <h5>Edit Offer</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
+
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
-
                             <div class="col-sm-3">
                                 <label class="col-form-label">Name AR</label>
                             </div>
                         </div>
                         <div class="row form-group">
+
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
-
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
+                                <label class="col-form-label">Name En</label>
                             </div>
                         </div>
+                        <div class="row form-group ">
+
+                            <div class="col-sm-9">
+                                <input type="checkbox"
+                                       class="form-control" v-model="item.is_percentage">
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Is Percentage</label>
+                            </div>
+                        </div>
+
                         <div class="row form-group">
+
+                            <div class="col-sm-9">
+                                <input type="number" autocomplete="off" class="form-control" v-model="item.discount">
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Discount</label>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-9 text-center">
+                                <date-picker v-model="item.expire_at" valueType="format"></date-picker>
+                                <!--<datetime ></datetime>-->
+                                <!--<input type="date" class="form-control" v-model="item.expire_at">-->
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Expire At</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group">
+
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{category.name_ar }} -
@@ -44,14 +80,16 @@
                         </div>
 
                         <div class="row form-group">
+
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Image</label>
-                            </div>
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label ">Image</label>
+                            </div>
                         </div>
+
                         <div class="text-center mt-5">
                             <router-link to="/admin/offer" class="btn btn-secondary">Cancel</router-link>
                             <button type="button" @click="editItem()" class="btn btn-primary">Update</button>
@@ -62,12 +100,20 @@
         </div>
     </div>
 
+
 </template>
 
 <script>
+    import DatePicker from 'vue2-datepicker';
+    import 'vue2-datepicker/index.css';
+
     export default {
         name: "Create",
+        components: {
+            DatePicker
+        },
         data() {
+
             return {
                 url: null,
                 show: false,
@@ -75,8 +121,11 @@
                 item: {
                     category_id: null,
                     id: null,
-                    name_ar: null,
-                    name_en: null,
+                    name_ar: '',
+                    name_en: '',
+                    discount: '',
+                    is_percentage: 1,
+                    expire_at: '',
                     image: null
                 },
                 categories: [{id: null, name_ar: null, name_en: null}]
@@ -104,11 +153,16 @@
             }, editItem() {
                 let data = new FormData();
                 for (const property in this.item) {
-                    if (!this.image_is_changed && property == 'image') {
-                        break;
-                    }
+                    // if (!this.image_is_changed && property == 'image') {
+                    //     break;
+                    // }
                     if (this.item[property] != null) {
-                        data.append(property, this.item[property])
+                        if (property == 'is_percentage') {
+                            data.append(property, (this.item[property]) ? 1 : 0)
+                        } else {
+
+                            data.append(property, this.item[property])
+                        }
                     }
                 }
 
@@ -131,8 +185,6 @@
                 }.bind(this), false);
 
                 reader.readAsDataURL(this.item.image);
-                this.image_is_changed = true;
-                this.url = URL.createObjectURL(this.item.image);
             },
         }
     }

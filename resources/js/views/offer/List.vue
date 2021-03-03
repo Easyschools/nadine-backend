@@ -17,10 +17,11 @@
                             <th>#</th>
                             <th>Name AR</th>
                             <th>Name En</th>
+                            <th>Image</th>
                             <th>Is Percentage</th>
                             <th>Discount</th>
+                            <th>expire_at</th>
                             <th>Category</th>
-                            <th>Image</th>
                             <th>Options</th>
                         </tr>
                         </thead>
@@ -29,12 +30,14 @@
                             <td>{{item.id}}</td>
                             <td>{{item.name_ar}}</td>
                             <td>{{item.name_en}}</td>
-                            <td>{{item.is_percentage}}</td>
-                            <td>{{item.discount}}</td>
-                            <td>{{item.category.name_ar}} - {{item.category.name_en}}</td>
                             <td>
                                 <img :src="item.image" class=" imageDisplay"/>
                             </td>
+                            <td>{{item.is_percentage}}</td>
+                            <td>{{item.discount}}</td>
+                            <td>{{item.expire_at}}</td>
+                            <td>{{item.category.name_ar}} - {{item.category.name_en}}</td>
+
                             <td>
                                 <router-link
                                     :to="{path:'/admin/offer/edit/' +item.id,params: { id: item.id }}"

@@ -215,6 +215,9 @@ Route::group([
     ], function () {
         Route::get('all', 'OrderStatusApiController@all');
         Route::get('get', 'OrderStatusApiController@read');
+        Route::delete('delete', 'OrderStatusApiController@delete');
+        Route::post('create', 'OrderStatusApiController@create');
+        Route::post('edit', 'OrderStatusApiController@edit');
     });
 
     Route::group([
@@ -297,6 +300,7 @@ Route::group([
         Route::get('/grand-total', 'OrderApiController@grandTotal');
         Route::post('/checkout', 'OrderApiController@checkout');
 
+        Route::post('/update', 'UpdateOrderApiController@update');
 
         Route::get('/get-orders', 'OrderInfoApiController@getUserOrders');
         Route::get('/order-details', 'OrderInfoApiController@orderDetails');

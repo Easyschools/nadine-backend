@@ -27,7 +27,7 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
         $this->setRelations([
-            'variants',
+            'variants' ,
             'tag',
             'category'
         ]);
@@ -51,7 +51,9 @@ class ProductApiService extends AppRepository
     public function get($request)
     {
         $this->setRelations([
-            'variants',
+            'variants' =>function($variant){
+                $variant->with(['color','dimension']);
+            },
             'tag',
             'category'
         ]);
