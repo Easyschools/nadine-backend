@@ -247,8 +247,10 @@
                 let data = this.getFormData(formData);
                 axios.post('/customer/update/', data).then(response => {
                     this.disableButton = false;
-                    this.$router.push('/admin/customer');
+                    // this.$router.push('/admin/customer');
                     swal("Good job!", "A new customer has been updated!", "success");
+                    this.getItem();
+                    window.scrollTo(0,0);
                 }).catch(err => {
                     this.disableButton = false;
                     this.errorMessages(err.response.data);

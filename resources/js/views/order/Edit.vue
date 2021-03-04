@@ -13,7 +13,7 @@
                                 <label class="col-form-label">Code</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="item.code">
+                                <input disabled type="text" class="form-control" v-model="item.code">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -85,7 +85,7 @@
                                 <label class="col-form-label">Subtotal</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.subtotal">
+                                <input disabled type="number" class="form-control" v-model="item.subtotal">
 
                             </div>
                         </div>
@@ -102,10 +102,20 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
+                                <label class="col-form-label">Shipping Price</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input disabled type="number" class="form-control" v-model="item.shipping_price">
+
+                            </div>
+                        </div>
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
                                 <label class="col-form-label">Grand Total</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.grand_total">
+                                <input disabled type="number" class="form-control" v-model="item.grand_total">
 
                             </div>
                         </div>
@@ -171,19 +181,22 @@
 
                                                 <div class="row form-group">
 
-                                                    <div class="col-sm-12 pb-3 text-center" v-if="order_item.variant.image">
-                                                        <img :src="order_item.variant.image" :ref="'imageDisplay_'+ index"
-                                                             class="mr-auto imageDisplay"/>
+                                                    <div class="col-sm-12 pb-3 text-center"
+                                                         v-if="order_item.variant.image">
+                                                        <img
+                                                            :src="order_item.variant ? order_item.variant.image : null "
+                                                            :ref="'imageDisplay_'+ index"
+                                                            class="mr-auto imageDisplay"/>
                                                     </div>
 
                                                     <!--<div class="col-sm-3">-->
-                                                        <!--<label style="font-weight: bold;"-->
-                                                               <!--class="col-form-label ">Image</label>-->
+                                                    <!--<label style="font-weight: bold;"-->
+                                                    <!--class="col-form-label ">Image</label>-->
                                                     <!--</div>-->
 
                                                     <!--<div class="col-md-9">-->
-                                                        <!--<input type="file" :ref="'order_item'+index"-->
-                                                               <!--@change="uploadOrderItemImage(index)">-->
+                                                    <!--<input type="file" :ref="'order_item'+index"-->
+                                                    <!--@change="uploadOrderItemImage(index)">-->
                                                     <!--</div>-->
 
                                                 </div>
@@ -207,7 +220,8 @@
                                                 <label style="font-weight: bold;">Variant</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
-                                                <select class="form-control" @change="uploadOrderItemImage(index)" v-model="order_item.variant_id">
+                                                <select class="form-control" @change="uploadOrderItemImage(index)"
+                                                        v-model="order_item.variant_id">
                                                     <option
                                                         v-for="variant in ( (variants[0].id ) ? variants : order_item.variant.product.variants)"
                                                         :value="variant.id">
@@ -217,16 +231,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Offer</label>
-                                            </div>
-                                            <div class="col-md-9 mt-3">
-                                                <select class="form-control" v-model="order_item.offer_id">
-                                                    <option v-for="offer in offers" :value="offer.id">
-                                                        {{ offer.name }}
-                                                    </option>
-                                                </select>
-                                            </div>
+
 
 
                                             <div class="col-md-3 mt-4 mb-3">
@@ -274,7 +279,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/lesson" class="btn btn-secondary">
+                <router-link to="/admin/order" class="btn btn-secondary">
                     Cancel
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
@@ -388,6 +393,9 @@
             this.getProduct();
 
         },
+        watch: {
+            '$route.params': 'getItem()',
+        },
         methods: {
             getPaymentType() {
                 axios.get('payment-type/all')
@@ -474,43 +482,15 @@
                 let formData = new FormData();
                 // formData.append('id', this.item.id);
                 let data = this.getFormData(formData);
-                axios.post('/product/edit/', data).then(response => {
+                axios.post('/order/update/', data).then(response => {
                     this.disableButton = false;
-                    this.$router.push('/admin/product');
-                    swal("Good job!", "A new product has been updated!", "success");
+                    swal("Good job!", "A new order has been updated!", "success");
+                    window.scrollTo(0, 0);
+                    this.getItem()
                 }).catch(err => {
                     this.disableButton = false;
                     this.errorMessages(err.response.data);
                     console.log(err)
-                });
-            },
-            deleteOrderItem(index, order_itemId) {
-                if (!order_itemId) {
-                    this.item.order_items.splice(index, 1);
-                    return
-                }
-                swal({
-                    title: "Are you sure ?",
-                    text: "you will not be able to revert deleted items.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                }).then(willDelete => {
-                    if (willDelete) {
-                        axios
-                            .delete("order_item/delete?id=" + order_itemId)
-                            .then(res => {
-                                this.item.order_items.splice(index, 1);
-                                swal("deleted successfully", {
-                                    icon: "success"
-                                });
-                                return
-                            })
-                            .catch(error => console.log(error));
-                    } else {
-                        swal("can not delete item, please check data again");
-                        return
-                    }
                 });
             },
             addOrderItem() {
@@ -520,6 +500,16 @@
                     offer: null,
                     quantity: 0,
                     item_price: 0,
+                    variant: {
+                        product_id: null,
+                        product: {
+                            id: null,
+                            name_ar: null,
+                            name_en: null,
+                        }
+                    },
+                    variant_id: null,
+                    offer_id: null,
                     total_item_price: 0,
                 })
             },

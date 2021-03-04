@@ -170,8 +170,10 @@
                 let data = this.getFormData(formData);
                 axios.post('/contact-info/update/', data).then(response => {
                     this.disableButton = false;
-                    this.$router.push('/admin/information');
+                    // this.$router.push('/admin/information');
                     swal("Good job!", "A new contact-info has been updated!", "success");
+                    this.getItem();
+                    window.scrollTo(0,0);
                 }).catch(err => {
                     this.disableButton = false;
                     this.errorMessages(err.response.data);

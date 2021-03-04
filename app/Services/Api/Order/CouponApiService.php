@@ -42,6 +42,10 @@ Class CouponApiService extends AppRepository
      */
     public function createCoupon($request)
     {
+        if (!$request->has('users')) {
+            $request['users'] = null;
+        }
+
         $model = $this->model->create($request->only(
             'code', 'is_percentage',
             'max_usage',
@@ -59,7 +63,9 @@ Class CouponApiService extends AppRepository
      */
     public function editCoupon($request)
     {
-
+        if (!$request->has('users')) {
+            $request['users'] = null;
+        }
         $model = $this->find($request->id);
         $model->update($request->only(
             'code',

@@ -39,9 +39,9 @@ class OrderInfoApiController extends Controller
         return $this->sendResponse($process);
     }
 
-    public function allOrders()
+    public function allOrders(Request $request)
     {
-        $process = $this->orderService->allOrders();
+        $process = $this->orderService->allOrders($request);
         return $this->sendResponse($process);
     }
 

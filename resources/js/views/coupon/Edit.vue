@@ -151,11 +151,12 @@
                     delete item.users;
                 }
 
-                // data.append('id', this.item.id);
                 axios.post('/coupon/edit', item)
                     .then(response => {
                         this.$router.push('/admin/coupon');
-                        swal("Good job!", "a user has been updated!", "success");
+                        // swal("Good job!", "a user has been updated!", "success");
+                        this.getItem();
+                        window.scrollTo(0,0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

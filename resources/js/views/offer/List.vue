@@ -87,6 +87,7 @@
                     name_ar: '',
                     name_en: '',
                     discount: '',
+                    expire_at: '',
                     is_percentage: '',
                     category: '',
                     image: null
@@ -95,6 +96,7 @@
                     name_ar: '',
                     name_en: '',
                     discount: '',
+                    expire_at: '',
                     is_percentage: '',
                     category: '',
                     image: null

@@ -119,8 +119,10 @@
                 // data.append('id', this.item.id);
                 axios.post('/slider/edit', data)
                     .then(response => {
-                        this.$router.push('/admin/slider');
-                        swal("Good job!", "a user has been updated!", "success");
+                        // this.$router.push('/admin/slider');
+                        swal("Good job!", "a slider has been updated!", "success");
+                        this.getItem();
+                        window.scrollTo(0,0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

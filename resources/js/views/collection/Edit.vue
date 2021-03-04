@@ -74,8 +74,10 @@ export default {
                 name_en: this.item.name_en,
             })
                 .then(response => {
-                    this.$router.push('/admin/collection');
+                    // this.$router.push('/admin/collection');
                     swal("Good job!", "A new collection has been updated!", "success");
+                    this.getItem();
+                    window.scrollTo(0,0);
                 })
                 .catch(err => {
                     this.errorMessages(err.response.data);

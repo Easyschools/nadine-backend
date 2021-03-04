@@ -78,7 +78,7 @@
                 axios.post('/order-status/edit', data)
                     .then(response => {
                         this.$router.push('/admin/status');
-                        swal("Good job!", "a user has been updated!", "success");
+                        swal("Good job!", "a status has been updated!", "success");
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

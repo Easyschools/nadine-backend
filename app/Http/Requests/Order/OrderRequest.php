@@ -39,6 +39,15 @@ class OrderRequest extends FormRequest
                 return $this->search();
             case 'delete':
                 return $this->orderIdRules();
+            case 'update-status':
+                return $this->updateStatusValidation();
+            case 'update-payment':
+                return $this->updatePaymentValidation();
+            case 'recalculate':
+            case 'update':
+                return $this->recalculateValidation();
+            case 'filter':
+                return $this->filter();
             default:
                 return [];
         }
@@ -58,6 +67,7 @@ class OrderRequest extends FormRequest
             'id' => 'required|exists:orders,id',
         ];
     }
+
     private function grandTotal()
     {
         return [
@@ -99,6 +109,52 @@ class OrderRequest extends FormRequest
         return [
             'status' => 'in:1,2,3,4,5',
             'key' => 'min:1',
+        ];
+    }
+
+
+    private function updateStatusValidation()
+    {
+        return [
+            'status' => 'required|between:1,13',
+            'id' => 'required|exists:orders,id',
+        ];
+    }
+
+    private function updatePaymentValidation()
+    {
+
+        return [
+            'payment_type_id' => 'required|exists:payment_types,id',
+            'id' => 'required|exists:orders,id',
+        ];
+    }
+
+    private function recalculateValidation()
+    {
+        return [
+            'id' => 'required|exists:orders,id',
+            'address_id' => 'required|exists:addresses,id',
+            'order_status_id' => 'required|exists:order_statuses,id',
+            'coupon_id' => 'nullable|exists:coupons,id',
+            'payment_type_id' => 'required|exists:payment_types,id',
+
+            'order_items' => 'required|array',
+            'order_items.*.variant_id' => 'required|exists:variants,id',
+            'order_items.*.quantity' => 'required|numeric|min:1',
+
+        ];
+    }
+
+
+    private function filter()
+    {
+        return [
+            'from' => 'date_format:Y-m-d|date',
+            'to' => 'date_format:Y-m-d|date',
+            'slot_id' => 'exists:slots,id',
+            'status' => 'between:1,13',
+            'waiting_orders' => 'boolean',
         ];
     }
 

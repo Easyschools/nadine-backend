@@ -67,6 +67,7 @@ class ProductApiService extends AppRepository
     public function createProduct($request)
     {
 //        dd($request->all());
+
         $product = Product::create($request->only([
             'name_ar',
             'name_en',
@@ -76,6 +77,7 @@ class ProductApiService extends AppRepository
             'stock',
             'weight',
             'price',
+            'price_after_discount',
             'collection_id',
             'category_id',
             'tag_id',
@@ -109,6 +111,7 @@ class ProductApiService extends AppRepository
             'stock',
             'weight',
             'price',
+            'price_after_discount',
             'collection_id',
             'category_id',
             'tag_id',
@@ -149,11 +152,6 @@ class ProductApiService extends AppRepository
         $orConditions = [];
 
         if ($request->name) {
-
-            $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
-            $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
-        }
-        if ($request->tag) {
 
             $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
             $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];

@@ -92,8 +92,10 @@
                 // data.append('id', this.item.id);
                 axios.post('/brand/edit', data)
                     .then(response => {
-                        this.$router.push('/admin/brand');
+                        // this.$router.push('/admin/brand');
                         swal("Good job!", "a user has been updated!", "success");
+                        this.getItem();
+                        window.scrollTo(0,0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

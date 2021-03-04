@@ -78,7 +78,7 @@ class OrderApiService extends AppRepository
         $offer = $item->variant->product->category->offers()->first()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
-        $productPrice = $item->variant->product->price + $item->variant->additional_price;
+        $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
 
         $offerItemPrice = -1;
 
@@ -141,7 +141,7 @@ class OrderApiService extends AppRepository
 
             $offerItemPrice = $this->getOfferPrice($item);
 
-            $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item->variant->product->price);
+            $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item->variant->product->price_after_discount);
 
             $item['total_item_price'] = $item->quantity * $itemPrice;
 
@@ -251,6 +251,9 @@ class OrderApiService extends AppRepository
 
         if ($this->coupon) {
             $this->coupon->user()->attach(Auth::id());
+            $this->coupon->update([
+                'used_times' => $this->coupon->used_times + 1
+            ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
 //        Cart::where('user_id', Auth::id())

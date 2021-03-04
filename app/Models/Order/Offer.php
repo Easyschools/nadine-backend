@@ -29,6 +29,11 @@ class Offer extends Model
     ];
 
 
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return Carbon::instance($date)->toDateString();
+    }
+
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
@@ -53,10 +58,17 @@ class Offer extends Model
 
     }
 
-    public function getExpireAtAttribute()
-    {
-        return Carbon::createFromTimestamp($this->attributes['expire_at'])->format('l jS \\of F Y h:i:s A');;
-    }
+//    public function getExpireAtAttribute()
+//    {
+//        return Carbon::createFromTimestamp($this->attributes['expire_at'])->format('l jS \\of F Y h:i:s A');
+//    }
+//
+//    public function setExpireAtAttribute($value)
+//    {
+//        $value = Carbon::createFromDate($value)->toDateTimeString();
+////        dd($value);
+//        $this->attributes['expire_at'] = $value;
+//    }
 
 
 }

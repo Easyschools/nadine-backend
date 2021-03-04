@@ -32,9 +32,6 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
                             </div>
                         </div>
                         <div class="row form-group">
@@ -53,9 +50,6 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.description_en">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
                             </div>
                         </div>
 
@@ -65,12 +59,21 @@
                                 <label class="col-form-label">Price</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.price">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
+                                <input type="number" v-on:keyup="fillPriceAfterDiscount" class="form-control" v-model="item.price">
                             </div>
                         </div>
+
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">Price After Discount</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number"  class="form-control" v-model="item.price_after_discount">
+                            </div>
+                        </div>
+
                         <div class="row form-group">
 
                             <div class="col-sm-3">
@@ -324,7 +327,7 @@ export default {
                 tag: '',
                 category: '',
                 collection: '',
-                price: 1,
+                price: null,
                 // image: null,
                 variants: [
                     {
@@ -446,15 +449,6 @@ export default {
             this.getTag(e.target.value);
             // console.log(e.target.value);
         },
-        // attachImage() {
-        //     this.item.image = this.$refs.myImage.files[0];
-        //     let reader = new FileReader();
-        //     reader.addEventListener('load', function () {
-        //         this.$refs.imageDisplay.src = reader.result;
-        //     }.bind(this), false);
-        //
-        //     reader.readAsDataURL(this.item.image);
-        // },
 
         uploadVariantImage(index) {
             this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
@@ -489,6 +483,9 @@ export default {
                 }
                 formData.append(parentKey, value);
             }
+        },
+        fillPriceAfterDiscount() {
+            this.item.price_after_discount = this.item.price;
         }
     }
 }

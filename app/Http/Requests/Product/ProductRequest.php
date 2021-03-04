@@ -53,6 +53,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'tag_id' => 'required|exists:tags,id',
             'price' => 'required|numeric|min:1',
+            'price_after_discount' => 'required|numeric|min:1',
             'weight' => 'required|numeric|min:1',
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
@@ -65,9 +66,21 @@ class ProductRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:products,id',
-            'name_en' => 'min:2',
-            'code' => 'min:2',
-            'name_ar' => 'min:2',
+            'name_ar' => 'required|min:2',
+            'description_en' => 'required|min:2',
+            'description_ar' => 'required|min:2',
+            'slug' => 'required|min:2',
+            'material_id' => 'required|exists:materials,id',
+            'collection_id' => 'required|exists:collections,id',
+            'category_id' => 'required|exists:categories,id',
+            'tag_id' => 'required|exists:tags,id',
+            'price' => 'required|numeric|min:1',
+            'price_after_discount' => 'required|numeric|min:1',
+            'weight' => 'required|numeric|min:1',
+            'variants' => 'required|array',
+            'variants.*.color_id' => 'exists:colors,id',
+            'variants.*.dimension_id' => 'exists:dimensions,id',
+            'variants.*.stock' => 'required',
         ];
     }
 

@@ -34,12 +34,12 @@ class OrderInfoApiService extends AppRepository
         $this->order->setRelations([
             'orderItems' => function ($item) {
                 $item->with([
-                    'variant' => function($variant){
+                    'variant' => function ($variant) {
                         $variant->with([
                             'product' => function ($product) {
                                 $product->with([
-                                    'variants' => function($variantNest1){
-                                        $variantNest1->with('color','dimension');
+                                    'variants' => function ($variantNest1) {
+                                        $variantNest1->with('color', 'dimension');
                                     }
                                 ]);
                             }
@@ -53,8 +53,10 @@ class OrderInfoApiService extends AppRepository
         return $this->order->find($orderId);
     }
 
-    public function allOrders()
+    public function allOrders($request)
     {
+        $this->filter($request);
+
         $this->order->setSortBy('id');
         $this->order->setSortOrder('desc');
         $this->order->setRelations([
@@ -64,8 +66,20 @@ class OrderInfoApiService extends AppRepository
             'address',
             'orderItems',
             'orderStatus'
-            ]);
+        ]);
         return $this->order->paginate();
+    }
+
+
+    public function filter($request)
+    {
+        $conditions = [];
+
+        if ($request->code) {
+            $conditions[] = ['code', 'like', '%' . $request->code . '%'];
+        }
+
+        $this->setConditions($conditions);
     }
 
 }

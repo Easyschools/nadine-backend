@@ -57,7 +57,7 @@ export default {
             colors: "#194d33",
             item: {
                 id: null,
-                color: null,
+                code: null,
                 name: null
             }
         };
@@ -71,8 +71,8 @@ export default {
         getItem() {
             axios.get('color/get?id=' + this.item.id)
                 .then(response => {
-                    this.item = response.data.data
-                    // this.colors = this.item.color
+                    this.item = response.data.data;
+                    this.colors = this.item.code;
                 })
                 .catch(err => console.log(err))
         },
@@ -87,8 +87,10 @@ export default {
                 code: color,
             })
                 .then(response => {
-                    this.$router.push('/admin/color');
+                    // this.$router.push('/admin/color');
                     swal("Good job!", "A new type has been updated!", "success");
+                    this.getItem();
+                    window.scrollTo(0,0);
                 })
                 .catch(err => {
                     this.errorMessages(err.response.data);

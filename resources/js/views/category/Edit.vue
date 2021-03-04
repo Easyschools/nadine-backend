@@ -86,8 +86,10 @@
                     name_en: this.item.name_en,
                 })
                     .then(response => {
-                        this.$router.push('/admin/category');
-                        swal("Good job!", "A new type has been updated!", "success");
+                        // this.$router.push('/admin/category');
+                        swal("Good job!", "A new category has been updated!", "success");
+                        this.getItem();
+                        window.scrollTo(0,0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

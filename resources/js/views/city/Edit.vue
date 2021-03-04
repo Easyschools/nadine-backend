@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/lesson" class="btn btn-secondary">
+                <router-link to="/admin/city" class="btn btn-secondary">
                     Cancel
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
@@ -180,8 +180,10 @@ export default {
             let data = this.getFormData(formData);
             axios.post('/city/edit/', data).then(response => {
                 this.disableButton = false;
-                this.$router.push('/admin/city');
+                // this.$router.push('/admin/city');
                 swal("Good job!", "A new city has been updated!", "success");
+                this.getItem();
+                window.scrollTo(0,0);
             }).catch(err => {
                 this.disableButton = false;
                 this.errorMessages(err.response.data);

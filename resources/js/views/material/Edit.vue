@@ -86,8 +86,10 @@
                     name_en: this.item.name_en,
                 })
                     .then(response => {
-                        this.$router.push('/admin/material');
+                        // this.$router.push('/admin/material');
                         swal("Good job!", "A new material has been updated!", "success");
+                        this.getItem();
+                        window.scrollTo(0,0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);

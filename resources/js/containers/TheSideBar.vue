@@ -10,7 +10,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/city">
                             <span class="pcoded-micon">
-                                <i class="fas fa-list-ol"></i>
+                                <i class="fas fa-city"></i>
                             </span>
                             <span class="pcoded-mtext">Cities</span>
                         </router-link>
@@ -22,7 +22,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/slider">
                             <span class="pcoded-micon">
-                                <i class="fas fa-list-ol"></i>
+                                <i class="fas fa-images"></i>
                             </span>
                             <span class="pcoded-mtext">Sliders</span>
                         </router-link>
@@ -30,7 +30,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/information">
                             <span class="pcoded-micon">
-                                <i class="fas fa-list-ol"></i>
+                                <i class="fas fa-id-card"></i>
                             </span>
                             <span class="pcoded-mtext">Contact Info</span>
                         </router-link>
@@ -42,7 +42,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/category">
                             <span class="pcoded-micon">
-                                <i class="fas fa-list-ol"></i>
+                                <i class="fas fa-th-large"></i>
                             </span>
                             <span class="pcoded-mtext">Categories</span>
                         </router-link>
@@ -50,7 +50,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/tag">
                             <span class="pcoded-micon">
-                                <i class="feather icon-edit-1"></i>
+                                    <i class="fas fa-tags"></i>
                             </span>
                             <span class="pcoded-mtext">Tags</span>
                         </router-link>
@@ -81,7 +81,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/material">
                             <span class="pcoded-micon">
-                                <i class="feather icon-edit-1"></i>
+                                <i class="fas fa-thumbtack"></i>
                             </span>
                             <span class="pcoded-mtext">Materials</span>
                         </router-link>
@@ -89,7 +89,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/collection">
                             <span class="pcoded-micon">
-                                <i class="feather icon-edit-1"></i>
+                                <i class="fas fa-clone"></i>
                             </span>
                             <span class="pcoded-mtext">Collections</span>
                         </router-link>
@@ -105,7 +105,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/color">
                             <span class="pcoded-micon">
-                                <i class="feather icon-edit-1"></i>
+                                <i class="fas fa-palette"></i>
                             </span>
                             <span class="pcoded-mtext">Colors</span>
                         </router-link>
@@ -114,7 +114,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/brand">
                             <span class="pcoded-micon">
-                                <i class="feather icon-edit-1"></i>
+                                <i class="fas fa-copyright"></i>
                             </span>
                             <span class="pcoded-mtext">Brands</span>
                         </router-link>
@@ -127,7 +127,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/product">
                             <span class="pcoded-micon">
-                                <i class="fas fa-book-open"></i>
+                                <i class="fas fa-couch"></i>
                             </span>
                             <span class="pcoded-mtext">Products</span>
                         </router-link>
@@ -135,7 +135,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/favourite">
                             <span class="pcoded-micon">
-                                <i class="fas fa-book-open"></i>
+                                <i class="fas fa-star"></i>
                             </span>
                             <span class="pcoded-mtext">Favourites</span>
                         </router-link>
@@ -173,7 +173,7 @@
                     <li class="nav-item pcoded-hasmenu">
                         <router-link to="/admin/offer">
                             <span class="pcoded-micon">
-                                <i class="feather icon-users"></i>
+                                <i class="fas fa-percentage"></i>
                             </span>
                             <span class="pcoded-mtext">Offers</span>
                         </router-link>

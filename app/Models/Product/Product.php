@@ -19,6 +19,7 @@ class Product extends Model
         'stock',
         'weight',
         'price',
+        'price_after_discount',
         'collection_id',
         'category_id',
         'tag_id',

@@ -21,24 +21,24 @@ class UpdateOrderApiController extends Controller
             ->only(['updateStatus','updatePayment']);
         $this->orderService = $orderService;
     }
-
-    public function updateStatus(OrderRequest $request)
-    {
-        $process = $this->orderService->updateStatus($request);
-        if (!$process) {
-            return $this->sendError(['sorry, cant update this order']);
-        }
-        return $this->sendResponse($process);
-    }
-
-    public function updatePayment(OrderRequest $request)
-    {
-        $process = $this->orderService->updatePayment($request);
-        if (!$process) {
-            return $this->sendError(['sorry, cant update this order']);
-        }
-        return $this->sendResponse($process);
-    }
+//
+//    public function updateStatus(OrderRequest $request)
+//    {
+//        $process = $this->orderService->updateStatus($request);
+//        if (!$process) {
+//            return $this->sendError(['sorry, cant update this order']);
+//        }
+//        return $this->sendResponse($process);
+//    }
+//
+//    public function updatePayment(OrderRequest $request)
+//    {
+//        $process = $this->orderService->updatePayment($request);
+//        if (!$process) {
+//            return $this->sendError(['sorry, cant update this order']);
+//        }
+//        return $this->sendResponse($process);
+//    }
 
     public function recalculate(OrderRequest $request)
     {
