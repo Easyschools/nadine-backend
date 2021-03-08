@@ -111,14 +111,14 @@
                         </router-link>
                     </li>
 
-                    <li class="nav-item pcoded-hasmenu">
-                        <router-link to="/admin/brand">
-                            <span class="pcoded-micon">
-                                <i class="fas fa-copyright"></i>
-                            </span>
-                            <span class="pcoded-mtext">Brands</span>
-                        </router-link>
-                    </li>
+                    <!--<li class="nav-item pcoded-hasmenu">-->
+                        <!--<router-link to="/admin/brand">-->
+                            <!--<span class="pcoded-micon">-->
+                                <!--<i class="fas fa-copyright"></i>-->
+                            <!--</span>-->
+                            <!--<span class="pcoded-mtext">Brands</span>-->
+                        <!--</router-link>-->
+                    <!--</li>-->
 
 
                     <li class="nav-item pcoded-menu-caption">
