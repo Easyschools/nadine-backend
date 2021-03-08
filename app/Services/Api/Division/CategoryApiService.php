@@ -20,6 +20,7 @@ Class CategoryApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->setColumns(['id', 'name_ar', 'name_en']);
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }

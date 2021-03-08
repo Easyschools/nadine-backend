@@ -27,7 +27,12 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
         $this->setRelations([
-            'variants' ,
+            'variants' => function ($variant) {
+                $variant->with(
+                    'Color:id,name_en,name_ar,code',
+                    'Dimension:id,dimension'
+                );
+            },
             'tag',
             'category'
         ]);
@@ -51,8 +56,8 @@ class ProductApiService extends AppRepository
     public function get($request)
     {
         $this->setRelations([
-            'variants' =>function($variant){
-                $variant->with(['color','dimension']);
+            'variants' => function ($variant) {
+                $variant->with(['color', 'dimension']);
             },
             'tag',
             'category'

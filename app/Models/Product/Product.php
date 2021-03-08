@@ -32,6 +32,7 @@ class Product extends Model
         'name',
         'currency',
         'image',
+        'type',
         'description',
     ];
 
@@ -79,6 +80,10 @@ class Product extends Model
     public function getCurrencyAttribute()
     {
         return 'pound';
+    }
+    public function getTypeAttribute()
+    {
+        return $this->category->name;
     }
 
 }
