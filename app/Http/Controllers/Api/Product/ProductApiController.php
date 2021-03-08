@@ -44,15 +44,22 @@ class ProductApiController extends Controller
         return $process;
     }
 
-    public function create(Request $request)
+    public function create(ProductRequest $request)
     {
         $process = $this->productApiService->createProduct($request);
         return $this->sendResponse($process);
     }
 
-    public function edit(Request $request)
+    public function edit(ProductRequest $request)
     {
         $process = $this->productApiService->updateProduct($request);
         return $this->sendResponse($process);
+    }
+
+    public function delete(ProductRequest $request)
+    {
+        $process = $this->productApiService->delete($request->id);
+        return $this->sendResponse($process);
+
     }
 }

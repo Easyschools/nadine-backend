@@ -68,7 +68,8 @@
                             <td>{{ item.category.name }}</td>
                             <td>{{ item.price }}</td>
                             <td>
-                                <img :src="item.image" class=" imageDisplay"/>
+                                <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
+                                <img v-else  src="../../../../public/images/no_image.jpg" class=" imageDisplay" alt="no Image"/>
                             </td>
                             <td>
                                 <router-link

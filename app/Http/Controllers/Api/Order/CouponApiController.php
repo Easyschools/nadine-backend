@@ -50,4 +50,11 @@ class CouponApiController extends Controller
         $process = $this->couponApiService->editCoupon($request);
         return $this->sendResponse($process);
     }
+
+    public function delete(CouponRequest $request)
+    {
+        $process = $this->couponApiService->delete($request->id);
+        return $this->sendResponse($process);
+
+    }
 }

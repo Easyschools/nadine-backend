@@ -139,6 +139,8 @@ Route::group([
         Route::get('get', 'ProductApiController@read');
         Route::post('create', 'ProductApiController@create');
         Route::post('edit', 'ProductApiController@edit');
+        Route::delete('delete', 'ProductApiController@delete');
+
     });
 
 
