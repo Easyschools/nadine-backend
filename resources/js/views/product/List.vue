@@ -48,7 +48,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Slug</th>
+                            <th>Sku</th>
                             <th>Name AR</th>
                             <th>Name EN</th>
                             <th>Tag</th>
@@ -61,7 +61,7 @@
                         <tbody>
                         <tr v-for="(item,index) in items">
                             <td>{{ item.id }}</td>
-                            <td>{{ item.slug }}</td>
+                            <td>{{ item.sku }}</td>
                             <td>{{ item.name_ar }}</td>
                             <td>{{ item.name_en }}</td>
                             <td>{{ item.tag.name }}</td>
@@ -127,7 +127,7 @@
                     name_en: '',
                     tag: '',
                     category: '',
-                    slug: '',
+                    sku: '',
                     price: '',
                     image: null,
                     variants: [

@@ -6,7 +6,7 @@
                 <router-link
                     to="/admin/tag/create"
                     class="btn btn-outline-primary float-right">
-                   Add New
+                    Add New
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -17,6 +17,7 @@
                             <th>#</th>
                             <th>Name AR</th>
                             <th>Name En</th>
+                            <th>Category</th>
                             <th>Image</th>
                             <th>Options</th>
                         </tr>
@@ -26,9 +27,11 @@
                             <td>{{item.id}}</td>
                             <td>{{item.name_ar}}</td>
                             <td>{{item.name_en}}</td>
+                            <td>{{item.category.name}}</td>
                             <td>
                                 <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
-                                <img v-else  src="../../../../public/images/no_image.jpg" class=" imageDisplay" alt="no Image"/>
+                                <img v-else src="../../../../public/images/no_image.jpg" class=" imageDisplay"
+                                     alt="no Image"/>
                             </td>
                             <td>
                                 <router-link
@@ -79,6 +82,9 @@
                     id: null,
                     name_ar: '',
                     name_en: '',
+                    category: {
+                        name: null
+                    },
                     image: null
                 },
                 newItem: {

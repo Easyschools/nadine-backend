@@ -22,7 +22,7 @@ class TagApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
-
+        $this->setRelations(['category']);
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
