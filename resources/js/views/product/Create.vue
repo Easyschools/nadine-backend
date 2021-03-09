@@ -7,13 +7,14 @@
                 </div>
                 <div class="card-body">
                     <form>
+
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Slug</label>
+                                <label class="col-form-label">SKU</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="item.slug">
+                                <input type="text" class="form-control" v-model="item.sku">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -28,7 +29,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
+                                <label class="col-form-label">Name EN</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
@@ -71,19 +72,6 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="number"  class="form-control" v-model="item.price_after_discount">
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Weight</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.weight">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
                             </div>
                         </div>
 
@@ -320,10 +308,9 @@ export default {
             item: {
                 name_ar: '',
                 name_en: '',
+                sku: '',
                 description_ar: '',
                 description_en: '',
-                slug: '',
-                weight: 0,
                 tag: '',
                 category: '',
                 collection: '',

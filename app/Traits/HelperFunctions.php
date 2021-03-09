@@ -10,6 +10,7 @@ namespace App\Traits;
 
 use App\Models\User\Address;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 trait HelperFunctions
 {
@@ -60,7 +61,7 @@ trait HelperFunctions
         $string = preg_replace("/[\s_]/", $separator, $string);
         //limit slug to  $lettersCount = (100)
 
-        return str_limit($string, $lettersCount, '');
+        return Str::limit($string, $lettersCount, '');
     }
 
 

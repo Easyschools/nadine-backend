@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import alertsMixin from "./mixins/alertsMixin";
 import {PaginationPlugin, FormTagsPlugin} from 'bootstrap-vue'
 import store from "./store";
+
 require('./store/subscriber');
 // import {VueEditor} from "vue2-editor";
 
@@ -25,15 +26,11 @@ axios.interceptors.response.use(function (response) {
     }
     return Promise.reject(error)
 })
-
-
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/admin';
 store.dispatch('auth/attempt', localStorage.getItem('token'));
 
 Vue.mixin(alertsMixin);
 Vue.component('the-container', require('./containers/TheContainer').default);
-
-
 
 const app = new Vue({
     el: '#app',

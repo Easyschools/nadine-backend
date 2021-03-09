@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Unitart Dashboard</title>
+    <title>Arabic Book Dashboard</title>
     <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 11]>
@@ -20,7 +20,6 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset("/css/app.css")}}">
 
-    <link rel="stylesheet" href="{{asset("assets/css/perfect-scrollbar.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/style.css")}}">
 
     {{--<link rel="stylesheet" href="{{asset("assets/css/layout-rtl.css")}}">--}}
@@ -29,14 +28,11 @@
 </head>
 <body>
 <div id="app">
-<the-container></the-container>
+    <the-container></the-container>
 </div>
 {{--<script src="{{asset("assets/js/vendor-all.min.js")}}"></script>--}}
 <script src="{{asset("/js/app.js")}}"></script>
 <script src="{{asset("assets/js/plugins/bootstrap.min.js")}}"></script>
-<script src="{{asset('assets/js/plugins/prism.js')}}"></script>
-<script src="{{asset('assets/js/perfect-scrollbar.min.js')}}"></script>
-
 {{--<script src="{{asset("assets/js/ripple.js")}}"></script>--}}
 {{--<script src="{{asset("assets/js/pcoded.min.js")}}"></script>--}}
 {{--<script src="{{asset("assets/js/menu-setting.min.js")}}"></script>--}}
@@ -51,4 +47,3 @@
 </body>
 
 </html>
-

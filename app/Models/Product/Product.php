@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
+        'sku',
         'name_ar',
         'name_en',
         'description_ar',
         'description_en',
         'slug',
         'stock',
-        'weight',
         'price',
         'price_after_discount',
         'collection_id',

@@ -6,6 +6,7 @@ use App\Models\Option\Color;
 use App\Models\Product\Product;
 use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
+use App\Traits\HelperFunctions;
 
 
 class ProductApiService extends AppRepository
@@ -72,7 +73,7 @@ class ProductApiService extends AppRepository
     public function createProduct($request)
     {
 //        dd($request->all());
-
+        $request['slug'] = HelperFunctions::makeSlug($request->name_en);
         $product = Product::create($request->only([
             'name_ar',
             'name_en',
@@ -80,8 +81,8 @@ class ProductApiService extends AppRepository
             'description_en',
             'slug',
             'stock',
-            'weight',
             'price',
+            'sku',
             'price_after_discount',
             'collection_id',
             'category_id',
@@ -114,8 +115,8 @@ class ProductApiService extends AppRepository
             'description_en',
             'slug',
             'stock',
-            'weight',
             'price',
+            'sku',
             'price_after_discount',
             'collection_id',
             'category_id',

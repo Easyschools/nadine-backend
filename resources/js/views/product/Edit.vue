@@ -10,10 +10,10 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Slug</label>
+                                <label class="col-form-label">SKU</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="item.slug">
+                                <input type="text" class="form-control" v-model="item.sku">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -32,9 +32,7 @@
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
+
                             </div>
                         </div>
                         <div class="row form-group">
@@ -76,15 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="row form-group">
 
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Weight</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="number"  class="form-control" v-model="item.weight">
-                            </div>
-                        </div>
 
 
                         <div class="row form-group">
@@ -321,6 +311,7 @@
             return {
                 disableButton: false,
                 item: {
+                    sku: '',
                     name_ar: '',
                     name_en: '',
                     description_ar: '',
