@@ -378,7 +378,7 @@ function configRoutes() {
                     component: productCreate,
                 },
                 {
-                    path: 'edit/:id',
+                    path: 'edit/:slug',
                     component: productEdit,
                 }
             ]

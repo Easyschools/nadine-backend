@@ -3,39 +3,39 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit Tag</h5>
+                    <h5>تعديل توع</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
-                            </div>
                         </div>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
-                            </div>
                         </div>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الفئة</label>
+                            </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{category.name_ar }} -
                                         {{category.name_en}}
                                     </option>
                                 </select>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Category</label>
                             </div>
                         </div>
 
@@ -44,17 +44,17 @@
                         </div>
 
                         <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الصورة</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Image</label>
                             </div>
 
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/tag" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">Update</button>
+                            <router-link to="/admin/tag" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
                         </div>
                     </form>
                 </div>

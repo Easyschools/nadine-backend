@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit City</h5>
+                    <h5>تعديل المدينة</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -11,7 +11,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
+                                <label class="col-form-label">الاسم بالعربية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
@@ -21,7 +21,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
@@ -45,7 +45,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addDistrict()">
-                    Add New City District
+                    اضافة جديد منظقة
                 </button>
             </div>
 
@@ -60,7 +60,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#district'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        District {{ index }}
+                                        منطقة {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -75,7 +75,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                District {{ index }}
+                                                منطقة {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -91,7 +91,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Name AR</label>
+                                                <label style="font-weight: bold;">الاسم بالعربية</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <input type="text" v-model="district.name_ar"
@@ -100,7 +100,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Name EN</label>
+                                                <label style="font-weight: bold;">الاسم بالانجليزية</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <input type="text" v-model="district.name_en"
@@ -123,10 +123,10 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/city" class="btn btn-secondary">
-                    Cancel
+                    الغاء
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    Add
+                    تعديل
                 </button>
             </div>
         </div>

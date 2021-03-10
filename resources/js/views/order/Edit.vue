@@ -3,14 +3,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit Product</h5>
+                    <h5>تعديل منتج</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Code</label>
+                                <label class="col-form-label">الكود</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="text" class="form-control" v-model="item.code">
@@ -19,7 +19,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">User Name</label>
+                                <label class="col-form-label">المستخدم</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="text" class="form-control" v-model="item.user.name">
@@ -28,7 +28,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Address</label>
+                                <label class="col-form-label">العنوان</label>
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.address_id">
@@ -40,7 +40,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Order Status</label>
+                                <label class="col-form-label">حالة الطلب</label>
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.order_status_id">
@@ -53,7 +53,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Coupon</label>
+                                <label class="col-form-label">كوبون</label>
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.coupon_id">
@@ -67,7 +67,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Payment Type</label>
+                                <label class="col-form-label">نوع الدفع</label>
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.payment_type_id">
@@ -82,7 +82,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Subtotal</label>
+                                <label class="col-form-label">القيمة الكلية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="number" class="form-control" v-model="item.subtotal">
@@ -92,7 +92,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Coupon Price</label>
+                                <label class="col-form-label">سعر الكوبون</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="number" class="form-control" v-model="item.coupon_price">
@@ -102,7 +102,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Shipping Price</label>
+                                <label class="col-form-label">تكلفة التوصيل</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="number" class="form-control" v-model="item.shipping_price">
@@ -112,7 +112,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Grand Total</label>
+                                <label class="col-form-label">المبلغ المدفوع</label>
                             </div>
                             <div class="col-sm-9">
                                 <input disabled type="number" class="form-control" v-model="item.grand_total">
@@ -133,7 +133,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addOrderItem()">
-                    Add New Product OrderItem
+                    اضافة جديد منتج القطع
                 </button>
             </div>
 
@@ -148,7 +148,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#order_item'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        Item {{ index }}
+                                        قطعة {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -163,7 +163,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                Item {{ index }}
+                                                قطعة {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -204,7 +204,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Product</label>
+                                                <label style="font-weight: bold;">منتج</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <select class="form-control" v-on:change="getVariants"
@@ -217,7 +217,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Variant</label>
+                                                <label style="font-weight: bold;">نوع</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <select class="form-control" @change="uploadOrderItemImage(index)"
@@ -235,7 +235,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Quantity</label>
+                                                <label style="font-weight: bold;">الكمية</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
 
@@ -245,7 +245,7 @@
                                             </div>
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Item Price</label>
+                                                <label style="font-weight: bold;">سعر القطعة</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
 
@@ -255,7 +255,7 @@
                                             </div>
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">Total Item Price</label>
+                                                <label style="font-weight: bold;">السعر الكلي</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
 
@@ -280,10 +280,10 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/order" class="btn btn-secondary">
-                    Cancel
+                    الغاء
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    Add
+                    اضافة
                 </button>
             </div>
         </div>

@@ -8,9 +8,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>phone</th>
-                            <th>email</th>
-                            <th>Options</th>
+                            <th>التليفون</th>
+                            <th>الايميل</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,7 +35,7 @@
                                 <router-link
                                     :to="{path:'/admin/Information/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                             </td>
                         </tr>

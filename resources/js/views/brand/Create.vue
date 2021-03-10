@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New Brand</h5>
+                    <h5>اضافة جديد Brand</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -13,7 +13,7 @@
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
+                                <label class="col-form-label">الاسم بالعربية</label>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -25,7 +25,7 @@
                                 <!--</select>-->
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
                             </div>
                         </div>
 
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/brand" class="btn btn-secondary">Cancel</router-link>
+                            <router-link to="/admin/brand" class="btn btn-secondary">الغاء</router-link>
                             <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </form>

@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New Customer</h5>
+                    <h5>اضافة جديد Customer</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -21,7 +21,7 @@
 
                                     <div class="col-sm-3">
                                         <label style="font-weight: bold;"
-                                               class="col-form-label ">Image</label>
+                                               class="col-form-label ">الصورة</label>
                                     </div>
 
                                     <div class="col-md-9">
@@ -37,7 +37,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name</label>
+                                <label class="col-form-label">الاسم</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name">
@@ -48,7 +48,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Email</label>
+                                <label class="col-form-label">البريد الالكترونى</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.email">
@@ -59,7 +59,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Banned</label>
+                                <label class="col-form-label">محظور</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.is_ban">
@@ -69,7 +69,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Phone</label>
+                                <label class="col-form-label">التليفون</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.phone">
@@ -86,7 +86,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addAddress()">
-                    Add New Customer Address
+                    اضافة جديد عنوان للمستخدم
                 </button>
             </div>
 
@@ -101,7 +101,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#address'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        Address {{ index }}
+                                        عنوان {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -116,7 +116,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                Address {{ index }}
+                                                عنوان {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -170,10 +170,10 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/lesson" class="btn btn-secondary">
-                    Cancel
+                    الغاء
                 </router-link>
                 <button type="button" @click="createItem" class="btn btn-primary">
-                    Add
+                    اضافة
                 </button>
             </div>
         </div>

@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Tags</h5>
+                <h5 style="font-size: 35px">الأنواع</h5>
                 <router-link
                     to="/admin/tag/create"
                     class="btn btn-outline-primary float-right">
-                    Add New
+                    اضافة جديد
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -15,11 +15,11 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name AR</th>
-                            <th>Name En</th>
-                            <th>Category</th>
-                            <th>Image</th>
-                            <th>Options</th>
+                            <th>الاسم بالعربية</th>
+                            <th>الاسم بالانجليزية</th>
+                            <th>الفئة</th>
+                            <th>الصورة</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,18 +30,18 @@
                             <td>{{item.category.name}}</td>
                             <td>
                                 <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
-                                <img v-else src="../../../../public/images/no_image.jpg" class=" imageDisplay"
+                                <img v-else src="../../../images/no_image.jpg" class=" imageDisplay"
                                      alt="no Image"/>
                             </td>
                             <td>
                                 <router-link
                                     :to="{path:'/admin/tag/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -51,15 +51,8 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
+                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>

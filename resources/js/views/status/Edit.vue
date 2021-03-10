@@ -3,32 +3,32 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit Order Status</h5>
+                    <h5>تعديل حالة الطلب</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
-                            </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="item.name_en">
-                            </div>
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/order-status" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">Update</button>
+                            <router-link to="/admin/status" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
                         </div>
                     </form>
                 </div>

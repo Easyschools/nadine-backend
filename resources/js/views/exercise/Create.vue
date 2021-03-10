@@ -52,7 +52,7 @@
                                             type="button"
                                             @click="item.parts.push({title: null,questions:[{question:null,answer: null}]})"
                                             style="display: flex ; margin-right: auto">
-                                        Add قسم جديد
+                                        اضافة قسم جديد
                                     </button>
                                 </div>
                                 <div class="card">
@@ -146,9 +146,9 @@
 
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/exercise" class="btn btn-secondary">Cancel</router-link>
+                            <router-link to="/admin/exercise" class="btn btn-secondary">الغاء</router-link>
                             <button type="button" :disabled="disableButton" @click="createItem()"
-                                    class="btn btn-primary">Add
+                                    class="btn btn-primary">اضافة
                             </button>
                         </div>
                     </form>

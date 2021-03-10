@@ -81,9 +81,10 @@ class Product extends Model
     {
         return 'pound';
     }
+
     public function getTypeAttribute()
     {
-        return $this->category->name;
+        return $this->category? $this->category->name : '';
     }
 
 }

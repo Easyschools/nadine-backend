@@ -33,7 +33,7 @@
                                 <router-link
                                     :to="{path:'/admin/preposition/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"

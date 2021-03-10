@@ -25,7 +25,7 @@
                             <i class="feather icon-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-notification"
-                        style=" min-width: auto;">
+                             style="left: 0 !important; min-width: auto;">
                             <ul class="pro-body" style="padding: 0;">
                                 <!--                                <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>-->
                                 <!--                                <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>-->
@@ -33,7 +33,7 @@
                                     <a href="#" v-on:click="submit()" class="dropdown-item">
                                         <i class="feather icon-log-out"></i>
 
-                                    Logout
+                                    تسجيل الخروج
                                     </a></li>
                             </ul>
                         </div>

@@ -9,7 +9,7 @@
                     data-backdrop="static" data-keyboard="false"
                     data-whatever="@getbootstrap"
                     class="btn btn-outline-primary float-right">
-                    Add New
+                    اضافة جديد
                 </button>
             </div>
             <div class="card-body table-border-style">
@@ -18,10 +18,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name AR</th>
-                            <th>Name EN</th>
-                            <th>Color</th>
-                            <th>Options</th>
+                            <th>الاسم بالعربية</th>
+                            <th>الاسم بالانجليزية</th>
+                            <th>اللون</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -31,9 +31,9 @@
                             <td>
                                 {{ item.name_en }}
                             </td>
-                            <td  class="DisplayColor" >
-                                <div  class="myDisplayDiv" v-bind:style="{ backgroundColor: item.code}" >
-<!--                                {{ item.color }}-->
+                            <td class="DisplayColor">
+                                <div class="myDisplayDiv" v-bind:style="{ backgroundColor: item.code}">
+                                    <!--                                {{ item.color }}-->
                                     &nbsp;
                                 </div>
                             </td>
@@ -41,11 +41,11 @@
                                 <router-link
                                     :to="{path:'/admin/color/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -55,15 +55,8 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
+                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
                 ></b-pagination>
             </div>
 
@@ -72,7 +65,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Color</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">اضافة جديد Color</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -80,12 +73,12 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Name Ar:</label>
+                                    <label for="recipient-name" class="col-form-label">الاسم بالعربية:</label>
                                     <input type="text" v-model="newItem.name_ar" class="form-control"
                                            id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Name EN:</label>
+                                    <label class="col-form-label">الاسم بالانجليزية:</label>
                                     <input type="text" v-model="newItem.name_en" class="form-control"
                                            id="recipient-name_ar">
 
@@ -100,7 +93,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                             <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </div>
@@ -111,99 +104,99 @@
 </template>
 
 <script>
-import {Chrome} from 'vue-color'
+    import {Chrome} from 'vue-color'
 
-export default {
-    name: "List",
-    components: {
-        'chrome-picker': Chrome,
-    },
-    data() {
-        return {
-            perPage: 3,
-            currentPage: 1,
-            rows: 15,
-            items: [],
-            show: false,
-            colors: "#194d33",
-            item: {
-                id: null,
-                name_ar: '',
-                name_en: '',
-                code: ''
+    export default {
+        name: "List",
+        components: {
+            'chrome-picker': Chrome,
+        },
+        data() {
+            return {
+                perPage: 3,
+                currentPage: 1,
+                rows: 15,
+                items: [],
+                show: false,
+                colors: "#194d33",
+                item: {
+                    id: null,
+                    name_ar: '',
+                    name_en: '',
+                    code: ''
+                },
+                newItem: {
+                    name_ar: null,
+                    name_en: null,
+                    code: null
+                }
+            }
+        },
+        created() {
+            this.show = true;
+            this.getAll();
+        },
+        methods: {
+            getAll() {
+                axios.get('/color/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
+                    this.items = response.data.data.data;
+                    this.currentPage = response.data.data.current_page
+                    this.perPage = response.data.data.per_page
+                    this.rows = response.data.data.total
+                })
+                    .catch(err => console.log(err));
             },
-            newItem: {
-                name_ar: null,
-                name_en: null,
-                code: null
+            createItem() {
+                let color = this.colors.hex;
+                this.newItem.code = color;
+                axios.post('/color/create', this.newItem).then(response => {
+                    console.log(response.data.data);
+                    this.newItem = {name_ar: null, name_en: null, code: null};
+                    this.getAll();
+                    // this.items.unshift(this.newItem);
+                    $('#exampleModal').modal('hide');
+                    swal("Good job!", "A new Color has been added!", "success");
+                })
+                    .catch(err => {
+                        this.errorMessages(err.response.data);
+                        console.log(err)
+                    });
+            },
+            deleteItem(id, index) {
+                swal({
+                    title: "Are you sure ?",
+                    text: "you will not be able to revert deleted items.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then(willDelete => {
+                    if (willDelete) {
+                        axios
+                            .delete("color/delete?id=" + id)
+                            .then(res => {
+                                this.items.splice(index, 1);
+                                swal("Deleted Successfully", {
+                                    icon: "success"
+                                });
+                            })
+                            .catch(error => console.log(error));
+                    } else {
+                        swal("Items are not deleted, please check again!");
+                    }
+                });
             }
         }
-    },
-    created() {
-        this.show = true;
-        this.getAll();
-    },
-    methods: {
-        getAll() {
-            axios.get('/color/all', {params: {page: this.currentPage, is_paginate: 1}}).then(response => {
-                this.items = response.data.data.data;
-                this.currentPage = response.data.data.current_page
-                this.perPage = response.data.data.per_page
-                this.rows = response.data.data.total
-            })
-                .catch(err => console.log(err));
-        },
-        createItem() {
-            let color = this.colors.hex;
-            this.newItem.code = color;
-            axios.post('/color/create', this.newItem).then(response => {
-                console.log(response.data.data);
-                this.newItem = {name_ar: null, name_en: null, code: null};
-                this.getAll();
-                // this.items.unshift(this.newItem);
-                $('#exampleModal').modal('hide');
-                swal("Good job!", "A new Color has been added!", "success");
-            })
-                .catch(err => {
-                    this.errorMessages(err.response.data);
-                    console.log(err)
-                });
-        },
-        deleteItem(id, index) {
-            swal({
-                title: "Are you sure ?",
-                text: "you will not be able to revert deleted items.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then(willDelete => {
-                if (willDelete) {
-                    axios
-                        .delete("color/delete?id=" + id)
-                        .then(res => {
-                            this.items.splice(index, 1);
-                            swal("Deleted Successfully", {
-                                icon: "success"
-                            });
-                        })
-                        .catch(error => console.log(error));
-                } else {
-                    swal("Items are not deleted, please check again!");
-                }
-            });
-        }
     }
-}
 </script>
 
 <style scoped>
 
-.DisplayColor{
-    width: 50px;
+    .DisplayColor {
+        width: 50px;
 
-}
+    }
 
-.myDisplayDiv{
-    content: "";
-}
+    .myDisplayDiv {
+        content: "";
+    }
 </style>

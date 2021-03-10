@@ -85,7 +85,8 @@ class ProductRequest extends FormRequest
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:products,id'
+//            'id' => 'required|exists:products,id',
+            'slug' => 'required|exists:products,slug'
         ];
     }
 

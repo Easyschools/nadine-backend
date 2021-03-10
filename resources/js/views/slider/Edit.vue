@@ -3,50 +3,47 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit الاعراب</h5>
+                    <h5>تعديل واجهة المستخدم</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
-                            </div>
                         </div>
                         <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
-                            </div>
                         </div>
 
 
 
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الوصف بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.text_ar">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Text AR</label>
-                            </div>
                         </div>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الوصف بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.text_en">
-                                <!--<select class="form-control" v-model="item.name_en">-->
-                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
-                                <!--</select>-->
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Text En</label>
                             </div>
                         </div>
 
@@ -55,17 +52,17 @@
                         </div>
 
                         <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">صورة</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Image</label>
                             </div>
 
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/slider" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">Update</button>
+                            <router-link to="/admin/slider" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
                         </div>
                     </form>
                 </div>

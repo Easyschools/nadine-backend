@@ -3,35 +3,35 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New Order Status</h5>
+                    <h5>اضافة جديد حالة الطلب</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
                             </div>
                         </div>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                                 <!--<select class="form-control" v-model="item.name_en">-->
                                 <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
                                 <!--</select>-->
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
-                            </div>
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/order-status" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
+                            <router-link to="/admin/status" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="createItem()" class="btn btn-primary">اضافة</button>
                         </div>
                     </form>
                 </div>

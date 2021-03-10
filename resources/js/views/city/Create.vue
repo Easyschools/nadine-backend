@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New City</h5>
+                    <h5>اضافة جديد مدينة</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -11,7 +11,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
+                                <label class="col-form-label">الاسم بالعربية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
@@ -20,7 +20,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name EN</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
@@ -40,7 +40,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addDistrict()">
-                    Add New District
+                    اضافة جديد منطقة
                 </button>
             </div>
 
@@ -55,7 +55,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#district'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        District {{ index }}
+                                        منطقة {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -70,7 +70,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                District {{ index }}
+                                                منطقة {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -86,7 +86,7 @@
 
 
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Name AR</label>
+                                                <label class="col-form-label">الاسم بالعربية</label>
                                             </div>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" v-model="district.name_ar">
@@ -94,7 +94,7 @@
 
 
                                             <div class="col-sm-3">
-                                                <label class="col-form-label">Name EN</label>
+                                                <label class="col-form-label">الاسم بالانجليزية</label>
                                             </div>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" v-model="district.name_en">
@@ -115,11 +115,11 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/lesson" class="btn btn-secondary">
-                    Cancel
+                <router-link to="/admin/city" class="btn btn-secondary">
+                    الغاء
                 </router-link>
                 <button type="button" @click="createItem" class="btn btn-primary">
-                    Add
+                    اضافة
                 </button>
             </div>
         </div>

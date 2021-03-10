@@ -3,75 +3,75 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New Offer</h5>
+                    <h5>اضافة جديد عرض</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
 
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
-                            </div>
                         </div>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
                             </div>
                         </div>
                         <div class="row form-group ">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">نسبة مئوية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="checkbox"
                                        class="form-control " v-model="item.is_percentage">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Is Percentage</label>
-                            </div>
                         </div>
 
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">التخفيض</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="number" autocomplete="off" class="form-control" v-model="item.discount">
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Discount</label>
-                            </div>
                         </div>
 
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">تاريخ الانتهاء</label>
+                            </div>
                             <div class="col-sm-9 text-center">
                                 <date-picker v-model="item.expire_at" valueType="format"></date-picker>
                                 <!--<datetime ></datetime>-->
                                 <!--<input type="date" class="form-control" v-model="item.expire_at">-->
 
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Expire At</label>
-                            </div>
                         </div>
 
 
                         <div class="row form-group">
 
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الفئة</label>
+                            </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{category.name_ar }} -
                                         {{category.name_en}}
                                     </option>
                                 </select>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Category</label>
                             </div>
                         </div>
 
@@ -81,18 +81,18 @@
 
                         <div class="row form-group">
 
-                            <div class="col-sm-9">
-                                <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div>
 
                             <div class="col-sm-3">
-                                <label class="col-form-label ">Image</label>
+                                <label class="col-form-label ">الصورة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
                             </div>
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/offer" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
+                            <router-link to="/admin/offer" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="createItem()" class="btn btn-primary">اضافة</button>
                         </div>
                     </form>
                 </div>

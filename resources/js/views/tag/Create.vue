@@ -3,44 +3,44 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New Tag</h5>
+                    <h5>اضافة جديد توع</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالعربية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
-                            </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
                             </div>
                         </div>
                         <div class="row form-group">
 
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الاسم بالانجليزية</label>
+                            </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                                 <!--<select class="form-control" v-model="item.name_en">-->
                                 <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
                                 <!--</select>-->
                             </div>
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
-                            </div>
                         </div>
 
 
                         <div class="row form-group">
 
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الفئة</label>
+                            </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{category.name_ar }} - {{category.name_en}}
                                     </option>
                                 </select>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <label class="col-form-label">Category</label>
                             </div>
                         </div>
 
@@ -50,12 +50,12 @@
 
                         <div class="row form-group">
 
-                            <div class="col-sm-9">
-                                <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div>
 
                             <div class="col-sm-3">
-                                <label class="col-form-label ">Image</label>
+                                <label class="col-form-label ">الصورة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
                             </div>
                             <!--<div class="col-sm-9">-->
                             <!--<b-form-tags input-id="tags-basic" v-model="item.text" class="mb-2"></b-form-tags>-->
@@ -66,8 +66,8 @@
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/tag" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
+                            <router-link to="/admin/tag" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="createItem()" class="btn btn-primary">اضافة</button>
                         </div>
                     </form>
                 </div>

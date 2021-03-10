@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Products</h5>
+                <h5 style="font-size: 35px">منتجات</h5>
                 <router-link
                     to="/admin/product/create"
                     class="btn btn-outline-primary float-right">
-                    Add New
+                    اضافة جديد
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -14,7 +14,7 @@
                     <div class="row ">
 
                         <div class="col-md-4">
-                            <div id="report-table_filter" class="dataTables_filter"><label>Name:
+                            <div id="report-table_filter" class="dataTables_filter"><label>الاسم:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div id="" class="dataTables_filter"><label>Category:
+                            <div id="" class="dataTables_filter"><label>الفئة:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div id="" class="dataTables_filter"><label>Tag:
+                            <div id="" class="dataTables_filter"><label>النوع:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -49,13 +49,13 @@
                         <tr>
                             <th>#</th>
                             <th>Sku</th>
-                            <th>Name AR</th>
-                            <th>Name EN</th>
-                            <th>Tag</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Image</th>
-                            <th>Options</th>
+                            <th>الاسم بالعربية</th>
+                            <th>الاسم بالانجليزية</th>
+                            <th>النوع</th>
+                            <th>الفئة</th>
+                            <th>السعر</th>
+                            <th>الصورة</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -69,17 +69,21 @@
                             <td>{{ item.price }}</td>
                             <td>
                                 <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
-                                <img v-else  src="../../../../public/images/no_image.jpg" class=" imageDisplay" alt="no Image"/>
+                                <img v-else src="../../../images/no_image.jpg" class=" imageDisplay"
+                                     alt="no Image"/>
                             </td>
                             <td>
                                 <router-link
-                                    :to="{path:'/admin/product/edit/' +item.id,params: { id: item.id }}"
+                                    :to="{path:'/admin/product/edit/' +item.slug,params: {
+                                     slug: item.slug
+                                     }}"
+
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -89,15 +93,7 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show"                     v-model="currentPage"                     @input="getAll"                     :total-rows="rows"                     :per-page="perPage"                     first-text="الاولى"                     prev-text="السابق"                     next-text="التالى"                     last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>

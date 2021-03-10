@@ -2,14 +2,14 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Categories</h5>
+                <h5 style="font-size: 35px">خامات</h5>
                 <button
                     type="button"
                     data-toggle="modal" data-target="#exampleModal"
                     data-backdrop="static" data-keyboard="false"
                     data-whatever="@getbootstrap"
                     class="btn btn-outline-primary float-right">
-                   Add New
+                    اضافة جديد
                 </button>
             </div>
             <div class="card-body table-border-style">
@@ -18,9 +18,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name AR</th>
-                            <th>Name EN</th>
-                            <th>Options</th>
+                            <th>الاسم بالعربية</th>
+                            <th>الاسم بالانجليزية</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,11 +34,11 @@
                                 <router-link
                                     :to="{path:'/admin/material/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -48,15 +48,8 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
+                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
                 ></b-pagination>
             </div>
 
@@ -65,7 +58,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Material</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">اضافة جديد خامة</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -73,12 +66,12 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Name Ar:</label>
+                                    <label for="recipient-name" class="col-form-label">الاسم بالعربية:</label>
                                     <input type="text" v-model="newItem.name_ar" class="form-control"
                                            id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Name EN:</label>
+                                    <label class="col-form-label">الاسم بالانجليزية:</label>
                                     <input type="text" v-model="newItem.name_en" class="form-control"
                                            id="recipient-name_ar">
                                     <!--<div class="col-md-4 text-center" style="margin-left: 100px">-->
@@ -88,7 +81,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
                             <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
                         </div>
                     </div>

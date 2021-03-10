@@ -3,7 +3,7 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>Edit Offer</h5>
+                    <h5>تعديل العرض</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -13,7 +13,7 @@
                                 <input type="text" class="form-control" v-model="item.name_ar">
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
+                                <label class="col-form-label">الاسم بالعربية</label>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -22,7 +22,7 @@
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
                             </div>
                         </div>
                         <div class="row form-group ">
@@ -32,7 +32,7 @@
                                        class="form-control" v-model="item.is_percentage">
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Is Percentage</label>
+                                <label class="col-form-label">نسبة مئوية</label>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                                 <input type="number" autocomplete="off" class="form-control" v-model="item.discount">
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Discount</label>
+                                <label class="col-form-label">التخفيض</label>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
 
                             </div>
                             <div class="col-sm-3">
-                                <label class="col-form-label">Expire At</label>
+                                <label class="col-form-label">تاريخ الانتهاء</label>
                             </div>
                         </div>
 
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Category</label>
+                                <label class="col-form-label">الفئة</label>
                             </div>
                         </div>
 
@@ -86,13 +86,13 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <label class="col-form-label ">Image</label>
+                                <label class="col-form-label ">الصورة</label>
                             </div>
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/offer" class="btn btn-secondary">Cancel</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">Update</button>
+                            <router-link to="/admin/offer" class="btn btn-secondary">الغاء</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
                         </div>
                     </form>
                 </div>

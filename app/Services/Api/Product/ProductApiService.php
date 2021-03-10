@@ -63,7 +63,7 @@ class ProductApiService extends AppRepository
             'tag',
             'category'
         ]);
-        return $this->find($request->id);
+        return $this->findByColumn('slug', $request->slug);
     }
 
     /**
@@ -74,6 +74,7 @@ class ProductApiService extends AppRepository
     {
 //        dd($request->all());
         $request['slug'] = HelperFunctions::makeSlug($request->name_en);
+
         $product = Product::create($request->only([
             'name_ar',
             'name_en',

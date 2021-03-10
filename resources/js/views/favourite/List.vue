@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Messages</h5>
+                <h5 style="font-size: 35px">المُفضلة</h5>
 
             </div>
             <div class="card-body table-border-style">
@@ -11,8 +11,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>User</th>
-                            <th>Product Slug</th>
+                            <th>المستخدم</th>
+                            <th>Slug المنتج</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -20,7 +20,7 @@
                             <td>{{item.id}}</td>
                             <td>{{item.user.name}} - {{item.user.phone}}</td>
                             <td>
-                                <router-link  :to="{path:'/admin/product/edit/' +item.product.id,params: { id: item.product.id }}">
+                                <router-link  :to="{path:'/admin/product/edit/' +item.product.slug,params: { slug: item.product.slug }}">
 
                                 {{item.product.slug}}
 
@@ -34,15 +34,7 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show"                     v-model="currentPage"                     @input="getAll"                     :total-rows="rows"                     :per-page="perPage"                     first-text="الاولى"                     prev-text="السابق"                     next-text="التالى"                     last-text="الاخير"
                 ></b-pagination>
             </div>
 

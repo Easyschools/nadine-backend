@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Add New ContactInfo</h5>
+                    <h5>اضافة جديد ContactInfo</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -19,7 +19,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name AR</label>
+                                <label class="col-form-label">الاسم بالعربية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
@@ -28,7 +28,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">Name En</label>
+                                <label class="col-form-label">الاسم بالانجليزية</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
@@ -154,7 +154,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addVariant()">
-                    Add New ContactInfo Variant
+                    اضافة جديد ContactInfo Variant
                 </button>
             </div>
 
@@ -291,10 +291,10 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/lesson" class="btn btn-secondary">
-                    Cancel
+                    الغاء
                 </router-link>
                 <button type="button" @click="createItem" class="btn btn-primary">
-                    Add
+                    اضافة
                 </button>
             </div>
         </div>

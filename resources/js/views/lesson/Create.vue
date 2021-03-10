@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5> Add درس جديد</h5>
+                <h5> اضافة درس جديد</h5>
             </div>
             <div class="card-body">
                 <form>
@@ -23,7 +23,7 @@
                             <div class="col-sm-12">
                                 <div class="col-md-12 text-right">
                                     <button class="btn btn-secondary mb-3" type="button" @click="addSection()">
-                                        Add قسم جديد
+                                        اضافة قسم جديد
                                     </button>
                                 </div>
                                 <div class="card">
@@ -172,10 +172,10 @@
 
                                 <div class="text-center">
                                     <router-link to="/admin/lesson" class="btn btn-secondary">
-                                        Cancel
+                                        الغاء
                                     </router-link>
                                     <button type="button" @click="createItem" :disabled="disableButton" class="btn btn-primary">
-                                        Add
+                                        اضافة
                                     </button>
                                 </div>
                             </div>

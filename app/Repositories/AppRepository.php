@@ -179,7 +179,9 @@ class AppRepository
 
     public function findByColumn($column, $value)
     {
-        return $this->model->select($this->columns)
+        return $this->model
+            ->select($this->columns)
+            ->with($this->relations)
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->where($column, $value)->first();

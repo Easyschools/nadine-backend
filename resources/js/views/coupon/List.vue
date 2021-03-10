@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Coupons</h5>
+                <h5 style="font-size: 35px">الكوبونات</h5>
                 <router-link
                     to="/admin/coupon/create"
                     class="btn btn-outline-primary float-right">
-                    Add New
+                    اضافة جديد
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -15,15 +15,15 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Code</th>
-                            <th>Users</th>
-                            <th>Is Percentage</th>
-                            <th>Value</th>
-                            <th>Max Usage</th>
-                            <th>Used Times</th>
-                            <th>Min Total</th>
+                            <th>الكود</th>
+                            <th>كل المستخدمين</th>
+                            <th>نسبة مئوية</th>
+                            <th>القيمة</th>
+                            <th>أقصى عدد للإستخدام</th>
+                            <th>عدد مرات الاستخدام</th>
+                            <th>قيمة الطلب</th>
                             <!--<th>min Total</th>-->
-                            <th>Options</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,11 +49,11 @@
                                 <router-link
                                     :to="{path:'/admin/coupon/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -63,15 +63,8 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
+                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>

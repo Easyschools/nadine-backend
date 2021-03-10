@@ -2,19 +2,19 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Products</h5>
-                <router-link
-                    to="/admin/product/create"
-                    class="btn btn-outline-primary float-right">
-                    Add New
-                </router-link>
+                <h5 style="font-size: 35px">طلبات</h5>
+                <!--<router-link-->
+                    <!--to="/admin/product/create"-->
+                    <!--class="btn btn-outline-primary float-right">-->
+                    <!--اضافة جديد-->
+                <!--</router-link>-->
             </div>
             <div class="card-body table-border-style">
                 <div class="table-responsive text-center">
                     <div class="row ">
 
                         <div class="col-md-4">
-                            <div id="report-table_filter" class="dataTables_filter"><label>Code:
+                            <div id="report-table_filter" class="dataTables_filter"><label>الكود:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="col-md-4">
-                            <div  class="dataTables_filter"><label>Category:
+                            <div  class="dataTables_filter"><label>الفئة:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="col-md-4">
-                            <div  class="dataTables_filter"><label>Tag:
+                            <div  class="dataTables_filter"><label>النوع:
                                 <input type="search"
                                        class="form-control form-control-sm"
                                        placeholder=""
@@ -50,18 +50,18 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Code</th>
-                            <th>User Name</th>
-                            <th>Address</th>
-                            <th>Status</th>
-                            <th>Payment Type</th>
-                            <th>Coupon</th>
-                            <th>subtotal</th>
-                            <th>Coupon Price</th>
-                            <th>Shipping Price</th>
-                            <th>Grand Total</th>
-                            <th>Notes</th>
-                            <th>Options</th>
+                            <th>الكود</th>
+                            <th>المستخدم</th>
+                            <th>العنوان</th>
+                            <th>الحالة</th>
+                            <th>نوع الدفع</th>
+                            <th>كوبون</th>
+                            <th>القيمة الكلية</th>
+                            <th>سعر الكوبون</th>
+                            <th>تكلفة التوصيل</th>
+                            <th>المبلغ المدفوع</th>
+                            <th>ملاحظات</th>
+                            <th>الخيارات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -82,11 +82,11 @@
                                 <router-link
                                     :to="{path:'/admin/order/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >Edit
+                                >تعديل
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">Delete
+                                        class="btn btn-outline-danger">حذف
                                 </button>
                             </td>
                         </tr>
@@ -96,15 +96,7 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"
-                    v-model="currentPage"
-                    @input="getAll"
-                    :total-rows="rows"
-                    :per-page="perPage"
-                    first-text="First"
-                    prev-text="Previous"
-                    next-text="Next"
-                    last-text="Last"
+                    v-if="show"                     v-model="currentPage"                     @input="getAll"                     :total-rows="rows"                     :per-page="perPage"                     first-text="الاولى"                     prev-text="السابق"                     next-text="التالى"                     last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>
