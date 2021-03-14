@@ -26,6 +26,20 @@
                             </div>
                         </div>
 
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الحالات</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" v-model="item.type">
+                                    <option value="active">نشطة</option>
+                                    <option value="inactive">غير نشطة</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="text-center mt-5">
                             <router-link to="/admin/status" class="btn btn-secondary">الغاء</router-link>
                             <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
@@ -47,6 +61,7 @@
                     id: null,
                     name_ar: null,
                     name_en: null,
+                    type: null,
                 },
 
             };

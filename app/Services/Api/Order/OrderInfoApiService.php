@@ -13,7 +13,7 @@ use App\Models\Order\Order;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Auth;
 
-class OrderInfoApiService extends AppRepository
+class OrderInfoApiService
 {
 
     private $order;
@@ -67,6 +67,12 @@ class OrderInfoApiService extends AppRepository
             'orderItems',
             'orderStatus'
         ]);
+//        if ($request->status){
+//            $this->order->paginateQuery()
+//            ->whereHas('orderStatus',function ($q){
+//                $q->
+//            });
+//        }
         return $this->order->paginate();
     }
 
@@ -79,7 +85,8 @@ class OrderInfoApiService extends AppRepository
             $conditions[] = ['code', 'like', '%' . $request->code . '%'];
         }
 
-        $this->setConditions($conditions);
+
+        $this->order->setConditions($conditions);
     }
 
 }

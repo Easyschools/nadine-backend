@@ -26,8 +26,11 @@ class CustomerApiService extends AppRepository
 
     public function updateCustomer(Request $request)
     {
-//        dd($request->all());
-        $userId = $this->getUserId($request->id);
+        if (Auth::user()->type == 1) {
+            $user = $this->find($request->id);
+        } else {
+            $user = Auth::user();
+        }
 
         $this->setConditions([['type', 2]]);
 
@@ -38,8 +41,7 @@ class CustomerApiService extends AppRepository
                 null : Auth::user()->phone_verified_at
         ]);
 
-        $user = $this->find($userId);
-        $this->update($userId,
+        $this->update($user->id,
             $request->only([
                 'phone',
                 'name',
@@ -65,10 +67,13 @@ class CustomerApiService extends AppRepository
         $this->setRelations([
             'addresses' => function ($address) {
                 $address->with([
-                    'city'
+                    'district' => function ($district) {
+                        $district->with('city');
+                    },
                 ]);
             }
         ]);
+
 
         $this->setColumns([
             'id',
@@ -82,7 +87,7 @@ class CustomerApiService extends AppRepository
         ]);
 
         $user = $this->find($userId);
-
+        $user['district_id'] = $user->district_id;
         return $user;
     }
 

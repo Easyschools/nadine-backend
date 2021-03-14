@@ -137,10 +137,24 @@
                                                 <label style="font-weight: bold;">المدينة</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
-                                                <select class="form-control" v-model="address.city_id">
+                                                <select v-on:change="getDistrict($event)" class="form-control"
+                                                        v-model="address.city_id">
                                                     <option v-for="city in cities" :value="city.id">
                                                         {{ city.name_ar }} -
                                                         {{ city.name_en }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-md-3 mt-4 mb-3">
+                                                <label style="font-weight: bold;">المنطقة</label>
+                                            </div>
+                                            <div class="col-md-9 mt-3">
+                                                <select class="form-control" v-model="address.district_id">
+                                                    <option v-for="district in districts" :value="district.id">
+                                                        {{ district.name_ar }} -
+                                                        {{ district.name_en }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -206,7 +220,8 @@
                         {
                             id: null,
                             address: null,
-                            city_id: null,
+                            district: {},
+                            district_id: null
                         },
                     ]
                 },
@@ -215,6 +230,12 @@
                     name_en: null,
                     name_ar: null
                 }],
+                districts: [{
+                    id: null,
+                    name_en: null,
+                    name_ar: null,
+                    city_id: null
+                }],
 
             };
         },
@@ -222,12 +243,24 @@
             this.item.id = this.$route.params.id;
             this.getItem();
             this.getCity();
+            this.getDistrict();
         },
         methods: {
             getCity() {
                 axios.get('city/all')
                     .then(response => {
                         this.cities = response.data.data
+                    })
+                    .catch(err => console.log(err))
+            },
+            getDistrict(e) {
+                axios.get('district/all', {
+                    params: {
+                        city_id: e ? e.target.value : null
+                    }
+                })
+                    .then(response => {
+                        this.districts = response.data.data
                     })
                     .catch(err => console.log(err))
             },
@@ -250,7 +283,7 @@
                     // this.$router.push('/admin/customer');
                     swal("Good job!", "A new customer has been updated!", "success");
                     this.getItem();
-                    window.scrollTo(0,0);
+                    window.scrollTo(0, 0);
                 }).catch(err => {
                     this.disableButton = false;
                     this.errorMessages(err.response.data);
@@ -261,7 +294,8 @@
                 this.item.addresses.push({
                     id: null,
                     address: null,
-                    city_id: null,
+                    district: {},
+                    district_id: null
                 })
             },
             getFormData(formData) {

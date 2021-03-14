@@ -1,17 +1,14 @@
 <?php
 
 
-
 Route::group([
     'namespace' => 'Api',
 ], function () {
 
 
-
-
     Route::group([
         'prefix' => 'admin',
-    'namespace' => 'Auth',
+        'namespace' => 'Auth',
     ], function () {
         Route::post('/login', 'AdminApiController@login');
         Route::post('/logout', 'AdminApiController@logout');
@@ -129,6 +126,17 @@ Route::group([
         Route::post('create', 'CityApiController@create');
         Route::post('edit', 'CityApiController@edit');
         Route::delete('delete', 'CityApiController@delete');
+    });
+
+    Route::group([
+        'prefix' => 'district',
+        'namespace' => 'Region',
+    ], function () {
+        Route::get('all', 'DistrictApiController@all');
+        Route::get('get', 'DistrictApiController@read');
+        Route::post('create', 'DistrictApiController@create');
+        Route::post('edit', 'DistrictApiController@edit');
+        Route::delete('delete', 'DistrictApiController@delete');
     });
 
     Route::group([
@@ -287,9 +295,11 @@ Route::group([
         'prefix' => 'cart',
         'namespace' => 'Order'
     ], function () {
-        Route::post('add-to-cart', 'CartApiController@create');
+        Route::post('add-to-cart', 'CartApiController@addToCart');
         Route::post('delete', 'CartApiController@delete');
+        Route::post('update', 'CartApiController@update');
         Route::get('all', 'CartApiController@index');
+
     });
 
 

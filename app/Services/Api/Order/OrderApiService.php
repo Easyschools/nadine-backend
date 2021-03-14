@@ -75,7 +75,7 @@ class OrderApiService extends AppRepository
     public function getOfferPrice($item)
     {
 //        dd($item->variant->product->category->offers()->first()->expire_at);
-        $offer = $item->variant->product->category->offers()->first()
+        $offer = $item->variant->product->category->offers()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
@@ -109,11 +109,12 @@ class OrderApiService extends AppRepository
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price', 'image')
+                $variant->select('id', 'product_id', 'additional_price', 'image' )
                     ->with([
                         'product' => function ($product) {
-                            $product->select('id', 'price', 'name_en', 'name_ar', 'tag_id',
-                                'category_id')
+                            $product->select('id', 'price','price_after_discount',
+                                'name_en', 'name_ar', 'tag_id',
+                                'category_id','slug')
                                 ->with([
                                     'category' => function ($category) {
                                         $category->select('id', 'name_ar', 'name_en')->with([
@@ -141,15 +142,15 @@ class OrderApiService extends AppRepository
 
             $offerItemPrice = $this->getOfferPrice($item);
 
-            $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item->variant->product->price_after_discount);
+            $itemPrice = ($offerItemPrice > 0 ? $offerItemPrice : $item->variant->product->price_after_discount);
 
-            $item['total_item_price'] = $item->quantity * $itemPrice;
+            $item['total_item_price'] = $item->quantity * ($itemPrice + $item->variant->additional_price);
 
             $item['item_price'] = $itemPrice;
 
             $this->subtotal += $item['total_item_price'];
 
-            $this->quantity += $item->variant->quantity;
+            $this->quantity += $item->quantity;
         }
 
         return [

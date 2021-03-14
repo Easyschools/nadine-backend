@@ -42,13 +42,13 @@ class OrderStatusApiController extends Controller
 
     public function create(OrderstatusRequest $request)
     {
-        $process = $this->orderStatusApiService->createOffer($request);
+        $process = $this->orderStatusApiService->createStatus($request);
         return $this->sendResponse($process);
     }
 
     public function edit(OrderstatusRequest $request)
     {
-        $process = $this->orderStatusApiService->editOffer($request);
+        $process = $this->orderStatusApiService->editStatus($request);
         return $this->sendResponse($process);
     }
     public function delete(OrderstatusRequest $request)

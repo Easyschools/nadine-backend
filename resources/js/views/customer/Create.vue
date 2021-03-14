@@ -145,6 +145,19 @@
                                                 </select>
                                             </div>
 
+                                            <div class="col-md-3 mt-4 mb-3">
+                                                <label style="font-weight: bold;">District</label>
+                                            </div>
+
+                                            <div class="col-md-9 mt-3">
+                                                <select class="form-control" v-model="address.district_id">
+                                                    <option v-for="district in districts" :value="district.id">
+                                                        {{ district.name_ar }} -
+                                                        {{ district.name_en }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
 
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold;">Address</label>
@@ -206,11 +219,18 @@
                         {
                             id: null,
                             address: null,
-                            city_id: null,
+                            district: null,
+                            city: null,
                         },
                     ]
                 },
                 cities: [{
+                    id: null,
+                    name_en: null,
+                    name_ar: null
+                }],
+
+                districts: [{
                     id: null,
                     name_en: null,
                     name_ar: null
@@ -247,7 +267,8 @@
                 this.item.addresses.push({
                     id: null,
                     address: null,
-                    city_id: null,
+                    district: null,
+                    city: null,
                 })
             },
             selectCategory: function (e) {

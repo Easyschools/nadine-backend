@@ -9,6 +9,7 @@ class OrderStatus extends Model
     protected $fillable = [
         'name_ar',
         'name_en',
+        'type',
     ];
 
 

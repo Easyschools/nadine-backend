@@ -20,11 +20,12 @@ class CartApiController extends Controller
         $this->cartApiService = $cartApiService;
     }
 
-    public function create(CartRequest $request)
+    public function addToCart(CartRequest $request)
     {
-        $this->cartApiService->create($request);
-        return $this->sendResponse(true);
+        $process = $this->cartApiService->addToCart($request);
+        return $this->sendResponse($process);
     }
+
 
     public function delete(CartRequest $request)
     {
@@ -32,11 +33,17 @@ class CartApiController extends Controller
         return $this->sendResponse($process);
     }
 
+
+    public function update(CartRequest $request)
+    {
+        $process = $this->cartApiService->updateCart($request);
+        return $this->sendResponse($process);
+    }
+
     public function index(CartRequest $request)
     {
-        $this->cartApiService->setConditions(['user_id' => Auth::id()]);
-        $this->cartApiService->setRelations(['variant']);
-        return $this->sendResponse($this->cartApiService->all());
+        $process = $this->cartApiService->index($request);
+        return $this->sendResponse($process);
     }
 
 }

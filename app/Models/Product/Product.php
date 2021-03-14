@@ -5,6 +5,7 @@ namespace App\Models\Product;
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
+use App\Models\Option\Color;
 use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,10 +30,10 @@ class Product extends Model
 
 
     protected $appends = [
-        'name',
         'currency',
         'image',
         'type',
+        'name',
         'description',
     ];
 
@@ -84,7 +85,28 @@ class Product extends Model
 
     public function getTypeAttribute()
     {
-        return $this->category? $this->category->name : '';
+        return $this->category ? $this->category->name : '';
     }
+
+    public function getTagsAttribute()
+    {
+        $arr = [];
+        if ($this->variants()->count()) {
+
+            foreach ($this->variants as $variant) {
+                $arr[] = $variant->color->name;
+                $arr[] = $variant->dimension->dimension;
+            }
+        }
+
+        // add tags of which has products
+        $arr = array_merge($arr,
+            Tag::whereHas('products', function ($q) {
+                $q->select('name_en', 'name_ar', 'id');
+            })->pluck('name_' . app()->getLocale())->toArray());
+
+        return $arr;
+    }
+
 
 }

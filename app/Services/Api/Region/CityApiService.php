@@ -23,7 +23,7 @@ class CityApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
-//        dd($this->conditions);
+
         $this->setRelations(['districts']);
 
         if ($request->is_paginate == 1) {
