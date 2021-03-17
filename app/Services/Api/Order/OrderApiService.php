@@ -257,8 +257,10 @@ class OrderApiService extends AppRepository
             ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
-//        Cart::where('user_id', Auth::id())
-//            ->delete();
+        Cart::where('user_id',$this->user_id)
+            ->delete();
+
+
         return $this->order;
     }
 

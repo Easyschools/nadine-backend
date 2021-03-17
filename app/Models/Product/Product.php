@@ -25,7 +25,6 @@ class Product extends Model
         'category_id',
         'tag_id',
         'material_id',
-        'tag_id',
     ];
 
 
@@ -99,11 +98,8 @@ class Product extends Model
             }
         }
 
-        // add tags of which has products
-        $arr = array_merge($arr,
-            Tag::whereHas('products', function ($q) {
-                $q->select('name_en', 'name_ar', 'id');
-            })->pluck('name_' . app()->getLocale())->toArray());
+        // add tag name of product
+        $arr []= $this->tag->name;
 
         return $arr;
     }

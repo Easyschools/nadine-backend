@@ -26,7 +26,27 @@ class OrderInfoApiService
     public function getUserOrders()
     {
         $this->order->setConditions([['user_id', Auth::id()]]);
-        return $this->order->paginate();
+        $this->order->setRelations([
+            'orderItems' => function ($item) {
+                $item->with([
+                    'variant' => function ($variant) {
+                        $variant->with([
+                            'product' => function ($product) {
+                                $product->with([
+                                    'variants' => function ($variantNest1) {
+                                        $variantNest1->with('color', 'dimension');
+                                    }
+                                ]);
+                            }
+                        ]);
+                    }
+                ]);
+            },
+            'address', 'coupon',
+            'user',
+            'paymentType',
+        ]);
+        return $this->order->all();
     }
 
     public function orderDetails($orderId)
@@ -48,7 +68,8 @@ class OrderInfoApiService
                 ]);
             },
             'address', 'coupon',
-            'user'
+            'user',
+            'paymentType',
         ]);
         return $this->order->find($orderId);
     }
