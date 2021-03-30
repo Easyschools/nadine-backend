@@ -12,13 +12,14 @@ namespace App\Http\Controllers\Api\Region;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Region\CountryRequest;
 use App\Services\Api\Region\CountryApiService;
+use App\Services\Dashboard\CountryService;
 
 class CountryApiController extends Controller
 {
 
     private $countryService;
 
-    public function __construct(CountryApiService $countryService)
+    public function __construct(CountryService $countryService)
     {
 //        $this->middleware('auth:api');
 //        $this->middleware('check.role:1,2 ')
