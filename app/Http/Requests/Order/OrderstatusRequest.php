@@ -45,6 +45,7 @@ class OrderstatusRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
+            'type' => 'required|in:active,inactive',
         ];
     }
 
@@ -54,6 +55,7 @@ class OrderstatusRequest extends FormRequest
             'id' => 'required|exists:order_statuses,id',
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
+            'type' => 'required|in:active,inactive',
         ];
     }
 

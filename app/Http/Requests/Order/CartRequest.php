@@ -28,7 +28,9 @@ class CartRequest extends FormRequest
         $endPoint = $this->segment($k);
         switch ($endPoint) {
             case 'add-to-cart':
-                return $this->createValidation();
+                return $this->addToCartValidation();
+            case 'update':
+                return $this->updateValidation();
             case 'delete':
                 return $this->idValidation();
             default:
@@ -36,12 +38,19 @@ class CartRequest extends FormRequest
         }
     }
 
-    private function createValidation()
+    private function addToCartValidation()
     {
         return [
-            'variants' => 'required|array',
-            'variants.*.variant_id' => 'required|integer|exists:variants,id',
-            'variants.*.quantity' => 'required|integer|min:1',
+            'variant_id' => 'required|integer|exists:variants,id',
+            'quantity' => 'required|min:1',
+        ];
+    }
+
+    private function updateValidation()
+    {
+        return [
+            'cart_id' => 'required|exists:carts,id',
+            'quantity' => 'required|min:1',
         ];
     }
 

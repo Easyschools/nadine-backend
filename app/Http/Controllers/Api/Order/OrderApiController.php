@@ -15,6 +15,8 @@ class OrderApiController extends Controller
         $this->middleware('auth:api');
         $this->middleware('check.role:1')
             ->only('updateStatus');
+//        $this->middleware('check.role:2')
+//            ->only('updateStatus','grandTotal' , 'checkout' );
         // $this->middleware('auth:api')->only('checkout');
         // $this->middleware('auth:web')
         //     ->only('checkout');

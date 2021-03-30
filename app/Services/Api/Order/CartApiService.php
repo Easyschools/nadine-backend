@@ -21,19 +21,65 @@ class CartApiService extends AppRepository
         parent::__construct($cart);
     }
 
-    public function create(Request $request)
+
+    public function index()
+    {
+        $this->setConditions([['user_id', Auth::id()]]);
+
+        $this->setRelations([
+            'variant' => function ($variant) {
+                $variant->select('id', 'product_id', 'dimension_id', 'image',
+                    'additional_price')->with([
+                    'product' => function ($product) {
+                        $product->select('id', 'name_ar', 'name_en','slug' ,
+                            'price_after_discount'
+                        );
+                    }
+                ]);
+            }
+        ]);
+
+        return $this->all();
+    }
+
+
+    public function addToCart($request)
     {
         $request->merge([
             'user_id' => Auth::id()
         ]);
-        // delete all carts when Auth customer choose different car model
-        foreach ($request->variants as $variant) {
-            $this->model->Create([
-                'variant_id' => $variant['variant_id'],
-                'user_id' => $request->user_id,
-                'quantity' => $variant['quantity']
+
+        $cart = $this->model->where('user_id', Auth::id())
+            ->where('variant_id', $request->variant_id)
+            ->first();
+
+
+        if ($cart) {
+            return $this->update($cart->id, [
+                'quantity' => $cart->quantity + 1
             ]);
         }
-        return;
+
+        return $this->model->create([
+            'variant_id' => $request['variant_id'],
+            'user_id' => $request->user_id,
+            'quantity' => $request['quantity']
+        ]);
+
     }
+
+
+    public function updateCart($request)
+    {
+        return $this->update($request->cart_id, $request->only(
+            'quantity'
+        ));
+    }
+
+    public function deleteFromCart($request)
+    {
+        return $this->model->delete($request->cart_id);
+    }
+
+
 }

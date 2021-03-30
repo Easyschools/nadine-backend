@@ -5,6 +5,7 @@ namespace App\Models\Product;
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
+use App\Models\Option\Color;
 use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,15 +25,14 @@ class Product extends Model
         'category_id',
         'tag_id',
         'material_id',
-        'tag_id',
     ];
 
 
     protected $appends = [
-        'name',
         'currency',
         'image',
         'type',
+        'name',
         'description',
     ];
 
@@ -84,7 +84,25 @@ class Product extends Model
 
     public function getTypeAttribute()
     {
-        return $this->category? $this->category->name : '';
+        return $this->category ? $this->category->name : '';
     }
+
+    public function getTagsAttribute()
+    {
+        $arr = [];
+        if ($this->variants()->count()) {
+
+            foreach ($this->variants as $variant) {
+                $arr[] = $variant->color->name;
+                $arr[] = $variant->dimension->dimension;
+            }
+        }
+
+        // add tag name of product
+        $arr []= $this->tag->name;
+
+        return $arr;
+    }
+
 
 }

@@ -42,23 +42,26 @@ Class OrderStatusApiService extends AppRepository
      * @param $request
      * @return mixed
      */
-    public function createOffer($request)
+    public function createStatus($request)
     {
         return $this->model->create($request->only(
             'name_ar',
-            'name_en'
+            'name_en',
+            'type'
         ));
     }
     /**
      * @param $request
      * @return mixed
      */
-    public function editOffer($request)
+    public function editStatus($request)
     {
         $model = $this->find($request->id);
         $model = $model->update($request->only(
             'name_ar',
-            'name_en'
+            'name_en',
+            'type'
+
         ));
 
         return $model;

@@ -38,6 +38,7 @@ class ProductApiService extends AppRepository
             'category'
         ]);
 
+
         if ($request->is_paginate == 1) {
             if ($request->tag) {
                 return $this->paginateOfTag(15, $request->tag);
@@ -47,7 +48,15 @@ class ProductApiService extends AppRepository
                 return $this->paginate();
             }
         }
-        return $this->all();
+
+
+        return $this->all()->map->append('currency',
+            'image',
+            'type',
+            'tags',
+            'name',
+            'description'
+        );
     }
 
     /**

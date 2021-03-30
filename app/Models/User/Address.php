@@ -2,7 +2,8 @@
 
 namespace App\Models\User;
 
-use App\Models\Region\City;
+use App\Models\Order\Order;
+use App\Models\Region\District;
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
@@ -14,7 +15,7 @@ class Address extends Model
      */
     protected $fillable = [
         'user_id',
-        'city_id',
+        'district_id',
         'address',
     ];
 
@@ -23,15 +24,22 @@ class Address extends Model
     {
         return 'address_id';
     }
-    public function city()
+
+    public function district()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(District::class);
     }
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
 }

@@ -59,15 +59,18 @@ class CustomerRequest extends FormRequest
 
     private function updateValidation()
     {
-        $id = Auth::id();
+        $id = $this->id ?? Auth::id();
+
         return [
-            'user_id' => 'exists:users,id',
+            'id' => 'exists:users,id',
             'name' => 'min:2|max:100',
 //            'image' => 'mimes:jpg,png,jpeg',
-            'phone' => 'unique:users,phone,' . $this->id,
+            'phone' => 'unique:users,phone,' . $id,
             'addresses' => 'array',
-            'addresses.*.city_id' => 'nullable|integer|exists:cities,id',
-            'addresses.*.address' => 'nullable|min:2',
+            'addresses.*.id' => 'nullable|exists:addresses,id',
+//            'addresses.*.city_id' => 'required|exists:cities,id',
+            'addresses.*.district_id' => 'required|exists:districts,id',
+            'addresses.*.address' => 'required|min:2',
         ];
     }
 

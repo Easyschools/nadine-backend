@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3.27|^8.0",
-        "doctrine/dbal":  "^2.0",
+        "doctrine/dbal": "^2.0",
         "elnooronline/laravel-bootstrap-forms": "^4.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -17,7 +17,8 @@
         "laravel/framework": "^7.29",
         "laravel/passport": "9.*",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^2.4"
+        "laravel/ui": "^2.4",
+        "sentry/sentry-laravel": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

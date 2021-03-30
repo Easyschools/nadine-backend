@@ -9,8 +9,11 @@
 namespace App\Traits;
 
 use App\Models\User\Address;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 trait HelperFunctions
 {
@@ -67,37 +70,92 @@ trait HelperFunctions
 
     static function UpdateAddressesForUser($user, $request)
     {
+//        DB::beginTransaction();
 
-        $addressOldIds = $user->addresses()->pluck('id')->toArray();
+        try {
+            $addressOldIds = $user->addresses()->pluck('id')->toArray();
 
-        $arr = [];
+            $arr = [];
 
-        if ($request->addresses){
+            if ($request->addresses) {
 
-            foreach ($request->addresses as $address) {
+                foreach ($request->addresses as $address) {
 
-                if ((int)$address['id'] != 0) {
-                    $user->addresses()->findOrFail((int)$address['id'])->update([
-                        'address' => $address['address'],
-                        'city_id' => (int)$address['city_id'],
-                    ]);
-                    $arr [] = (int)$address['id'];
+                    if (Auth::user()->type == 1) {
+                        $address['address_id'] = $address['id'];
+                    }
+
+                    if ($address['address_id']) {
+
+                        $addressModel = $user->addresses()->findOrFail($address['address_id']);
+                        if (!HelperFunctions::checkForActiveOrders($addressModel)) {
+
+                            $addressModel->update([
+                                'address' => $address['address'],
+                                'district_id' => $address['district_id'],
+                            ]);
+
+
+                            $arr [] = $address['address_id'];
+                        } else {
+
+                            HelperFunctions::ThrowValidationForRelatedAddresses();
+
+                        }
+
+                    } else {
+                        $user->addresses()->create([
+                            'address' => $address['address'],
+                            'district_id' => $address['district_id'],
+                        ]);
+                    }
+                }
+
+            }
+
+            dd($arr);
+
+
+            // remove addresses
+            $NewIds = array_diff($addressOldIds, $arr);
+            foreach ($NewIds as $deletedId) {
+                $address = Address::findOrFail($deletedId);
+
+                if (!HelperFunctions::checkForActiveOrders($address)) {
+
+                    $address->delete();
                 } else {
-                    $user->addresses()->create([
-                        'address' => $address['address'],
-                        'city_id' => (int)$address['city_id'],
-                    ]);
+                    HelperFunctions::ThrowValidationForRelatedAddresses();
                 }
             }
+
+
+//            DB::commit();
+
+        } catch (\Exception $e) {
+//            DB::rollback();
+            return $e->getMessage();
         }
 
 
-        // remove addresses
-        $NewIds = array_diff($addressOldIds, $arr);
-        Address::whereIn('id', $NewIds)->delete();
+//        Address::whereIn('id', $NewIds)->delete();
 
 
     }
+
+    public static function checkForActiveOrders($address)
+    {
+        return $address->orders()->whereHas('orderStatus', function ($q) {
+            $q->where('type', 'active');
+        })->exists();
+    }
+
+
+    public static function ThrowValidationForRelatedAddresses()
+    {
+        throw  ValidationException::withMessages(['message' => 'you can not edit or delete addresses which are assigned to active orders']);
+    }
+
 
     static function CurdOperation($request, $parent, $model, $childName, $parentName, $oldIDs)
     {

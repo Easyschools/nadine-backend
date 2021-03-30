@@ -21,6 +21,9 @@ Class DistrictApiService extends AppRepository
      */
     public function index($request)
     {
+        $this->setConditions([
+            ['city_id', $request->city_id]
+        ]);
         $this->setRelations(['city']);
         if ($request->is_paginate == 1) {
             return $this->paginate();
@@ -38,7 +41,6 @@ Class DistrictApiService extends AppRepository
 
         return $this->find($request->id);
     }
-
 
 
 }

@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
 
 Route::group([
     'prefix' => 'admin',

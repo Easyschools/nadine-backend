@@ -3,6 +3,7 @@
 namespace App\Models\Division;
 
 use App\Models\Order\Offer;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
@@ -41,6 +42,11 @@ class Tag extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
 }

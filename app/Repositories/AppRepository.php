@@ -88,6 +88,14 @@ class AppRepository
             ->orderBy($this->sortBy, $this->sortOrder)
             ->paginate($pageCount);
     }
+    public function paginateQuery()
+    {
+        return $this->model->select($this->columns)
+            ->with($this->relations)
+            ->where($this->conditions)
+            ->orWhere($this->orConditions)
+            ->orderBy($this->sortBy, $this->sortOrder);
+    }
 
     public function paginateOfCategory($pageCount = 15, $category = null)
     {

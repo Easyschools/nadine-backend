@@ -24,27 +24,27 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
-                            <div  class="dataTables_filter"><label>الفئة:
-                                <input type="search"
-                                       class="form-control form-control-sm"
-                                       placeholder=""
-                                       v-model="search.category"
-                                       v-on:keyup="getAll"
-                                       aria-controls="report-table"></label>
-                            </div>
-                        </div>
+                        <!--<div class="col-md-4">-->
+                            <!--<div  class="dataTables_filter"><label>الفئة:-->
+                                <!--<input type="search"-->
+                                       <!--class="form-control form-control-sm"-->
+                                       <!--placeholder=""-->
+                                       <!--v-model="search.category"-->
+                                       <!--v-on:keyup="getAll"-->
+                                       <!--aria-controls="report-table"></label>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
-                        <div class="col-md-4">
-                            <div  class="dataTables_filter"><label>النوع:
-                                <input type="search"
-                                       class="form-control form-control-sm"
-                                       placeholder=""
-                                       v-model="search.tag"
-                                       v-on:keyup="getAll"
-                                       aria-controls="report-table"></label>
-                            </div>
-                        </div>
+                        <!--<div class="col-md-4">-->
+                            <!--<div  class="dataTables_filter"><label>النوع:-->
+                                <!--<input type="search"-->
+                                       <!--class="form-control form-control-sm"-->
+                                       <!--placeholder=""-->
+                                       <!--v-model="search.tag"-->
+                                       <!--v-on:keyup="getAll"-->
+                                       <!--aria-controls="report-table"></label>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                     <table class="table">
                         <thead>

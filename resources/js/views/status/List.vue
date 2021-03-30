@@ -6,7 +6,7 @@
                 <router-link
                     to="/admin/status/create"
                     class="btn btn-outline-primary float-right">
-                   اضافة جديد
+                    اضافة جديد
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -17,6 +17,7 @@
                             <th>#</th>
                             <th>الاسم بالعربية</th>
                             <th>الاسم بالانجليزية</th>
+                            <th>الحالات</th>
                             <th>الخيارات</th>
                         </tr>
                         </thead>
@@ -25,6 +26,9 @@
                             <td>{{item.id}}</td>
                             <td>{{item.name_ar}}</td>
                             <td>{{item.name_en}}</td>
+                            <td v-if="item.type == 'active'">نشطة</td>
+                            <td v-else-if="item.type == 'inactive'">غير نشطة</td>
+                            <td v-else></td>
                             <td>
                                 <router-link
                                     :to="{path:'/admin/status/edit/' +item.id,params: { id: item.id }}"
@@ -43,7 +47,8 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"                     v-model="currentPage"                     @input="getAll"                     :total-rows="rows"                     :per-page="perPage"                     first-text="الاولى"                     prev-text="السابق"                     next-text="التالى"                     last-text="الاخير"
+                    v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
+                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>
@@ -66,10 +71,12 @@
                     id: null,
                     name_ar: '',
                     name_en: '',
+                    type: '',
                 },
                 newItem: {
                     name_ar: '',
                     name_en: '',
+                    type: '',
                     image: null
                 }
             }

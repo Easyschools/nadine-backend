@@ -13,7 +13,7 @@ use App\Models\Order\Order;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Auth;
 
-class OrderInfoApiService extends AppRepository
+class OrderInfoApiService
 {
 
     private $order;
@@ -26,7 +26,27 @@ class OrderInfoApiService extends AppRepository
     public function getUserOrders()
     {
         $this->order->setConditions([['user_id', Auth::id()]]);
-        return $this->order->paginate();
+        $this->order->setRelations([
+            'orderItems' => function ($item) {
+                $item->with([
+                    'variant' => function ($variant) {
+                        $variant->with([
+                            'product' => function ($product) {
+                                $product->with([
+                                    'variants' => function ($variantNest1) {
+                                        $variantNest1->with('color', 'dimension');
+                                    }
+                                ]);
+                            }
+                        ]);
+                    }
+                ]);
+            },
+            'address', 'coupon',
+            'user',
+            'paymentType',
+        ]);
+        return $this->order->all();
     }
 
     public function orderDetails($orderId)
@@ -48,7 +68,8 @@ class OrderInfoApiService extends AppRepository
                 ]);
             },
             'address', 'coupon',
-            'user'
+            'user',
+            'paymentType',
         ]);
         return $this->order->find($orderId);
     }
@@ -67,6 +88,12 @@ class OrderInfoApiService extends AppRepository
             'orderItems',
             'orderStatus'
         ]);
+//        if ($request->status){
+//            $this->order->paginateQuery()
+//            ->whereHas('orderStatus',function ($q){
+//                $q->
+//            });
+//        }
         return $this->order->paginate();
     }
 
@@ -79,7 +106,8 @@ class OrderInfoApiService extends AppRepository
             $conditions[] = ['code', 'like', '%' . $request->code . '%'];
         }
 
-        $this->setConditions($conditions);
+
+        $this->order->setConditions($conditions);
     }
 
 }
