@@ -64,8 +64,8 @@
                             <td>{{ item.sku }}</td>
                             <td>{{ item.name_ar }}</td>
                             <td>{{ item.name_en }}</td>
-                            <td>{{ item.tag.name }}</td>
-                            <td>{{ item.category.name }}</td>
+                            <td>{{ item.tag ? item.tag.name : '' }}</td>
+                            <td>{{ item.category ? item.category.name : '' }}</td>
                             <td>{{ item.price }}</td>
                             <td>
                                 <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
