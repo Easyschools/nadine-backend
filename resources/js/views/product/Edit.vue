@@ -4,7 +4,6 @@
             <div class="card">
                 <div class="card-header">
                     <h5>تعديل منتج</h5>
-                    dsdnskj
                 </div>
                 <div class="card-body">
                     <form>
