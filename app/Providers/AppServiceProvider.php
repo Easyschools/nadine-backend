@@ -12,6 +12,7 @@ use App\Observers\TagObserver;
 use App\Observers\UserObserver;
 use App\Observers\VariantObserver;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,5 +39,7 @@ class AppServiceProvider extends ServiceProvider
         Offer::observe(OfferObserver::class);
         Variant::observe(VariantObserver::class);
         Brand::observe(BrandObserver::class);
+    Schema::defaultStringLength(191);
+
     }
 }
