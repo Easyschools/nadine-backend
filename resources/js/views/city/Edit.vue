@@ -178,7 +178,7 @@ export default {
             let formData = new FormData();
             // formData.append('id', this.item.id);
             let data = this.getFormData(formData);
-            axios.post('/city/edit/', data).then(response => {
+            axios.post('city/edit', data).then(response => {
                 this.disableButton = false;
                 // this.$router.push('/admin/city');
                 swal("Good job!", "A new city has been updated!", "success");
