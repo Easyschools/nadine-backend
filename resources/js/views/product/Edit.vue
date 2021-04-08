@@ -290,7 +290,7 @@
                     الغاء
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    اضافة
+                    تعديل
                 </button>
             </div>
         </div>
@@ -431,7 +431,7 @@
                 let formData = new FormData();
                 // formData.append('id', this.item.id);
                 let data = this.getFormData(formData);
-                axios.post('/product/update/', data).then(response => {
+                axios.post('product/update', data).then(response => {
                     this.disableButton = false;
                     // this.$router.push('/admin/product');
                     swal("Good job!", "A new product has been updated!", "success");
