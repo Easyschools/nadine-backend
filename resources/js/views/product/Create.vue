@@ -281,10 +281,10 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/product" class="btn btn-secondary">
+                <router-link v-if="disableButton" to="/admin/product" class="btn btn-secondary">
                     الغاء
                 </router-link>
-                <button type="button" @click="createItem" class="btn btn-primary">
+                <button v-if="disableButton" type="button" @click="createItem" class="btn btn-primary">
                     اضافة
                 </button>
             </div>
@@ -304,7 +304,7 @@ export default {
         return {
             disableButton: false,
 
-            show: false,
+            show: true,
             item: {
                 name_ar: '',
                 name_en: '',
