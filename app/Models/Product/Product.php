@@ -93,13 +93,19 @@ class Product extends Model
         if ($this->variants()->count()) {
 
             foreach ($this->variants as $variant) {
-                $arr[] = $variant->color->name;
+                if ($variant->color) {
+                    $arr[] = $variant->color->name;
+                }
+                if ($variant->dimension) {
                 $arr[] = $variant->dimension->dimension;
+                }
             }
         }
 
         // add tag name of product
-        $arr []= $this->tag->name;
+        if ($this->tag->color) {
+            $arr [] = $this->tag->name;
+        }
 
         return $arr;
     }
