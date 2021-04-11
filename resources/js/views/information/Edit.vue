@@ -168,7 +168,7 @@
                 let formData = new FormData();
 
                 let data = this.getFormData(formData);
-                axios.post('/contact-info/update/', data).then(response => {
+                axios.post('contact-info/update', data).then(response => {
                     this.disableButton = false;
                     // this.$router.push('/admin/information');
                     swal("Good job!", "A new contact-info has been updated!", "success");

@@ -109,12 +109,12 @@ class OrderApiService extends AppRepository
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price', 'image' )
+                $variant->select('id', 'product_id', 'additional_price', 'image')
                     ->with([
                         'product' => function ($product) {
-                            $product->select('id', 'price','price_after_discount',
+                            $product->select('id', 'price', 'price_after_discount',
                                 'name_en', 'name_ar', 'tag_id',
-                                'category_id','slug')
+                                'category_id', 'slug')
                                 ->with([
                                     'category' => function ($category) {
                                         $category->select('id', 'name_ar', 'name_en')->with([
@@ -209,12 +209,12 @@ class OrderApiService extends AppRepository
             ->first();
 
         if ($this->coupon) {
-            if ($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) {
+            if (($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) && $this->coupon->min_total <= $subtotal) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
                     $subtotal * ($this->coupon->value / 100);
-                $this->coupon->update([
-                    'used_times' => $this->coupon->used_times + 1,
-                ]);
+//                $this->coupon->update([
+//                    'used_times' => $this->coupon->used_times + 1,
+//                ]);
             }
         }
 
@@ -257,7 +257,7 @@ class OrderApiService extends AppRepository
             ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
-        Cart::where('user_id',$this->user_id)
+        Cart::where('user_id', $this->user_id)
             ->delete();
 
 

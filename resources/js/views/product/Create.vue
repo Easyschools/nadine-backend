@@ -11,7 +11,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">SKU</label>
+                                <label class="col-form-label">الكود</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.sku">
@@ -246,15 +246,7 @@
                                             </div>
 
 
-                                            <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">العدد المُتاح</label>
-                                            </div>
-                                            <div class="col-md-9 mt-3">
 
-                                                <input type="number" v-model="variant.stock"
-                                                       class="form-control mob_no"
-                                                       autocomplete="off" maxlength="2">
-                                            </div>
 
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold;">السعر الاضافى</label>
@@ -281,10 +273,10 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link v-if="disableButton" to="/admin/product" class="btn btn-secondary">
+                <router-link v-if="!disableButton" to="/admin/product" class="btn btn-secondary">
                     الغاء
                 </router-link>
-                <button v-if="disableButton" type="button" @click="createItem" class="btn btn-primary">
+                <button v-if="!disableButton" type="button" @click="createItem" class="btn btn-primary">
                     اضافة
                 </button>
             </div>
@@ -319,7 +311,6 @@ export default {
                 variants: [
                     {
                         image: null,
-                        stock: 1,
                         additional_price: 0,
                         color_id: null,
                         dimension_id: null,
@@ -421,6 +412,7 @@ export default {
                 this.errorMessages(err.response.data);
                 console.log(err)
             });
+            this.disableButton = false;
         },
         addVariant() {
             this.item.variants.push({

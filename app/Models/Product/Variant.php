@@ -12,7 +12,6 @@ class Variant extends Model
         'additional_price',
         'color_id',
         'image',
-        'stock',
         'product_id',
         'dimension_id',
     ];

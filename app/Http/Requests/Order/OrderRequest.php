@@ -82,7 +82,7 @@ class OrderRequest extends FormRequest
         return [
 //            'token' => 'required|exists:users,hash_token',
             'address_id' => 'required|exists:addresses,id',
-            'code' => 'exists:coupons,code',
+            'code' => 'nullable|exists:coupons,code',
             'payment_type_id' => 'required|exists:payment_types,id',
 //            'Amount' => 'required',
 //            'Currency' => 'required',
