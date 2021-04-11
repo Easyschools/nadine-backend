@@ -103,7 +103,7 @@ class Product extends Model
         }
 
         // add tag name of product
-        if ($this->tag->color) {
+        if ($this->tag) {
             $arr [] = $this->tag->name;
         }
 
