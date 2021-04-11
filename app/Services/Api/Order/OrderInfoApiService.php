@@ -70,6 +70,7 @@ class OrderInfoApiService
             'address', 'coupon',
             'user',
             'paymentType',
+            'orderStatus',
         ]);
         return $this->order->find($orderId);
     }
@@ -88,12 +89,20 @@ class OrderInfoApiService
             'orderItems',
             'orderStatus'
         ]);
-//        if ($request->status){
-//            $this->order->paginateQuery()
-//            ->whereHas('orderStatus',function ($q){
-//                $q->
-//            });
-//        }
+        if ($request->username){
+            $username = $request->username;
+            return $this->order->paginateQuery()
+            ->whereHas('user',function ($q) use ($username){
+                $q->where('name','like','%'.$username.'%');
+            })->paginate();
+        }
+        if ($request->phone){
+            $phone = $request->phone;
+            return $this->order->paginateQuery()
+            ->whereHas('user',function ($q) use ($phone){
+                $q->where('phone','like','%'.$phone.'%');
+            })->paginate();
+        }
         return $this->order->paginate();
     }
 
@@ -105,6 +114,8 @@ class OrderInfoApiService
         if ($request->code) {
             $conditions[] = ['code', 'like', '%' . $request->code . '%'];
         }
+
+
 
 
         $this->order->setConditions($conditions);

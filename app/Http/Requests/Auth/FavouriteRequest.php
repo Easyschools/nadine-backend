@@ -38,8 +38,8 @@ class FavouriteRequest extends FormRequest
             case 'delete':
             case 'get':
                 return $this->idValidation();
-            case 'all':
-                return $this->allValidation();
+//            case 'all':
+//                return $this->allValidation();
             default:
                 return [];
         }
@@ -48,7 +48,6 @@ class FavouriteRequest extends FormRequest
 
     public function createValidation()
     {
-
 
         return [
             'product_id' => 'exists:products,id',
@@ -71,12 +70,12 @@ class FavouriteRequest extends FormRequest
             ];
     }
 
-    public function allValidation()
-    {
-        $user_ids = implode(',', User::pluck('id')->toArray());
-        return
-            [
-                'user_id' => "in:$user_ids",
-            ];
-    }
+//    public function allValidation()
+//    {
+//        $user_ids = implode(',', User::pluck('id')->toArray());
+//        return
+//            [
+//                'user_id' => "in:$user_ids",
+//            ];
+//    }
 }

@@ -31,15 +31,16 @@
                             <td>{{item.id}}</td>
                             <td>{{item.code}}</td>
                             <td>
-                                <ul>
+                                <ul v-if="item.users_of_coupon.length != 0">
                                     <li v-for="(user,phone) in item.users_of_coupon">
 
                                         {{user}} - {{phone}}
                                     </li>
                                 </ul>
+                                <p v-else>كل المستخدمين</p>
                             </td>
-                            <td>{{item.is_percentage}}</td>
-                            <td>{{item.value}}</td>
+                            <td>{{item.is_percentage === 1 ? 'نعم' : 'لا'}}</td>
+                            <td>{{item.value }}  {{item.is_percentage === 1 ? '%' : 'جنيه '}}</td>
                             <td>{{item.max_usage}}</td>
                             <td>{{item.used_times}}</td>
                             <td>{{item.min_total}}</td>

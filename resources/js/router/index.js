@@ -60,9 +60,6 @@ import orderEdit from '../views/order/Edit';
 import definitionList from './../views/definition/List';
 import definitionCreate from './../views/definition/Create';
 import definitionEdit from './../views/definition/Edit';
-import prepositionList from './../views/preposition/List';
-import prepositionCreate from './../views/preposition/Create';
-import prepositionEdit from './../views/preposition/Edit';
 import lessonList from './../views/lesson/List';
 import lessonCreate from './../views/lesson/Create';
 import lessonEdit from './../views/lesson/Edit';
@@ -420,26 +417,6 @@ function configRoutes() {
                 {
                     path: 'edit/:id',
                     component: definitionEdit,
-                }
-            ]
-        },
-        {
-            path: "/admin/preposition",
-            component: View,
-            redirect: 'admin/preposition/list',
-            meta: {requiresAuth: true},
-            children: [
-                {
-                    path: 'list',
-                    component: prepositionList,
-                },
-                {
-                    path: 'create',
-                    component: prepositionCreate,
-                },
-                {
-                    path: 'edit/:id',
-                    component: prepositionEdit,
                 }
             ]
         },
