@@ -3,10 +3,12 @@
 namespace App\Services\Api\Product;
 
 use App\Models\Option\Color;
+use App\Models\Option\Dimension;
 use App\Models\Product\Product;
 use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
+use Http\Message\MessageFactory\DiactorosMessageFactory;
 
 
 class ProductApiService extends AppRepository
@@ -82,8 +84,7 @@ class ProductApiService extends AppRepository
     public function createProduct($request)
     {
 //        dd($request->all());
-        $request['slug'] = HelperFunctions::makeSlug($request->name_en);
-
+        $request['slug'] = HelperFunctions::makeSlug($request->name_en) . '-' . HelperFunctions::makeSlug($request->sku);
         $product = Product::create($request->only([
             'name_ar',
             'name_en',
@@ -102,6 +103,9 @@ class ProductApiService extends AppRepository
         ]));
 
         foreach ($request->variants as $variant) {
+
+            $variant = $this->createDimension($variant);
+
             Variant::create(array_merge($variant, [
                 'product_id' => $product->id
             ]));
@@ -140,6 +144,8 @@ class ProductApiService extends AppRepository
 //        dd($request->variants);
         foreach ($request->variants as $variant) {
 
+            $variant = $this->createDimension($variant);
+
             if ($variant['id']) {
 
                 $variantModel = $this->variantRepo->find($variant['id']);
@@ -175,6 +181,16 @@ class ProductApiService extends AppRepository
 
         $this->setConditions($conditions);
         $this->setOrConditions($orConditions);
+    }
+
+    public function createDimension($variant)
+    {
+        $dimension = Dimension::firstOrCreate([
+            'dimension' => $variant['dimension']
+        ]);
+        $variant['dimension_id'] = $dimension->id;
+
+        return $variant;
     }
 
 }

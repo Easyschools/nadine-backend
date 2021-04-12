@@ -243,11 +243,9 @@
                                                 <label style="font-weight: bold;">المقاس</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
-                                                <select class="form-control" v-model="variant.dimension_id">
-                                                    <option v-for="dimension in dimensions" :value="dimension.id">
-                                                        {{ dimension.dimension }}
-                                                    </option>
-                                                </select>
+                                                <input type="text" v-model="variant.dimension"
+                                                       class="form-control">
+
                                             </div>
 
 
@@ -306,6 +304,7 @@
                     sku: '',
                     name_ar: '',
                     name_en: '',
+                    dimension: '',
                     description_ar: '',
                     description_en: '',
                     slug: '',
