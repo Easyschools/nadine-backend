@@ -72,9 +72,9 @@ class CustomerApiAuthController extends Controller
 
         $customer = User::where('phone', $request->phone)->first();
 
-        // send sms message
-        $msg = ' forget password code:  ';
-        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
+//        // send sms message
+//        $msg = ' forget password code:  ';
+//        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
         if ($user == false) {
             return $this->sendError(

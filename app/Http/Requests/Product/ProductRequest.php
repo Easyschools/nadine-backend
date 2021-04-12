@@ -78,7 +78,7 @@ class ProductRequest extends FormRequest
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
 //            'variants.*.dimension_id' => 'exists:dimensions,id',
-            'variants.*.dimension' => 'required',
+            'variants.*.dimension_value' => 'required',
         ];
     }
 
