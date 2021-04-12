@@ -45,7 +45,7 @@ class ColorRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
-            'code' => 'required|min:2',
+            'image' => 'required|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -54,7 +54,7 @@ class ColorRequest extends FormRequest
         return [
             'id' => 'required|exists:colors,id',
             'name_en' => 'min:2',
-            'code' => 'required|min:2',
+            'image' => 'required',
             'name_ar' => 'min:2',
         ];
     }

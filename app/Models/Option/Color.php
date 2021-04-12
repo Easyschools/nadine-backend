@@ -10,6 +10,7 @@ class Color extends Model
       'name_ar',
       'name_en',
       'code',
+      'image',
     ];
 
 
@@ -23,4 +24,15 @@ class Color extends Model
         return $this['name_' . app()->getLocale()];
     }
 
+    public function getImageAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
+
+    public function setImageAttribute($value)
+    {
+        if (is_file($value)) {
+            $this->attributes['image'] = 'uploads/' . $value->store('Color');
+        }
+    }
 }

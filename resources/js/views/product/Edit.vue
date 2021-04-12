@@ -70,11 +70,9 @@
                                 <label class="col-form-label">السعر بعد الخصم</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number"  class="form-control" v-model="item.price_after_discount">
+                                <input type="number" class="form-control" v-model="item.price_after_discount">
                             </div>
                         </div>
-
-
 
 
                         <div class="row form-group">
@@ -243,12 +241,10 @@
                                                 <label style="font-weight: bold;">المقاس</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
-                                                <input type="text" v-model="variant.dimension"
+                                                <input type="text" v-model="variant.dimension_value"
                                                        class="form-control">
 
                                             </div>
-
-
 
 
                                             <div class="col-md-3 mt-4 mb-3">
@@ -304,7 +300,6 @@
                     sku: '',
                     name_ar: '',
                     name_en: '',
-                    dimension: '',
                     description_ar: '',
                     description_en: '',
                     slug: '',
@@ -320,6 +315,7 @@
                             additional_price: 0,
                             color_id: null,
                             dimension_id: null,
+                            dimension_value: null,
                         },
                     ]
                 },
@@ -411,6 +407,7 @@
                 axios.get('/product/get?slug=' + this.item.slug)
                     .then(response => {
                         this.item = response.data.data;
+                        // this.item.dimension = response.data.data.dimension.dimension;
                     }).catch(err => {
                     this.errorMessages(err.response.data);
                     console.log(err);
@@ -419,7 +416,6 @@
             editItem() {
                 this.disableButton = true;
                 let formData = new FormData();
-                // formData.append('id', this.item.id);
                 let data = this.getFormData(formData);
                 axios.post('product/update', data).then(response => {
                     this.disableButton = false;
@@ -441,6 +437,7 @@
                     additional_price: 0,
                     color_id: null,
                     dimension_id: null,
+                    dimension: null,
                 })
             },
             getFormData(formData) {

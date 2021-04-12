@@ -45,7 +45,7 @@ Class ColorApiService extends AppRepository
     {
         $category = $this->model->create($request->only([
             'name_ar', 'name_en',
-            'code'
+            'image'
         ]));
         return $category;
     }
@@ -60,7 +60,7 @@ Class ColorApiService extends AppRepository
         $result = $category->update($request->only([
             'name_ar',
             'name_en',
-            'code'
+            'image'
 
         ]));
         return $result;

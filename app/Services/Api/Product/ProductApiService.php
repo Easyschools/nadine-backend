@@ -74,7 +74,12 @@ class ProductApiService extends AppRepository
             'tag',
             'category'
         ]);
-        return $this->findByColumn('slug', $request->slug);
+        $product = $this->findByColumn('slug', $request->slug);
+        foreach ($product->variants as $variant) {
+            if ($variant->dimension)
+                $variant['dimension_value'] = $variant->dimension->dimension;
+        }
+        return $product;
     }
 
     /**
@@ -144,7 +149,7 @@ class ProductApiService extends AppRepository
 //        dd($request->variants);
         foreach ($request->variants as $variant) {
 
-            $variant = $this->createDimension($variant);
+            $variant = $this->createDimension($variant , 'dimension_value');
 
             if ($variant['id']) {
 
@@ -183,10 +188,11 @@ class ProductApiService extends AppRepository
         $this->setOrConditions($orConditions);
     }
 
-    public function createDimension($variant)
+    public function createDimension($variant , $key = 'dimension')
     {
+
         $dimension = Dimension::firstOrCreate([
-            'dimension' => $variant['dimension']
+            'dimension' => $variant[$key]
         ]);
         $variant['dimension_id'] = $dimension->id;
 
