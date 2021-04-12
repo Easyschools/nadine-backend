@@ -112,12 +112,12 @@
                     </li>
 
                     <!--<li class="nav-item pcoded-hasmenu">-->
-                        <!--<router-link to="/admin/brand">-->
-                            <!--<span class="pcoded-micon">-->
-                                <!--<i class="fas fa-copyright"></i>-->
-                            <!--</span>-->
-                            <!--<span class="pcoded-mtext">Brands</span>-->
-                        <!--</router-link>-->
+                    <!--<router-link to="/admin/brand">-->
+                    <!--<span class="pcoded-micon">-->
+                    <!--<i class="fas fa-copyright"></i>-->
+                    <!--</span>-->
+                    <!--<span class="pcoded-mtext">Brands</span>-->
+                    <!--</router-link>-->
                     <!--</li>-->
 
 
@@ -215,6 +215,8 @@
                                 <i class="fas fa-mail-bulk"></i>
                             </span>
                             <span class="pcoded-mtext">رسائل</span>
+                            <span class="unread"
+                                  style="background-color: red;color:white;padding: 7px;margin-right:5px;border-radius: 50%">s</span>
                         </router-link>
                     </li>
 
@@ -229,6 +231,7 @@
     export default {
         name: "TheSideBar"
     }
+
 </script>
 
 <style scoped>

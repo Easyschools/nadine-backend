@@ -278,6 +278,7 @@ Route::group([
         Route::get('get', 'ContactApiController@read');
         Route::post('create', 'ContactApiController@create');
         Route::delete('delete', 'ContactApiController@delete');
+        Route::get('get-count-unread', 'ContactApiController@getCountOfunRead');
     });
 
     Route::group([
