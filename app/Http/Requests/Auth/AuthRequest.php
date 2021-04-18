@@ -45,9 +45,10 @@ class AuthRequest extends FormRequest
 
     private function registerRules()
     {
+//        var_dump($this);
         return [
             'name' => 'required',
-            'phone' => 'required|digits:11',
+            'phone' => 'required|digits:11|unique:users,phone',
             'password' => 'required|min:8|confirmed'
         ];
     }

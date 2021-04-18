@@ -29,6 +29,33 @@
                             </div>
                         </div>
 
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الشحن داخل القاهرة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" v-model="item.cost_inside_cairo">
+                                <!--<select class="form-control" v-model="item.name_en">-->
+                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
+                                <!--</select>-->
+                            </div>
+                        </div>
+
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الشحن خارج القاهرة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" v-model="item.cost_outside_cairo">
+                                <!--<select class="form-control" v-model="item.name_en">-->
+                                <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
+                                <!--</select>-->
+                            </div>
+                        </div>
+
 
                         <div class="row form-group">
 
@@ -38,7 +65,8 @@
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
-                                    <option v-for="category in categories" :value="category.id">{{category.name_ar }} - {{category.name_en}}
+                                    <option v-for="category in categories" :value="category.id">{{category.name_ar }} -
+                                        {{category.name_en}}
                                     </option>
                                 </select>
                             </div>
@@ -86,6 +114,8 @@
                 item: {
                     name_en: null,
                     name_ar: null,
+                    cost_inside_cairo: null,
+                    cost_outside_cairo: null,
                     category_id: null,
                     image: null
                 },

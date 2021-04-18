@@ -4,15 +4,19 @@ namespace App\Services\Api\Division;
 
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
+use App\Models\Order\CustomTagShippingPrice;
 use App\Repositories\AppRepository;
+use App\Services\Api\Order\CustomTagShippingPriceApiService;
 
 
 class TagApiService extends AppRepository
 {
+    private $customTagShippingPriceApiService;
 
     public function __construct(Tag $tag)
     {
         parent::__construct($tag);
+        $this->customTagShippingPriceApiService = new  AppRepository(new CustomTagShippingPrice);
     }
 
     /**
@@ -22,7 +26,7 @@ class TagApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
-        $this->setRelations(['category']);
+        $this->setRelations(['category', 'customTagShippingPrice']);
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
@@ -35,6 +39,7 @@ class TagApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations(['customTagShippingPrice']);
         return $this->find($request->id);
     }
 
@@ -44,10 +49,18 @@ class TagApiService extends AppRepository
      */
     public function createTag($request)
     {
-        return $this->model->create($request->only([
+        $tag = $this->model->create($request->only([
             'name_ar', 'name_en', 'image',
             'category_id'
         ]));
+        if ($request->cost_inside_cairo || $request->cost_outside_cairo) {
+            $this->customTagShippingPriceApiService->model->create([
+                'tag_id' => $tag->id,
+                'cost_inside_cairo' => $request->cost_inside_cairo,
+                'cost_outside_cairo' => $request->cost_outside_cairo,
+            ]);
+        }
+        return $tag;
     }
 
 
@@ -58,6 +71,13 @@ class TagApiService extends AppRepository
     public function editTag($request)
     {
         $tag = $this->find($request->id);
+        if ($tag->customTagShippingPrice) {
+
+            $tag->customTagShippingPrice->update([
+                'cost_inside_cairo' => $request->cost_inside_cairo,
+                'cost_outside_cairo' => $request->cost_outside_cairo,
+            ]);
+        }
         return $tag->update($request->only([
             'name_ar', 'name_en', 'image',
             'category_id'

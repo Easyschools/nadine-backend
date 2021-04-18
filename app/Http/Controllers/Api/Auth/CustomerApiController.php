@@ -24,6 +24,9 @@ class CustomerApiController extends Controller
     public function update(CustomerRequest $request)
     {
         $process = $this->customerService->updateCustomer($request);
+        if ($process !== true){
+            return $this->sendError($process);
+        }
         return $this->sendResponse($process);
     }
 
@@ -36,6 +39,7 @@ class CustomerApiController extends Controller
     public function index(CustomerRequest $request)
     {
         $process = $this->customerService->index($request);
+
         return $this->sendResponse($process);
     }
 

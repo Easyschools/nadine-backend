@@ -10,6 +10,8 @@ namespace App\Services\Api\Order;
 
 use App\Models\Order\Cart;
 use App\Models\Order\Coupon;
+use App\Models\Order\CustomTagShippingPrice;
+use App\Models\Order\Helper\ShippingPriceOrderHelper;
 use App\Models\Order\Offer;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
@@ -26,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderApiService extends AppRepository
 {
-    use FirebaseFCM;
+    use FirebaseFCM, ShippingPriceOrderHelper;
 
     private $order;
     private $coupon = null;
@@ -36,7 +38,7 @@ class OrderApiService extends AppRepository
     private $subtotal = 0;
     private $discount = 0;
     private $offerDiscount = 0;
-    private $shippingPrice = 30;
+    private $shippingPrice = 0;
     private $orderStatus = 1;
     private $quantity = 0;
     private $description = '';
@@ -59,8 +61,31 @@ class OrderApiService extends AppRepository
         if ($this->address->id == 1) {
             $this->shippingPrice = 200;
         }
-        $this->shippingPrice = 250;
+        $customIDs = CustomTagShippingPrice::pluck('tag_id')->toArray();
+        $enter = 0;
+        foreach ($this->items as $item) {
+            if (in_array($item->variant->product->tag->id, $customIDs)) {
+                $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
+                $enter = 1;
+                $this->calculateDependingOnCustomTagPrice($customShippingPrice);
+            }
+            if (!$enter) {
+                if ($this->address->district->city->name_en == 'cairo') {
+                    $this->shippingPrice = 200 + $this->calculateAdditionalDependingOnItemsCount($item);
+                } else {
+                    $this->shippingPrice = 250 + $this->calculateAdditionalDependingOnItemsCount($item);
+                }
+            }
+        }
 
+    }
+
+    public function calculateAdditionalDependingOnItemsCount($item)
+    {
+        if ($item->quantity > 2) {
+            return ($item->quantity - 2) * 200;
+        }
+        return 0;
     }
 
     public function setOrderStatus()
@@ -122,7 +147,8 @@ class OrderApiService extends AppRepository
                                                 $offer->select('id', 'is_percentage', 'discount', 'category_id');
                                             }
                                         ]);
-                                    }
+                                    },
+                                    'tag:id,name_en,name_ar'
                                 ]);
                         }
                     ]);

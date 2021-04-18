@@ -25,6 +25,30 @@
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                         </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الشحن داخل القاهرة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control"
+                                       v-model="item.custom_tag_shipping_price_copy.cost_inside_cairo">
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-sm-3">
+                                <label class="col-form-label">الشحن خارج القاهرة</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control"
+                                       v-model="item.custom_tag_shipping_price_copy.cost_outside_cairo">
+                            </div>
+                        </div>
+
+
                         <div class="row form-group">
 
                             <div class="col-sm-3">
@@ -77,7 +101,11 @@
                     id: null,
                     name_ar: null,
                     name_en: null,
-                    image: null
+                    image: null,
+                    custom_tag_shipping_price_copy: {
+                        cost_inside_cairo: null,
+                        cost_outside_cairo: null
+                    },
                 },
                 categories: [{id: null, name_ar: null, name_en: null}]
             };
@@ -99,6 +127,11 @@
                 axios.get('/tag/get?id=' + this.item.id)
                     .then(response => {
                         this.item = response.data.data
+                        if (this.item.custom_tag_shipping_price) {
+
+                            this.item.custom_tag_shipping_price_copy = this.item.custom_tag_shipping_price
+                        }
+                        // console.log(this.item)
                     })
                     .catch(err => console.log(err))
             }, editItem() {
@@ -118,7 +151,7 @@
                         // this.$router.push('/admin/tag');
                         swal("Good job!", "a tag has been updated!", "success");
                         this.getItem();
-                        window.scrollTo(0,0);
+                        window.scrollTo(0, 0);
                     })
                     .catch(err => {
                         this.errorMessages(err.response.data);
