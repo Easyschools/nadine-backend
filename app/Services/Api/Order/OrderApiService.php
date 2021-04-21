@@ -37,6 +37,7 @@ class OrderApiService extends AppRepository
     private $address;
     private $subtotal = 0;
     private $discount = 0;
+    private $isCheckedOut = 0;
     private $offerDiscount = 0;
     private $shippingPrice = 0;
     private $orderStatus = 1;
@@ -201,6 +202,11 @@ class OrderApiService extends AppRepository
         }
         $this->couponValue($request->code, $this->subtotal);
 
+        if (!$this->couponValue && !$this->isCheckedOut) {
+            return [
+                'code' => ['this coupon exceeded allowed used times']
+            ];
+        }
         $this->setAddress($request->address_id);
 
         $this->setShippingPrice();
@@ -252,6 +258,7 @@ class OrderApiService extends AppRepository
 
     public function checkout(Request $request)
     {
+        $this->isCheckedOut =1;
         $this->user_id = Auth::id();
 
         $grandTotal = $this->grandTotal($request);
