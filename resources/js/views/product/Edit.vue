@@ -81,7 +81,7 @@
                                 <label class="col-form-label">الفئة</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control"  v-on:change="selectCategory" v-model="item.tag.category_id">
+                                <select class="form-control" v-if="item.tag"  v-on:change="selectCategory" v-model="item.tag.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
