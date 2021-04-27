@@ -26,7 +26,12 @@ class TagApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
-        $this->setRelations(['category', 'customTagShippingPrice']);
+
+        $this->setRelations([
+            'category',
+            'customTagShippingPrice'
+        ]);
+
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
@@ -39,7 +44,10 @@ class TagApiService extends AppRepository
      */
     public function get($request)
     {
-        $this->setRelations(['customTagShippingPrice']);
+        $this->setRelations([
+            'category',
+            'customTagShippingPrice:id,tag_id,cost_inside_cairo,cost_outside_cairo'
+        ]);
         return $this->find($request->id);
     }
 

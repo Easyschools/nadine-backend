@@ -71,7 +71,9 @@ class ProductApiService extends AppRepository
             'type',
             'tags',
             'name',
-            'description'
+            'description',
+            'category_id',
+            'category'
         ]);
     }
 

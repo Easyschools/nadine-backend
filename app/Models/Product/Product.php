@@ -22,7 +22,6 @@ class Product extends Model
         'price',
         'price_after_discount',
         'collection_id',
-        'category_id',
         'tag_id',
         'material_id',
     ];
@@ -34,6 +33,8 @@ class Product extends Model
         'type',
         'name',
         'description',
+        'category',
+        'category_id',
     ];
 
 
@@ -59,7 +60,7 @@ class Product extends Model
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class);
+        return $this->belongsTo(Tag::class , 'tag_id');
     }
 
     public function collection()
@@ -110,5 +111,14 @@ class Product extends Model
         return $arr;
     }
 
+    public function getCategoryAttribute()
+    {
+        return $this->tag()->with('category')->first()->category;
+    }
+    public function getCategoryIdAttribute()
+    {
+//        dd($this->tag()->with('category')->first());
+        return $this->tag()->with('category')->first()->category->id;
+    }
 
 }

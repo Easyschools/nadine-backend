@@ -101,11 +101,11 @@
                     id: null,
                     name_ar: null,
                     name_en: null,
-                    image: null,
                     custom_tag_shipping_price_copy: {
-                        cost_inside_cairo: null,
-                        cost_outside_cairo: null
+                        cost_inside_cairo: 0,
+                        cost_outside_cairo: 0
                     },
+                    image: null,
                 },
                 categories: [{id: null, name_ar: null, name_en: null}]
             };
@@ -126,17 +126,22 @@
             getItem() {
                 axios.get('/tag/get?id=' + this.item.id)
                     .then(response => {
-                        this.item = response.data.data
-                        if (this.item.custom_tag_shipping_price) {
+                        this.item = response.data.data;
+                        if (this.item.custom_tag_shipping_price !== null) {
 
                             this.item.custom_tag_shipping_price_copy = this.item.custom_tag_shipping_price
                         }
+                            this.item.custom_tag_shipping_price_copy = {
+                                cost_inside_cairo: null,
+                                cost_outside_cairo: null
+                            }
                         // console.log(this.item)
                     })
                     .catch(err => console.log(err))
             }, editItem() {
                 let data = new FormData();
                 for (const property in this.item) {
+                    console.log(this.item[property])
                     if (!this.image_is_changed && property == 'image') {
                         break;
                     }
@@ -164,7 +169,7 @@
                 reader.addEventListener('load', function () {
                     this.$refs.imageDisplay.src = reader.result;
                 }.bind(this), false);
-
+                thi.image_is_changed =1 ;
                 reader.readAsDataURL(this.item.image);
                 this.image_is_changed = true;
                 this.url = URL.createObjectURL(this.item.image);

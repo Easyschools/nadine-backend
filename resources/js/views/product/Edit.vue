@@ -81,7 +81,7 @@
                                 <label class="col-form-label">الفئة</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" v-model="item.category_id">
+                                <select class="form-control"  v-on:change="selectCategory" v-model="item.tag.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
@@ -286,214 +286,222 @@
 
 
 <script>
-    import {VueEditor} from "vue2-editor";
+import {VueEditor} from "vue2-editor";
 
-    export default {
-        name: "Edit",
-        components: {
-            VueEditor
-        },
-        data() {
-            return {
-                disableButton: false,
-                item: {
-                    sku: '',
-                    name_ar: '',
-                    name_en: '',
-                    description_ar: '',
-                    description_en: '',
-                    slug: '',
-                    weight: 0,
-                    tag: '',
-                    category: '',
-                    collection: '',
-                    price: 1,
-                    price_after_discount: 1,
-                    variants: [
-                        {
-                            image: null,
-                            additional_price: 0,
-                            color_id: null,
-                            dimension_id: null,
-                            dimension_value: null,
-                        },
-                    ]
+export default {
+    name: "Edit",
+    components: {
+        VueEditor
+    },
+    data() {
+        return {
+            disableButton: false,
+            item: {
+                sku: '',
+                name_ar: '',
+                name_en: '',
+                description_ar: '',
+                description_en: '',
+                slug: '',
+                weight: 0,
+                tag: {
+                    category: {
+                        id: null
+                    }
                 },
-                categories: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null
-                }],
-                tags: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                    category_id: null
-                }],
-                materials: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }],
+                category: '',
+                collection: '',
+                price: 1,
+                price_after_discount: 1,
+                variants: [
+                    {
+                        image: null,
+                        additional_price: 0,
+                        color_id: null,
+                        dimension_id: null,
+                        dimension_value: null,
+                    },
+                ]
+            },
+            categories: [{
+                id: null,
+                name_en: null,
+                name_ar: null
+            }],
+            tags: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+                category_id: null
+            }],
+            materials: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }],
 
-                collections: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }],
-                dimensions: [{}],
-                colors: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }]
+            collections: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }],
+            dimensions: [{}],
+            colors: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }]
 
-            };
-        },
-        created() {
-            this.item.slug = this.$route.params.slug;
-            this.getItem();
-            this.getCategory();
-            this.getTag();
-            this.getMaterial();
-            this.getCollection();
-            this.getColor();
-            this.getDimension();
-        },
-        methods: {
-            getCategory() {
-                axios.get('category/all')
-                    .then(response => {
-                        this.categories = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getDimension() {
-                axios.get('dimension/all')
-                    .then(response => {
-                        this.dimensions = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getColor() {
-                axios.get('color/all')
-                    .then(response => {
-                        this.colors = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getTag() {
-                axios.get('tag/all')
-                    .then(response => {
-                        this.tags = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getMaterial() {
-                axios.get('material/all')
-                    .then(response => {
-                        this.materials = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getCollection() {
-                axios.get('collection/all')
-                    .then(response => {
-                        this.collections = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getItem() {
-                axios.get('/product/get?slug=' + this.item.slug)
-                    .then(response => {
-                        this.item = response.data.data;
-                        // this.item.dimension = response.data.data.dimension.dimension;
-                    }).catch(err => {
-                    this.errorMessages(err.response.data);
-                    console.log(err);
-                });
-            },
-            editItem() {
-                this.disableButton = true;
-                let formData = new FormData();
-                let data = this.getFormData(formData);
-                axios.post('product/update', data).then(response => {
-                    this.disableButton = false;
-                    // this.$router.push('/admin/product');
-                    swal("Good job!", "A new product has been updated!", "success");
-                    this.getItem();
-                    window.scrollTo(0, 0);
-                }).catch(err => {
-                    this.disableButton = false;
-                    this.errorMessages(err.response.data);
-                    console.log(err)
-                });
-            },
-            addVariant() {
-                this.item.variants.push({
-                    id: null,
-                    image: null,
-                    stock: 1,
-                    additional_price: 0,
-                    color_id: null,
-                    dimension_id: null,
-                    dimension: null,
+        };
+    },
+    created() {
+        this.item.slug = this.$route.params.slug;
+        this.getItem();
+        this.getCategory();
+        this.getTag();
+        this.getMaterial();
+        this.getCollection();
+        this.getColor();
+        this.getDimension();
+    },
+    methods: {
+        getCategory() {
+            axios.get('category/all')
+                .then(response => {
+                    this.categories = response.data.data
                 })
-            },
-            getFormData(formData) {
-                this.buildFormData(formData, this.item, null);
-                return formData;
-            },
-            uploadVariantImage(index) {
-                this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
+                .catch(err => console.log(err))
+        },
+        getDimension() {
+            axios.get('dimension/all')
+                .then(response => {
+                    this.dimensions = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getColor() {
+            axios.get('color/all')
+                .then(response => {
+                    this.colors = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getTag(value = null) {
+            axios.get('tag/all?category_id=' + (value ? value : 0))
+                .then(response => {
+                    this.tags = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getMaterial() {
+            axios.get('material/all')
+                .then(response => {
+                    this.materials = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getCollection() {
+            axios.get('collection/all')
+                .then(response => {
+                    this.collections = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getItem() {
+            axios.get('/product/get?slug=' + this.item.slug)
+                .then(response => {
+                    this.item = response.data.data;
+                    // this.item.dimension = response.data.data.dimension.dimension;
+                }).catch(err => {
+                this.errorMessages(err.response.data);
+                console.log(err);
+            });
+        },
+        selectCategory: function (e) {
+            this.getTag(e.target.value);
+            // console.log(e.target.value);
+        },
+        editItem() {
+            this.disableButton = true;
+            let formData = new FormData();
+            let data = this.getFormData(formData);
+            axios.post('product/update', data).then(response => {
+                this.disableButton = false;
+                // this.$router.push('/admin/product');
+                swal("Good job!", "A new product has been updated!", "success");
+                this.getItem();
+                window.scrollTo(0, 0);
+            }).catch(err => {
+                this.disableButton = false;
+                this.errorMessages(err.response.data);
+                console.log(err)
+            });
+        },
+        addVariant() {
+            this.item.variants.push({
+                id: null,
+                image: null,
+                stock: 1,
+                additional_price: 0,
+                color_id: null,
+                dimension_id: null,
+                dimension: null,
+            })
+        },
+        getFormData(formData) {
+            this.buildFormData(formData, this.item, null);
+            return formData;
+        },
+        uploadVariantImage(index) {
+            this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
 
-                let reader = new FileReader();
-                reader.addEventListener('load', function () {
-                    this.$refs['imageDisplay_' + index][0].src = reader.result;
-                }.bind(this), false);
+            let reader = new FileReader();
+            reader.addEventListener('load', function () {
+                this.$refs['imageDisplay_' + index][0].src = reader.result;
+            }.bind(this), false);
 
-                reader.readAsDataURL(this.item.variants[index].image);
+            reader.readAsDataURL(this.item.variants[index].image);
 
-            },
-            buildFormData(formData, data, parentKey) {
-                if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
-                    Object.keys(data).forEach(key => {
-                        this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
-                    });
-                } else {
-                    let value = data == null ? '' : data;
-                    if (typeof (value) === 'string' && parentKey.search('content') > 0) {
-                        return;
-                    }
-                    if (typeof (data) === 'boolean' && data === false) {
-                        value = '0'
-                    }
-                    if (typeof (data) === 'boolean' && data === true) {
-                        value = '1'
-                    }
-                    formData.append(parentKey, value);
+        },
+        buildFormData(formData, data, parentKey) {
+            if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
+                Object.keys(data).forEach(key => {
+                    this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+                });
+            } else {
+                let value = data == null ? '' : data;
+                if (typeof (value) === 'string' && parentKey.search('content') > 0) {
+                    return;
                 }
-            },
-            fillPriceAfterDiscount() {
-                this.item.price_after_discount = this.item.price;
+                if (typeof (data) === 'boolean' && data === false) {
+                    value = '0'
+                }
+                if (typeof (data) === 'boolean' && data === true) {
+                    value = '1'
+                }
+                formData.append(parentKey, value);
             }
+        },
+        fillPriceAfterDiscount() {
+            this.item.price_after_discount = this.item.price;
         }
     }
+}
 </script>
 
 <style scoped>
-    li {
-        transition: width 1s;
-        width: 100px;
-        margin-right: -30px;
-    }
+li {
+    transition: width 1s;
+    width: 100px;
+    margin-right: -30px;
+}
 
-    li:hover {
-        width: 120px;
-    }
+li:hover {
+    width: 120px;
+}
 
-    li a:hover {
-        background: aliceblue;
+li a:hover {
+    background: aliceblue;
 
-    }
+}
 </style>
