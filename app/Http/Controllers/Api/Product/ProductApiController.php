@@ -41,7 +41,7 @@ class ProductApiController extends Controller
         if ($request->sendResponse) {
             return $this->sendResponse($process);
         }
-        return $process;
+        return $this->sendResponse($process);
     }
 
     public function create(ProductRequest $request)

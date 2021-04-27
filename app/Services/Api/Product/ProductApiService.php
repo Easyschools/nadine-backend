@@ -29,6 +29,19 @@ class ProductApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
+        $this->setColumns([
+            'id',
+            'sku',
+            'name_en',
+            'name_ar',
+            'description_en',
+            'description_ar',
+            'price',
+            'price_after_discount',
+            'description_ar',
+            'category_id',
+            'tag_id',
+        ]);
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->with(
@@ -36,8 +49,8 @@ class ProductApiService extends AppRepository
                     'Dimension:id,dimension'
                 );
             },
-            'tag',
-            'category'
+            'tag:id,name_en,name_ar',
+            'category:id,name_ar,name_en'
         ]);
 
 
@@ -51,14 +64,14 @@ class ProductApiService extends AppRepository
             }
         }
 
-
-        return $this->all()->map->append('currency',
+        return $this->paginate(16)->appends([
+            'currency',
             'image',
             'type',
             'tags',
             'name',
             'description'
-        );
+        ]);
     }
 
     /**
@@ -74,7 +87,12 @@ class ProductApiService extends AppRepository
             'tag',
             'category'
         ]);
-        $product = $this->findByColumn('slug', $request->slug);
+        if ($request->slug) {
+            $product = $this->findByColumn('slug', $request->slug);
+        } else {
+            $product = $this->find($request->id);
+        }
+
         foreach ($product->variants as $variant) {
             if ($variant->dimension)
                 $variant['dimension_value'] = $variant->dimension->dimension;
@@ -149,7 +167,7 @@ class ProductApiService extends AppRepository
 //        dd($request->variants);
         foreach ($request->variants as $variant) {
 
-            $variant = $this->createDimension($variant , 'dimension_value');
+            $variant = $this->createDimension($variant, 'dimension_value');
 
             if ($variant['id']) {
 
@@ -188,7 +206,7 @@ class ProductApiService extends AppRepository
         $this->setOrConditions($orConditions);
     }
 
-    public function createDimension($variant , $key = 'dimension')
+    public function createDimension($variant, $key = 'dimension')
     {
 
         $dimension = Dimension::firstOrCreate([

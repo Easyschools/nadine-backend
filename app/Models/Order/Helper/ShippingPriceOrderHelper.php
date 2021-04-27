@@ -12,13 +12,13 @@ namespace App\Models\Order\Helper;
 trait ShippingPriceOrderHelper
 {
 
-    public function calculateDependingOnCustomTagPrice($customShippingPrice)
+    public function calculateDependingOnCustomTagPrice($customShippingPrice , $item)
     {
 
         if ($this->address->district->city->name_en == 'cairo') {
-            $this->shippingPrice += $customShippingPrice->cost_inside_cairo;
+            $this->shippingPrice += ($customShippingPrice->cost_inside_cairo* $item->quantity);
         } else {
-            $this->shippingPrice += $customShippingPrice->cost_outside_cairo;
+            $this->shippingPrice += ($customShippingPrice->cost_outside_cairo *$item->quantity);
         }
     }
 }
