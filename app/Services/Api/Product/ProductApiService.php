@@ -29,20 +29,7 @@ class ProductApiService extends AppRepository
     public function index($request)
     {
         $this->filter($request);
-//        $this->setColumns([
-//            'id',
-//            'sku',
-//            'name_en',
-//            'name_ar',
-//            'description_en',
-//            'description_ar',
-//            'price',
-//            'price_after_discount',
-//            'description_ar',
-//            'category_id',
-//            'tag_id',
-//            'slug'
-//        ]);
+
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->with(
@@ -50,8 +37,7 @@ class ProductApiService extends AppRepository
                     'Dimension:id,dimension'
                 );
             },
-            'tag:id,name_en,name_ar',
-            'category:id,name_ar,name_en'
+            'tag:id,name_en,name_ar'
         ]);
 
 
@@ -88,7 +74,6 @@ class ProductApiService extends AppRepository
                 $variant->with(['color', 'dimension']);
             },
             'tag',
-            'category'
         ]);
         if ($request->slug) {
             $product = $this->findByColumn('slug', $request->slug);
@@ -200,7 +185,6 @@ class ProductApiService extends AppRepository
         $orConditions = [];
 
         if ($request->name) {
-
             $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
             $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
         }

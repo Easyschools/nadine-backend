@@ -60,7 +60,7 @@ class Product extends Model
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class , 'tag_id');
+        return $this->belongsTo(Tag::class, 'tag_id');
     }
 
     public function collection()
@@ -98,7 +98,7 @@ class Product extends Model
                     $arr[] = $variant->color->name;
                 }
                 if ($variant->dimension) {
-                $arr[] = $variant->dimension->dimension;
+                    $arr[] = $variant->dimension->dimension;
                 }
             }
         }
@@ -113,12 +113,18 @@ class Product extends Model
 
     public function getCategoryAttribute()
     {
-        return $this->tag()->with('category')->first()->category;
+        $tag = $this->tag()->with('category')->first();
+        if ($tag)
+            return $tag->category;
+        return null;
     }
+
     public function getCategoryIdAttribute()
     {
-//        dd($this->tag()->with('category')->first());
-        return $this->tag()->with('category')->first()->category->id;
+        $tag = $this->tag()->with('category')->first();
+        if ($tag)
+            return $tag->category;
+        return null;
     }
 
 }
