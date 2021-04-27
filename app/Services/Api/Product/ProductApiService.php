@@ -144,7 +144,6 @@ class ProductApiService extends AppRepository
             'sku',
             'price_after_discount',
             'collection_id',
-            'category_id',
             'tag_id',
             'material_id',
             'tag_id',
