@@ -86,6 +86,12 @@
                                         {{ category.name_en }}
                                     </option>
                                 </select>
+
+                                <select class="form-control" v-else  v-on:change="selectCategory" v-model="item.category_id">
+                                    <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
+                                        {{ category.name_en }}
+                                    </option>
+                                </select>
                             </div>
 
                         </div>
@@ -311,6 +317,8 @@ export default {
                 },
                 category: '',
                 collection: '',
+                category_id: '',
+                tag_id: '',
                 price: 1,
                 price_after_discount: 1,
                 variants: [
