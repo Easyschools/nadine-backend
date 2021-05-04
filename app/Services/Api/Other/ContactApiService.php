@@ -54,6 +54,6 @@ class ContactApiService extends AppRepository
 
     public function getCountOfUnreadMessages()
     {
-        return $this->where('is_read', 0)->count();
+        return $this->model->where('is_read', 0)->count();
     }
 }
