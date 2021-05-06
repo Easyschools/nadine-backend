@@ -17,6 +17,7 @@ trait Changeable
     protected $key = [];
     protected $related_ids = [];
     protected $RelationName = [];
+    protected $appendsColumns = [];
     protected $original_id = [];
     protected $orConditions = [];
     protected $columns = ['*'];
@@ -64,6 +65,12 @@ trait Changeable
     public function setNotNullColumn($column = 'id')
     {
         $this->column = $column;
+
+    }
+
+    public function setAppends($appendsColumns = [])
+    {
+        $this->appendsColumns = $appendsColumns;
 
     }
 

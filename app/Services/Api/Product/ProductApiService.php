@@ -41,7 +41,9 @@ class ProductApiService extends AppRepository
         ]);
 
 
-        if ($request->is_paginate == 1) {
+
+
+        if (!$request->has('front')) {
             if ($request->tag) {
                 return $this->paginateOfTag(15, $request->tag);
             } elseif ($request->category) {
@@ -51,7 +53,7 @@ class ProductApiService extends AppRepository
             }
         }
 
-        return $this->paginate(16)->appends([
+        $this->setAppends([
             'currency',
             'image',
             'type',
@@ -61,6 +63,8 @@ class ProductApiService extends AppRepository
             'category_id',
             'category'
         ]);
+
+        return $this->paginate(16);
     }
 
     /**

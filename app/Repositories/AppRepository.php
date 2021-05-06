@@ -86,7 +86,7 @@ class AppRepository
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
-            ->paginate($pageCount);
+            ->paginate($pageCount)->appends($this->appendsColumns);
     }
     public function paginateQuery()
     {
@@ -107,7 +107,8 @@ class AppRepository
             ->whereHas('category', function ($q) use ($category) {
                 $q->where('name_en', 'like', '%' . $category . '%');
             })
-            ->paginate($pageCount);
+            ->paginate($pageCount)
+            ->appends($this->appendsColumns);
     }
 
     public function paginateOfTag($pageCount = 15, $tag = null)
@@ -120,7 +121,8 @@ class AppRepository
             ->whereHas('tag', function ($q) use ($tag) {
                 $q->where('name_en', 'like', '%' . $tag . '%');
             })
-            ->paginate($pageCount);
+            ->paginate($pageCount)
+            ->appends($this->appendsColumns);
     }
 
     public function OrderPaginator($pageCount = 15)
