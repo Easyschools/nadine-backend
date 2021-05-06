@@ -41,18 +41,6 @@ class ProductApiService extends AppRepository
         ]);
 
 
-
-
-        if (!$request->has('front')) {
-            if ($request->tag) {
-                return $this->paginateOfTag(15, $request->tag);
-            } elseif ($request->category) {
-                return $this->paginateOfCategory(15, $request->category);
-            } else {
-                return $this->paginate();
-            }
-        }
-
         $this->setAppends([
             'currency',
             'image',
@@ -64,7 +52,15 @@ class ProductApiService extends AppRepository
             'category'
         ]);
 
-        return $this->paginate(16);
+
+        if ($request->tag) {
+            return $this->paginateOfTag(16, $request->tag);
+        } elseif ($request->category) {
+            return $this->paginateOfCategory(16, $request->category);
+        } else {
+            return $this->paginate(16);
+        }
+
     }
 
     /**
