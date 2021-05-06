@@ -105,7 +105,8 @@ class AppRepository
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
             ->whereHas('category', function ($q) use ($category) {
-                $q->where('name_en', 'like', '%' . $category . '%');
+                $q->where('name_en', 'like', '%' . $category . '%')
+                ->orWhere('name_ar', 'like', '%' . $category . '%');
             })
             ->paginate($pageCount)
             ->appends($this->appendsColumns);
@@ -119,7 +120,8 @@ class AppRepository
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
             ->whereHas('tag', function ($q) use ($tag) {
-                $q->where('name_en', 'like', '%' . $tag . '%');
+                $q->where('name_en', 'like', '%' . $tag . '%')
+                    ->orWhere('name_ar', 'like', '%' . $tag . '%');
             })
             ->paginate($pageCount)
             ->appends($this->appendsColumns);
