@@ -35,10 +35,10 @@
                                     class="btn btn-outline-warning"
                                 >تعديل
                                 </router-link>
-                                <button type="button"
-                                        @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
-                                </button>
+                                <!--<button type="button"-->
+                                        <!--@click="deleteItem(item.id,index)"-->
+                                        <!--class="btn btn-outline-danger">حذف-->
+                                <!--</button>-->
                             </td>
                         </tr>
                         </tbody>

@@ -9,8 +9,11 @@
 namespace App\Services\Api\Order;
 
 use App\Models\Order\Coupon;
+use App\Models\Order\CustomTagShippingPrice;
+use App\Models\Order\Helper\ShippingPriceOrderHelper;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
+use App\Models\Product\Product;
 use App\Models\Product\Variant;
 use App\Models\User\Address;
 use App\Models\User\User;
@@ -24,18 +27,19 @@ use Illuminate\Validation\ValidationException;
 
 class UpdateOrderApiService extends AppRepository
 {
-    use FirebaseFCM;
+    use FirebaseFCM, ShippingPriceOrderHelper;
 
     private $order;
     private $coupon = null;
     private $variantService = null;
+    private $productService = null;
     private $couponValue = 0;
     private $shipping;
     private $address;
     private $subtotal = 0;
     private $discount = 0;
     private $offerDiscount = 0;
-    private $shippingPrice = 30;
+    private $shippingPrice = 0;
     private $orderStatus = 1;
     private $quantity = 0;
     private $description = '';
@@ -46,6 +50,7 @@ class UpdateOrderApiService extends AppRepository
     {
         parent::__construct($order);
         $this->variantService = new AppRepository(new Variant());
+        $this->productService = new AppRepository(new Product);
     }
 
     public function setAddress($id)
@@ -56,12 +61,36 @@ class UpdateOrderApiService extends AppRepository
 
     public function setShippingPrice()
     {
-        if ($this->address->id == 1) {
-            $this->shippingPrice = 200;
+        $customIDs = CustomTagShippingPrice::pluck('tag_id')->toArray();
+        foreach ($this->items as $item) {
+
+            $enter = 0;
+
+            if (in_array($item->product->tag->id, $customIDs)) {
+                $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->product->tag->id)->first();
+                $enter = 1;
+                $this->calculateDependingOnCustomTagPrice($customShippingPrice, $item);
+            }
+            if (!$enter) {
+                if ($this->address->district->city->name_en == 'cairo') {
+                    $this->shippingPrice += (200 + $this->calculateAdditionalDependingOnItemsCount($item));
+                } else {
+                    $this->shippingPrice += (250 + $this->calculateAdditionalDependingOnItemsCount($item));
+                }
+            }
         }
-        $this->shippingPrice = 250;
 
     }
+
+
+    public function calculateAdditionalDependingOnItemsCount($item)
+    {
+        if ($item->quantity > 2) {
+            return ($item->quantity - 2) * 200;
+        }
+        return 0;
+    }
+
 
     public function setOrderStatus()
     {
@@ -74,27 +103,28 @@ class UpdateOrderApiService extends AppRepository
      */
     public function getOfferPrice($item)
     {
-//        dd($item->variant->product->category->offers()->first()->expire_at);
-//        dd($item['variant']);
-        $offer = $item->product->category->offers()->first()
-            ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
-        $productPrice = $item->product->price + $item->additional_price;
-
         $offerItemPrice = -1;
-
-        if ($offer) {
-            if ($offer->is_percentage) {
-                $offerItemPrice = $productPrice - ($offer->discount * $productPrice / 100);
-
-            } else {
-                $offerItemPrice = $productPrice - $offer->discount;
-
+        $this->productService->setRelations([
+            'category' => function ($category) {
+                $category->select('id')->with('offers');
             }
-        }
+        ]);
+        $item['product'] = $this->productService->find($item->product_id);
+        if ($item->product->category->offers()->exists()) {
+            $offer = $item->product->category->offers()->first()->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
+            $productPrice = $item->product->price + $item->additional_price;
+            if ($offer) {
+                if ($offer->is_percentage) {
+                    $offerItemPrice = $productPrice - ($offer->discount * $productPrice / 100);
+                } else {
+                    $offerItemPrice = $productPrice - $offer->discount;
 
-        // check if it became negative number
-        if ($offerItemPrice < 0) {
-            $offerItemPrice = 0;
+                }
+            }
+            // check if it became negative number
+            if ($offerItemPrice < 0 && $offerItemPrice != -1) {
+                $offerItemPrice = 0;
+            }
         }
 
         return $offerItemPrice;
@@ -104,8 +134,9 @@ class UpdateOrderApiService extends AppRepository
     public function setItems(Request $request)
     {
         $orderItems = [];
-        foreach ($request->order_items as $order_item) {
-            if (array_key_exists('variant',$order_item['variant']['product'])) {
+        foreach ($request->order_items as $index => $order_item) {
+            if (array_key_exists('variant', $order_item['variant']['product'])) {
+                $order_item['exist'] = 1;
                 $orderItems[] = $order_item['variant'];
             } else {
                 $variant = $this->variantService->model->with([
@@ -125,11 +156,9 @@ class UpdateOrderApiService extends AppRepository
                     }
                 ])->where('id', $order_item['variant_id'])->first();
                 $variant['quantity'] = $order_item['quantity'];
-                $orderItems[] = $variant;
+                $orderItems[$index] = $variant;
             }
         }
-//        unset($request['order_items']);
-//        dd($orderItems[0]);
         $this->items = $orderItems;
     }
 
@@ -144,20 +173,21 @@ class UpdateOrderApiService extends AppRepository
         $this->setItems($request);
 
 
-
         foreach ($this->items as $item) {
 
-//            $variantProduct = $item['variant']['product']['product'];
             $offerItemPrice = $this->getOfferPrice($item);
 
-            $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item['variant']->product->price);
+            if ($item->exist) {
+                $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item['variant']->product->price);
+            } else {
+                $itemPrice = ($offerItemPrice >= 0 ? $offerItemPrice : $item->product->price);
+            }
 
             $item['total_item_price'] = $item->quantity * $itemPrice;
 
             $item['item_price'] = $itemPrice;
 
             $this->subtotal += $item['total_item_price'];
-
             $this->quantity += $item->quantity;
         }
 

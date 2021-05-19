@@ -52,6 +52,9 @@ class FavouriteApiService extends AppRepository
             ]);
 
         }else{
+            $this->setConditions([
+                ['user_id', Auth::id()]
+            ]);
             $this->setRelations([
                'product'=>function($product){
                     $product->select('id','slug');

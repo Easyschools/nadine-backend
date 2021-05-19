@@ -52,4 +52,10 @@ class ContactApiController extends Controller
         $process = $this->contactApiService->index($request);
         return $this->sendResponse($process);
     }
+
+    public function getCountOfunRead(ContactRequest $request)
+    {
+        $process = $this->contactApiService->getCountOfUnreadMessages();
+        return $this->sendResponse($process);
+    }
 }

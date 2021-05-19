@@ -2,6 +2,7 @@
 
 namespace App\Models\Division;
 
+use App\Models\Order\CustomTagShippingPrice;
 use App\Models\Order\Offer;
 use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -46,7 +47,12 @@ class Tag extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class,'tag_id');
+    }
+
+    public function customTagShippingPrice()
+    {
+        return $this->hasOne(CustomTagShippingPrice::class , 'tag_id');
     }
 
 }

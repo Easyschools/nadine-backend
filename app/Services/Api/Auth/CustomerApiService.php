@@ -52,10 +52,10 @@ class CustomerApiService extends AppRepository
                 'email_verified_at',
             ]));
 
-        HelperFunctions::UpdateAddressesForUser($user, $request);
+        $res = HelperFunctions::UpdateAddressesForUser($user, $request);
 
 
-        return true;
+        return $res;
     }
 
 

@@ -33,17 +33,27 @@ class ContactApiService extends AppRepository
 
     public function index(Request $request)
     {
+        $this->setSortBy();
+        $this->setSortOrder();
         if ($request->is_paginate)
             return $this->paginate();
-        return  $this->all();
+        return $this->all();
 
     }
 
 
     public function get(Request $request)
     {
-        return $this->find($request->id);
+        $contact = $this->find($request->id);
+        $contact->update([
+            'is_read' => 1
+        ]);
+        return $contact;
     }
 
 
+    public function getCountOfUnreadMessages()
+    {
+        return $this->model->where('is_read', 0)->count();
+    }
 }

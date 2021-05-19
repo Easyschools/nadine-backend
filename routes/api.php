@@ -146,7 +146,7 @@ Route::group([
         Route::get('all', 'ProductApiController@all');
         Route::get('get', 'ProductApiController@read');
         Route::post('create', 'ProductApiController@create');
-        Route::post('edit', 'ProductApiController@edit');
+        Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
 
     });
@@ -278,6 +278,7 @@ Route::group([
         Route::get('get', 'ContactApiController@read');
         Route::post('create', 'ContactApiController@create');
         Route::delete('delete', 'ContactApiController@delete');
+        Route::get('get-count-unread', 'ContactApiController@getCountOfunRead');
     });
 
     Route::group([

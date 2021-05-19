@@ -24,27 +24,27 @@
                             </div>
                         </div>
 
-                        <!--<div class="col-md-4">-->
-                            <!--<div  class="dataTables_filter"><label>الفئة:-->
-                                <!--<input type="search"-->
-                                       <!--class="form-control form-control-sm"-->
-                                       <!--placeholder=""-->
-                                       <!--v-model="search.category"-->
-                                       <!--v-on:keyup="getAll"-->
-                                       <!--aria-controls="report-table"></label>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="col-md-4">
+                            <div  class="dataTables_filter"><label>التليفون:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.phone"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
 
-                        <!--<div class="col-md-4">-->
-                            <!--<div  class="dataTables_filter"><label>النوع:-->
-                                <!--<input type="search"-->
-                                       <!--class="form-control form-control-sm"-->
-                                       <!--placeholder=""-->
-                                       <!--v-model="search.tag"-->
-                                       <!--v-on:keyup="getAll"-->
-                                       <!--aria-controls="report-table"></label>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="col-md-4">
+                            <div  class="dataTables_filter"><label>الاسم:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.username"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
                     </div>
                     <table class="table">
                         <thead>
@@ -52,6 +52,7 @@
                             <th>#</th>
                             <th>الكود</th>
                             <th>المستخدم</th>
+                            <th>التليفون</th>
                             <th>العنوان</th>
                             <th>الحالة</th>
                             <th>نوع الدفع</th>
@@ -69,6 +70,7 @@
                             <td>{{ item.id }}</td>
                             <td>{{ item.code }}</td>
                             <td>{{ item.user.name }}</td>
+                            <td>{{ item.user.phone }}</td>
                             <td>{{ item.address.address }}</td>
                             <td v-if="item.order_status">{{ item.order_status.name }}</td>
                             <td>{{ item.payment_type.name }}</td>
@@ -115,7 +117,7 @@
                 items: [],
                 search: {
                     code: null,
-                    tag: null,
+                    phone: null,
                     category: null
                 },
                 show: false,
@@ -175,8 +177,8 @@
                     params: {
                         page: this.currentPage,
                         code: this.search.code,
-                        tag: this.search.tag,
-                        category: this.search.category,
+                        phone: this.search.phone,
+                        username: this.search.username,
                         is_paginate: 1,
                         sendResponse: 1
                     }

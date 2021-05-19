@@ -38,7 +38,7 @@ class CustomerApiAuthService extends AppRepository
         ]);
         $user = $this->model->create(
             array_merge($request->only(
-                'name', 'phone', 'password', 'type',
+                'name', 'phone', 'password', 'type', 'email',
                 'image'
             ), [
                 'verified_code' => $verified_code,

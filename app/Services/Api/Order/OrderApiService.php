@@ -10,6 +10,8 @@ namespace App\Services\Api\Order;
 
 use App\Models\Order\Cart;
 use App\Models\Order\Coupon;
+use App\Models\Order\CustomTagShippingPrice;
+use App\Models\Order\Helper\ShippingPriceOrderHelper;
 use App\Models\Order\Offer;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
@@ -26,7 +28,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderApiService extends AppRepository
 {
-    use FirebaseFCM;
+    use FirebaseFCM, ShippingPriceOrderHelper;
 
     private $order;
     private $coupon = null;
@@ -35,8 +37,9 @@ class OrderApiService extends AppRepository
     private $address;
     private $subtotal = 0;
     private $discount = 0;
+    private $isCheckedOut = 0;
     private $offerDiscount = 0;
-    private $shippingPrice = 30;
+    private $shippingPrice = 0;
     private $orderStatus = 1;
     private $quantity = 0;
     private $description = '';
@@ -59,8 +62,31 @@ class OrderApiService extends AppRepository
         if ($this->address->id == 1) {
             $this->shippingPrice = 200;
         }
-        $this->shippingPrice = 250;
+        $customIDs = CustomTagShippingPrice::pluck('tag_id')->toArray();
+        $enter = 0;
+        foreach ($this->items as $item) {
+            if (in_array($item->variant->product->tag->id, $customIDs)) {
+                $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
+                $enter = 1;
+                $this->calculateDependingOnCustomTagPrice($customShippingPrice);
+            }
+            if (!$enter) {
+                if ($this->address->district->city->name_en == 'cairo') {
+                    $this->shippingPrice = 200 + $this->calculateAdditionalDependingOnItemsCount($item);
+                } else {
+                    $this->shippingPrice = 250 + $this->calculateAdditionalDependingOnItemsCount($item);
+                }
+            }
+        }
 
+    }
+
+    public function calculateAdditionalDependingOnItemsCount($item)
+    {
+        if ($item->quantity > 2) {
+            return ($item->quantity - 2) * 200;
+        }
+        return 0;
     }
 
     public function setOrderStatus()
@@ -109,12 +135,12 @@ class OrderApiService extends AppRepository
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price', 'image' )
+                $variant->select('id', 'product_id', 'additional_price', 'image')
                     ->with([
                         'product' => function ($product) {
-                            $product->select('id', 'price','price_after_discount',
+                            $product->select('id', 'price', 'price_after_discount',
                                 'name_en', 'name_ar', 'tag_id',
-                                'category_id','slug')
+                                'category_id', 'slug')
                                 ->with([
                                     'category' => function ($category) {
                                         $category->select('id', 'name_ar', 'name_en')->with([
@@ -122,7 +148,8 @@ class OrderApiService extends AppRepository
                                                 $offer->select('id', 'is_percentage', 'discount', 'category_id');
                                             }
                                         ]);
-                                    }
+                                    },
+                                    'tag:id,name_en,name_ar'
                                 ]);
                         }
                     ]);
@@ -175,6 +202,11 @@ class OrderApiService extends AppRepository
         }
         $this->couponValue($request->code, $this->subtotal);
 
+        if (!$this->couponValue && !$this->isCheckedOut) {
+            return [
+                'code' => ['this coupon exceeded allowed used times']
+            ];
+        }
         $this->setAddress($request->address_id);
 
         $this->setShippingPrice();
@@ -209,12 +241,12 @@ class OrderApiService extends AppRepository
             ->first();
 
         if ($this->coupon) {
-            if ($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) {
+            if (($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) && $this->coupon->min_total <= $subtotal) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
                     $subtotal * ($this->coupon->value / 100);
-                $this->coupon->update([
-                    'used_times' => $this->coupon->used_times + 1,
-                ]);
+//                $this->coupon->update([
+//                    'used_times' => $this->coupon->used_times + 1,
+//                ]);
             }
         }
 
@@ -226,6 +258,7 @@ class OrderApiService extends AppRepository
 
     public function checkout(Request $request)
     {
+        $this->isCheckedOut =1;
         $this->user_id = Auth::id();
 
         $grandTotal = $this->grandTotal($request);
@@ -257,7 +290,7 @@ class OrderApiService extends AppRepository
             ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
-        Cart::where('user_id',$this->user_id)
+        Cart::where('user_id', $this->user_id)
             ->delete();
 
 

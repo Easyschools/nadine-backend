@@ -20,6 +20,7 @@ class Slider extends Model
      */
     protected $appends = [
         'name',
+        'text',
     ];
 
 

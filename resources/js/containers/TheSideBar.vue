@@ -112,12 +112,12 @@
                     </li>
 
                     <!--<li class="nav-item pcoded-hasmenu">-->
-                        <!--<router-link to="/admin/brand">-->
-                            <!--<span class="pcoded-micon">-->
-                                <!--<i class="fas fa-copyright"></i>-->
-                            <!--</span>-->
-                            <!--<span class="pcoded-mtext">Brands</span>-->
-                        <!--</router-link>-->
+                    <!--<router-link to="/admin/brand">-->
+                    <!--<span class="pcoded-micon">-->
+                    <!--<i class="fas fa-copyright"></i>-->
+                    <!--</span>-->
+                    <!--<span class="pcoded-mtext">Brands</span>-->
+                    <!--</router-link>-->
                     <!--</li>-->
 
 
@@ -215,6 +215,8 @@
                                 <i class="fas fa-mail-bulk"></i>
                             </span>
                             <span class="pcoded-mtext">رسائل</span>
+                            <span v-if="cnt" class="unread"
+                                  style="background-color: red;color:white;padding: 7px;margin-right:5px;border-radius: 50%">{{ cnt }}</span>
                         </router-link>
                     </li>
 
@@ -226,9 +228,28 @@
 </template>
 
 <script>
-    export default {
-        name: "TheSideBar"
+export default {
+    name: "TheSideBar",
+    data() {
+        return {
+            cnt: 0
+        }
+    },
+    created() {
+        this.getUnreadMessages();
+    },
+    methods: {
+        getUnreadMessages() {
+            axios.get('contact/get-count-unread')
+                .then(response => {
+                    this.cnt = response.data.data;
+                })
+                .catch()
+        }
     }
+
+}
+
 </script>
 
 <style scoped>

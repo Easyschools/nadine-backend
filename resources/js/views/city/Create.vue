@@ -159,7 +159,7 @@ export default {
 
             this.disableButton = true;
             let data = this.getFormData();
-            axios.post('/city/create', data)
+            axios.post('city/create', data)
                 .then(response => {
                     this.$router.push('/admin/city');
                     swal("Good job!", "A new city has been added!", "success");

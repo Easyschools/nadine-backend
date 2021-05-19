@@ -420,10 +420,9 @@ export default {
                 .catch(err => console.log(err))
         },
         createItem() {
-
             this.disableButton = true;
             let data = this.getFormData();
-            axios.post('/product/create', data)
+            axios.post('product/create', data)
                 .then(response => {
                     this.$router.push('/admin/product');
                     swal("Good job!", "A new product has been added!", "success");

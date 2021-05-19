@@ -16,6 +16,7 @@
                             <th>الهاتف</th>
                             <th>البريد الإلكتروني</th>
                             <th>الرسالة</th>
+                            <th>مقروءة</th>
                             <th>الخيارات</th>
                         </tr>
                         </thead>
@@ -29,9 +30,10 @@
                             <td>
                                 {{ substringMessage(item.message)}}
                             </td>
+                            <td>{{item.is_read ? 'نعم' : 'لا'}}</td>
                             <td>
                                 <button
-                                    @click="showMessage(item.message)"
+                                    @click="showMessage(item.message , item.id)"
                                     class="btn btn-outline-success"
                                 >عرض
                                 </button>
@@ -67,11 +69,6 @@
                 items: [],
                 show: false,
                 colors: "#194d33",
-                item: {
-                    id: null,
-                    name: '',
-                    color: ''
-                }
             }
         },
         created() {
@@ -88,7 +85,17 @@
                 })
                     .catch(err => console.log(err));
             },
-            showMessage(message) {
+            showMessage(message, id = null) {
+                if (id) {
+                    axios.get('/contact/get', {
+                        params: {
+                            id: id
+                        }
+                    }).then(response => {
+                        swal(message);
+                    })
+                        .catch(err => console.log(err));
+                }
                 swal(message);
             },
             deleteItem(id, index) {

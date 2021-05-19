@@ -61,7 +61,7 @@ class ContactInfoApiService extends AppRepository
     {
         $this->updateOrCreateContactAddress($request);
 
-        $contactInfo = $this->find(1);
+        $contactInfo = ContactInfo::first();
 
         return $contactInfo->update([
 //            'phones' => implode(',', $request->phone),

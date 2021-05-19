@@ -89,7 +89,6 @@ trait HelperFunctions
 
                         $addressModel = $user->addresses()->findOrFail($address['address_id']);
                         if (!HelperFunctions::checkForActiveOrders($addressModel)) {
-
                             $addressModel->update([
                                 'address' => $address['address'],
                                 'district_id' => $address['district_id'],
@@ -99,7 +98,8 @@ trait HelperFunctions
                             $arr [] = $address['address_id'];
                         } else {
 
-                            HelperFunctions::ThrowValidationForRelatedAddresses();
+//                            HelperFunctions::ThrowValidationForRelatedAddresses();
+                            return 'you can not edit or delete addresses which are assigned to active order';
 
                         }
 
@@ -113,7 +113,6 @@ trait HelperFunctions
 
             }
 
-            dd($arr);
 
 
             // remove addresses
@@ -129,7 +128,7 @@ trait HelperFunctions
                 }
             }
 
-
+            return true;
 //            DB::commit();
 
         } catch (\Exception $e) {

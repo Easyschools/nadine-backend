@@ -23,14 +23,18 @@
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label class="col-form-label">اللون</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <chrome-picker v-if="show" :value="colors" v-model="colors"></chrome-picker>
-                            </div>
+
+                        <div class="row form-group " v-if="item.image">
+                            <img :src="item.image" ref="imageDisplay" class="mr-auto imageDisplay"/>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label">الصورة:</label>
+                            <input type="file" ref="myImage" v-on:change="attachImage"
+                                   class="form-control"
+                                   id="recipient-image">
+                        </div>
+
                         <div class="text-center mt-5">
                             <router-link to="/admin/color" class="btn btn-secondary">الغاء</router-link>
                             <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
@@ -57,7 +61,7 @@ export default {
             colors: "#194d33",
             item: {
                 id: null,
-                code: null,
+                image: null,
                 name: null
             }
         };
@@ -78,14 +82,16 @@ export default {
         },
 
         editItem() {
-            let color = (this.colors.hex) ? this.colors.hex : this.colors;
+            let formData = new FormData();
+            for (const property in this.item) {
+                if (this.item[property] != null) {
+                    formData.append(property, this.item[property])
+
+                }
+            }
+            // let color = (this.colors.hex) ? this.colors.hex : this.colors;
             // console.log(color)
-            axios.post('color/edit', {
-                id: this.item.id,
-                name_ar: this.item.name_ar,
-                name_en: this.item.name_en,
-                code: color,
-            })
+            axios.post('color/edit',formData)
                 .then(response => {
                     // this.$router.push('/admin/color');
                     swal("Good job!", "A new type has been updated!", "success");
@@ -96,7 +102,16 @@ export default {
                     this.errorMessages(err.response.data);
                     console.log(err)
                 });
-        }
+        },
+        attachImage() {
+            this.item.image = this.$refs.myImage.files[0];
+            let reader = new FileReader();
+            reader.addEventListener('load', function () {
+                this.$refs.imageDisplay.src = reader.result;
+            }.bind(this), false);
+
+            reader.readAsDataURL(this.item.image);
+        },
     }
 }
 </script>

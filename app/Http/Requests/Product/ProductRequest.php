@@ -50,14 +50,14 @@ class ProductRequest extends FormRequest
             'description_ar' => 'required|min:2',
             'material_id' => 'required|exists:materials,id',
             'collection_id' => 'nullable|exists:collections,id',
-            'category_id' => 'required|exists:categories,id',
+//            'category_id' => 'required|exists:categories,id',
             'tag_id' => 'required|exists:tags,id',
             'price' => 'required|numeric|min:1',
             'price_after_discount' => 'required|numeric|min:1',
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
-            'variants.*.dimension_id' => 'exists:dimensions,id',
-            'variants.*.stock' => 'required',
+//            'variants.*.dimension_id' => 'exists:dimensions,id',
+            'variants.*.dimension' => 'required',
         ];
     }
 
@@ -71,22 +71,22 @@ class ProductRequest extends FormRequest
             'description_ar' => 'required|min:2',
             'material_id' => 'required|exists:materials,id',
             'collection_id' => 'nullable|exists:collections,id',
-            'category_id' => 'required|exists:categories,id',
+//            'category_id' => 'required|exists:categories,id',
             'tag_id' => 'required|exists:tags,id',
             'price' => 'required|numeric|min:1',
             'price_after_discount' => 'required|numeric|min:1',
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
-            'variants.*.dimension_id' => 'exists:dimensions,id',
-            'variants.*.stock' => 'required',
+//            'variants.*.dimension_id' => 'exists:dimensions,id',
+            'variants.*.dimension_value' => 'required',
         ];
     }
 
     private function idValidation()
     {
         return [
-//            'id' => 'required|exists:products,id',
-            'slug' => 'required|exists:products,slug'
+            'id' => 'exists:products,id',
+            'slug' => 'exists:products,slug'
         ];
     }
 

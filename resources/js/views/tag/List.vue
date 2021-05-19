@@ -19,6 +19,8 @@
                             <th>الاسم بالانجليزية</th>
                             <th>الفئة</th>
                             <th>الصورة</th>
+                            <th>الشحن داخل القاهرة</th>
+                            <th>الشحن خارج القاهرة</th>
                             <th>الخيارات</th>
                         </tr>
                         </thead>
@@ -33,6 +35,9 @@
                                 <img v-else src="../../../images/no_image.jpg" class=" imageDisplay"
                                      alt="no Image"/>
                             </td>
+                            <td>{{item.custom_tag_shipping_price ? item.custom_tag_shipping_price.cost_inside_cairo : ''}}</td>
+                            <td>{{item.custom_tag_shipping_price ? item.custom_tag_shipping_price.cost_outside_cairo : ''}}</td>
+
                             <td>
                                 <router-link
                                     :to="{path:'/admin/tag/edit/' +item.id,params: { id: item.id }}"

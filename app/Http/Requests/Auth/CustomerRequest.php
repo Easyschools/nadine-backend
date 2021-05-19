@@ -60,7 +60,6 @@ class CustomerRequest extends FormRequest
     private function updateValidation()
     {
         $id = $this->id ?? Auth::id();
-
         return [
             'id' => 'exists:users,id',
             'name' => 'min:2|max:100',

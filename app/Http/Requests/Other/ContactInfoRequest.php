@@ -51,6 +51,7 @@ class ContactInfoRequest extends FormRequest
     private function updateValidation()
     {
         return [
+            'id' => 'required|exists:contact_info,id',
             'phones' => 'required',
             'emails' => 'required',
         ];

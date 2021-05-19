@@ -22,7 +22,6 @@ class Product extends Model
         'price',
         'price_after_discount',
         'collection_id',
-        'category_id',
         'tag_id',
         'material_id',
     ];
@@ -34,6 +33,8 @@ class Product extends Model
         'type',
         'name',
         'description',
+        'category',
+        'category_id',
     ];
 
 
@@ -59,7 +60,7 @@ class Product extends Model
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class);
+        return $this->belongsTo(Tag::class, 'tag_id');
     }
 
     public function collection()
@@ -93,16 +94,37 @@ class Product extends Model
         if ($this->variants()->count()) {
 
             foreach ($this->variants as $variant) {
-                $arr[] = $variant->color->name;
-                $arr[] = $variant->dimension->dimension;
+                if ($variant->color) {
+                    $arr[] = $variant->color->name;
+                }
+                if ($variant->dimension) {
+                    $arr[] = $variant->dimension->dimension;
+                }
             }
         }
 
         // add tag name of product
-        $arr []= $this->tag->name;
+        if ($this->tag) {
+            $arr [] = $this->tag->name;
+        }
 
         return $arr;
     }
 
+    public function getCategoryAttribute()
+    {
+        $tag = $this->tag()->with('category')->first();
+        if ($tag)
+            return $tag->category;
+        return null;
+    }
+
+    public function getCategoryIdAttribute()
+    {
+        $tag = $this->tag()->with('category')->first();
+        if ($tag)
+            return $tag->category;
+        return null;
+    }
 
 }
