@@ -2,6 +2,7 @@
 
 namespace App\Services\Api\Product;
 
+use App\Models\Division\Tag;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
@@ -32,12 +33,12 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->with(
+                $variant->select('product_id','image','color_id','dimension_id')->with(
                     'Color:id,name_en,name_ar,code',
                     'Dimension:id,dimension'
                 );
             },
-            'tag:id,name_en,name_ar'
+            'tag:id,name_en,name_ar,category_id'
         ]);
 
 
@@ -56,7 +57,18 @@ class ProductApiService extends AppRepository
         if ($request->tag) {
             return $this->paginateOfTag(16, $request->tag);
         } elseif ($request->category) {
-            return $this->paginateOfCategory(16, $request->category);
+
+            $category = $request->category;
+
+            $tags_ids = Tag::whereHas('category', function ($q) use ($category) {
+                $q->where('name_en', 'like', '%' . $category . '%')
+                    ->orWhere('name_ar', 'like', '%' . $category . '%');
+            })->pluck('id')->toArray();
+
+            return $this->paginateQuery()->whereHas('tag', function ($q) use ($tags_ids) {
+                $q->whereIn('tag_id', $tags_ids);
+            })->paginate(16)->appends($this->appendsColumns);
+
         } else {
             return $this->paginate(16);
         }

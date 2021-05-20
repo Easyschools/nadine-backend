@@ -104,7 +104,7 @@ class AppRepository
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
-            ->whereHas('category', function ($q) use ($category) {
+            ->whereHas('tag.category', function ($q) use ($category) {
                 $q->where('name_en', 'like', '%' . $category . '%')
                 ->orWhere('name_ar', 'like', '%' . $category . '%');
             })

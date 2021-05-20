@@ -8,6 +8,7 @@ use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -125,6 +126,8 @@ class Product extends Model
 
     public function getCategoryIdAttribute()
     {
+//        dd();
+        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
         $tag = $this->tag()->with('category')->first();
         if ($tag)
             return $tag->category;
