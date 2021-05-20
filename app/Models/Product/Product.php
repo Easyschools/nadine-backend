@@ -113,7 +113,11 @@ class Product extends Model
 
     public function getCategoryAttribute()
     {
-        $tag = $this->tag()->with('category')->first();
+        $tag = $this->tag()->with([
+            'category' => function ($category) {
+                $category->with('offers:id,category_id,discount,is_percentage');
+            }
+        ])->first();
         if ($tag)
             return $tag->category;
         return null;
