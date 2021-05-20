@@ -56,6 +56,8 @@ class ProductApiService extends AppRepository
 
         if ($request->tag) {
             return $this->paginateOfTag(16, $request->tag);
+        } elseif ($request->brand) {
+            return $this->paginateOfTag(16, $request->brand);
         } elseif ($request->category) {
 
             $category = $request->category;

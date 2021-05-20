@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 
+use App\Models\Division\Tag;
 use App\Models\User\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 class AppRepository
 {
     use Changeable, Sortable;
+
     protected $model;
 
     public function __construct(Model $model)
@@ -88,6 +90,7 @@ class AppRepository
             ->orderBy($this->sortBy, $this->sortOrder)
             ->paginate($pageCount)->appends($this->appendsColumns);
     }
+
     public function paginateQuery()
     {
         return $this->model->select($this->columns)
@@ -106,7 +109,7 @@ class AppRepository
             ->orderBy($this->sortBy, $this->sortOrder)
             ->whereHas('tag.category', function ($q) use ($category) {
                 $q->where('name_en', 'like', '%' . $category . '%')
-                ->orWhere('name_ar', 'like', '%' . $category . '%');
+                    ->orWhere('name_ar', 'like', '%' . $category . '%');
             })
             ->paginate($pageCount)
             ->appends($this->appendsColumns);
@@ -114,14 +117,22 @@ class AppRepository
 
     public function paginateOfTag($pageCount = 15, $tag = null)
     {
+        $tag_ids = [];
+        $tag_names = explode(',', $tag);
+
+//        dd($tag_names);
+        foreach ($tag_names as $tag_name) {
+            $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en',$tag_name)->pluck('id')->toArray();
+            $tag_ids = array_merge($tag_ids , $arr);
+        }
+//        dd($tag_ids);
         return $this->model->select($this->columns)
             ->with($this->relations)
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->orderBy($this->sortBy, $this->sortOrder)
-            ->whereHas('tag', function ($q) use ($tag) {
-                $q->where('name_en', 'like', '%' . $tag . '%')
-                    ->orWhere('name_ar', 'like', '%' . $tag . '%');
+            ->whereHas('tag', function ($q) use ($tag_ids) {
+                $q->whereIn('id',  $tag_ids );
             })
             ->paginate($pageCount)
             ->appends($this->appendsColumns);
