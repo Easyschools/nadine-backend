@@ -134,4 +134,16 @@ class Product extends Model
         return null;
     }
 
+//    public function getCategoryIdAttribute()
+//    {
+////        dd();
+//        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
+//        $tag = $this->tag()->with('category')->first();
+//        if ($tag)
+//            return $tag->category;
+//        return null;
+//    }
+
+
+
 }

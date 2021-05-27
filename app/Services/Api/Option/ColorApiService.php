@@ -22,9 +22,19 @@ Class ColorApiService extends AppRepository
     {
 
         if ($request->is_paginate == 1) {
-            return $this->paginate();
+            $colors = $this->paginate();
+        } else if ($request->all) {
+            $this->setColumns([
+                'name_ar',
+                'name_en',
+                'id',
+            ]);
+
+            $colors = $this->paginateQuery()->whereHas('variants')->get();
+        } else {
+            $colors = $this->all();
         }
-        return $this->all();
+        return $colors;
     }
 
     /**

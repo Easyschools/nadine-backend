@@ -2,6 +2,7 @@
 
 namespace App\Models\Option;
 
+use App\Models\Product\Variant;
 use Illuminate\Database\Eloquent\Model;
 
 class Color extends Model
@@ -18,6 +19,10 @@ class Color extends Model
         'name'
     ];
 
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
 
     public function getNameAttribute()
     {

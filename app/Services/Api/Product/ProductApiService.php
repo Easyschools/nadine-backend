@@ -9,7 +9,7 @@ use App\Models\Product\Product;
 use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
-use Http\Message\MessageFactory\DiactorosMessageFactory;
+use Illuminate\Support\Facades\DB;
 
 
 class ProductApiService extends AppRepository
@@ -33,7 +33,7 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id','image','color_id','dimension_id')->with(
+                $variant->select('product_id', 'image', 'color_id', 'dimension_id')->with(
                     'Color:id,name_en,name_ar,code',
                     'Dimension:id,dimension'
                 );
@@ -50,30 +50,35 @@ class ProductApiService extends AppRepository
             'name',
             'description',
             'category_id',
-            'category'
+            'category',
         ]);
 
 
-        if ($request->tag) {
-            return $this->paginateOfTag(16, $request->tag);
-        } elseif ($request->brand) {
-            return $this->paginateOfTag(16, $request->brand);
+        if ($request->tag || $request->brand) {
+            $tag = $request->tag ?? $request->brand;
+            $tag = implode(' ', explode('-', $tag));
+//            dd($tag);
+            $products = $this->paginateOfTag(16, $tag);
         } elseif ($request->category) {
-
-            $category = $request->category;
+            $category = implode(' ', explode('-', $request->category));
 
             $tags_ids = Tag::whereHas('category', function ($q) use ($category) {
                 $q->where('name_en', 'like', '%' . $category . '%')
                     ->orWhere('name_ar', 'like', '%' . $category . '%');
             })->pluck('id')->toArray();
 
-            return $this->paginateQuery()->whereHas('tag', function ($q) use ($tags_ids) {
+            $products = $this->paginateQuery()->whereHas('tag', function ($q) use ($tags_ids) {
                 $q->whereIn('tag_id', $tags_ids);
             })->paginate(16)->appends($this->appendsColumns);
 
         } else {
-            return $this->paginate(16);
+            $products = $this->paginate(16);
         }
+
+//        foreach ($products as  $product){
+//            $product['filters']
+//        }
+        return $products;
 
     }
 
@@ -100,6 +105,28 @@ class ProductApiService extends AppRepository
                 $variant['dimension_value'] = $variant->dimension->dimension;
         }
         return $product;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function priceRange()
+    {
+////        $query = Product::selectRaw('select p.price');
+//        $this->setColumns([
+//            'id',
+//            'price_after_discount',
+//        ]);
+//         = '';
+//        $result = DB::table('product')->selectRaw(
+//            'select min(p.price_after_discount) as min_price
+//        from products p (inner join variants v on p.id=v.product_id) ')->first()->min_price;
+//        dd($result);
+//        $range = $this->paginateQuery()->whereHas('variants',function ($q){
+//            $q->select('addtiona_price')
+//        });
+//        return $product;
     }
 
     /**

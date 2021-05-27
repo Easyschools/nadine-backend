@@ -5,9 +5,10 @@ namespace App\Services\Api\Option;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Repositories\AppRepository;
+use Illuminate\Support\Facades\Auth;
 
 
-Class DimensionApiService extends AppRepository
+class DimensionApiService extends AppRepository
 {
 
     public function __construct(Dimension $dimension)
@@ -22,9 +23,18 @@ Class DimensionApiService extends AppRepository
     public function index($request)
     {
         if ($request->is_paginate == 1) {
-            return $this->paginate();
+            $dimensions = $this->paginate();
+        } else if ($request->all) {
+            $this->setColumns([
+                'dimension',
+                'id',
+            ]);
+            $dimensions = $this->paginateQuery()->whereHas('variants')->get();
+        } else {
+            $dimensions = $this->all();
         }
-        return $this->all();
+
+        return $dimensions;
     }
 
     /**
@@ -60,7 +70,6 @@ Class DimensionApiService extends AppRepository
             'dimension',
         ]));
     }
-
 
 
 }

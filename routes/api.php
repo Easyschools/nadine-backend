@@ -148,6 +148,7 @@ Route::group([
         Route::post('create', 'ProductApiController@create');
         Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
+        Route::get('price-range', 'ProductApiController@priceRange');
 
     });
 
@@ -186,6 +187,7 @@ Route::group([
         Route::post('create', 'MaterialApiController@create');
         Route::post('edit', 'MaterialApiController@edit');
     });
+
 
     Route::group([
         'prefix' => 'variant',
@@ -321,6 +323,8 @@ Route::group([
         Route::get('/search', 'OrderInfoApiController@search');
         Route::post('/delete', 'OrderApiController@delete');
     });
+
+
 
 });
 
