@@ -7,6 +7,7 @@ use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
 use App\Models\Product\Variant;
+use App\Models\Product\VariantImage;
 use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
 use Illuminate\Support\Facades\DB;
@@ -33,10 +34,10 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id', 'image', 'color_id', 'dimension_id')->with(
+                $variant->select('product_id', 'color_id', 'dimension_id')->with(
                     'Color:id,name_en,name_ar,code',
                     'Dimension:id,dimension'
-                );
+                )->with('images');
             },
             'tag:id,name_en,name_ar,category_id'
         ]);
@@ -107,27 +108,6 @@ class ProductApiService extends AppRepository
         return $product;
     }
 
-    /**
-     * @param $request
-     * @return mixed
-     */
-    public function priceRange()
-    {
-////        $query = Product::selectRaw('select p.price');
-//        $this->setColumns([
-//            'id',
-//            'price_after_discount',
-//        ]);
-//         = '';
-//        $result = DB::table('product')->selectRaw(
-//            'select min(p.price_after_discount) as min_price
-//        from products p (inner join variants v on p.id=v.product_id) ')->first()->min_price;
-//        dd($result);
-//        $range = $this->paginateQuery()->whereHas('variants',function ($q){
-//            $q->select('addtiona_price')
-//        });
-//        return $product;
-    }
 
     /**
      * @param $request
@@ -135,7 +115,6 @@ class ProductApiService extends AppRepository
      */
     public function createProduct($request)
     {
-//        dd($request->all());
         $request['slug'] = HelperFunctions::makeSlug($request->name_en) . '-' . HelperFunctions::makeSlug($request->sku);
         $product = Product::create($request->only([
             'name_ar',
@@ -158,9 +137,13 @@ class ProductApiService extends AppRepository
 
             $variant = $this->createDimension($variant);
 
-            Variant::create(array_merge($variant, [
+            $variantModel = Variant::create(array_merge($variant, [
                 'product_id' => $product->id
             ]));
+
+            $variantModel->images->create([
+                'image' => $variant['image']
+            ]);
         }
 
         return $product;
@@ -172,8 +155,8 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
+        dd($request->all());
         $product = $this->find($request->id);
-
         $product->update($request->only([
             'name_ar',
             'name_en',
@@ -205,9 +188,16 @@ class ProductApiService extends AppRepository
                 $arr[] = $variant['id'];
 
             } else {
-                Variant::create(array_merge($variant, [
+                $variantModel = Variant::create(array_merge($variant, [
                     'product_id' => $product->id
                 ]));
+
+                $variantModel->images->updateOrCreate([
+                    'image' => $variant['image']
+                ], [
+                    'image' => $variant['image']
+                ]);
+
             }
         }
 

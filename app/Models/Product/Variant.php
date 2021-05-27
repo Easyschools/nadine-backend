@@ -11,22 +11,18 @@ class Variant extends Model
     protected $fillable = [
         'additional_price',
         'color_id',
-        'image',
         'product_id',
         'dimension_id',
     ];
 
+    protected $appends = [
+        'image'
+    ];
 
     public function getImageAttribute($value)
     {
-        return ($value) ? url($value) : $value;
-    }
-
-    public function setImageAttribute($value)
-    {
-        if (is_file($value)) {
-            $this->attributes['image'] = 'uploads/' . $value->store('Variant');
-        }
+        $image = $this->images()->first();
+        return $image ? url($image->image) : '';
     }
 
     public function product()
@@ -42,7 +38,12 @@ class Variant extends Model
     public function Color()
     {
 //        return $this->belongsTo(Color::class , 'color_id');
-        return $this->belongsTo(Color::class );
+        return $this->belongsTo(Color::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(VariantImage::class);
     }
 
 }

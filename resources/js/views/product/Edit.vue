@@ -81,13 +81,15 @@
                                 <label class="col-form-label">الفئة</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" v-if="item.tag"  v-on:change="selectCategory" v-model="item.tag.category_id">
+                                <select class="form-control" v-if="item.tag" v-on:change="selectCategory"
+                                        v-model="item.tag.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
                                 </select>
 
-                                <select class="form-control" v-else  v-on:change="selectCategory" v-model="item.category_id">
+                                <select class="form-control" v-else v-on:change="selectCategory"
+                                        v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
@@ -202,23 +204,19 @@
 
                                                 <div class="row form-group">
 
-                                                    <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
-                                                        <img :src="variant.image" :ref="'imageDisplay_'+ index"
-                                                             class="mr-auto imageDisplay"/>
-                                                    </div>
-
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
                                                                class="col-form-label ">الصورة</label>
                                                     </div>
 
                                                     <div class="col-md-9">
-                                                        <input type="file" :ref="'variant'+index"
-                                                               @change="uploadVariantImage(index)">
+                                                        <input type="file" :ref="'mainImages'"
+                                                               @change="uploadVariantImage" multiple>
                                                     </div>
 
                                                 </div>
                                             </div>
+
 
 
                                             <!--                                            &lt;!&ndash;                                            <div class="col-md-">&ndash;&gt;-->
@@ -309,6 +307,7 @@ export default {
                 description_ar: '',
                 description_en: '',
                 slug: '',
+                imgs: [],
                 weight: 0,
                 tag: {
                     category: {
@@ -460,15 +459,13 @@ export default {
             this.buildFormData(formData, this.item, null);
             return formData;
         },
+
         uploadVariantImage(index) {
-            this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
+            Array.from(this.$refs['mainImages'].files).forEach((item, index) => {
+                this.item.imgs.push(item);
 
-            let reader = new FileReader();
-            reader.addEventListener('load', function () {
-                this.$refs['imageDisplay_' + index][0].src = reader.result;
-            }.bind(this), false);
+            });
 
-            reader.readAsDataURL(this.item.variants[index].image);
 
         },
         buildFormData(formData, data, parentKey) {
