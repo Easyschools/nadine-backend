@@ -27,7 +27,9 @@ class Product extends Model
         'material_id',
     ];
 
-
+    protected $with = [
+        'images'
+    ];
     protected $appends = [
         'currency',
         'image',
@@ -143,7 +145,6 @@ class Product extends Model
 //            return $tag->category;
 //        return null;
 //    }
-
 
 
 }

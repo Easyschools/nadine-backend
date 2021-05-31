@@ -45,7 +45,6 @@ class ProductApiService extends AppRepository
 
         $this->setAppends([
             'currency',
-            'image',
             'type',
             'tags',
             'name',
