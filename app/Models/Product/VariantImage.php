@@ -21,8 +21,9 @@ class VariantImage extends Model
 
     public function setImageAttribute($value)
     {
-        if (is_file($value)) {
-            $this->attributes['image'] = 'uploads/' . $value->store('Variant_images');
+        if (!is_array($value)) {
+            if (is_file($value))
+                $this->attributes['image'] = 'uploads/' . $value->store('Variant_images');
         }
     }
 

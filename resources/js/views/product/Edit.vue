@@ -204,19 +204,26 @@
 
                                                 <div class="row form-group">
 
+                                                    <div class="col-md-3 m-2" v-if="variant.images.length > 0" v-for="image in variant.images">
+                                                        <img v-if="image" :src="image.image" width="200px" height="200px">
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row form-group">
+
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
                                                                class="col-form-label ">الصورة</label>
                                                     </div>
 
                                                     <div class="col-md-9">
-                                                        <input type="file" :ref="'mainImages'"
-                                                               @change="uploadVariantImage" multiple>
+                                                        <input type="file" :ref="'mainImages'+index"
+                                                               @change="uploadVariantImage(index)" multiple>
                                                     </div>
 
                                                 </div>
                                             </div>
-
 
 
                                             <!--                                            &lt;!&ndash;                                            <div class="col-md-">&ndash;&gt;-->
@@ -290,13 +297,9 @@
 
 
 <script>
-import {VueEditor} from "vue2-editor";
 
 export default {
     name: "Edit",
-    components: {
-        VueEditor
-    },
     data() {
         return {
             disableButton: false,
@@ -307,7 +310,7 @@ export default {
                 description_ar: '',
                 description_en: '',
                 slug: '',
-                imgs: [],
+                images: [],
                 weight: 0,
                 tag: {
                     category: {
@@ -327,6 +330,7 @@ export default {
                         color_id: null,
                         dimension_id: null,
                         dimension_value: null,
+                        images: [null],
                     },
                 ]
             },
@@ -361,6 +365,7 @@ export default {
 
         };
     },
+
     created() {
         this.item.slug = this.$route.params.slug;
         this.getItem();
@@ -418,6 +423,8 @@ export default {
             axios.get('/product/get?slug=' + this.item.slug)
                 .then(response => {
                     this.item = response.data.data;
+                    // console.log(this.item.variants);
+                    // this.item.images = [];
                     // this.item.dimension = response.data.data.dimension.dimension;
                 }).catch(err => {
                 this.errorMessages(err.response.data);
@@ -452,21 +459,22 @@ export default {
                 additional_price: 0,
                 color_id: null,
                 dimension_id: null,
+                images: [],
                 dimension: null,
-            })
+            });
+
         },
         getFormData(formData) {
             this.buildFormData(formData, this.item, null);
             return formData;
         },
-
         uploadVariantImage(index) {
-            Array.from(this.$refs['mainImages'].files).forEach((item, index) => {
-                this.item.imgs.push(item);
-
+            // console.log(this.$refs['mainImages'+index][index].files[0])
+            console.log(this.$refs['mainImages' + index][0])
+            Array.from(this.$refs['mainImages' + index][0].files).forEach((item, indx) => {
+                this.item.variants[index].images.push(item);
+                console.log(this.item.variants[index].images)
             });
-
-
         },
         buildFormData(formData, data, parentKey) {
             if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {

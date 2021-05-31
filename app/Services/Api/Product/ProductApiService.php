@@ -91,7 +91,7 @@ class ProductApiService extends AppRepository
     {
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension']);
+                $variant->with(['color', 'dimension', 'images']);
             },
             'tag',
         ]);
@@ -141,9 +141,14 @@ class ProductApiService extends AppRepository
                 'product_id' => $product->id
             ]));
 
-            $variantModel->images->create([
-                'image' => $variant['image']
-            ]);
+            if (count($variant['images'])) {
+                foreach ($variant['images'] as $img) {
+                    $variantModel->images()->firstOrcreate([
+                        'image' => $img
+                    ]);
+//                $variantModel->images->delete();
+                }
+            }
         }
 
         return $product;
@@ -155,7 +160,7 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
-        dd($request->all());
+//        dd($request->all());
         $product = $this->find($request->id);
         $product->update($request->only([
             'name_ar',
@@ -176,7 +181,7 @@ class ProductApiService extends AppRepository
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr = [];
 //        dd($request->variants);
-        foreach ($request->variants as $variant) {
+        foreach ($request->variants as $index => $variant) {
 
             $variant = $this->createDimension($variant, 'dimension_value');
 
@@ -185,6 +190,8 @@ class ProductApiService extends AppRepository
                 $variantModel = $this->variantRepo->find($variant['id']);
                 $variantModel->update($variant);
 
+                $this->updateImagesOfVariants($variant, $variantModel);
+
                 $arr[] = $variant['id'];
 
             } else {
@@ -192,12 +199,7 @@ class ProductApiService extends AppRepository
                     'product_id' => $product->id
                 ]));
 
-                $variantModel->images->updateOrCreate([
-                    'image' => $variant['image']
-                ], [
-                    'image' => $variant['image']
-                ]);
-
+                $this->updateImagesOfVariants($variant, $variantModel);
             }
         }
 
@@ -208,6 +210,26 @@ class ProductApiService extends AppRepository
         return $product;
     }
 
+
+    public function updateImagesOfVariants($variant, $variantModel)
+    {
+        $hasNewFiles = 0;
+        if (count($variant['images'])) {
+            foreach ($variant['images'] as $img) {
+                if (!is_array($img) && is_file($img) && !$hasNewFiles) {
+                    $variantModel->images()->delete();
+                    $hasNewFiles = 1;
+                }
+                if (is_array($img)) {
+                    continue;
+                }
+                $variantModel->images()->firstOrcreate([
+                    'image' => $img
+                ]);
+//                $variantModel->images->delete();
+            }
+        }
+    }
 
     public function filter($request)
     {
