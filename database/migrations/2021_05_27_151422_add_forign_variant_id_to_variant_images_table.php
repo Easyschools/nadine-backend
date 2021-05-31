@@ -15,8 +15,9 @@ class AddForignVariantIdToVariantImagesTable extends Migration
     {
         Schema::table('variant_images', function (Blueprint $table) {
             //
-            $table->foreignId('variant_id')->constrained('variants')
+            $table->foreignId('variant_id')->nullable()->constrained('variants')
                 ->cascadeOnDelete();
+
         });
     }
 

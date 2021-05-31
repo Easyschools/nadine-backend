@@ -210,22 +210,6 @@ class ProductApiService extends AppRepository
         return $product;
     }
 
-    /**
-     * @param $request
-     * @return mixed
-     */
-    public function replaceProduct()
-    {
-        $variants = Variant::select('id', 'product_id', 'image')->get();
-
-        foreach ($variants as $variant) {
-            $variant->images()->create([
-                'image' => $variant->image
-            ]);
-        }
-        return true;
-    }
-
 
     public function updateImagesOfVariants($variant, $variantModel)
     {
