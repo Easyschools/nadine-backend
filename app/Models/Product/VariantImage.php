@@ -23,7 +23,7 @@ class VariantImage extends Model
     {
         if (!is_array($value)) {
             if (is_file($value))
-                $this->attributes['image'] = 'uploads/' . $value->store('Variant_images');
+                $this->attributes['image'] = 'uploads/' . $value->store('Variant');
         }
     }
 

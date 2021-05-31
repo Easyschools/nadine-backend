@@ -34,7 +34,7 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id', 'color_id', 'dimension_id','id')->with(
+                $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
                     'Color:id,name_en,name_ar,code',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
@@ -208,6 +208,22 @@ class ProductApiService extends AppRepository
         $this->variantRepo->model->whereIn('id', $deletedIds)->delete();
 
         return $product;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function replaceProduct()
+    {
+        $variants = Variant::select('id', 'product_id', 'image')->get();
+
+        foreach ($variants as $variant) {
+            $variant->images()->create([
+                'image' => $variant->image
+            ]);
+        }
+        return true;
     }
 
 

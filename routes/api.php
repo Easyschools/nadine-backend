@@ -149,6 +149,7 @@ Route::group([
         Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
         Route::get('price-range', 'ProductApiController@priceRange');
+        Route::get('replace-image', 'ProductApiController@replaceImage');
 
     });
 

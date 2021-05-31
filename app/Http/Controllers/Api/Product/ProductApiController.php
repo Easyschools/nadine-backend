@@ -62,4 +62,11 @@ class ProductApiController extends Controller
         return $this->sendResponse($process);
 
     }
+
+    public function replaceImage()
+    {
+        $process = $this->productApiService->replaceProduct();
+        return $this->sendResponse($process);
+
+    }
 }
