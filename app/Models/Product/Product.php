@@ -27,9 +27,9 @@ class Product extends Model
         'material_id',
     ];
 
-    protected $with = [
-        'images'
-    ];
+//    protected $with = [
+//        'image'
+//    ];
     protected $appends = [
         'currency',
         'image',
@@ -78,7 +78,12 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-        return $this->variants()->exists() ? $this->variants()->first()->image : "";
+
+        $variants = $this->variants;
+        return count($variants) > 0 ? $variants->first()->images
+            ? $variants->first()->images()->exists()
+                ? $variants->first()->images()->first()->image
+                : "" : "" : "";
     }
 
     public function getCurrencyAttribute()

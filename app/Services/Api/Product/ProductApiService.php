@@ -34,10 +34,11 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id', 'color_id', 'dimension_id')->with(
+                $variant->select('product_id', 'color_id', 'dimension_id','id')->with(
                     'Color:id,name_en,name_ar,code',
-                    'Dimension:id,dimension'
-                )->with('images');
+                    'Dimension:id,dimension',
+                    'images:id,variant_id,image'
+                );
             },
             'tag:id,name_en,name_ar,category_id'
         ]);

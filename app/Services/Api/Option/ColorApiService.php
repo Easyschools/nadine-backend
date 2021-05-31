@@ -27,6 +27,8 @@ Class ColorApiService extends AppRepository
             $this->setColumns([
                 'name_ar',
                 'name_en',
+                'image',
+                'code',
                 'id',
             ]);
 
