@@ -78,12 +78,12 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-
-        $variants = $this->variants;
-        return count($variants) > 0 ? $variants->first()->images
-            ? $variants->first()->images()->exists()
-                ? $variants->first()->images()->first()->image
-                : "" : "" : "";
+        return $this->variants()->exists() ?
+            $this->variants()->whereHas('images')->exists() ?
+                    $this->variants()->whereHas('images',function ($q){
+                        $q->whereNotNull('image');
+                    })->first()->images()->whereNotNull('image')->first()->image
+                    : "" : "";
     }
 
     public function getCurrencyAttribute()
