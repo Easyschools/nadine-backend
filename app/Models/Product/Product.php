@@ -76,7 +76,7 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-        return $this->variants()->first() ? $this->variants()->first()->image : "";
+        return $this->variants()->exists() ? $this->variants()->first()->image : "";
     }
 
     public function getCurrencyAttribute()
