@@ -93,6 +93,9 @@ class ProductApiService extends AppRepository
         }
         if ($request->min_price || $request->max_price) {
 
+            $request->min_price = $request->min_price?? 0;
+            $request->max_price = $request->max_price?? 0;
+
             $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
         }
         if ($request->category) {
