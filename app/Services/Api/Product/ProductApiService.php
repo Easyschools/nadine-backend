@@ -175,7 +175,7 @@ class ProductApiService extends AppRepository
             'collection_id',
             'tag_id',
             'material_id',
-            'tag_id',
+            'color_id',
         ]));
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();

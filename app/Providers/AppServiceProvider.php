@@ -4,7 +4,7 @@ namespace App\Providers;
 use App\Models\Division\Tag;
 use App\Models\Feature\Brand;
 use App\Models\Order\Offer;
-use App\Models\Product\Variant;
+use App\Models\Product\VariantImage;
 use App\Models\User\User;
 use App\Observers\BrandObserver;
 use App\Observers\OfferObserver;
@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Tag::observe(TagObserver::class);
         Offer::observe(OfferObserver::class);
-        Variant::observe(VariantImageObserver::class);
+        VariantImage::observe(VariantImageObserver::class);
         Brand::observe(BrandObserver::class);
     Schema::defaultStringLength(191);
 
