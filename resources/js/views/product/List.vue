@@ -93,7 +93,15 @@
             </div>
             <div class="offset-3 col-md-6">
                 <b-pagination
-                    v-if="show"                     v-model="currentPage"                     @input="getAll"                     :total-rows="rows"                     :per-page="perPage"                     first-text="الاولى"                     prev-text="السابق"                     next-text="التالى"                     last-text="الاخير"
+                    v-if="show"
+                    v-model="currentPage"
+                    @input="getAll"
+                    :total-rows="rows"
+                    :per-page="perPage"
+                    first-text="الاولى"
+                    prev-text="السابق"
+                    next-text="التالى"
+                    last-text="الاخير"
                 ></b-pagination>
             </div>
         </div>

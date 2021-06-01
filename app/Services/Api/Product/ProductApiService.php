@@ -54,13 +54,48 @@ class ProductApiService extends AppRepository
             'category',
         ]);
 
+        $productQuery = $this->filterWithAttributes($request);
+
+        $products = $productQuery->paginate();
+        $custom = collect([
+            'min_price' => $productQuery->min('price_after_discount'),
+            'max_price' => $productQuery->max('price_after_discount')
+        ]);
+
+        return $custom->merge($products);
+//        dd($max_price , $min_price);
+    }
+
+    public function filterWithAttributes($request)
+    {
+        $productQuery = $this->paginateQuery(16);
+
 
         if ($request->tag || $request->brand) {
             $tag = $request->tag ?? $request->brand;
             $tag = implode(' ', explode('-', $tag));
 //            dd($tag);
-            $products = $this->paginateOfTag(16, $tag);
-        } elseif ($request->category) {
+            $productQuery = $productQuery->paginateOfTag(16, $tag);
+        }
+        if ($request->colors) {
+            $colorIDs = explode(',', $request->colors);
+
+            $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
+                $q->whereIn('color_id', $colorIDs);
+            });
+        }
+        if ($request->size) {
+            $sizeIDs = explode(',', $request->size);
+
+            $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
+                $q->whereIn('dimension_id', $sizeIDs);
+            });
+        }
+        if ($request->min_price || $request->max_price) {
+
+            $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
+        }
+        if ($request->category) {
             $category = implode(' ', explode('-', $request->category));
 
             $tags_ids = Tag::whereHas('category', function ($q) use ($category) {
@@ -68,19 +103,12 @@ class ProductApiService extends AppRepository
                     ->orWhere('name_ar', 'like', '%' . $category . '%');
             })->pluck('id')->toArray();
 
-            $products = $this->paginateQuery()->whereHas('tag', function ($q) use ($tags_ids) {
+            $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
                 $q->whereIn('tag_id', $tags_ids);
-            })->paginate(16)->appends($this->appendsColumns);
-
-        } else {
-            $products = $this->paginate(16);
+            })->appends($this->appendsColumns);
         }
-
-//        foreach ($products as  $product){
-//            $product['filters']
-//        }
-        return $products;
-
+//        dd($productQuery->toSql());
+        return $productQuery;
     }
 
     /**

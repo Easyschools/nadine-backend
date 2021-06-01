@@ -95,9 +95,9 @@ class AppRepository
     {
         return $this->model->select($this->columns)
             ->with($this->relations)
+            ->orderBy($this->sortBy, $this->sortOrder)
             ->where($this->conditions)
-            ->orWhere($this->orConditions)
-            ->orderBy($this->sortBy, $this->sortOrder);
+            ->orWhere($this->orConditions);
     }
 
     public function paginateOfCategory($pageCount = 15, $category = null)
@@ -134,8 +134,8 @@ class AppRepository
             ->whereHas('tag', function ($q) use ($tag_ids) {
                 $q->whereIn('id',  $tag_ids );
             })
-            ->paginate($pageCount)
             ->appends($this->appendsColumns);
+//            ->paginate($pageCount);
     }
 
     public function OrderPaginator($pageCount = 15)
