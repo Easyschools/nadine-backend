@@ -115,10 +115,10 @@ class AppRepository
             ->appends($this->appendsColumns);
     }
 
-    public function paginateOfTag($pageCount = 15, $tag = null)
+    public function paginateOfTag($pageCount = 15, $tag_names = null)
     {
         $tag_ids = [];
-        $tag_names = explode(',', $tag);
+//        $tag_names = explode(',', $tag);
 
 //        dd($tag_names);
         foreach ($tag_names as $tag_name) {
@@ -133,8 +133,7 @@ class AppRepository
             ->orderBy($this->sortBy, $this->sortOrder)
             ->whereHas('tag', function ($q) use ($tag_ids) {
                 $q->whereIn('id',  $tag_ids );
-            })
-            ->appends($this->appendsColumns);
+            });
 //            ->paginate($pageCount);
     }
 

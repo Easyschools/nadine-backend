@@ -17,6 +17,7 @@ class ProductApiService extends AppRepository
 {
 
     private $variantRepo;
+    private $append = 0;
 
     public function __construct(Product $product)
     {
@@ -56,7 +57,10 @@ class ProductApiService extends AppRepository
 
         $productQuery = $this->filterWithAttributes($request);
 
-        $products = $productQuery->paginate();
+        $products = $productQuery->paginate(16);
+        if ($this->append) {
+            $products = $products->appends($this->appendsColumns);
+        }
         $custom = collect([
             'min_price' => $productQuery->min('price_after_discount'),
             'max_price' => $productQuery->max('price_after_discount')
@@ -68,14 +72,17 @@ class ProductApiService extends AppRepository
 
     public function filterWithAttributes($request)
     {
-        $productQuery = $this->paginateQuery(16);
-
+        $productQuery = $this->paginateQuery();
 
         if ($request->tag || $request->brand) {
             $tag = $request->tag ?? $request->brand;
-            $tag = implode(' ', explode('-', $tag));
+            $tag = explode(',', $tag);
+            $tag = $this->replaceDashWithSpace($tag);
+
 //            dd($tag);
-            $productQuery = $productQuery->paginateOfTag(16, $tag);
+//            dd($tag);
+            $this->append = 1;
+            $productQuery = $this->paginateOfTag(16, $tag);
         }
         if ($request->colors) {
             $colorIDs = explode(',', $request->colors);
@@ -93,25 +100,40 @@ class ProductApiService extends AppRepository
         }
         if ($request->min_price || $request->max_price) {
 
-            $request->min_price = $request->min_price?? 0;
-            $request->max_price = $request->max_price?? 0;
+            $request->min_price = $request->min_price ?? 0;
+            $request->max_price = $request->max_price ?? 0;
 
             $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
         }
         if ($request->category) {
-            $category = implode(' ', explode('-', $request->category));
+            $category = explode(',', $request->category);
 
-            $tags_ids = Tag::whereHas('category', function ($q) use ($category) {
-                $q->where('name_en', 'like', '%' . $category . '%')
-                    ->orWhere('name_ar', 'like', '%' . $category . '%');
-            })->pluck('id')->toArray();
+            $category = $this->replaceDashWithSpace($category);
+            $tags_ids = [];
+            foreach ($category as $cat) {
 
+                $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
+                    $q->where('name_en', 'like', '%' . $cat . '%')
+                        ->orWhere('name_ar', 'like', '%' . $cat . '%');
+                })->pluck('id')->toArray());
+            }
+//            dd($tags_ids);
+
+            $this->append = 1;
             $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
                 $q->whereIn('tag_id', $tags_ids);
-            })->appends($this->appendsColumns);
+            });
         }
 //        dd($productQuery->toSql());
         return $productQuery;
+    }
+
+    public function replaceDashWithSpace($name)
+    {
+        for ($i = 0; $i < count($name); $i++) {
+            $name[$i] = str_replace("-", " ", $name[$i]);
+        }
+        return $name;
     }
 
     /**
