@@ -36,7 +36,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
-                    'Color:id,name_en,name_ar,code',
+                    'Color:id,name_en,name_ar,code,image',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
                 );
@@ -57,10 +57,8 @@ class ProductApiService extends AppRepository
 
         $productQuery = $this->filterWithAttributes($request);
 
-        $products = $productQuery->paginate(16);
-        if ($this->append) {
-            $products = $products->appends($this->appendsColumns);
-        }
+        $products = $productQuery->paginate(16)->appends($this->appendsColumns);
+
         $custom = collect([
             'min_price' => $productQuery->min('price_after_discount'),
             'max_price' => $productQuery->max('price_after_discount')
@@ -93,7 +91,7 @@ class ProductApiService extends AppRepository
         }
         if ($request->size) {
             $sizeIDs = explode(',', $request->size);
-
+//            dd($sizeIDs);
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
                 $q->whereIn('dimension_id', $sizeIDs);
             });
