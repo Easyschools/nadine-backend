@@ -28,7 +28,7 @@ class CartApiService extends AppRepository
 
         $this->setRelations([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'dimension_id', 'image',
+                $variant->select('id', 'product_id', 'dimension_id',
                     'additional_price')->with([
                     'product' => function ($product) {
                         $product->select('id', 'name_ar', 'name_en','slug' ,

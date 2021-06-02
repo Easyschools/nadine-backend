@@ -32,6 +32,8 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
 
+        $this->setSortOrder('asc');
+        $this->setSortBy('name_en');
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
@@ -69,6 +71,8 @@ class ProductApiService extends AppRepository
 
     public function filterWithAttributes($request)
     {
+//        dd(implode(',',Color::pluck('id')->toArray()) );
+
         $productQuery = $this->paginateQuery();
 //        dd($request->all());
         if ($request->tag || $request->brand) {
@@ -92,13 +96,13 @@ class ProductApiService extends AppRepository
 //        dd($productQuery->toSql());
         if ($request->color) {
             $colorIDs = explode(',', $request->color);
-
+//            dd($colorIDs);
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
                 $q->whereIn('color_id', $colorIDs);
             });
         }
         if ($request->sizes) {
-            $sizeIDs = explode(',', $request->size);
+            $sizeIDs = explode(',', $request->sizes);
 //            dd($sizeIDs);
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
                 $q->whereIn('dimension_id', $sizeIDs);
