@@ -63,4 +63,11 @@ class ProductApiController extends Controller
 
     }
 
+    public function priceRange()
+    {
+        $process = $this->productApiService->priceRange();
+        return $this->sendResponse($process);
+
+    }
+
 }

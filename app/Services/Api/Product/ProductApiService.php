@@ -17,7 +17,6 @@ class ProductApiService extends AppRepository
 {
 
     private $variantRepo;
-    private $append = 0;
 
     public function __construct(Product $product)
     {
@@ -60,8 +59,8 @@ class ProductApiService extends AppRepository
         $products = $productQuery->paginate(16)->appends($this->appendsColumns);
 
         $custom = collect([
-            'min_price' => $productQuery->min('price_after_discount'),
-            'max_price' => $productQuery->max('price_after_discount')
+            'min_price' => Product::min('price_after_discount'),
+            'max_price' => Product::max('price_after_discount')
         ]);
 
         return $custom->merge($products);
@@ -75,13 +74,22 @@ class ProductApiService extends AppRepository
         if ($request->tag || $request->brand) {
             $tag = $request->tag ?? $request->brand;
             $tag = explode(',', $tag);
-            $tag = $this->replaceDashWithSpace($tag);
+            $tag_names = $this->replaceDashWithSpace($tag);
 
-//            dd($tag);
-//            dd($tag);
-            $this->append = 1;
-            $productQuery = $this->paginateOfTag(16, $tag);
+            $tag_ids = [];
+
+
+//        dd($tag_names);
+            foreach ($tag_names as $tag_name) {
+                $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
+                $tag_ids = array_merge($tag_ids, $arr);
+            }
+
+            $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
+                $q->whereIn('id', $tag_ids);
+            });
         }
+//        dd($productQuery->toSql());
         if ($request->colors) {
             $colorIDs = explode(',', $request->colors);
 
@@ -105,21 +113,17 @@ class ProductApiService extends AppRepository
         }
         if ($request->category) {
             $category = explode(',', $request->category);
-
             $category = $this->replaceDashWithSpace($category);
             $tags_ids = [];
-            foreach ($category as $cat) {
 
+            foreach ($category as $cat) {
                 $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
                     $q->where('name_en', 'like', '%' . $cat . '%')
                         ->orWhere('name_ar', 'like', '%' . $cat . '%');
                 })->pluck('id')->toArray());
             }
-//            dd($tags_ids);
-
-            $this->append = 1;
             $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
-                $q->whereIn('tag_id', $tags_ids);
+                $q->whereIn('id', $tags_ids);
             });
         }
 //        dd($productQuery->toSql());
@@ -203,6 +207,14 @@ class ProductApiService extends AppRepository
         }
 
         return $product;
+    }
+
+    public function priceRange()
+    {
+        return [
+            'min_price' => Product::min('price_after_discount'),
+            'max_price' => Product::max('price_after_discount')
+        ];
     }
 
     /**
