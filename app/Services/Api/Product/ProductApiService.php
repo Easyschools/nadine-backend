@@ -70,7 +70,7 @@ class ProductApiService extends AppRepository
     public function filterWithAttributes($request)
     {
         $productQuery = $this->paginateQuery();
-
+//        dd($request->all());
         if ($request->tag || $request->brand) {
             $tag = $request->tag ?? $request->brand;
             $tag = explode(',', $tag);
@@ -79,25 +79,25 @@ class ProductApiService extends AppRepository
             $tag_ids = [];
 
 
-//        dd($tag_names);
             foreach ($tag_names as $tag_name) {
                 $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
                 $tag_ids = array_merge($tag_ids, $arr);
             }
+//            dd($tag_ids);
 
             $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
                 $q->whereIn('id', $tag_ids);
             });
         }
 //        dd($productQuery->toSql());
-        if ($request->colors) {
-            $colorIDs = explode(',', $request->colors);
+        if ($request->color) {
+            $colorIDs = explode(',', $request->color);
 
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
                 $q->whereIn('color_id', $colorIDs);
             });
         }
-        if ($request->size) {
+        if ($request->sizes) {
             $sizeIDs = explode(',', $request->size);
 //            dd($sizeIDs);
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
@@ -111,6 +111,7 @@ class ProductApiService extends AppRepository
 
             $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
         }
+
         if ($request->category) {
             $category = explode(',', $request->category);
             $category = $this->replaceDashWithSpace($category);
