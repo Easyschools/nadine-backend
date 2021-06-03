@@ -74,8 +74,9 @@
                             </td>
                             <td>
                                 <router-link
-                                    :to="{path:'/admin/product/edit/' +item.slug,params: {
-                                     slug: item.slug
+                                    :to="{path:'/admin/product/edit/' +item.slug +'/'+currentPage,params: {
+                                     slug: item.slug,
+                                     page: currentPage,
                                      }}"
 
                                     class="btn btn-outline-warning"
@@ -124,7 +125,6 @@
                     category: null
                 },
                 show: false,
-                colors: "#194d33",
                 item: {
                     id: null,
                     name_ar: '',
@@ -167,6 +167,7 @@
         },
         created() {
             this.show = true;
+            this.currentPage = this.$route.query.page ;
             this.getAll();
         },
         methods: {

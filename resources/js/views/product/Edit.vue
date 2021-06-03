@@ -204,8 +204,10 @@
 
                                                 <div class="row form-group">
 
-                                                    <div class="col-md-3 m-2" v-if="variant.images.length > 0" v-for="image in variant.images">
-                                                        <img v-if="image" :src="image.image" width="200px" height="200px">
+                                                    <div class="col-md-3 m-2" v-if="variant.images.length > 0"
+                                                         v-for="image in variant.images">
+                                                        <img v-if="image" :src="image.image" width="200px"
+                                                             height="200px">
                                                     </div>
 
                                                 </div>
@@ -283,7 +285,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/product" class="btn btn-secondary">
+                <router-link :to="{path:'/admin/product/' ,query: {
+                                     page: current_page,}}" class="btn btn-secondary">
                     الغاء
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
@@ -303,6 +306,7 @@ export default {
     data() {
         return {
             disableButton: false,
+            current_page: 0,
             item: {
                 sku: '',
                 name_ar: '',
@@ -368,6 +372,7 @@ export default {
 
     created() {
         this.item.slug = this.$route.params.slug;
+        this.current_page = this.$route.params.page;
         this.getItem();
         this.getCategory();
         this.getTag();

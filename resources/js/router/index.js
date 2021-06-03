@@ -363,11 +363,11 @@ function configRoutes() {
         {
             path: "/admin/product",
             component: View,
-            redirect: "/admin/product/list/:page",
+            redirect: "/admin/product/list",
             meta: {requiresAuth: true},
             children: [
                 {
-                    path: 'list/:page',
+                    path: 'list',
                     component: productList,
                 },
                 {
@@ -375,7 +375,7 @@ function configRoutes() {
                     component: productCreate,
                 },
                 {
-                    path: 'edit/:slug',
+                    path: 'edit/:slug/:page',
                     component: productEdit,
                 }
             ]
