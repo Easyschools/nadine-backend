@@ -153,7 +153,7 @@ class OrderApiService extends AppRepository
                                     'tag:id,name_en,name_ar'
                                 ]);
                         },
-                        'variant_images:variant_id,image'
+                        'images:variant_id,image'
                     ]);
             },
         ])->get();
