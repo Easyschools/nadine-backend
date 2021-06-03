@@ -136,7 +136,7 @@ class OrderApiService extends AppRepository
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price', 'image')
+                $variant->select('id', 'product_id', 'additional_price')
                     ->with([
                         'product' => function ($product) {
                             $product->select('id', 'price', 'price_after_discount',
@@ -152,7 +152,8 @@ class OrderApiService extends AppRepository
 //                                    },
                                     'tag:id,name_en,name_ar'
                                 ]);
-                        }
+                        },
+                        'variant_images:variant_id,image'
                     ]);
             },
         ])->get();
