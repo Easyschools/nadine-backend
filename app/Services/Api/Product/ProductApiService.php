@@ -75,9 +75,11 @@ class ProductApiService extends AppRepository
 
         $productQuery = $this->paginateQuery();
 //        dd($request->all());
-        if ($request->collection_id) {
-            
-            $productQuery = $productQuery->where('collection_id', $request->collection_id);
+        if ($request->collection_name) {
+            $collection_name = str_replace('-', ' ', $request->collection_name);
+            $productQuery = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
+                $q->where('name_en', $collection_name)->orWhere('name_ar', $collection_name);
+            });
         }
 
         if ($request->tag || $request->brand) {
