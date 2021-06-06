@@ -148,7 +148,7 @@
                 item.is_percentage = (this.item.is_percentage || this.item.is_percentage == 1) ? 1 : 0;
                 item.all_users = (this.item.all_users || this.item.all_users == 1) ? 1 : 0;
                 if (item.all_users == 1) {
-                    delete item.users;
+                    delete this.item.users;
                 }
 
                 axios.post('/coupon/edit', item)

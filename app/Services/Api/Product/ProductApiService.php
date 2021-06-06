@@ -33,7 +33,7 @@ class ProductApiService extends AppRepository
         $this->filter($request);
 
         $this->setSortOrder('asc');
-        $this->setSortBy('name_en');
+        $this->setSortBy('sku');
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
