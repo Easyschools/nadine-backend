@@ -446,7 +446,12 @@ export default {
             let data = this.getFormData(formData);
             axios.post('product/update', data).then(response => {
                 this.disableButton = false;
-                // this.$router.push('/admin/product');
+                this.$router.push({
+                    path: '/admin/product',
+                    query: {
+                        page: this.current_page,
+                    }
+                });
                 swal("Good job!", "A new product has been updated!", "success");
                 this.getItem();
                 window.scrollTo(0, 0);

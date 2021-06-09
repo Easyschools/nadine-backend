@@ -94,23 +94,23 @@ class ProductApiService extends AppRepository
                 $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
                 $tag_ids = array_merge($tag_ids, $arr);
             }
-//            dd($tag_ids);
+
 
             $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
                 $q->whereIn('id', $tag_ids);
             });
         }
-//        dd($productQuery->toSql());
+
         if ($request->color) {
             $colorIDs = explode(',', $request->color);
-//            dd($colorIDs);
+
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
                 $q->whereIn('color_id', $colorIDs);
             });
         }
         if ($request->sizes) {
             $sizeIDs = explode(',', $request->sizes);
-//            dd($sizeIDs);
+
             $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
                 $q->whereIn('dimension_id', $sizeIDs);
             });
