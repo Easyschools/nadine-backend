@@ -2,6 +2,7 @@
 
 namespace App\Models\Option;
 
+use App\Models\Product\Variant;
 use Illuminate\Database\Eloquent\Model;
 
 class Dimension extends Model
@@ -10,6 +11,9 @@ class Dimension extends Model
       'dimension',
     ];
 
+    public function  variants(){
+        return $this->hasMany(Variant::class);
+    }
 
 
 }

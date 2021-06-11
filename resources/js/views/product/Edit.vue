@@ -81,13 +81,15 @@
                                 <label class="col-form-label">الفئة</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" v-if="item.tag"  v-on:change="selectCategory" v-model="item.tag.category_id">
+                                <select class="form-control" v-if="item.tag" v-on:change="selectCategory"
+                                        v-model="item.tag.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
                                 </select>
 
-                                <select class="form-control" v-else  v-on:change="selectCategory" v-model="item.category_id">
+                                <select class="form-control" v-else v-on:change="selectCategory"
+                                        v-model="item.category_id">
                                     <option v-for="category in categories" :value="category.id">{{ category.name_ar }} -
                                         {{ category.name_en }}
                                     </option>
@@ -202,10 +204,15 @@
 
                                                 <div class="row form-group">
 
-                                                    <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
-                                                        <img :src="variant.image" :ref="'imageDisplay_'+ index"
-                                                             class="mr-auto imageDisplay"/>
+                                                    <div class="col-md-3 m-2" v-if="variant.images.length > 0"
+                                                         v-for="image in variant.images">
+                                                        <img v-if="image" :src="image.image" width="200px"
+                                                             height="200px">
                                                     </div>
+
+                                                </div>
+
+                                                <div class="row form-group">
 
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
@@ -213,8 +220,8 @@
                                                     </div>
 
                                                     <div class="col-md-9">
-                                                        <input type="file" :ref="'variant'+index"
-                                                               @change="uploadVariantImage(index)">
+                                                        <input type="file" :ref="'mainImages'+index"
+                                                               @change="uploadVariantImage(index)" multiple>
                                                     </div>
 
                                                 </div>
@@ -278,7 +285,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <router-link to="/admin/product" class="btn btn-secondary">
+                <router-link :to="{path:'/admin/product/' ,query: {
+                                     page: current_page,}}" class="btn btn-secondary">
                     الغاء
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
@@ -292,16 +300,13 @@
 
 
 <script>
-import {VueEditor} from "vue2-editor";
 
 export default {
     name: "Edit",
-    components: {
-        VueEditor
-    },
     data() {
         return {
             disableButton: false,
+            current_page: 0,
             item: {
                 sku: '',
                 name_ar: '',
@@ -309,6 +314,7 @@ export default {
                 description_ar: '',
                 description_en: '',
                 slug: '',
+                images: [],
                 weight: 0,
                 tag: {
                     category: {
@@ -328,6 +334,7 @@ export default {
                         color_id: null,
                         dimension_id: null,
                         dimension_value: null,
+                        images: [null],
                     },
                 ]
             },
@@ -362,8 +369,10 @@ export default {
 
         };
     },
+
     created() {
         this.item.slug = this.$route.params.slug;
+        this.current_page = this.$route.params.page;
         this.getItem();
         this.getCategory();
         this.getTag();
@@ -419,6 +428,8 @@ export default {
             axios.get('/product/get?slug=' + this.item.slug)
                 .then(response => {
                     this.item = response.data.data;
+                    // console.log(this.item.variants);
+                    // this.item.images = [];
                     // this.item.dimension = response.data.data.dimension.dimension;
                 }).catch(err => {
                 this.errorMessages(err.response.data);
@@ -435,7 +446,12 @@ export default {
             let data = this.getFormData(formData);
             axios.post('product/update', data).then(response => {
                 this.disableButton = false;
-                // this.$router.push('/admin/product');
+                this.$router.push({
+                    path: '/admin/product',
+                    query: {
+                        page: this.current_page,
+                    }
+                });
                 swal("Good job!", "A new product has been updated!", "success");
                 this.getItem();
                 window.scrollTo(0, 0);
@@ -453,23 +469,22 @@ export default {
                 additional_price: 0,
                 color_id: null,
                 dimension_id: null,
+                images: [],
                 dimension: null,
-            })
+            });
+
         },
         getFormData(formData) {
             this.buildFormData(formData, this.item, null);
             return formData;
         },
         uploadVariantImage(index) {
-            this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
-
-            let reader = new FileReader();
-            reader.addEventListener('load', function () {
-                this.$refs['imageDisplay_' + index][0].src = reader.result;
-            }.bind(this), false);
-
-            reader.readAsDataURL(this.item.variants[index].image);
-
+            // console.log(this.$refs['mainImages'+index][index].files[0])
+            console.log(this.$refs['mainImages' + index][0])
+            Array.from(this.$refs['mainImages' + index][0].files).forEach((item, indx) => {
+                this.item.variants[index].images.push(item);
+                console.log(this.item.variants[index].images)
+            });
         },
         buildFormData(formData, data, parentKey) {
             if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {

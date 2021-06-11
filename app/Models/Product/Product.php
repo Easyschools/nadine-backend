@@ -8,6 +8,7 @@ use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -26,7 +27,9 @@ class Product extends Model
         'material_id',
     ];
 
-
+//    protected $with = [
+//        'image'
+//    ];
     protected $appends = [
         'currency',
         'image',
@@ -75,7 +78,12 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-        return $this->variants()->first() ? $this->variants()->first()->image : "";
+        return $this->variants()->exists() ?
+            $this->variants()->whereHas('images')->exists() ?
+                    $this->variants()->whereHas('images',function ($q){
+                        $q->whereNotNull('image');
+                    })->first()->images()->whereNotNull('image')->first()->image
+                    : "" : "";
     }
 
     public function getCurrencyAttribute()
@@ -113,7 +121,11 @@ class Product extends Model
 
     public function getCategoryAttribute()
     {
-        $tag = $this->tag()->with('category')->first();
+        $tag = $this->tag()->with([
+            'category' => function ($category) {
+                $category->with('offers:id,category_id,discount,is_percentage');
+            }
+        ])->first();
         if ($tag)
             return $tag->category;
         return null;
@@ -121,10 +133,23 @@ class Product extends Model
 
     public function getCategoryIdAttribute()
     {
+//        dd();
+        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
         $tag = $this->tag()->with('category')->first();
         if ($tag)
             return $tag->category;
         return null;
     }
+
+//    public function getCategoryIdAttribute()
+//    {
+////        dd();
+//        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
+//        $tag = $this->tag()->with('category')->first();
+//        if ($tag)
+//            return $tag->category;
+//        return null;
+//    }
+
 
 }

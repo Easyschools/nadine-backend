@@ -68,7 +68,7 @@ class OrderApiService extends AppRepository
             if (in_array($item->variant->product->tag->id, $customIDs)) {
                 $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
                 $enter = 1;
-                $this->calculateDependingOnCustomTagPrice($customShippingPrice);
+                $this->calculateDependingOnCustomTagPrice($customShippingPrice,$item);
             }
             if (!$enter) {
                 if ($this->address->district->city->name_en == 'cairo') {
@@ -129,29 +129,31 @@ class OrderApiService extends AppRepository
 
     public function setItems()
     {
+
         $this->items = Cart::where([
 
             ['user_id', Auth::id()],
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price', 'image')
+                $variant->select('id', 'product_id', 'additional_price')
                     ->with([
                         'product' => function ($product) {
                             $product->select('id', 'price', 'price_after_discount',
                                 'name_en', 'name_ar', 'tag_id',
-                                'category_id', 'slug')
+                                'slug')
                                 ->with([
-                                    'category' => function ($category) {
-                                        $category->select('id', 'name_ar', 'name_en')->with([
-                                            'offers' => function ($offer) {
-                                                $offer->select('id', 'is_percentage', 'discount', 'category_id');
-                                            }
-                                        ]);
-                                    },
+//                                    'category' => function ($category) {
+//                                        $category->select('id', 'name_ar', 'name_en')->with([
+//                                            'offers' => function ($offer) {
+//                                                $offer->select('id', 'is_percentage', 'discount', 'category_id');
+//                                            }
+//                                        ]);
+//                                    },
                                     'tag:id,name_en,name_ar'
                                 ]);
-                        }
+                        },
+                        'images:variant_id,image'
                     ]);
             },
         ])->get();
@@ -202,10 +204,8 @@ class OrderApiService extends AppRepository
         }
         $this->couponValue($request->code, $this->subtotal);
 
-        if (!$this->couponValue && !$this->isCheckedOut) {
-            return [
-                'code' => ['this coupon exceeded allowed used times']
-            ];
+        if ($request->code && !$this->couponValue && !$this->isCheckedOut) {
+            return 'this coupon exceeded allowed used times';
         }
         $this->setAddress($request->address_id);
 

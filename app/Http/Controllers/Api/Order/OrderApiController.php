@@ -42,8 +42,8 @@ class OrderApiController extends Controller
         $process = $this->orderApiService->grandTotal($request);
         if ($process == false) {
             return $this->sendError($process, 'please, add product to cart');
-        } if (is_array($process) ){
-            return $this->sendError($process, 'please use a valid coupon');
+        } if (!is_array($process) ){
+            return $this->sendError( $process,'please use a valid coupon or '.$process);
         }
         return $this->sendResponse($process);
     }

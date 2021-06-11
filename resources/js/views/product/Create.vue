@@ -194,10 +194,15 @@
 
                                                 <div class="row form-group">
 
-                                                    <div class="col-sm-12 pb-3 text-center" v-if="variant.image">
-                                                        <img src="" :ref="'imageDisplay_'+ index"
-                                                             class="mr-auto imageDisplay"/>
+                                                    <div class="col-md-3 m-2" v-if="variant.images.length > 0"
+                                                         v-for="image in variant.images">
+                                                        <img v-if="image" :src="image.image" width="200px"
+                                                             height="200px">
                                                     </div>
+
+                                                </div>
+
+                                                <div class="row form-group">
 
                                                     <div class="col-sm-3">
                                                         <label style="font-weight: bold;"
@@ -205,12 +210,13 @@
                                                     </div>
 
                                                     <div class="col-md-9">
-                                                        <input type="file" :ref="'variant'+index"
-                                                               @change="uploadVariantImage(index)">
+                                                        <input type="file" :ref="'mainImages'+index"
+                                                               @change="uploadVariantImage(index)" multiple>
                                                     </div>
 
                                                 </div>
                                             </div>
+
 
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold;">اللون</label>
@@ -272,186 +278,194 @@
 </template>
 
 <script>
-    import alertsMixin from "../../mixins/alertsMixin";
+import alertsMixin from "../../mixins/alertsMixin";
 
-    export default {
-        name: "Create",
-        data() {
-            return {
-                disableButton: false,
+export default {
+    name: "Create",
+    data() {
+        return {
+            disableButton: false,
 
-                show: true,
-                item: {
-                    name_ar: '',
-                    name_en: '',
-                    sku: '',
-                    description_ar: '',
-                    description_en: '',
-                    tag: '',
-                    category: '',
-                    collection: '',
-                    price: null,
-                    // image: null,
-                    variants: [
-                        {
-                            image: null,
-                            additional_price: 0,
-                            color_id: null,
-                            dimension_id: null,
-                        },
-                    ]
-                },
-                categories: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null
-                }],
-                tags: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                    category_id: null
-                }],
-                materials: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }],
+            show: true,
+            item: {
+                name_ar: '',
+                name_en: '',
+                sku: '',
+                description_ar: '',
+                description_en: '',
+                tag: '',
+                category: '',
+                collection: '',
+                price: null,
+                // image: null,
+                variants: [
+                    {
+                        image: null,
+                        additional_price: 0,
+                        color_id: null,
+                        dimension_id: null,
+                        images: [],
+                    },
+                ]
+            },
+            categories: [{
+                id: null,
+                name_en: null,
+                name_ar: null
+            }],
+            tags: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+                category_id: null
+            }],
+            materials: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }],
 
-                collections: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }],
-                dimensions: [{}]
-                ,
-                colors: [{
-                    id: null,
-                    name_en: null,
-                    name_ar: null,
-                }]
+            collections: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }],
+            dimensions: [{}]
+            ,
+            colors: [{
+                id: null,
+                name_en: null,
+                name_ar: null,
+            }]
 
-            };
-        },
-        created() {
-            this.getCategory();
-            this.getTag();
-            this.getMaterial();
-            this.getCollection();
-            this.getColor();
-            this.getDimension();
-        },
-        methods: {
-            getCategory() {
-                axios.get('category/all')
-                    .then(response => {
-                        this.categories = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getDimension() {
-                axios.get('dimension/all')
-                    .then(response => {
-                        this.dimensions = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getColor() {
-                axios.get('color/all')
-                    .then(response => {
-                        this.colors = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getTag(value = null) {
-                axios.get('tag/all?category_id=' + (value ? value : 0))
-                    .then(response => {
-                        this.tags = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getMaterial() {
-                axios.get('material/all')
-                    .then(response => {
-                        this.materials = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            getCollection() {
-                axios.get('collection/all')
-                    .then(response => {
-                        this.collections = response.data.data
-                    })
-                    .catch(err => console.log(err))
-            },
-            createItem() {
-
-                this.disableButton = true;
-                let data = this.getFormData();
-                axios.post('/product/create', data)
-                    .then(response => {
-                        this.$router.push('/admin/product');
-                        swal("Good job!", "A new product has been added!", "success");
-                    }).catch(err => {
-                    this.errorMessages(err.response.data);
-                    console.log(err)
-                });
-                this.disableButton = false;
-            },
-            addVariant() {
-                this.item.variants.push({
-                    image: null,
-                    additional_price: 0,
-                    stock: 1,
-                    color_id: null,
-                    dimension_id: null,
-
+        };
+    },
+    created() {
+        this.getCategory();
+        this.getTag();
+        this.getMaterial();
+        this.getCollection();
+        this.getColor();
+        this.getDimension();
+    },
+    methods: {
+        getCategory() {
+            axios.get('category/all')
+                .then(response => {
+                    this.categories = response.data.data
                 })
-            },
-            selectCategory: function (e) {
-                this.getTag(e.target.value);
-                // console.log(e.target.value);
-            },
+                .catch(err => console.log(err))
+        },
+        getDimension() {
+            axios.get('dimension/all')
+                .then(response => {
+                    this.dimensions = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getColor() {
+            axios.get('color/all')
+                .then(response => {
+                    this.colors = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getTag(value = null) {
+            axios.get('tag/all?category_id=' + (value ? value : 0))
+                .then(response => {
+                    this.tags = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getMaterial() {
+            axios.get('material/all')
+                .then(response => {
+                    this.materials = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        getCollection() {
+            axios.get('collection/all')
+                .then(response => {
+                    this.collections = response.data.data
+                })
+                .catch(err => console.log(err))
+        },
+        createItem() {
 
-            uploadVariantImage(index) {
-                this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
+            this.disableButton = true;
+            let data = this.getFormData();
+            axios.post('/product/create', data)
+                .then(response => {
+                    this.$router.push('/admin/product');
+                    swal("Good job!", "A new product has been added!", "success");
+                }).catch(err => {
+                this.errorMessages(err.response.data);
+                console.log(err)
+            });
+            this.disableButton = false;
+        },
+        addVariant() {
+            this.item.variants.push({
+                image: null,
+                additional_price: 0,
+                stock: 1,
+                color_id: null,
+                dimension_id: null,
+                images: [],
 
-                let reader = new FileReader();
+            })
+        },
+        selectCategory: function (e) {
+            this.getTag(e.target.value);
+            // console.log(e.target.value);
+        },
 
-                reader.readAsDataURL(this.item.variants[index].image);
+        uploadVariantImage(index) {
+            console.log(this.$refs['mainImages' + index][0])
+            Array.from(this.$refs['mainImages' + index][0].files).forEach((item, indx) => {
+                this.item.variants[index].images.push(item);
+                console.log(this.item.variants[index].images)
+            });
 
-                reader.addEventListener('load', function () {
-                    this.$refs['imageDisplay_' + index][0].src = reader.result;
-                    console.log(reader);
-                }.bind(this), false);
+            // this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
+            //
+            // let reader = new FileReader();
+            //
+            // reader.readAsDataURL(this.item.variants[index].image);
+            //
+            // reader.addEventListener('load', function () {
+            //     this.$refs['imageDisplay_' + index][0].src = reader.result;
+            //     console.log(reader);
+            // }.bind(this), false);
 
-            },
-            getFormData() {
-                let formData = new FormData();
-                this.buildFormData(formData, this.item, null);
-                return formData;
-            },
-            buildFormData(formData, data, parentKey) {
-                if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
-                    Object.keys(data).forEach(key => {
-                        this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
-                    });
-                } else {
-                    let value = data == null ? '' : data;
-                    if (typeof (data) === 'boolean' && data === false) {
-                        value = '0'
-                    }
-                    if (typeof (data) === 'boolean' && data === true) {
-                        value = '1'
-                    }
-                    formData.append(parentKey, value);
+        },
+        getFormData() {
+            let formData = new FormData();
+            this.buildFormData(formData, this.item, null);
+            return formData;
+        },
+        buildFormData(formData, data, parentKey) {
+            if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File) && !(data instanceof Blob)) {
+                Object.keys(data).forEach(key => {
+                    this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+                });
+            } else {
+                let value = data == null ? '' : data;
+                if (typeof (data) === 'boolean' && data === false) {
+                    value = '0'
                 }
-            },
-            fillPriceAfterDiscount() {
-                this.item.price_after_discount = this.item.price;
+                if (typeof (data) === 'boolean' && data === true) {
+                    value = '1'
+                }
+                formData.append(parentKey, value);
             }
+        },
+        fillPriceAfterDiscount() {
+            this.item.price_after_discount = this.item.price;
         }
     }
+}
 </script>
 
 <style scoped>
