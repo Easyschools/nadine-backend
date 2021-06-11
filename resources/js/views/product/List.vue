@@ -165,10 +165,15 @@
                 }
             }
         },
+        mounted() {
+            this.currentPage = this.$route.query.page ;
+            console.log(this.currentPage)
+            // console.log(this.currentPage)
+        },
         created() {
             this.show = true;
             this.currentPage = this.$route.query.page ;
-            // this.getAll();
+            this.getAll();
         },
         methods: {
             getAll() {
