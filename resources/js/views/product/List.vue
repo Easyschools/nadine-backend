@@ -168,11 +168,11 @@
         created() {
             this.show = true;
             this.currentPage = this.$route.query.page ;
-            this.getAll();
+            // this.getAll();
         },
         methods: {
             getAll() {
-                axios.get('/product/all', {
+                axios.get('product/all', {
                     params: {
                         page: this.currentPage,
                         name: this.search.name,
