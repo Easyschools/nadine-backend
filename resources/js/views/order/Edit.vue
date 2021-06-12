@@ -403,7 +403,7 @@ export default {
     created() {
         this.item.id = this.$route.params.id;
         this.getItem();
-        // this.getAddress();
+        this.getAddress();
         this.getPaymentType();
         this.getOrderStatus();
         this.getCoupon();
