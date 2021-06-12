@@ -27,9 +27,6 @@ class Product extends Model
         'material_id',
     ];
 
-//    protected $with = [
-//        'image'
-//    ];
     protected $appends = [
         'currency',
         'image',

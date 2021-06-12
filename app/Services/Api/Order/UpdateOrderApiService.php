@@ -55,8 +55,12 @@ class UpdateOrderApiService extends AppRepository
 
     public function setAddress($id)
     {
-        $this->address = (new AppRepository(new Address()))->find($id);
-
+        $this->address = Address::with([
+            'district' => function ($district) {
+                $district->with('city');
+            }
+        ])->find($id);
+        dd($this->address->district);
     }
 
     public function setShippingPrice()
@@ -104,11 +108,11 @@ class UpdateOrderApiService extends AppRepository
     public function getOfferPrice($item)
     {
         $offerItemPrice = -1;
-        $this->productService->setRelations([
-            'category' => function ($category) {
-                $category->select('id')->with('offers');
-            }
-        ]);
+//        $this->productService->setRelations([
+//            'category' => function ($category) {
+//                $category->select('id')->with('offers');
+//            }
+//        ]);
         $item['product'] = $this->productService->find($item->product_id);
         if ($item->product->category->offers()->exists()) {
             $offer = $item->product->category->offers()->first()->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
@@ -141,18 +145,17 @@ class UpdateOrderApiService extends AppRepository
             } else {
                 $variant = $this->variantService->model->with([
                     'product' => function ($product) {
-                        $product->select('id', 'price', 'name_en', 'name_ar', 'tag_id',
-                            'category_id')
-                            ->with([
-                                'category' => function ($category) {
-                                    $category->select('id', 'name_ar', 'name_en')->with([
-                                        'offers' => function ($offer) {
-                                            $offer->select('id', 'is_percentage', 'discount',
-                                                'category_id');
-                                        }
-                                    ]);
-                                }
-                            ]);
+                        $product->select('id', 'price', 'name_en', 'name_ar', 'tag_id');
+//                            ->with([
+//                                'category' => function ($category) {
+//                                    $category->select('id', 'name_ar', 'name_en')->with([
+//                                        'offers' => function ($offer) {
+//                                            $offer->select('id', 'is_percentage', 'discount',
+//                                                'category_id');
+//                                        }
+//                                    ]);
+//                                }
+//                            ]);
                     }
                 ])->where('id', $order_item['variant_id'])->first();
                 $variant['quantity'] = $order_item['quantity'];

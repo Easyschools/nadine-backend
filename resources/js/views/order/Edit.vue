@@ -30,6 +30,7 @@
                             <div class="col-sm-3">
                                 <label class="col-form-label">العنوان</label>
                             </div>
+
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.address_id">
                                     <option v-for="address in addresses" :value="address.id">{{ address.address }}
@@ -212,7 +213,7 @@
                                                     <option v-for="product in products" :value="product.id">
                                                         {{ product.name }}
                                                     </option>
-                                                    <option  value="load"
+                                                    <option value="load"
                                                             style="cursor: pointer!important;font-size: 17px;"
                                                             class="bg-primary py-2 text-white font-weight-bold text-capitalize">
                                                         load more..
@@ -304,6 +305,7 @@ export default {
             disableButton: false,
             page: 1,
             isClicked: 0,
+            user_id: null,
             item: {
                 id: null,
                 code: '',
@@ -312,7 +314,7 @@ export default {
                 shipping_price: 0,
                 payment_type: null,
                 coupon: null,
-                user_id: null,
+                user_id: 0,
                 subtotal: '',
                 grand_total: '',
                 order_status: null,
@@ -401,10 +403,10 @@ export default {
     created() {
         this.item.id = this.$route.params.id;
         this.getItem();
+        // this.getAddress();
         this.getPaymentType();
         this.getOrderStatus();
         this.getCoupon();
-        this.getAddress();
         this.getOffer();
         this.getProduct();
         this.getTag();
@@ -477,23 +479,6 @@ export default {
             })
                 .catch(err => console.log(err))
         },
-        getAddress() {
-            axios.get('customer/get?id=' + 7, {
-                params: {
-                    id: this.item.user_id,
-                    page: this.currentPage,
-                    // code: this.search.code,
-                    // tag: this.search.tag,
-                    // category: this.search.category,
-                    is_paginate: 1,
-                    sendResponse: 1
-                }
-            }).then(response => {
-                this.addresses = response.data.data.addresses
-
-            })
-                .catch(err => console.log(err))
-        },
         getOrderStatus() {
             axios.get('order-status/all')
                 .then(response => {
@@ -519,19 +504,32 @@ export default {
             axios.get('/order/order-details?order_id=' + this.item.id)
                 .then(response => {
                     this.item = response.data.data;
-                    // this.variants = this.item.variant.product.variants;
-                    // this.variants = this.item.order_items.variant.product.variants;
+                    this.user_id = this.item.user_id
+                    this.getAddress();
+            // console.log(this.user_id)
 
-                    console.log(this.variants);
                 }).catch(err => {
                 this.errorMessages(err.response.data);
                 console.log(err);
             });
         },
+        getAddress() {
+            // console.log(this.user_id)
+            axios.get('customer/get?id=' + this.user_id, {
+                params: {
+                    is_paginate: 1,
+                    sendResponse: 1
+                }
+            }).then(response => {
+                this.addresses = response.data.data.addresses
+
+            })
+                .catch(err => console.log(err))
+        },
         editItem() {
             this.disableButton = true;
             let formData = new FormData();
-            // formData.append('id', this.item.id);
+
             let data = this.getFormData(formData);
             axios.post('/order/update/', data).then(response => {
                 this.disableButton = false;

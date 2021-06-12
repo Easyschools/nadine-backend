@@ -15,7 +15,7 @@ class CustomerApiController extends Controller
     {
         $this->middleware('auth:api');
         $this->middleware('check.role:1,2')
-            ->only([ 'index' , 'update','get']);
+            ->only([ 'index' , 'update']);
         $this->middleware('check.role:1')
             ->only('delete');
         $this->customerService = $customerService;
