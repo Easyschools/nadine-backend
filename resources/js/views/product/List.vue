@@ -92,6 +92,7 @@
                     </table>
                 </div>
             </div>
+<!--            {{// this.currentPage}}-->
             <div class="offset-3 col-md-6">
                 <b-pagination
                     v-if="show"
@@ -115,7 +116,7 @@
         name: "List",
         data() {
             return {
-                perPage: 3,
+                perPage: 1,
                 currentPage: 1,
                 rows: 15,
                 items: [],
@@ -164,11 +165,6 @@
                     ]
                 }
             }
-        },
-        mounted() {
-            this.currentPage = this.$route.query.page ;
-            console.log(this.currentPage)
-            // console.log(this.currentPage)
         },
         created() {
             this.show = true;
