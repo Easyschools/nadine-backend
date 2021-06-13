@@ -87,6 +87,7 @@ class CustomerApiService extends AppRepository
         ]);
 
         $user = $this->find($userId);
+        dd($user);
         $user['district_id'] = $user->district_id;
         return $user;
     }

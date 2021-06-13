@@ -72,7 +72,7 @@
                             <td>{{ item.user.name }}</td>
                             <td>{{ item.user.phone }}</td>
                             <td>{{ item.address.address }}</td>
-                            <td v-if="item.order_status">{{ item.order_status.name }}</td>
+                            <td >{{ item.order_status ? item.order_status.name : '' }}</td>
                             <td>{{ item.payment_type.name }}</td>
                             <td >{{ item.coupon ? item.coupon.code : ''}}</td>
                             <td>{{ item.subtotal}}</td>
