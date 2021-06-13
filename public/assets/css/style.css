@@ -32927,4 +32927,14 @@ new-task label input[type=checkbox] {
     border-bottom-right-radius: 0.25rem;
 }
 
+
+@media (max-width: 2000px) and (min-width: 700px) {
+    .m-header #mobile-collapse {
+        display:none !important ;
+    }
+    #closeSideBar {
+        display:none !important ;
+    }
+}
+
 /**====== user card css end ======**/

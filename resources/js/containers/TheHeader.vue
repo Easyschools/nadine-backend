@@ -96,9 +96,5 @@ export default {
 }
 </script>
 <style scoped>
-@media (max-width: 700px) and (min-width: 10px) {
-    #mobile-collapse {
-        display:none !important ;
-    }
-}
+
 </style>
