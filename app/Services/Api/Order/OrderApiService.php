@@ -68,7 +68,7 @@ class OrderApiService extends AppRepository
             if (in_array($item->variant->product->tag->id, $customIDs)) {
                 $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
                 $enter = 1;
-                $this->calculateDependingOnCustomTagPrice($customShippingPrice,$item);
+                $this->calculateDependingOnCustomTagPrice($customShippingPrice, $item);
             }
             if (!$enter) {
                 if ($this->address->district->city->name_en == 'cairo') {
@@ -101,6 +101,7 @@ class OrderApiService extends AppRepository
     public function getOfferPrice($item)
     {
 //        dd($item->variant->product->category->offers()->first()->expire_at);
+//        dd($item->variant);
         $offer = $item->variant->product->category->offers()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
@@ -142,16 +143,7 @@ class OrderApiService extends AppRepository
                             $product->select('id', 'price', 'price_after_discount',
                                 'name_en', 'name_ar', 'tag_id',
                                 'slug')
-                                ->with([
-//                                    'category' => function ($category) {
-//                                        $category->select('id', 'name_ar', 'name_en')->with([
-//                                            'offers' => function ($offer) {
-//                                                $offer->select('id', 'is_percentage', 'discount', 'category_id');
-//                                            }
-//                                        ]);
-//                                    },
-                                    'tag:id,name_en,name_ar'
-                                ]);
+                                ->with('tag:id,name_en,name_ar');
                         },
                         'images:variant_id,image'
                     ]);
@@ -258,7 +250,7 @@ class OrderApiService extends AppRepository
 
     public function checkout(Request $request)
     {
-        $this->isCheckedOut =1;
+        $this->isCheckedOut = 1;
         $this->user_id = Auth::id();
 
         $grandTotal = $this->grandTotal($request);

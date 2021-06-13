@@ -1,8 +1,10 @@
 <template>
-    <nav class="pcoded-navbar menu-light">
+    <nav id="lorem" class="pcoded-navbar menu-light">
         <div class="navbar-wrapper">
             <div class="navbar-content scroll-div">
+                <button class="btn btn-outline-primary mt-2" id="closeSideBar" v-on:click="closeSideBar">close</button>
                 <ul class="nav pcoded-inner-navbar ">
+
 
                     <li class="nav-item pcoded-menu-caption">
                         <label>المناطق</label>
@@ -216,7 +218,9 @@
                             </span>
                             <span class="pcoded-mtext">رسائل</span>
                             <span v-if="cnt" class="unread"
-                                  style="background-color: red;color:white;padding: 7px;margin-right:5px;border-radius: 50%">{{ cnt }}</span>
+                                  style="background-color: red;color:white;padding: 7px;margin-right:5px;border-radius: 50%">{{
+                                    cnt
+                                }}</span>
                         </router-link>
                     </li>
 
@@ -228,6 +232,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
     name: "TheSideBar",
     data() {
@@ -239,6 +245,10 @@ export default {
         this.getUnreadMessages();
     },
     methods: {
+        ...mapActions({
+            collapseNavBar: 'auth/collapseNavBar',
+            closeSideBar: 'auth/closeSideBar'
+        }),
         getUnreadMessages() {
             axios.get('contact/get-count-unread')
                 .then(response => {

@@ -2,16 +2,9 @@
     <header class="navbar pcoded-header navbar-expand-lg navbar-light header-blue">
         <div class="m-header">
             <!--            <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>-->
-            <router-link to="/admin/home" class="b-brand" style="font-size: 40px">
-                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
-                <a href="#!" class="b-brand">
-                    <!-- ========   change your logo hear   ============ -->
-                    <img src="assets/images/logo.png" alt="" class="logo">
+                <a class="mobile-menu" v-on:click="collapseNavBar"  id="mobile-collapse " href="#!"><span></span></a>
+            <router-link   to="/admin/home" class="b-brand" style="font-size: 40px">
 
-                </a>
-                <a href="#!" class="mob-toggler">
-                    <i class="feather icon-more-vertical"></i>
-                </a>
                 <!-- ========   change your logo hear   ============ -->
                 Unitart
                 <!--<img height="150" width="180" src="/img/logo.png" alt="" class="logo">-->
@@ -56,13 +49,18 @@
 
 <script>
 import {mapActions} from 'vuex';
-
+// console.log(mapActions)
 export default {
     name: "TheHeader",
-
+    data(){
+      return{
+          flag: 0
+        }
+    },
     methods: {
         ...mapActions({
-            logoutAction: 'auth/logout'
+            logoutAction: 'auth/logout',
+            collapseNavBar: 'auth/collapseNavBar'
         }),
         submit() {
             this.logoutAction()
@@ -75,10 +73,32 @@ export default {
             //         window.location.href = '/admin/login/';
             //     })
             //     .catch((error) => console.log(error))
-        }
+        },
+        // collapseNavBar() {
+        //     let nav = document.getElementById('lorem');
+        //     console.log(this.flag)
+        //     if (!this.flag) {
+        //     console.log('add class')
+        //         this.flag = true;
+        //         nav.classList.add("mob-open");
+        //     } else {
+        //         this.flag = false;
+        //     console.log('remove class')
+        //         nav.classList.remove("mob-open");
+        //     }
+        //     // if (nav.classList.contains("mob-open") === false) {
+        //     //     nav.classList.add("mob-open");
+        //     // } else {
+        //     //     nav.classList.remove("mob-open");
+        //     // }
+        // }
     }
 }
 </script>
 <style scoped>
-
+@media (max-width: 700px) and (min-width: 10px) {
+    #mobile-collapse {
+        display:none !important ;
+    }
+}
 </style>
