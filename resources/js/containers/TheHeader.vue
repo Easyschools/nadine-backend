@@ -3,6 +3,15 @@
         <div class="m-header">
             <!--            <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>-->
             <router-link to="/admin/home" class="b-brand" style="font-size: 40px">
+                <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+                <a href="#!" class="b-brand">
+                    <!-- ========   change your logo hear   ============ -->
+                    <img src="assets/images/logo.png" alt="" class="logo">
+
+                </a>
+                <a href="#!" class="mob-toggler">
+                    <i class="feather icon-more-vertical"></i>
+                </a>
                 <!-- ========   change your logo hear   ============ -->
                 Unitart
                 <!--<img height="150" width="180" src="/img/logo.png" alt="" class="logo">-->
@@ -33,7 +42,7 @@
                                     <a href="#" v-on:click="submit()" class="dropdown-item">
                                         <i class="feather icon-log-out"></i>
 
-                                    تسجيل الخروج
+                                        تسجيل الخروج
                                     </a></li>
                             </ul>
                         </div>
@@ -46,29 +55,29 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+import {mapActions} from 'vuex';
 
-    export default {
-        name: "TheHeader",
+export default {
+    name: "TheHeader",
 
-        methods: {
-            ...mapActions({
-                logoutAction: 'auth/logout'
-            }),
-            submit() {
-                this.logoutAction()
-                    .then(()=>{
-                        this.$router.push('/admin/login')
-                    })
-                // axios.post('/admin/logout')
-                //     .then((response) => {
-                //         console.log('success');
-                //         window.location.href = '/admin/login/';
-                //     })
-                //     .catch((error) => console.log(error))
-            }
+    methods: {
+        ...mapActions({
+            logoutAction: 'auth/logout'
+        }),
+        submit() {
+            this.logoutAction()
+                .then(() => {
+                    this.$router.push('/admin/login')
+                })
+            // axios.post('/admin/logout')
+            //     .then((response) => {
+            //         console.log('success');
+            //         window.location.href = '/admin/login/';
+            //     })
+            //     .catch((error) => console.log(error))
         }
     }
+}
 </script>
 <style scoped>
 

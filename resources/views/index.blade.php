@@ -30,12 +30,12 @@
 <div id="app">
     <the-container></the-container>
 </div>
-{{--<script src="{{asset("assets/js/vendor-all.min.js")}}"></script>--}}
+<script src="{{asset("assets/js/vendor-all.min.js")}}"></script>
 <script src="{{asset("/js/app.js")}}"></script>
 <script src="{{asset("assets/js/plugins/bootstrap.min.js")}}"></script>
-{{--<script src="{{asset("assets/js/ripple.js")}}"></script>--}}
-{{--<script src="{{asset("assets/js/pcoded.min.js")}}"></script>--}}
-{{--<script src="{{asset("assets/js/menu-setting.min.js")}}"></script>--}}
+<script src="{{asset("assets/js/ripple.js")}}"></script>
+<script src="{{asset("assets/js/pcoded.min.js")}}"></script>
+<script src="{{asset("assets/js/menu-setting.min.js")}}"></script>
 {{----}}
 {{--<!-- Apex Chart -->--}}
 {{--<script src="{{asset("assets/js/plugins/apexcharts.min.js")}}"></script>--}}
