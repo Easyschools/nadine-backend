@@ -92,7 +92,7 @@ class OrderApiService extends AppRepository
 
     public function setOrderStatus()
     {
-        $this->orderStatus = OrderStatus::where('name_en','like','%انتظار%')->first()->id;
+        $this->orderStatus = OrderStatus::where('name_ar','like','%انتظار الموافقه%')->first()->id;
     }
 
     /**
