@@ -15,6 +15,7 @@ use App\Models\Order\Helper\ShippingPriceOrderHelper;
 use App\Models\Order\Offer;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
+use App\Models\Order\OrderStatus;
 use App\Models\User\Address;
 use App\Models\User\User;
 use App\Product\Variant;
@@ -91,7 +92,7 @@ class OrderApiService extends AppRepository
 
     public function setOrderStatus()
     {
-        $this->orderStatus = 1;
+        $this->orderStatus = OrderStatus::where('name_en','like','%انتظار%')->first()->id;
     }
 
     /**
