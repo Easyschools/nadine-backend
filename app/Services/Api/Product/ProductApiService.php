@@ -316,6 +316,10 @@ class ProductApiService extends AppRepository
             $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
         }
 
+        if ($request->id) {
+            $conditions[] = ['id', $request->id];
+        }
+
         $this->setConditions($conditions);
         $this->setOrConditions($orConditions);
     }

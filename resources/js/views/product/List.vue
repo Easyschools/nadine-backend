@@ -14,6 +14,16 @@
                     <div class="row ">
 
                         <div class="col-md-4">
+                            <div id="report-2" class="dataTables_filter"><label>الرقم:
+                                <input type="search"
+                                       class="form-control form-control-sm"
+                                       placeholder=""
+                                       v-model="search.id"
+                                       v-on:keyup="getAll"
+                                       aria-controls="report-table"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div id="report-table_filter" class="dataTables_filter"><label>الاسم:
                                 <input type="search"
                                        class="form-control form-control-sm"
@@ -123,7 +133,8 @@
                 search: {
                     name: null,
                     tag: null,
-                    category: null
+                    category: null,
+                    id: null
                 },
                 show: false,
                 item: {
@@ -179,6 +190,7 @@
                         name: this.search.name,
                         tag: this.search.tag,
                         category: this.search.category,
+                        id: this.search.id,
                         is_paginate: 1,
                         sendResponse: 1
                     }

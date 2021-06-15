@@ -88,6 +88,11 @@ class Product extends Model
         return 'pound';
     }
 
+    public function getPriceAttribute()
+    {
+        return $this->attributes['price_after_discount'];
+    }
+
     public function getTypeAttribute()
     {
         return $this->category ? $this->category->name : '';
