@@ -41,9 +41,9 @@ class CartRequest extends FormRequest
     private function addToCartValidation()
     {
         return [
-            'variants' => 'required|array',
-            'variants.*.variantId' => 'required|exists:variants,id',
-            'variants.*.qty' => 'required|min:1',
+            'variants' => 'array',
+            'variants.*.variantId' => 'exists:variants,id',
+            'variants.*.qty' => 'min:1',
         ];
     }
 
