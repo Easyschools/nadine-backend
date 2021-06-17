@@ -49,14 +49,22 @@ class CartApiService extends AppRepository
             'user_id' => Auth::id()
         ]);
 
-        foreach ($request->variants as $variant) {
+        if ($request->has('variants') && count($request->variants)) {
 
-
+            foreach ($request->variants as $variant) {
+                $this->model->create([
+                    'variant_id' => $variant['variantId'],
+                    'user_id' => $request->user_id,
+                    'quantity' => $variant['qty']
+                ]);
+            }
+        }else{
             $this->model->create([
-                'variant_id' => $variant['variantId'],
+                'variant_id' => $request['variantId'],
                 'user_id' => $request->user_id,
-                'quantity' => $variant['qty']
+                'quantity' => $request['qty']
             ]);
+
         }
         return true;
     }
