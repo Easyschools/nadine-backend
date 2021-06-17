@@ -22,7 +22,7 @@ class CartApiService extends AppRepository
     }
 
 
-    public function index()
+    public function index($request)
     {
         $this->setConditions([['user_id', Auth::id()]]);
 
@@ -31,7 +31,7 @@ class CartApiService extends AppRepository
                 $variant->select('id', 'product_id', 'dimension_id',
                     'additional_price')->with([
                     'product' => function ($product) {
-                        $product->select('id', 'name_ar', 'name_en','slug' ,
+                        $product->select('id', 'name_ar', 'name_en', 'slug',
                             'price_after_discount'
                         );
                     }
@@ -49,23 +49,16 @@ class CartApiService extends AppRepository
             'user_id' => Auth::id()
         ]);
 
-        $cart = $this->model->where('user_id', Auth::id())
-            ->where('variant_id', $request->variant_id)
-            ->first();
+        foreach ($request->variants as $variant) {
 
 
-        if ($cart) {
-            return $this->update($cart->id, [
-                'quantity' => $cart->quantity + 1
+            $this->model->create([
+                'variant_id' => $variant['variantId'],
+                'user_id' => $request->user_id,
+                'quantity' => $variant['qty']
             ]);
         }
-
-        return $this->model->create([
-            'variant_id' => $request['variant_id'],
-            'user_id' => $request->user_id,
-            'quantity' => $request['quantity']
-        ]);
-
+        return true;
     }
 
 
