@@ -123,7 +123,6 @@ class OrderRequest extends FormRequest
 
     private function updatePaymentValidation()
     {
-
         return [
             'payment_type_id' => 'required|exists:payment_types,id',
             'id' => 'required|exists:orders,id',
@@ -157,6 +156,4 @@ class OrderRequest extends FormRequest
             'waiting_orders' => 'boolean',
         ];
     }
-
-
 }

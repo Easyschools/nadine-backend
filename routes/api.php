@@ -4,8 +4,6 @@
 Route::group([
     'namespace' => 'Api',
 ], function () {
-
-
     Route::group([
         'prefix' => 'admin',
         'namespace' => 'Auth',
@@ -23,16 +21,12 @@ Route::group([
         Route::post('forgot-password', 'AuthController@forgetPassword');
         Route::post('reset-password', 'AuthController@resetPassword');
     });
-
-
 });
 
 
 Route::group([
     'namespace' => 'Api',
 ], function () {
-
-
     Route::group([
         'prefix' => 'customer',
         'namespace' => 'Auth'
@@ -78,7 +72,6 @@ Route::group([
         Route::post('create', 'TagApiController@create');
         Route::post('edit', 'TagApiController@edit');
         Route::delete('delete', 'TagApiController@delete');
-
     });
 
 
@@ -149,7 +142,6 @@ Route::group([
         Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
         Route::get('price-range', 'ProductApiController@priceRange');
-
     });
 
 
@@ -302,7 +294,6 @@ Route::group([
         Route::post('delete', 'CartApiController@delete');
         Route::post('update', 'CartApiController@update');
         Route::get('all', 'CartApiController@index');
-
     });
 
 
@@ -321,11 +312,6 @@ Route::group([
         Route::get('/order-details', 'OrderInfoApiController@orderDetails');
         Route::get('/', 'OrderInfoApiController@allOrders');
         Route::get('/search', 'OrderInfoApiController@search');
-        Route::post('/delete', 'OrderApiController@delete');
+        Route::delete('/delete', 'OrderApiController@delete');
     });
-
-
-
 });
-
-
