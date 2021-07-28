@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Services\Api\Review;
 
 use App\Models\Review\Review;
-use \App\Repositories\AppRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use \App\Repositories\AppRepository;
 
 class ReviewApiService extends AppRepository
 {
@@ -14,7 +12,6 @@ class ReviewApiService extends AppRepository
     {
         parent::__construct($review);
     }
-
 
     /**
      * @param $request
@@ -50,7 +47,6 @@ class ReviewApiService extends AppRepository
         ]);
     }
 
-
     public function index(Request $request)
     {
         $this->setRelations([
@@ -58,16 +54,18 @@ class ReviewApiService extends AppRepository
         ]);
         $this->setConditions(['product_id' => $request->product_id]);
         $this->setSortOrder();
-        if ($request->is_paginate)
+        if ($request->is_paginate) {
             return $this->paginate();
+        }
+
         return $this->all();
     }
 
     public function get(Request $request)
     {
         $this->setRelations([
-            'product'=>function($product){
-            $product->select('id','name_ar','name_en','material_id');
+            'product' => function ($product) {
+                $product->select('id', 'name_ar', 'tag_id', 'name_en', 'material_id');
             },
         ]);
         $this->setRelations([
@@ -76,6 +74,5 @@ class ReviewApiService extends AppRepository
 
         return $this->find($request->id);
     }
-
 
 }

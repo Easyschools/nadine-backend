@@ -19,15 +19,13 @@ class Offer extends Model
         'image',
     ];
 
-
-//    protected $dates = [
-//        'expire_at'
-//    ];
+    // protected $dates = [
+    //     'expire_at',
+    // ];
 
     protected $appends = [
-        'name'
+        'name',
     ];
-
 
     protected function serializeDate(\DateTimeInterface $date)
     {
@@ -38,7 +36,6 @@ class Offer extends Model
     {
         return $this['name_' . app()->getLocale()];
     }
-
 
     public function getImageAttribute($value)
     {
@@ -58,17 +55,27 @@ class Offer extends Model
 
     }
 
-//    public function getExpireAtAttribute()
-//    {
-//        return Carbon::createFromTimestamp($this->attributes['expire_at'])->format('l jS \\of F Y h:i:s A');
-//    }
-//
-//    public function setExpireAtAttribute($value)
-//    {
-//        $value = Carbon::createFromDate($value)->toDateTimeString();
-////        dd($value);
-//        $this->attributes['expire_at'] = $value;
-//    }
+    /**
+     * The roles that belong to the Offer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'offer_tags', 'offer_id', 'tag_id');
 
+    }
+
+//    public function getExpireAtAttribute()
+    //    {
+    //        return Carbon::createFromTimestamp($this->attributes['expire_at'])->format('l jS \\of F Y h:i:s A');
+    //    }
+    //
+    //    public function setExpireAtAttribute($value)
+    //    {
+    //        $value = Carbon::createFromDate($value)->toDateTimeString();
+    ////        dd($value);
+    //        $this->attributes['expire_at'] = $value;
+    //    }
 
 }

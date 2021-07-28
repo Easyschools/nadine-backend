@@ -8,15 +8,12 @@
 
 namespace App\Services\Api\Auth;
 
-
 use App\Models\User\User;
 use App\Repositories\AppRepository;
 use Illuminate\Http\Request;
-use App\Models\User\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\ValidationException;
+
 class AdminApiService
 {
     private $userRepo;
@@ -28,7 +25,7 @@ class AdminApiService
 
     public function login(Request $request)
     {
-        $this->userRepo->setConditions([['type',1]]);
+        $this->userRepo->setConditions([['type', 1]]);
         $user = $this->userRepo->findByColumn('email', $request->email);
         if (!$user) {
             return false;

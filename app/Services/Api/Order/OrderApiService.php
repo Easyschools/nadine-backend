@@ -12,7 +12,6 @@ use App\Models\Order\Cart;
 use App\Models\Order\Coupon;
 use App\Models\Order\CustomTagShippingPrice;
 use App\Models\Order\Helper\ShippingPriceOrderHelper;
-use App\Models\Order\Offer;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
 use App\Models\Order\OrderStatus;
@@ -22,8 +21,6 @@ use App\Product\Variant;
 use App\Repositories\AppRepository;
 use App\Traits\FirebaseFCM;
 use Carbon\Carbon;
-use Faker\Provider\DateTime;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,7 +89,7 @@ class OrderApiService extends AppRepository
 
     public function setOrderStatus()
     {
-        $this->orderStatus = OrderStatus::where('name_ar','like','%انتظار الموافقه%')->first()->id;
+        $this->orderStatus = OrderStatus::where('name_ar', 'like', '%انتظار الموافقه%')->first()->id;
     }
 
     /**
@@ -101,9 +98,9 @@ class OrderApiService extends AppRepository
      */
     public function getOfferPrice($item)
     {
-//        dd($item->variant->product->category->offers()->first()->expire_at);
-//        dd($item->variant);
-        $offer = $item->variant->product->category->offers()
+        //        dd($item->variant->product->category->offers()->first()->expire_at);
+        //        dd($item->variant);
+        $offer = $item->variant->product->tag->offers()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
@@ -128,12 +125,10 @@ class OrderApiService extends AppRepository
         return $offerItemPrice;
     }
 
-
     public function setItems()
     {
 
         $this->items = Cart::where([
-
             ['user_id', Auth::id()],
             ['checkout', 0],
         ])->with([
@@ -146,7 +141,7 @@ class OrderApiService extends AppRepository
                                 'slug')
                                 ->with('tag:id,name_en,name_ar');
                         },
-                        'images:variant_id,image'
+                        'images:variant_id,image',
                     ]);
             },
         ])->get();
@@ -236,10 +231,10 @@ class OrderApiService extends AppRepository
         if ($this->coupon) {
             if (($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) && $this->coupon->min_total <= $subtotal) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
-                    $subtotal * ($this->coupon->value / 100);
+                $subtotal * ($this->coupon->value / 100);
 //                $this->coupon->update([
-//                    'used_times' => $this->coupon->used_times + 1,
-//                ]);
+                //                    'used_times' => $this->coupon->used_times + 1,
+                //                ]);
             }
         }
 
@@ -271,7 +266,7 @@ class OrderApiService extends AppRepository
             'address_id' => $this->address->id,
             'shipping_price' => $this->shippingPrice,
             'payment_type_id' => $request->payment_type_id,
-            'notes' => $request->notes
+            'notes' => $request->notes,
         ]);
 
         $this->addOrderItems($this->items);
@@ -279,13 +274,12 @@ class OrderApiService extends AppRepository
         if ($this->coupon) {
             $this->coupon->user()->attach(Auth::id());
             $this->coupon->update([
-                'used_times' => $this->coupon->used_times + 1
+                'used_times' => $this->coupon->used_times + 1,
             ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
         Cart::where('user_id', $this->user_id)
             ->delete();
-
 
         return $this->order;
     }
@@ -350,6 +344,5 @@ class OrderApiService extends AppRepository
         $num = ($latestOrder) ? $latestOrder->id : 0;
         return 'ord-' . str_pad($num + 1, 8, "0", STR_PAD_LEFT);
     }
-
 
 }

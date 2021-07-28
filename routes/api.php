@@ -1,6 +1,5 @@
 <?php
 
-
 Route::group([
     'namespace' => 'Api',
 ], function () {
@@ -23,13 +22,12 @@ Route::group([
     });
 });
 
-
 Route::group([
     'namespace' => 'Api',
 ], function () {
     Route::group([
         'prefix' => 'customer',
-        'namespace' => 'Auth'
+        'namespace' => 'Auth',
     ], function () {
         Route::post('register', 'CustomerApiAuthController@register');
         Route::post('login', 'CustomerApiAuthController@login');
@@ -50,7 +48,6 @@ Route::group([
         Route::post('delete', 'CustomerApiController@delete');
     });
 
-
     Route::group([
         'prefix' => 'category',
         'namespace' => 'Division',
@@ -61,7 +58,6 @@ Route::group([
         Route::post('create', 'CategoryApiController@create');
         Route::post('edit', 'CategoryApiController@edit');
     });
-
 
     Route::group([
         'prefix' => 'tag',
@@ -74,7 +70,6 @@ Route::group([
         Route::delete('delete', 'TagApiController@delete');
     });
 
-
     Route::group([
         'prefix' => 'color',
         'namespace' => 'Option',
@@ -86,7 +81,6 @@ Route::group([
         Route::post('edit', 'ColorApiController@edit');
     });
 
-
     Route::group([
         'prefix' => 'brand',
         'namespace' => 'Feature',
@@ -97,7 +91,6 @@ Route::group([
         Route::post('edit', 'BrandApiController@edit');
         Route::delete('delete', 'BrandApiController@delete');
     });
-
 
     Route::group([
         'prefix' => 'slider',
@@ -137,13 +130,13 @@ Route::group([
         'namespace' => 'Product',
     ], function () {
         Route::get('all', 'ProductApiController@all');
+        Route::get('offers', 'ProductApiController@offers');
         Route::get('get', 'ProductApiController@read');
         Route::post('create', 'ProductApiController@create');
         Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
         Route::get('price-range', 'ProductApiController@priceRange');
     });
-
 
     Route::group([
         'prefix' => 'collection',
@@ -156,7 +149,6 @@ Route::group([
         Route::post('edit', 'CollectionApiController@edit');
     });
 
-
     Route::group([
         'prefix' => 'dimension',
         'namespace' => 'Option',
@@ -167,7 +159,6 @@ Route::group([
         Route::post('create', 'DimensionApiController@create');
         Route::post('edit', 'DimensionApiController@edit');
     });
-
 
     Route::group([
         'prefix' => 'material',
@@ -180,7 +171,6 @@ Route::group([
         Route::post('edit', 'MaterialApiController@edit');
     });
 
-
     Route::group([
         'prefix' => 'variant',
         'namespace' => 'Product',
@@ -188,7 +178,6 @@ Route::group([
         Route::get('all', 'VariantApiController@all');
         Route::get('get', 'VariantApiController@read');
     });
-
 
     Route::group([
         'prefix' => 'coupon',
@@ -200,7 +189,6 @@ Route::group([
         Route::post('create', 'CouponApiController@create');
         Route::post('edit', 'CouponApiController@edit');
     });
-
 
     Route::group([
         'prefix' => 'offer',
@@ -288,7 +276,7 @@ Route::group([
 
     Route::group([
         'prefix' => 'cart',
-        'namespace' => 'Order'
+        'namespace' => 'Order',
     ], function () {
         Route::post('add-to-cart', 'CartApiController@addToCart');
         Route::post('delete', 'CartApiController@delete');
@@ -296,10 +284,9 @@ Route::group([
         Route::get('all', 'CartApiController@index');
     });
 
-
     Route::group([
         'prefix' => 'order',
-        'namespace' => 'Order'
+        'namespace' => 'Order',
     ], function () {
         Route::post('/status', 'OrderApiController@updateStatus');
         Route::get('/calculate', 'OrderApiController@calculate');

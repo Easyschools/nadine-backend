@@ -8,10 +8,8 @@
 
 namespace App\Services\Api\Order;
 
-
 use App\Models\Order\Cart;
 use App\Repositories\AppRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartApiService extends AppRepository
@@ -20,7 +18,6 @@ class CartApiService extends AppRepository
     {
         parent::__construct($cart);
     }
-
 
     public function index($request)
     {
@@ -31,22 +28,27 @@ class CartApiService extends AppRepository
                 $variant->select('id', 'product_id', 'dimension_id',
                     'additional_price')->with([
                     'product' => function ($product) {
-                        $product->select('id', 'name_ar', 'name_en', 'slug',
-                            'price_after_discount'
+                        $product->select(
+                            'id',
+                            'name_ar',
+                            'name_en',
+                            'slug',
+                            'price_after_discount',
+                            'tag_id',
+                            'price'
                         );
-                    }
+                    },
                 ]);
-            }
+            },
         ]);
 
         return $this->all();
     }
 
-
     public function addToCart($request)
     {
         $request->merge([
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
         ]);
 
         if ($request->has('variants') && count($request->variants)) {
@@ -55,20 +57,19 @@ class CartApiService extends AppRepository
                 $this->model->create([
                     'variant_id' => $variant['variantId'],
                     'user_id' => $request->user_id,
-                    'quantity' => $variant['qty']
+                    'quantity' => $variant['qty'],
                 ]);
             }
-        }else{
+        } else {
             $this->model->create([
                 'variant_id' => $request['variantId'],
                 'user_id' => $request->user_id,
-                'quantity' => $request['qty']
+                'quantity' => $request['qty'],
             ]);
 
         }
         return true;
     }
-
 
     public function updateCart($request)
     {
@@ -81,6 +82,5 @@ class CartApiService extends AppRepository
     {
         return $this->model->delete($request->cart_id);
     }
-
 
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImageColumnToOffersTable extends Migration
+class RemoveImageFromOffers extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddImageColumnToOffersTable extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->string('image')->after('name_en')->nullable();
+            $table->dropColumn('image');
         });
     }
 
@@ -26,7 +26,7 @@ class AddImageColumnToOffersTable extends Migration
     public function down()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->dropColumn('image');
+            $table->string('image')->after('name_en')->nullable();
         });
     }
 }
