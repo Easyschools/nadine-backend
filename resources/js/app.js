@@ -3,7 +3,7 @@ window.Vue = require('vue');
 import router from './router';
 import swal from 'sweetalert';
 import alertsMixin from "./mixins/alertsMixin";
-import {PaginationPlugin, FormTagsPlugin} from 'bootstrap-vue'
+import { PaginationPlugin, FormTagsPlugin } from 'bootstrap-vue'
 import store from "./store";
 
 require('./store/subscriber');
@@ -14,7 +14,7 @@ Vue.use(PaginationPlugin);
 Vue.use(FormTagsPlugin);
 // Vue.use(VueEditor);
 
-axios.defaults.baseURL = "/api";
+axios.defaults.baseURL = "https://admin.unitart.net/api";
 axios.interceptors.response.use(function (response) {
     return response
 }, function (error) {

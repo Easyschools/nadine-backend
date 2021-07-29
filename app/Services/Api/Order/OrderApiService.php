@@ -26,6 +26,7 @@ use Faker\Provider\DateTime;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderApiService extends AppRepository
 {
@@ -55,7 +56,6 @@ class OrderApiService extends AppRepository
     public function setAddress($id)
     {
         $this->address = (new AppRepository(new Address()))->find($id);
-
     }
 
     public function setShippingPrice()
@@ -79,7 +79,6 @@ class OrderApiService extends AppRepository
                 }
             }
         }
-
     }
 
     public function calculateAdditionalDependingOnItemsCount($item)
@@ -92,7 +91,7 @@ class OrderApiService extends AppRepository
 
     public function setOrderStatus()
     {
-        $this->orderStatus = OrderStatus::where('name_ar','like','%انتظار الموافقه%')->first()->id;
+        $this->orderStatus = OrderStatus::where('name_ar', 'like', '%انتظار الموافقه%')->first()->id;
     }
 
     /**
@@ -116,7 +115,6 @@ class OrderApiService extends AppRepository
 //                dd($offerItemPrice);
             } else {
                 $offerItemPrice = $productPrice - $offer->discount;
-
             }
         }
 
@@ -131,7 +129,6 @@ class OrderApiService extends AppRepository
 
     public function setItems()
     {
-
         $this->items = Cart::where([
 
             ['user_id', Auth::id()],
@@ -141,9 +138,15 @@ class OrderApiService extends AppRepository
                 $variant->select('id', 'product_id', 'additional_price')
                     ->with([
                         'product' => function ($product) {
-                            $product->select('id', 'price', 'price_after_discount',
-                                'name_en', 'name_ar', 'tag_id',
-                                'slug')
+                            $product->select(
+                                'id',
+                                'price',
+                                'price_after_discount',
+                                'name_en',
+                                'name_ar',
+                                'tag_id',
+                                'slug'
+                            )
                                 ->with('tag:id,name_en,name_ar');
                         },
                         'images:variant_id,image'
@@ -161,7 +164,6 @@ class OrderApiService extends AppRepository
         $this->setItems();
 
         foreach ($this->items as $item) {
-
             $offerItemPrice = $this->getOfferPrice($item);
 
             $itemPrice = ($offerItemPrice > 0 ? $offerItemPrice : $item->variant->product->price_after_discount);
@@ -285,7 +287,8 @@ class OrderApiService extends AppRepository
 //        $this->createWaybill($this->address, $this->order, $this->description);
         Cart::where('user_id', $this->user_id)
             ->delete();
-
+          
+         Mail::to('basemovic1911@gmail.com')->send($this->order);
 
         return $this->order;
     }
@@ -293,7 +296,17 @@ class OrderApiService extends AppRepository
     public function storePaymentData($order, Request $request)
     {
         return $order->payment()->create($request->only(
-            'Amount', 'Currency', 'MerchantReference', 'NetworkReference', 'PaidThrough', 'PayerAccount', 'PayerName', 'ProviderSchemeName', 'SecureHash', 'SystemReference', 'TxnDate'
+            'Amount',
+            'Currency',
+            'MerchantReference',
+            'NetworkReference',
+            'PaidThrough',
+            'PayerAccount',
+            'PayerName',
+            'ProviderSchemeName',
+            'SecureHash',
+            'SystemReference',
+            'TxnDate'
         ));
     }
 
@@ -350,6 +363,4 @@ class OrderApiService extends AppRepository
         $num = ($latestOrder) ? $latestOrder->id : 0;
         return 'ord-' . str_pad($num + 1, 8, "0", STR_PAD_LEFT);
     }
-
-
 }
