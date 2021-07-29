@@ -288,7 +288,6 @@ class OrderApiService extends AppRepository
         Cart::where('user_id', $this->user_id)
             ->delete();
           
-         Mail::to('basemovic1911@gmail.com')->send($this->order);
 
         return $this->order;
     }
