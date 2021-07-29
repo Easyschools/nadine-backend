@@ -14,7 +14,6 @@ class AddImageColumnToOffersTable extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            //
             $table->string('image')->after('name_en')->nullable();
         });
     }
@@ -27,7 +26,7 @@ class AddImageColumnToOffersTable extends Migration
     public function down()
     {
         Schema::table('offers', function (Blueprint $table) {
-            //
+            $table->dropColumn('image');
         });
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Order\CustomTagShippingPrice;
 use App\Repositories\AppRepository;
 use App\Services\Api\Order\CustomTagShippingPriceApiService;
 
-
 class TagApiService extends AppRepository
 {
     private $customTagShippingPriceApiService;
@@ -35,7 +34,7 @@ class TagApiService extends AppRepository
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
-        return $this->all();
+        return $this->all()->count();
     }
 
     /**
@@ -80,7 +79,6 @@ class TagApiService extends AppRepository
     {
         $tag = $this->find($request->id);
         if ($tag->customTagShippingPrice) {
-
             $tag->customTagShippingPrice->update([
                 'cost_inside_cairo' => $request->cost_inside_cairo,
                 'cost_outside_cairo' => $request->cost_outside_cairo,
@@ -103,5 +101,4 @@ class TagApiService extends AppRepository
 
         $this->setConditions($conditions);
     }
-
 }

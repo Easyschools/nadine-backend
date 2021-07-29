@@ -2,12 +2,11 @@
 
 namespace App\Services\Api\Order;
 
-
 use App\Models\Order\Offer;
+use App\Models\Order\OfferTag;
 use App\Repositories\AppRepository;
 
-
-Class OfferApiService extends AppRepository
+class OfferApiService extends AppRepository
 {
 
     public function __construct(Offer $offer)
@@ -22,7 +21,7 @@ Class OfferApiService extends AppRepository
     public function index($request)
     {
         $this->setRelations([
-            'category'
+            'category',
         ]);
         if ($request->is_paginate == 1) {
             return $this->paginate();
@@ -36,6 +35,9 @@ Class OfferApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setRelations([
+            'tags',
+        ]);
         return $this->find($request->id);
     }
 
@@ -45,20 +47,28 @@ Class OfferApiService extends AppRepository
      */
     public function createOffer($request)
     {
-        return $this->model->create($request->only(
+        $offer = $this->model->create($request->only(
             'name_ar',
             'name_en',
             'is_percentage',
             'discount',
-            'image',
             'category_id',
             'expire_at'
         ));
+
+        foreach ($request->tags as $tag) {
+            $data = [
+                'offer_id' => $offer->id,
+                'tag_id' => $tag,
+            ];
+            OfferTag::create($data);
+        }
     }
     /**
      * @param $request
      * @return mixed
      */
+
     public function editOffer($request)
     {
         $model = $this->find($request->id);
@@ -71,9 +81,17 @@ Class OfferApiService extends AppRepository
             'category_id',
             'expire_at'
         ));
+        \DB::table("offer_tags")->where('offer_id', $request->id)->delete();
 
+        foreach ($request->tags as $tag) {
+            $data = [
+                'tag_id' => $tag,
+                'offer_id' => $request->id,
+            ];
+
+            $offerTag = OfferTag::create($data);
+        }
         return $model;
     }
-
 
 }

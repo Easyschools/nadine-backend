@@ -7,6 +7,8 @@ use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Material;
+use App\Models\Order\Offer;
+use App\Models\Order\OfferTag;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,8 +37,9 @@ class Product extends Model
         'description',
         'category',
         'category_id',
+        'active_offer',
+        'price_after_offer',
     ];
-
 
     public function getNameAttribute()
     {
@@ -76,11 +79,11 @@ class Product extends Model
     public function getImageAttribute()
     {
         return $this->variants()->exists() ?
-            $this->variants()->whereHas('images')->exists() ?
-                    $this->variants()->whereHas('images',function ($q){
-                        $q->whereNotNull('image');
-                    })->first()->images()->whereNotNull('image')->first()->image
-                    : "" : "";
+        $this->variants()->whereHas('images')->exists() ?
+        $this->variants()->whereHas('images', function ($q) {
+            $q->whereNotNull('image');
+        })->first()->images()->whereNotNull('image')->first()->image
+        : "" : "";
     }
 
     public function getCurrencyAttribute()
@@ -88,9 +91,30 @@ class Product extends Model
         return 'pound';
     }
 
-    public function getPriceAttribute()
+    // public function getPriceAttribute()
+    // {
+    //     return $this->attributes['price_after_discount'];
+    // }
+
+    public function getPriceAfterOfferAttribute()
     {
-        return $this->attributes['price_after_discount'];
+        $tag_id = $this->attributes['tag_id'];
+        $offer = Offer::whereHas('tags', function ($q) use ($tag_id) {
+            $q->where('tag_id', $tag_id);
+        })
+            ->where('expire_at', '>', now())->first();
+        // return
+        if ($offer) {
+            if ($offer->is_percentage) {
+                return $this->attributes['price'] - ($offer->discount * $this->attributes['price'] / 100);
+                // dd($offerItemPrice);
+            } else {
+                return $this->attributes['price'] - $offer->discount;
+
+            }
+        }
+
+        // return $this->attributes['price'];
     }
 
     public function getTypeAttribute()
@@ -115,7 +139,7 @@ class Product extends Model
 
         // add tag name of product
         if ($this->tag) {
-            $arr [] = $this->tag->name;
+            $arr[] = $this->tag->name;
         }
 
         return $arr;
@@ -126,32 +150,54 @@ class Product extends Model
         $tag = $this->tag()->with([
             'category' => function ($category) {
                 $category->with('offers:id,category_id,discount,is_percentage');
-            }
+            },
         ])->first();
-        if ($tag)
+        if ($tag) {
             return $tag->category;
+        }
+
         return null;
     }
 
     public function getCategoryIdAttribute()
     {
-//        dd();
-        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
+        // dd();
+        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) {
+            return null;
+        }
+
         $tag = $this->tag()->with('category')->first();
-        if ($tag)
+        if ($tag) {
             return $tag->category;
+        }
+
         return null;
     }
 
 //    public function getCategoryIdAttribute()
-//    {
-////        dd();
-//        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
-//        $tag = $this->tag()->with('category')->first();
-//        if ($tag)
-//            return $tag->category;
-//        return null;
-//    }
+    //    {
+    ////        dd();
+    //        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
+    //        $tag = $this->tag()->with('category')->first();
+    //        if ($tag)
+    //            return $tag->category;
+    //        return null;
+    //    }
 
+    public function getActiveOfferAttribute()
+    {
+        $tag_id = $this->attributes['tag_id'];
+        $offer = Offer::whereHas('tags', function ($q) use ($tag_id) {
+            $q->where('tag_id', $tag_id);
+        })
+            ->where('expire_at', '>', now())->first();
+        return $offer;
+    }
+
+    public function offer()
+    {
+        return $this->belongsTo(OfferTag::class, 'tag_id', 'tag_id')
+            ->join('offers', 'offers.id', '=', 'offer_tags.offer_id');
+    }
 
 }

@@ -16,11 +16,9 @@ class Tag extends Model
         'image',
     ];
 
-
     protected $appends = [
-        'name'
+        'name',
     ];
-
 
     public function getImageAttribute($value)
     {
@@ -39,7 +37,6 @@ class Tag extends Model
         return $this['name_' . app()->getLocale()];
     }
 
-
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -47,12 +44,18 @@ class Tag extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class,'tag_id');
+        return $this->hasMany(Product::class, 'tag_id');
     }
 
     public function customTagShippingPrice()
     {
-        return $this->hasOne(CustomTagShippingPrice::class , 'tag_id');
+        return $this->hasOne(CustomTagShippingPrice::class, 'tag_id');
+    }
+
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class, 'offer_tags', 'tag_id', 'offer_id');
+
     }
 
 }

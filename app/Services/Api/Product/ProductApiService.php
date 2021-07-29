@@ -7,11 +7,8 @@ use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
 use App\Models\Product\Variant;
-use App\Models\Product\VariantImage;
 use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
-use Illuminate\Support\Facades\DB;
-
 
 class ProductApiService extends AppRepository
 {
@@ -42,9 +39,8 @@ class ProductApiService extends AppRepository
                     'images:id,variant_id,image'
                 );
             },
-            'tag:id,name_en,name_ar,category_id'
+            'tag:id,name_en,name_ar,category_id',
         ]);
-
 
         $this->setAppends([
             'currency',
@@ -62,7 +58,7 @@ class ProductApiService extends AppRepository
 
         $custom = collect([
             'min_price' => Product::min('price_after_discount'),
-            'max_price' => Product::max('price_after_discount')
+            'max_price' => Product::max('price_after_discount'),
         ]);
 
         return $custom->merge($products);
@@ -75,13 +71,19 @@ class ProductApiService extends AppRepository
 
         $productQuery = $this->paginateQuery();
 //        dd($request->all());
-        if ($request->collection_name) {
+        if ($request->collection_name && $request->collection_name != 'sale') {
             $collection_name = str_replace('-', ' ', $request->collection_name);
             $productQuery = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
                 $q->where('name_en', $collection_name)->orWhere('name_ar', $collection_name);
             });
         }
 
+        if ($request->collection_name && $request->collection_name == 'sale') {
+            $productQuery = $productQuery->whereHas('offer', function ($q) {
+                $q->join('offers', 'offers.id', '=', 'offer_tags.offer_id')->where('offers.expire_at', '>', now());
+
+            })->with('offer');
+        }
         if ($request->tag || $request->brand) {
             $tag = $request->tag ?? $request->brand;
             $tag = explode(',', $tag);
@@ -89,12 +91,10 @@ class ProductApiService extends AppRepository
 
             $tag_ids = [];
 
-
             foreach ($tag_names as $tag_name) {
                 $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
                 $tag_ids = array_merge($tag_ids, $arr);
             }
-
 
             $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
                 $q->whereIn('id', $tag_ids);
@@ -169,12 +169,13 @@ class ProductApiService extends AppRepository
         }
 
         foreach ($product->variants as $variant) {
-            if ($variant->dimension)
+            if ($variant->dimension) {
                 $variant['dimension_value'] = $variant->dimension->dimension;
+            }
+
         }
         return $product;
     }
-
 
     /**
      * @param $request
@@ -205,13 +206,13 @@ class ProductApiService extends AppRepository
             $variant = $this->createDimension($variant);
 
             $variantModel = Variant::create(array_merge($variant, [
-                'product_id' => $product->id
+                'product_id' => $product->id,
             ]));
 
             if (count($variant['images'])) {
                 foreach ($variant['images'] as $img) {
                     $variantModel->images()->firstOrcreate([
-                        'image' => $img
+                        'image' => $img,
                     ]);
 //                $variantModel->images->delete();
                 }
@@ -225,7 +226,7 @@ class ProductApiService extends AppRepository
     {
         return [
             'min_price' => Product::min('price_after_discount'),
-            'max_price' => Product::max('price_after_discount')
+            'max_price' => Product::max('price_after_discount'),
         ];
     }
 
@@ -271,7 +272,7 @@ class ProductApiService extends AppRepository
 
             } else {
                 $variantModel = Variant::create(array_merge($variant, [
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]));
 
                 $this->updateImagesOfVariants($variant, $variantModel);
@@ -284,7 +285,6 @@ class ProductApiService extends AppRepository
 
         return $product;
     }
-
 
     public function updateImagesOfVariants($variant, $variantModel)
     {
@@ -299,7 +299,7 @@ class ProductApiService extends AppRepository
                     continue;
                 }
                 $variantModel->images()->firstOrcreate([
-                    'image' => $img
+                    'image' => $img,
                 ]);
 //                $variantModel->images->delete();
             }
@@ -328,7 +328,7 @@ class ProductApiService extends AppRepository
     {
 
         $dimension = Dimension::firstOrCreate([
-            'dimension' => $variant[$key]
+            'dimension' => $variant[$key],
         ]);
         $variant['dimension_id'] = $dimension->id;
 
