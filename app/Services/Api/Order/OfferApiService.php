@@ -5,10 +5,10 @@ namespace App\Services\Api\Order;
 use App\Models\Order\Offer;
 use App\Models\Order\OfferTag;
 use App\Repositories\AppRepository;
+use Illuminate\Support\Facades\DB;
 
 class OfferApiService extends AppRepository
 {
-
     public function __construct(Offer $offer)
     {
         parent::__construct($offer);
@@ -67,6 +67,7 @@ class OfferApiService extends AppRepository
     /**
      * @param $request
      * @return mixed
+
      */
 
     public function editOffer($request)
@@ -81,7 +82,7 @@ class OfferApiService extends AppRepository
             'category_id',
             'expire_at'
         ));
-        \DB::table("offer_tags")->where('offer_id', $request->id)->delete();
+        DB::table("offer_tags")->where('offer_id', $request->id)->delete();
 
         foreach ($request->tags as $tag) {
             $data = [
@@ -93,5 +94,4 @@ class OfferApiService extends AppRepository
         }
         return $model;
     }
-
 }
