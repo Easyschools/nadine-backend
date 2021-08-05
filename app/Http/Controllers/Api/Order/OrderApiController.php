@@ -15,8 +15,8 @@ class OrderApiController extends Controller
         $this->middleware('auth:api');
         $this->middleware('check.role:1')
             ->only('updateStatus');
-//        $this->middleware('check.role:2')
-//            ->only('updateStatus','grandTotal' , 'checkout' );
+        // $this->middleware('check.role:2')
+        //     ->only('updateStatus', 'grandTotal', 'checkout');
         // $this->middleware('auth:api')->only('checkout');
         // $this->middleware('auth:web')
         //     ->only('checkout');
@@ -42,8 +42,8 @@ class OrderApiController extends Controller
         $process = $this->orderApiService->grandTotal($request);
         if ($process == false) {
             return $this->sendError($process, 'please, add product to cart');
-        } if (!is_array($process) ){
-            return $this->sendError( $process,'please use a valid coupon or '.$process);
+        }if (!is_array($process)) {
+            return $this->sendError($process, 'please use a valid coupon or ' . $process);
         }
         return $this->sendResponse($process);
     }
@@ -67,6 +67,5 @@ class OrderApiController extends Controller
         }
         return $this->sendResponse($process);
     }
-
 
 }

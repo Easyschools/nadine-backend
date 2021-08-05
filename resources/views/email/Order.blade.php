@@ -1,13 +1,27 @@
 <h2>Hello User,</h2>
-Email received from: {{ $order->user->name }}
+<p>Email received from: {{ $order->user->name }}</p>
+<h2>
+    order information:
+</h2>
+<p>
+    <strong>Name: </strong> {{ $order->user->name }}
+</p>
+<p>
+    <strong> Order:
+    </strong> {{ $order->code }}
+</p>
+<p>
+    <strong>shiping at :</strong> {{ $order->address->address }}
+</p>
 
-order information:
+<p>
+    <strong>shiping_price : </strong> {{ $order->shipping_price }}
+</p>
+<p>
+    <strong>subTotal: </strong>{{ $order->subtotal }}
+</p>
 
-Name: {{ $order->user->name }}
-Order: {{ $order->code }}
-shiping at : {{ $order->address->address }}
-shiping_price : {{ $order->shipping_price }}
-subTotal: {{ $order->subtotal }}
-grand_total: {{ $order->grand_total }}
-
-Thank you 
+<p>
+    <strong>grand_total : </strong> {{ $order->grand_total }}
+</p>
+<p style="color: #d1d1d1"> Thank you</p>

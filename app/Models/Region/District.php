@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class District extends Model
 {
-    protected $fillable =[
-      'name_ar',
-      'name_en',
-      'city_id',
+    protected $fillable = [
+        'name_ar',
+        'name_en',
+        'city_id',
     ];
 
     protected $appends = [
-        'name'
+        'name',
     ];
 
     public function getNameAttribute()

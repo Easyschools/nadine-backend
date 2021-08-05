@@ -5,7 +5,7 @@ import AuthMiddleware from "../router/middleware/auth";
 const originalPush = Router.prototype.push;
 
 Router.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch((err) => err);
+    return originalPush.call(this, location).catch(err => err);
 };
 
 Vue.use(Router);
@@ -53,6 +53,7 @@ import productEdit from "../views/product/Edit";
 import orderList from "../views/order/List";
 import orderCreate from "../views/order/Create";
 import orderEdit from "../views/order/Edit";
+import orderShow from "../views/order/Show";
 import definitionList from "./../views/definition/List";
 import definitionCreate from "./../views/definition/Create";
 import definitionEdit from "./../views/definition/Edit";
@@ -72,10 +73,10 @@ const View = () => import("./../components/View");
 
 const router = new Router({
     mode: "history",
-    routes: configRoutes(),
+    routes: configRoutes()
 });
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
         AuthMiddleware(to, from, next);
     }
     next(); // make sure to always call next()!
@@ -85,7 +86,7 @@ function configRoutes() {
     return [
         {
             path: "/admin/login",
-            component: Login,
+            component: Login
         },
         {
             path: "/admin/home",
@@ -94,9 +95,9 @@ function configRoutes() {
             children: [
                 {
                     path: "/",
-                    component: Home,
-                },
-            ],
+                    component: Home
+                }
+            ]
         },
         {
             path: "/admin/message",
@@ -105,9 +106,9 @@ function configRoutes() {
             children: [
                 {
                     path: "/",
-                    component: Messages,
-                },
-            ],
+                    component: Messages
+                }
+            ]
         },
         {
             path: "/admin/favourite",
@@ -116,9 +117,9 @@ function configRoutes() {
             children: [
                 {
                     path: "/",
-                    component: Favourites,
-                },
-            ],
+                    component: Favourites
+                }
+            ]
         },
         {
             path: "/admin/city",
@@ -128,13 +129,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: cityList,
+                    component: cityList
                 },
                 {
                     path: "edit/:id",
-                    component: cityEdit,
-                },
-            ],
+                    component: cityEdit
+                }
+            ]
         },
         {
             path: "/admin/category",
@@ -144,13 +145,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: categoryList,
+                    component: categoryList
                 },
                 {
                     path: "edit/:id",
-                    component: categoryEdit,
-                },
-            ],
+                    component: categoryEdit
+                }
+            ]
         },
         {
             path: "/admin/material",
@@ -160,13 +161,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: materialList,
+                    component: materialList
                 },
                 {
                     path: "edit/:id",
-                    component: materialEdit,
-                },
-            ],
+                    component: materialEdit
+                }
+            ]
         },
         {
             path: "/admin/collection",
@@ -176,13 +177,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: collectionList,
+                    component: collectionList
                 },
                 {
                     path: "edit/:id",
-                    component: collectionEdit,
-                },
-            ],
+                    component: collectionEdit
+                }
+            ]
         },
         {
             path: "/admin/color",
@@ -192,13 +193,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: colorList,
+                    component: colorList
                 },
                 {
                     path: "edit/:id",
-                    component: colorEdit,
-                },
-            ],
+                    component: colorEdit
+                }
+            ]
         },
         {
             path: "/admin/dimension",
@@ -208,13 +209,13 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: dimensionList,
+                    component: dimensionList
                 },
                 {
                     path: "edit/:id",
-                    component: dimensionEdit,
-                },
-            ],
+                    component: dimensionEdit
+                }
+            ]
         },
         {
             path: "/admin/tag",
@@ -224,17 +225,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: tagList,
+                    component: tagList
                 },
                 {
                     path: "create",
-                    component: tagCreate,
+                    component: tagCreate
                 },
                 {
                     path: "edit/:id",
-                    component: tagEdit,
-                },
-            ],
+                    component: tagEdit
+                }
+            ]
         },
         {
             path: "/admin/status",
@@ -244,17 +245,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: statusList,
+                    component: statusList
                 },
                 {
                     path: "create",
-                    component: statusCreate,
+                    component: statusCreate
                 },
                 {
                     path: "edit/:id",
-                    component: statusEdit,
-                },
-            ],
+                    component: statusEdit
+                }
+            ]
         },
         {
             path: "/admin/offer",
@@ -264,17 +265,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: offerList,
+                    component: offerList
                 },
                 {
                     path: "create",
-                    component: offerCreate,
+                    component: offerCreate
                 },
                 {
                     path: "edit/:id",
-                    component: offerEdit,
-                },
-            ],
+                    component: offerEdit
+                }
+            ]
         },
         {
             path: "/admin/slider",
@@ -284,17 +285,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: sliderList,
+                    component: sliderList
                 },
                 {
                     path: "create",
-                    component: sliderCreate,
+                    component: sliderCreate
                 },
                 {
                     path: "edit/:id",
-                    component: sliderEdit,
-                },
-            ],
+                    component: sliderEdit
+                }
+            ]
         },
         {
             path: "/admin/brand",
@@ -304,17 +305,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: brandList,
+                    component: brandList
                 },
                 {
                     path: "create",
-                    component: brandCreate,
+                    component: brandCreate
                 },
                 {
                     path: "edit/:id",
-                    component: brandEdit,
-                },
-            ],
+                    component: brandEdit
+                }
+            ]
         },
         {
             path: "/admin/coupon",
@@ -324,17 +325,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: couponList,
+                    component: couponList
                 },
                 {
                     path: "create",
-                    component: couponCreate,
+                    component: couponCreate
                 },
                 {
                     path: "edit/:id",
-                    component: couponEdit,
-                },
-            ],
+                    component: couponEdit
+                }
+            ]
         },
         {
             path: "/admin/city",
@@ -344,17 +345,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: cityList,
+                    component: cityList
                 },
                 {
                     path: "create",
-                    component: cityCreate,
+                    component: cityCreate
                 },
                 {
                     path: "edit/:id",
-                    component: cityEdit,
-                },
-            ],
+                    component: cityEdit
+                }
+            ]
         },
         {
             path: "/admin/product",
@@ -364,17 +365,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: productList,
+                    component: productList
                 },
                 {
                     path: "create",
-                    component: productCreate,
+                    component: productCreate
                 },
                 {
                     path: "edit/:slug/:page",
-                    component: productEdit,
-                },
-            ],
+                    component: productEdit
+                }
+            ]
         },
         {
             path: "/admin/order",
@@ -384,17 +385,21 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: orderList,
+                    component: orderList
                 },
                 {
                     path: "create",
-                    component: orderCreate,
+                    component: orderCreate
                 },
                 {
                     path: "edit/:id",
-                    component: orderEdit,
+                    component: orderEdit
                 },
-            ],
+                {
+                    path: "show/:id",
+                    component: orderShow
+                }
+            ]
         },
         {
             path: "/admin/definition",
@@ -404,17 +409,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: definitionList,
+                    component: definitionList
                 },
                 {
                     path: "create",
-                    component: definitionCreate,
+                    component: definitionCreate
                 },
                 {
                     path: "edit/:id",
-                    component: definitionEdit,
-                },
-            ],
+                    component: definitionEdit
+                }
+            ]
         },
         {
             path: "/admin/lesson",
@@ -424,17 +429,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: lessonList,
+                    component: lessonList
                 },
                 {
                     path: "create",
-                    component: lessonCreate,
+                    component: lessonCreate
                 },
                 {
                     path: "edit/:id",
-                    component: lessonEdit,
-                },
-            ],
+                    component: lessonEdit
+                }
+            ]
         },
         {
             path: "/admin/customer",
@@ -444,17 +449,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: customerList,
+                    component: customerList
                 },
                 {
                     path: "create",
-                    component: customerCreate,
+                    component: customerCreate
                 },
                 {
                     path: "edit/:id",
-                    component: customerEdit,
-                },
-            ],
+                    component: customerEdit
+                }
+            ]
         },
         {
             path: "/admin/information",
@@ -464,17 +469,17 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: informationList,
+                    component: informationList
                 },
                 {
                     path: "create",
-                    component: informationCreate,
+                    component: informationCreate
                 },
                 {
                     path: "edit/:id",
-                    component: informationEdit,
-                },
-            ],
+                    component: informationEdit
+                }
+            ]
         },
         {
             path: "/admin/exercise",
@@ -484,18 +489,18 @@ function configRoutes() {
             children: [
                 {
                     path: "list",
-                    component: exerciseList,
+                    component: exerciseList
                 },
                 {
                     path: "create",
-                    component: exerciseCreate,
+                    component: exerciseCreate
                 },
                 {
                     path: "edit/:id",
-                    component: exerciseEdit,
-                },
-            ],
-        },
+                    component: exerciseEdit
+                }
+            ]
+        }
     ];
 }
 

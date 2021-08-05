@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequest;
 use App\Models\Order\Order;
 use App\Services\Api\Order\UpdateOrderApiService;
-use Illuminate\Http\Request;
 
 class UpdateOrderApiController extends Controller
 {
@@ -18,27 +17,27 @@ class UpdateOrderApiController extends Controller
         $this->middleware(['check.role:1,2,4'])
             ->only(['recalculate', 'update']);
         $this->middleware(['check.role:1,2,3,4'])
-            ->only(['updateStatus','updatePayment']);
+            ->only(['updateStatus', 'updatePayment']);
         $this->orderService = $orderService;
     }
 //
-//    public function updateStatus(OrderRequest $request)
-//    {
-//        $process = $this->orderService->updateStatus($request);
-//        if (!$process) {
-//            return $this->sendError(['sorry, cant update this order']);
-//        }
-//        return $this->sendResponse($process);
-//    }
-//
-//    public function updatePayment(OrderRequest $request)
-//    {
-//        $process = $this->orderService->updatePayment($request);
-//        if (!$process) {
-//            return $this->sendError(['sorry, cant update this order']);
-//        }
-//        return $this->sendResponse($process);
-//    }
+    //    public function updateStatus(OrderRequest $request)
+    //    {
+    //        $process = $this->orderService->updateStatus($request);
+    //        if (!$process) {
+    //            return $this->sendError(['sorry, cant update this order']);
+    //        }
+    //        return $this->sendResponse($process);
+    //    }
+    //
+    //    public function updatePayment(OrderRequest $request)
+    //    {
+    //        $process = $this->orderService->updatePayment($request);
+    //        if (!$process) {
+    //            return $this->sendError(['sorry, cant update this order']);
+    //        }
+    //        return $this->sendResponse($process);
+    //    }
 
     public function recalculate(OrderRequest $request)
     {
@@ -55,6 +54,5 @@ class UpdateOrderApiController extends Controller
         }
         return $this->sendResponse($process);
     }
-
 
 }

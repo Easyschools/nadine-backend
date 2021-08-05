@@ -20,10 +20,8 @@ use App\Models\User\User;
 use App\Repositories\AppRepository;
 use App\Traits\FirebaseFCM;
 use Carbon\Carbon;
-use Doctrine\DBAL\Driver\AbstractDB2Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class UpdateOrderApiService extends AppRepository
 {
@@ -58,9 +56,8 @@ class UpdateOrderApiService extends AppRepository
         $this->address = Address::with([
             'district' => function ($district) {
                 $district->with('city');
-            }
+            },
         ])->find($id);
-        dd($this->address->district);
     }
 
     public function setShippingPrice()
@@ -86,7 +83,6 @@ class UpdateOrderApiService extends AppRepository
 
     }
 
-
     public function calculateAdditionalDependingOnItemsCount($item)
     {
         if ($item->quantity > 2) {
@@ -94,7 +90,6 @@ class UpdateOrderApiService extends AppRepository
         }
         return 0;
     }
-
 
     public function setOrderStatus()
     {
@@ -109,10 +104,10 @@ class UpdateOrderApiService extends AppRepository
     {
         $offerItemPrice = -1;
 //        $this->productService->setRelations([
-//            'category' => function ($category) {
-//                $category->select('id')->with('offers');
-//            }
-//        ]);
+        //            'category' => function ($category) {
+        //                $category->select('id')->with('offers');
+        //            }
+        //        ]);
         $item['product'] = $this->productService->find($item->product_id);
         if ($item->product->category->offers()->exists()) {
             $offer = $item->product->category->offers()->first()->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
@@ -134,7 +129,6 @@ class UpdateOrderApiService extends AppRepository
         return $offerItemPrice;
     }
 
-
     public function setItems(Request $request)
     {
         $orderItems = [];
@@ -147,16 +141,16 @@ class UpdateOrderApiService extends AppRepository
                     'product' => function ($product) {
                         $product->select('id', 'price', 'name_en', 'name_ar', 'tag_id');
 //                            ->with([
-//                                'category' => function ($category) {
-//                                    $category->select('id', 'name_ar', 'name_en')->with([
-//                                        'offers' => function ($offer) {
-//                                            $offer->select('id', 'is_percentage', 'discount',
-//                                                'category_id');
-//                                        }
-//                                    ]);
-//                                }
-//                            ]);
-                    }
+                        //                                'category' => function ($category) {
+                        //                                    $category->select('id', 'name_ar', 'name_en')->with([
+                        //                                        'offers' => function ($offer) {
+                        //                                            $offer->select('id', 'is_percentage', 'discount',
+                        //                                                'category_id');
+                        //                                        }
+                        //                                    ]);
+                        //                                }
+                        //                            ]);
+                    },
                 ])->where('id', $order_item['variant_id'])->first();
                 $variant['quantity'] = $order_item['quantity'];
                 $orderItems[$index] = $variant;
@@ -174,7 +168,6 @@ class UpdateOrderApiService extends AppRepository
         $this->order->orderItems()->delete();
 
         $this->setItems($request);
-
 
         foreach ($this->items as $item) {
 
@@ -251,7 +244,7 @@ class UpdateOrderApiService extends AppRepository
         if ($this->coupon) {
             if ($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
-                    $subtotal * ($this->coupon->value / 100);
+                $subtotal * ($this->coupon->value / 100);
                 $this->coupon->update([
                     'used_times' => $this->coupon->used_times + 1,
                 ]);
@@ -278,12 +271,12 @@ class UpdateOrderApiService extends AppRepository
             'order_status_id' => $request->order_status_id,
             'subtotal' => $this->subtotal,
 //            'coupon_price' => $this->couponValue,
-//            'coupon_id' => ($this->coupon) ? $this->coupon->id : null,
+            //            'coupon_id' => ($this->coupon) ? $this->coupon->id : null,
             'grand_total' => $grandTotal['grand_total'],
             'address_id' => $this->address->id,
             'shipping_price' => $this->shippingPrice,
             'payment_type_id' => $request->payment_type_id,
-            'notes' => $request->notes
+            'notes' => $request->notes,
         ]);
 
         $this->addOrderItems($this->items);
@@ -291,12 +284,12 @@ class UpdateOrderApiService extends AppRepository
         if ($this->coupon) {
             $this->coupon->user()->attach(Auth::id());
             $this->coupon->update([
-                'used_times' => $this->coupon->used_times + 1
+                'used_times' => $this->coupon->used_times + 1,
             ]);
         }
 //        $this->createWaybill($this->address, $this->order, $this->description);
-//        Cart::where('user_id', Auth::id())
-//            ->delete();
+        //        Cart::where('user_id', Auth::id())
+        //            ->delete();
         return $this->order;
     }
 
@@ -326,7 +319,6 @@ class UpdateOrderApiService extends AppRepository
         }
     }
 
-
     /**
      * delete order order
      * @param $orderId
@@ -337,6 +329,5 @@ class UpdateOrderApiService extends AppRepository
         OrderItem::where('order_id', $orderId)->delete();
         return Order::find($orderId)->delete();
     }
-
 
 }

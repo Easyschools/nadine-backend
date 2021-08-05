@@ -14,46 +14,49 @@
           <div class="row">
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
-                <label
-                  >الكود:
+                <label>
+                  الكود:
                   <input
                     type="search"
                     class="form-control form-control-sm"
-                    placeholder=""
+                    placeholder
                     v-model="search.code"
                     v-on:keyup="getAll"
                     aria-controls="report-table"
-                /></label>
+                  />
+                </label>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="dataTables_filter">
-                <label
-                  >التليفون:
+                <label>
+                  التليفون:
                   <input
                     type="search"
                     class="form-control form-control-sm"
-                    placeholder=""
+                    placeholder
                     v-model="search.phone"
                     v-on:keyup="getAll"
                     aria-controls="report-table"
-                /></label>
+                  />
+                </label>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="dataTables_filter">
-                <label
-                  >الاسم:
+                <label>
+                  الاسم:
                   <input
                     type="search"
                     class="form-control form-control-sm"
-                    placeholder=""
+                    placeholder
                     v-model="search.username"
                     v-on:keyup="getAll"
                     aria-controls="report-table"
-                /></label>
+                  />
+                </label>
               </div>
             </div>
           </div>
@@ -77,7 +80,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in items">
+              <tr v-for="(item, index) in items" :key="index">
                 <td>{{ item.id }}</td>
                 <td>{{ item.code }}</td>
                 <td>{{ item.user.name }}</td>
@@ -94,19 +97,23 @@
                 <td>
                   <router-link
                     :to="{
+                      path: '/admin/order/show/' + item.id,
+                      params: { id: item.id },
+                    }"
+                    class="btn btn-outline-primary"
+                  >التفاصيل</router-link>
+                  <router-link
+                    :to="{
                       path: '/admin/order/edit/' + item.id,
                       params: { id: item.id },
                     }"
                     class="btn btn-outline-warning"
-                    >تعديل
-                  </router-link>
+                  >تعديل</router-link>
                   <button
                     type="button"
                     @click="deleteItem(item.id, index)"
                     class="btn btn-outline-danger"
-                  >
-                    حذف
-                  </button>
+                  >حذف</button>
                 </td>
               </tr>
             </tbody>
