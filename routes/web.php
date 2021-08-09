@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Product\Product;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +12,10 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('test', function () {
-    return $products = Product::with('offer')->get();
-});
+// Route::get('test', function () {
+//     $order = Order::first();
+//     return view('email.Order', compact('order'));
+// });
 Route::get('/', function () {
     return view('welcome');
 });
