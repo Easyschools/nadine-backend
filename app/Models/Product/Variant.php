@@ -16,7 +16,7 @@ class Variant extends Model
     ];
 
     protected $appends = [
-        'image'
+        'image',
     ];
 
     public function getImageAttribute($value)
@@ -47,5 +47,3 @@ class Variant extends Model
     }
 
 }
-
-

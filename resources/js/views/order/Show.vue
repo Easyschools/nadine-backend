@@ -161,7 +161,7 @@
             <label class="col-form-label">السعر قبل الخصم</label>
           </div>
           <div class="col-sm-9">
-            <div class="form-control">{{item.item_price}}</div>
+            <div class="form-control">{{item.variant.product.price}}</div>
           </div>
         </div>
 

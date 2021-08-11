@@ -8,7 +8,6 @@
 
 namespace App\Services\Api\Order;
 
-
 use App\Models\Order\Order;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Auth;
@@ -35,11 +34,11 @@ class OrderInfoApiService
                                 $product->with([
                                     'variants' => function ($variantNest1) {
                                         $variantNest1->with('color', 'dimension');
-                                    }
+                                    },
                                 ]);
-                            }
+                            },
                         ]);
-                    }
+                    },
                 ]);
             },
             'address', 'coupon',
@@ -60,11 +59,11 @@ class OrderInfoApiService
                                 $product->with([
                                     'variants' => function ($variantNest1) {
                                         $variantNest1->with('color', 'dimension');
-                                    }
+                                    },
                                 ]);
-                            }
+                            },
                         ]);
-                    }
+                    },
                 ]);
             },
             'address', 'coupon',
@@ -87,25 +86,24 @@ class OrderInfoApiService
             'paymentType',
             'address',
             'orderItems',
-            'orderStatus'
+            'orderStatus',
         ]);
-        if ($request->username){
+        if ($request->username) {
             $username = $request->username;
             return $this->order->paginateQuery()
-            ->whereHas('user',function ($q) use ($username){
-                $q->where('name','like','%'.$username.'%');
-            })->paginate();
+                ->whereHas('user', function ($q) use ($username) {
+                    $q->where('name', 'like', '%' . $username . '%');
+                })->paginate();
         }
-        if ($request->phone){
+        if ($request->phone) {
             $phone = $request->phone;
             return $this->order->paginateQuery()
-            ->whereHas('user',function ($q) use ($phone){
-                $q->where('phone','like','%'.$phone.'%');
-            })->paginate();
+                ->whereHas('user', function ($q) use ($phone) {
+                    $q->where('phone', 'like', '%' . $phone . '%');
+                })->paginate();
         }
         return $this->order->paginate();
     }
-
 
     public function filter($request)
     {
@@ -114,9 +112,6 @@ class OrderInfoApiService
         if ($request->code) {
             $conditions[] = ['code', 'like', '%' . $request->code . '%'];
         }
-
-
-
 
         $this->order->setConditions($conditions);
     }

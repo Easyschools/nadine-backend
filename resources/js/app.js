@@ -16,10 +16,10 @@ Vue.use(FormTagsPlugin);
 
 axios.defaults.baseURL = "/api";
 axios.interceptors.response.use(
-    function (response) {
+    function(response) {
         return response;
     },
-    function (error) {
+    function(error) {
         console.log(error.response.status);
         if (error.response.status == 401) {
             console.log("arrival");
@@ -29,7 +29,7 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-// axios.defaults.baseURL = 'http://127.0.0.1:8000/admin';
+// axios.defaults.baseURL = "https://admin.unitart.net";
 store.dispatch("auth/attempt", localStorage.getItem("token"));
 
 Vue.mixin(alertsMixin);
@@ -39,5 +39,5 @@ const app = new Vue({
     el: "#app",
     store,
     router,
-    swal,
+    swal
 });
