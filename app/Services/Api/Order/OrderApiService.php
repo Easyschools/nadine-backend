@@ -11,7 +11,7 @@ namespace App\Services\Api\Order;
 use App\Mail\OrderMail;
 use App\Models\Order\Cart;
 use App\Models\Order\Coupon;
-use App\Models\Order\CustomTagShippingPrice;
+// use App\Models\Order\CustomTagShippingPrice;
 use App\Models\Order\Helper\ShippingPriceOrderHelper;
 use App\Models\Order\Order;
 use App\Models\Order\OrderItem;
@@ -58,25 +58,33 @@ class OrderApiService extends AppRepository
 
     public function setShippingPrice()
     {
-        if ($this->address->id == 1) {
-            $this->shippingPrice = 200;
+        $shippingPrice = 200;
+        if ($this->address
+            && $this->address->district
+            && $this->address->district->city) {
+            $shippingPrice = $this->address->district->city->shipping_cost;
         }
-        $customIDs = CustomTagShippingPrice::pluck('tag_id')->toArray();
-        $enter = 0;
-        foreach ($this->items as $item) {
-            if (in_array($item->variant->product->tag->id, $customIDs)) {
-                $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
-                $enter = 1;
-                $this->calculateDependingOnCustomTagPrice($customShippingPrice, $item);
-            }
-            if (!$enter) {
-                if ($this->address->district->city->name_en == 'cairo') {
-                    $this->shippingPrice = 200 + $this->calculateAdditionalDependingOnItemsCount($item);
-                } else {
-                    $this->shippingPrice = 250 + $this->calculateAdditionalDependingOnItemsCount($item);
-                }
-            }
-        }
+
+        // if ($this->address->id == 1) {
+        $this->shippingPrice = $shippingPrice;
+        // }
+
+        // $customIDs = CustomTagShippingPrice::pluck('tag_id')->toArray();
+        // $enter = 0;
+        // foreach ($this->items as $item) {
+        //     if (in_array($item->variant->product->tag->id, $customIDs)) {
+        //         $customShippingPrice = CustomTagShippingPrice::where('tag_id', $item->variant->product->tag->id)->first();
+        //         $enter = 1;
+        //         $this->calculateDependingOnCustomTagPrice($customShippingPrice, $item);
+        //     }
+        //     if (!$enter) {
+        //         if ($this->address->district->city->name_en == 'cairo') {
+        //             $this->shippingPrice = 200 + $this->calculateAdditionalDependingOnItemsCount($item);
+        //         } else {
+        //             $this->shippingPrice = 250 + $this->calculateAdditionalDependingOnItemsCount($item);
+        //         }
+        //     }
+        // }
     }
 
     public function calculateAdditionalDependingOnItemsCount($item)
@@ -236,9 +244,9 @@ class OrderApiService extends AppRepository
             if (($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) && $this->coupon->min_total <= $subtotal) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
                 $subtotal * ($this->coupon->value / 100);
-//                $this->coupon->update([
-                //                    'used_times' => $this->coupon->used_times + 1,
-                //                ]);
+                // $this->coupon->update([
+                //     'used_times' => $this->coupon->used_times + 1,
+                // ]);
             }
         }
 

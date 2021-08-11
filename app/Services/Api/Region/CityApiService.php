@@ -7,7 +7,6 @@ use App\Models\Region\District;
 use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
 
-
 class CityApiService extends AppRepository
 {
 
@@ -43,7 +42,6 @@ class CityApiService extends AppRepository
         return $this->find($request->id);
     }
 
-
     /**
      * @param $request
      * @return mixed
@@ -53,17 +51,17 @@ class CityApiService extends AppRepository
         $city = City::create($request->only([
             'name_ar',
             'name_en',
+            'shipping_cost',
         ]));
 
         foreach ($request->districts as $district) {
             District::create(array_merge($district, [
-                'city_id' => $city->id
+                'city_id' => $city->id,
             ]));
         }
 
         return $city;
     }
-
 
     /**
      * @param $request
@@ -76,12 +74,12 @@ class CityApiService extends AppRepository
         $city->update($request->only([
             'name_ar',
             'name_en',
+            'shipping_cost',
         ]));
 
         $oldVariantsIds = $city->districts()->pluck('id')->toArray();
 
         HelperFunctions::CurdOperation($request, $city, new District, 'districts', 'city', $oldVariantsIds);
-
 
         return $city;
     }
@@ -100,6 +98,5 @@ class CityApiService extends AppRepository
         $this->setConditions($conditions);
         $this->setOrConditions($orConditions);
     }
-
 
 }

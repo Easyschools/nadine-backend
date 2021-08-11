@@ -45,6 +45,7 @@ class CityRequest extends FormRequest
         return [
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
+            'shipping_cost' => 'required|numeric',
         ];
     }
 
@@ -54,13 +55,14 @@ class CityRequest extends FormRequest
             'id' => 'required|exists:cities,id',
             'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
+            'shipping_cost' => 'required|numeric',
         ];
     }
 
     private function idValidation()
     {
         return [
-            'id' => 'required|exists:cities,id'
+            'id' => 'required|exists:cities,id',
         ];
     }
 

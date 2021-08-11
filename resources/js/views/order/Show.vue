@@ -22,13 +22,23 @@
               <div class="form-control">{{item.user.name}}</div>
             </div>
           </div>
+
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <label class="col-form-label">رقم التلفون</label>
+            </div>
+            <div class="col-sm-9">
+              <div class="form-control">{{item.user.phone}}</div>
+            </div>
+          </div>
+
           <div class="row form-group">
             <div class="col-sm-3">
               <label class="col-form-label">العنوان</label>
             </div>
 
             <div class="col-sm-9">
-              <div class="form-control">{{getCurrentAddress()}}</div>
+              <div class="form-control">{{getCurrentAddress()}} - {{getCurrentCity()}}</div>
             </div>
           </div>
           <div class="row form-group">
@@ -101,7 +111,23 @@
       </div>
     </div>
     <div class="col-md-12">
+      <h1 class="card-header" v-if="item.order_items.length > 0">المنتجات</h1>
       <div class="card" v-for="(item, index) in item.order_items" :key="index">
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <label class="col-form-label">رابط المنتج</label>
+          </div>
+          <div class="col-sm-9">
+            <div class="form-control">
+              <a
+                :href="`https://www.unitart.net/product/${item.variant.product.slug}`"
+                target="_blank"
+                rel="noopener noreferrer"
+              >https://www.unitart.net/product/{{item.variant.product.slug}}</a>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group row">
           <div class="col-sm-3">
             <label class="col-form-label">اسم المنتج</label>
@@ -114,10 +140,10 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">وصف المنتج</label>
+            <label class="col-form-label">صورة المنتج</label>
           </div>
           <div class="col-sm-9">
-            <div>{{item.variant.product.description_ar}}</div>
+            <img :src="item.variant.image" alt class="img-thumbnail" width="200px" height="200px" />
           </div>
         </div>
 
@@ -132,7 +158,7 @@
 
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">السعر</label>
+            <label class="col-form-label">السعر قبل الخصم</label>
           </div>
           <div class="col-sm-9">
             <div class="form-control">{{item.item_price}}</div>
@@ -150,7 +176,7 @@
       </div>
       <div class="text-center">
         <router-link to="/admin/order" class="btn btn-secondary">الغاء</router-link>
-        <router-link :to="`admin/order/edit/${item.id}`" class="btn btn-primary">تعديل</router-link>
+        <router-link :to="`/admin/order/edit/${item.id}`" class="btn btn-primary">تعديل</router-link>
       </div>
     </div>
   </div>
@@ -242,6 +268,15 @@ export default {
         (item) => item.id === this.item.address_id
       );
       return addresss?.address;
+    },
+
+    getCurrentCity() {
+      const addresss = this.addresses.find(
+        (item) => item.id === this.item.address_id
+      );
+      return (
+        addresss?.district?.name_ar + " - " + addresss?.district?.city?.name_ar
+      );
     },
 
     getAddress() {
