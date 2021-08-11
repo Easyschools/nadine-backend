@@ -29,7 +29,7 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-// axios.defaults.baseURL = "https://admin.unitart.net";
+axios.defaults.baseURL = "https://admin.unitart.net";
 store.dispatch("auth/attempt", localStorage.getItem("token"));
 
 Vue.mixin(alertsMixin);

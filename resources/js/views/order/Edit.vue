@@ -564,7 +564,7 @@ export default {
 
       let data = this.getFormData(formData);
       axios
-        .post("/order/update/", data)
+        .post("/order/update", data)
         .then((response) => {
           this.disableButton = false;
           swal("Good job!", "A new order has been updated!", "success");
