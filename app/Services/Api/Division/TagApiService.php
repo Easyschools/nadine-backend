@@ -34,7 +34,7 @@ class TagApiService extends AppRepository
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
-        return $this->all()->count();
+        return $this->all();
     }
 
     /**
