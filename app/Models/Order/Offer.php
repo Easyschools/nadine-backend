@@ -19,9 +19,6 @@ class Offer extends Model
         'image',
     ];
 
-    // protected $dates = [
-    //     'expire_at',
-    // ];
 
     protected $appends = [
         'name',
@@ -52,7 +49,6 @@ class Offer extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
-
     }
 
     /**
@@ -63,7 +59,6 @@ class Offer extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'offer_tags', 'offer_id', 'tag_id');
-
     }
 
 //    public function getExpireAtAttribute()
@@ -77,5 +72,4 @@ class Offer extends Model
     ////        dd($value);
     //        $this->attributes['expire_at'] = $value;
     //    }
-
 }
