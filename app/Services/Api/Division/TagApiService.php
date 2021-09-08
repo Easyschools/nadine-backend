@@ -38,7 +38,7 @@ class TagApiService extends AppRepository
         }
         
         $data['request']=($this->all());
-$data['products_count'] = Tag::withCount('products');
+$data['products_count'] = Tag::with('products')->count();
 
      return $data;
 
