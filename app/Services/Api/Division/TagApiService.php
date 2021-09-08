@@ -39,7 +39,7 @@ class TagApiService extends AppRepository
             return $this->paginate();
         }
         
-$data['request']=($this->all());
+        $data['request']=($this->all());
 
 return $this->sendResponse($data, 'counter retrieved successfully.');
 
