@@ -30,18 +30,17 @@ class TagApiService extends AppRepository
       $this->setRelations([
             'category',
             'customTagShippingPrice',
-            'products'
         ]);
 
-    $data['products_count'] = Tag::withCount('products')->get();
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
         
         $data['request']=($this->all());
+$data['products_count'] = Tag::withCount('products');
 
-return $this->sendResponse($data, 'counter retrieved successfully.');
+     return $data;
 
 
     }
