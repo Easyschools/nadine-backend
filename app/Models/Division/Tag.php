@@ -47,6 +47,8 @@ class Tag extends Model
         return $this->hasMany(Product::class, 'tag_id');
     }
 
+      
+
     public function customTagShippingPrice()
     {
         return $this->hasOne(CustomTagShippingPrice::class, 'tag_id');
