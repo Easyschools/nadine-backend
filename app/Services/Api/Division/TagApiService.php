@@ -30,7 +30,7 @@ class TagApiService extends AppRepository
       $this->setRelations([
             'category',
             'customTagShippingPrice',
-            'product_count'
+            'products'
         ]);
 
     $data['products_count'] = Tag::withCount('products')->get();
