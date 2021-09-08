@@ -25,22 +25,22 @@ class TagApiService extends AppRepository
     {
 // $count_product = nul;
         
-       $data['filter']= $this->filter($request);
+        $this->filter($request);
 
-    $data['relations']=   $this->setRelations([
+      $this->setRelations([
             'category',
             'customTagShippingPrice',
             'product_count'
         ]);
 
-    $data['products'] = Tag::withCount('products')->get();
+    $data['products_count'] = Tag::withCount('products')->get();
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
-        dd($data);
         
-// return $count_product->merge($this->all());
+$data['request']=($this->all());
+
 return $this->sendResponse($data, 'counter retrieved successfully.');
 
 
