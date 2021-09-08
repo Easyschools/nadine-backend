@@ -17,24 +17,30 @@ class TagApiService extends AppRepository
         parent::__construct($tag);
         $this->customTagShippingPriceApiService = new  AppRepository(new CustomTagShippingPrice);
     }
-
     /**
      * @param $request
      * @return mixed
      */
     public function index($request)
     {
+$count_product = null;
+        
         $this->filter($request);
 
         $this->setRelations([
             'category',
             'customTagShippingPrice'
         ]);
+ $this->count_product = [Tag::withCount('products')->get()];
+
 
         if ($request->is_paginate == 1) {
             return $this->paginate();
         }
-        return $this->all();
+// return $count_product->merge($this->all());
+
+return $this->all();
+
     }
 
     /**
