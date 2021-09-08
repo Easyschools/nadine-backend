@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => [],
 
     'allowed_methods' => ['*'],
 
@@ -23,11 +23,11 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => [ '*'],
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => false,
 
     'supports_credentials' => false,
 
