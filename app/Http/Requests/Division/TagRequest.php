@@ -66,12 +66,12 @@ class TagRequest extends FormRequest
         ];
     }
 
-    private function allValidation()
-    {
-        return [
-            'is_paginate' => 'in:0,1',
-            'is_banned' => 'in:0,1',
-        ];
-    }
+    // private function allValidation()
+    // {
+    //     return [
+    //         'is_paginate' => 'in:0,1',
+    //         'is_banned' => 'in:0,1',
+    //     ];
+    // }
 
 }

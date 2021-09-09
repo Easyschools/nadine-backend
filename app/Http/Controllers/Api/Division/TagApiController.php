@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers\Api\Division;
 
+use Illuminate\Http\Request;
+use App\Models\Division\Tag;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Division\TagRequest;
@@ -34,12 +36,29 @@ class TagApiController extends Controller
     }
 
 
-    public function all(TagRequest $request)
-    {
-        $process = $this->tagService->index($request);
-        return $this->sendResponse($process);
-    }
+    public function all(Request $request)
+   {
+        $validator = Validator($request->all(), [
+    'is_paginate' => 'in:0,1',
+    
+]);
+if ($validator->fails()) {
+    return $this->sendError('error validation', $validator->errors());
+}
+$Tag = Tag::with(
+     'category',
+            'customTagShippingPrice',
 
+)->withCount('products');
+
+if (!$request->is_paginate) {
+    $Tag = $Tag->get();
+} else {
+    $Tag = $Tag->paginate(15);
+}
+return $this->sendResponse($Tag, "Tag Seen Successfully");
+
+}
     public function delete(TagRequest $request)
     {
         $process = $this->tagService->delete($request->id);
