@@ -124,19 +124,22 @@ class ProductApiService extends AppRepository
         }
 
         if ($request->category) {
-            $category = explode(',', $request->category);
-            $category = $this->replaceDashWithSpace($category);
-            $tags_ids = [];
+            // $category = explode(',', $request->category);
+            // $category = $this->replaceDashWithSpace($category);
+            // $tags_ids = [];
 
-            foreach ($category as $cat) {
-                $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
-                    $q->where('name_en', 'like', '%' . $cat . '%')
-                        ->orWhere('name_ar', 'like', '%' . $cat . '%');
-                })->pluck('id')->toArray());
-            }
-            $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
-                $q->whereIn('id', $tags_ids);
-            });
+            // foreach ($category as $cat) {
+            //     $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
+            //         $q->where('name_en', 'like', '%' . $cat . '%')
+            //             ->orWhere('name_ar', 'like', '%' . $cat . '%');
+            //     })->pluck('id')->toArray());
+            // }
+            // $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
+            //     $q->whereIn('id', $tags_ids);
+            // });
+
+            $productQuery = $productQuery->whereHas('offer')->whereNotNull('price_after_discount');
+
         }
 //        dd($productQuery->toSql());
         return $productQuery;
