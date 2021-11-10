@@ -138,7 +138,7 @@ class ProductApiService extends AppRepository
             //     $q->whereIn('id', $tags_ids);
             // });
 
-            $productQuery = $productQuery->whereHas('offer')->whereNotNull('price_after_discount');
+            $productQuery = $productQuery->where('price_after_discount','!=',0)->orWhereHas('offer');
 
         }
 //        dd($productQuery->toSql());
