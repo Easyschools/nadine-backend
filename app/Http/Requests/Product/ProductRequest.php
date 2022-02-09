@@ -50,13 +50,13 @@ class ProductRequest extends FormRequest
             'description_ar' => 'required|min:2',
             'material_id' => 'required|exists:materials,id',
             'collection_id' => 'nullable|exists:collections,id',
-//            'category_id' => 'required|exists:categories,id',
+            //            'category_id' => 'required|exists:categories,id',
             'tag_id' => 'required|exists:tags,id',
             'price' => 'required|numeric|min:1',
-            'price_after_discount' => 'required|numeric|min:1',
+            'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
-//            'variants.*.dimension_id' => 'exists:dimensions,id',
+            //            'variants.*.dimension_id' => 'exists:dimensions,id',
             'variants.*.dimension' => 'required',
         ];
     }
@@ -71,13 +71,13 @@ class ProductRequest extends FormRequest
             'description_ar' => 'required|min:2',
             'material_id' => 'required|exists:materials,id',
             'collection_id' => 'nullable|exists:collections,id',
-//            'category_id' => 'required|exists:categories,id',
+            //            'category_id' => 'required|exists:categories,id',
             'tag_id' => 'required|exists:tags,id',
             'price' => 'required|numeric|min:1',
-            'price_after_discount' => 'required|numeric|min:1',
+            'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'exists:colors,id',
-//            'variants.*.dimension_id' => 'exists:dimensions,id',
+            //            'variants.*.dimension_id' => 'exists:dimensions,id',
             'variants.*.dimension_value' => 'required',
         ];
     }
@@ -97,5 +97,4 @@ class ProductRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }
