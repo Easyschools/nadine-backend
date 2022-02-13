@@ -266,6 +266,7 @@
                       </div>
                       <div class="col-md-9 mt-3">
                         <select class="form-control" v-model="variant.color_id">
+                            <option value=""></option>
                           <option v-for="color in colors" :value="color.id">
                             {{ color.name_ar }} -
                             {{ color.name_en }}

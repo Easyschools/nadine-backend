@@ -73,7 +73,7 @@ class ProductApiService extends AppRepository
 //        dd($request->all());
         if ($request->collection_name && $request->collection_name != 'sale') {
             $collection_name = str_replace('-', ' ', $request->collection_name);
-            $productQuery = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
+            $productQuery    = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
                 $q->where('name_en', $collection_name)->orWhere('name_ar', $collection_name);
             });
         }
@@ -85,14 +85,14 @@ class ProductApiService extends AppRepository
             })->with('offer');
         }
         if ($request->tag || $request->brand) {
-            $tag = $request->tag ?? $request->brand;
-            $tag = explode(',', $tag);
+            $tag       = $request->tag ?? $request->brand;
+            $tag       = explode(',', $tag);
             $tag_names = $this->replaceDashWithSpace($tag);
 
             $tag_ids = [];
 
             foreach ($tag_names as $tag_name) {
-                $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
+                $arr     = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
                 $tag_ids = array_merge($tag_ids, $arr);
             }
 
@@ -126,26 +126,26 @@ class ProductApiService extends AppRepository
         if ($request->category) {
             if ($request->category == 'discounts') {
 
-                $productQuery = $productQuery->WhereHas('offer')->orWhere('price_after_discount','!=',0);
-            }else{
+                $productQuery = $productQuery->WhereHas('offer')->orWhere('price_after_discount', '!=', 0);
+            } else {
 
-            $category = explode(',', $request->category);
-            $category = $this->replaceDashWithSpace($category);
-            $tags_ids = [];
+                $category = explode(',', $request->category);
+                $category = $this->replaceDashWithSpace($category);
+                $tags_ids = [];
 
-            foreach ($category as $cat) {
-                $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
-                    $q->where('name_en', 'like', '%' . $cat . '%')
-                        ->orWhere('name_ar', 'like', '%' . $cat . '%');
-                })->pluck('id')->toArray());
+                foreach ($category as $cat) {
+                    $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
+                        $q->where('name_en', 'like', '%' . $cat . '%')
+                            ->orWhere('name_ar', 'like', '%' . $cat . '%');
+                    })->pluck('id')->toArray());
+                }
+                $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
+                    $q->whereIn('id', $tags_ids);
+                });
+
             }
-            $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
-                $q->whereIn('id', $tags_ids);
-            });
 
-    }
-
-    }
+        }
 //        dd($productQuery->toSql());
         return $productQuery;
     }
@@ -192,7 +192,7 @@ class ProductApiService extends AppRepository
     public function createProduct($request)
     {
         $request['slug'] = HelperFunctions::makeSlug($request->name_en) . '-' . HelperFunctions::makeSlug($request->sku);
-        $product = Product::create($request->only([
+        $product         = Product::create($request->only([
             'name_ar',
             'name_en',
             'description_ar',
@@ -210,7 +210,6 @@ class ProductApiService extends AppRepository
         ]));
 
         foreach ($request->variants as $variant) {
-
             $variant = $this->createDimension($variant);
 
             $variantModel = Variant::create(array_merge($variant, [
@@ -222,7 +221,6 @@ class ProductApiService extends AppRepository
                     $variantModel->images()->firstOrcreate([
                         'image' => $img,
                     ]);
-//                $variantModel->images->delete();
                 }
             }
         }
@@ -263,7 +261,7 @@ class ProductApiService extends AppRepository
         ]));
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
-        $arr = [];
+        $arr            = [];
 //        dd($request->variants);
         foreach ($request->variants as $index => $variant) {
 
@@ -316,11 +314,11 @@ class ProductApiService extends AppRepository
 
     public function filter($request)
     {
-        $conditions = [];
+        $conditions   = [];
         $orConditions = [];
 
         if ($request->name) {
-            $conditions[] = ['name_ar', 'like', '%' . $request->name . '%'];
+            $conditions[]   = ['name_ar', 'like', '%' . $request->name . '%'];
             $orConditions[] = ['name_en', 'like', '%' . $request->name . '%'];
         }
 
@@ -334,11 +332,15 @@ class ProductApiService extends AppRepository
 
     public function createDimension($variant, $key = 'dimension')
     {
+        if ($variant[$key]) {
 
-        $dimension = Dimension::firstOrCreate([
-            'dimension' => $variant[$key],
-        ]);
-        $variant['dimension_id'] = $dimension->id;
+            $dimension = Dimension::firstOrCreate([
+                'dimension' => $variant[$key],
+            ]);
+            $variant['dimension_id'] = $dimension->id;
+        } else {
+            $variant['dimension_id'] = null;
+        }
 
         return $variant;
     }

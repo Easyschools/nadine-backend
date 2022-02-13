@@ -15,6 +15,8 @@ class AddForeignVariantIdToCartsTable extends Migration
     {
         Schema::table('carts', function (Blueprint $table) {
             //
+            // $table->dropForeign('carts_variant_id_foreign');
+            $table->dropForeign(['variant_id']);
             $table->dropColumn('variant_id');
         });
         Schema::table('carts', function (Blueprint $table) {
