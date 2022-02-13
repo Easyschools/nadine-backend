@@ -11,6 +11,8 @@ app/storage/
 public/storage
 public/hot
 public/uploads
+public/js
+public/css
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
