@@ -2,13 +2,14 @@
 
 namespace App\Services\Api\Product;
 
+use App\ThirdParty\Pixel;
 use App\Models\Division\Tag;
 use App\Models\Option\Color;
-use App\Models\Option\Dimension;
 use App\Models\Product\Product;
 use App\Models\Product\Variant;
-use App\Repositories\AppRepository;
 use App\Traits\HelperFunctions;
+use App\Models\Option\Dimension;
+use App\Repositories\AppRepository;
 
 class ProductApiService extends AppRepository
 {
@@ -196,6 +197,7 @@ class ProductApiService extends AppRepository
      */
     public function get($request)
     {
+        Pixel::viewContent();
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images']);

@@ -8,6 +8,7 @@
 
 namespace App\Services\Api\Order;
 
+use App\ThirdParty\Pixel;
 use App\Models\Order\Cart;
 use App\Repositories\AppRepository;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,7 @@ class CartApiService extends AppRepository
 
     public function addToCart($request)
     {
+        Pixel::addToCart();
         $request->merge([
             'user_id' => Auth::id(),
         ]);

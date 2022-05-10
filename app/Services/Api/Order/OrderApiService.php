@@ -20,6 +20,7 @@ use App\Models\User\Address;
 use App\Models\User\User;
 use App\Product\Variant;
 use App\Repositories\AppRepository;
+use App\ThirdParty\Pixel;
 use App\Traits\FirebaseFCM;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -280,6 +281,8 @@ class OrderApiService extends AppRepository
             'payment_type_id' => $request->payment_type_id,
             'notes' => $request->notes,
         ]);
+
+        Pixel::purchase($grandTotal['grand_total']);
 
         $this->addOrderItems($this->items);
 
