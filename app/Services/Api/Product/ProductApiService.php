@@ -25,6 +25,8 @@ class ProductApiService extends AppRepository
      * @param $request
      * @return mixed
      */
+
+
     public function index($request)
     {
         $this->filter($request);
@@ -62,15 +64,48 @@ class ProductApiService extends AppRepository
         ]);
 
         return $custom->merge($products);
-//        dd($max_price , $min_price);
+        //        dd($max_price , $min_price);
+    }
+
+    public function indexWeb($request)
+    {
+        $this->filter($request);
+
+        $this->setSortOrder('asc');
+        $this->setSortBy('sku');
+        $this->setRelations([
+            'variants' => function ($variant) {
+                $variant->select('product_id',  'dimension_id', 'id')->with(
+                    'Dimension:id,dimension',
+                    'images:id,variant_id,image'
+                );
+            },
+        ]);
+
+        $this->setAppends([
+            'currency',
+
+        ]);
+
+        $productQuery = $this->filterWithAttributes($request);
+
+        $products = $productQuery->paginate(16);
+
+        $custom = collect([
+            'min_price' => Product::min('price_after_discount'),
+            'max_price' => Product::max('price_after_discount'),
+        ]);
+        // return $products;
+        return $custom->merge($products);
+        //        dd($max_price , $min_price);
     }
 
     public function filterWithAttributes($request)
     {
-//        dd(implode(',',Color::pluck('id')->toArray()) );
+        //        dd(implode(',',Color::pluck('id')->toArray()) );
 
         $productQuery = $this->paginateQuery();
-//        dd($request->all());
+        //        dd($request->all());
         if ($request->collection_name && $request->collection_name != 'sale') {
             $collection_name = str_replace('-', ' ', $request->collection_name);
             $productQuery    = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
@@ -81,7 +116,6 @@ class ProductApiService extends AppRepository
         if ($request->collection_name && $request->collection_name == 'sale') {
             $productQuery = $productQuery->whereHas('offer', function ($q) {
                 $q->join('offers', 'offers.id', '=', 'offer_tags.offer_id')->where('offers.expire_at', '>', now());
-
             })->with('offer');
         }
         if ($request->tag || $request->brand) {
@@ -142,11 +176,9 @@ class ProductApiService extends AppRepository
                 $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
                     $q->whereIn('id', $tags_ids);
                 });
-
             }
-
         }
-//        dd($productQuery->toSql());
+        //        dd($productQuery->toSql());
         return $productQuery;
     }
 
@@ -180,7 +212,6 @@ class ProductApiService extends AppRepository
             if ($variant->dimension) {
                 $variant['dimension_value'] = $variant->dimension->dimension;
             }
-
         }
         return $product;
     }
@@ -242,7 +273,7 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
-//        dd($request->all());
+        //        dd($request->all());
         $product = $this->find($request->id);
         $product->update($request->only([
             'name_ar',
@@ -262,7 +293,7 @@ class ProductApiService extends AppRepository
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr            = [];
-//        dd($request->variants);
+        //        dd($request->variants);
         foreach ($request->variants as $index => $variant) {
 
             $variant = $this->createDimension($variant, 'dimension_value');
@@ -275,7 +306,6 @@ class ProductApiService extends AppRepository
                 $this->updateImagesOfVariants($variant, $variantModel);
 
                 $arr[] = $variant['id'];
-
             } else {
                 $variantModel = Variant::create(array_merge($variant, [
                     'product_id' => $product->id,
@@ -307,7 +337,7 @@ class ProductApiService extends AppRepository
                 $variantModel->images()->firstOrcreate([
                     'image' => $img,
                 ]);
-//                $variantModel->images->delete();
+                //                $variantModel->images->delete();
             }
         }
     }
@@ -344,5 +374,4 @@ class ProductApiService extends AppRepository
 
         return $variant;
     }
-
 }

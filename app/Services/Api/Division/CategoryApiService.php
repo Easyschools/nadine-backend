@@ -6,7 +6,7 @@ use App\Models\Division\Category;
 use App\Repositories\AppRepository;
 
 
-Class CategoryApiService extends AppRepository
+class CategoryApiService extends AppRepository
 {
 
     public function __construct(Category $category)
@@ -22,8 +22,8 @@ Class CategoryApiService extends AppRepository
     {
         $this->setColumns(['id', 'name_ar', 'name_en']);
         $this->setRelations([
-            'tags' => function($tag){
-                $tag->select('id','category_id','name_ar','name_en');
+            'tags' => function ($tag) {
+                $tag->select('id', 'category_id', 'name_ar', 'name_en');
             }
         ]);
         if ($request->is_paginate == 1) {
@@ -70,6 +70,4 @@ Class CategoryApiService extends AppRepository
         ]));
         return $result;
     }
-
-
 }

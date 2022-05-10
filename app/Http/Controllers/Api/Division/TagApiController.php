@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -22,9 +23,9 @@ class TagApiController extends Controller
 
     public function __construct(TagApiService $tagService)
     {
-//        $this->middleware('auth:api');
-//        $this->middleware('check.role:1,2 ')
-//            ->only(['index','read']);
+        //        $this->middleware('auth:api');
+        //        $this->middleware('check.role:1,2 ')
+        //            ->only(['index','read']);
         $this->tagService = $tagService;
     }
 
@@ -37,28 +38,27 @@ class TagApiController extends Controller
 
 
     public function all(Request $request)
-   {
+    {
         $validator = Validator($request->all(), [
-    'is_paginate' => 'in:0,1',
-    
-]);
-if ($validator->fails()) {
-    return $this->sendError('error validation', $validator->errors());
-}
-$Tag = Tag::with(
-     'category',
+            'is_paginate' => 'in:0,1',
+
+        ]);
+        if ($validator->fails()) {
+            return $this->sendError('error validation', $validator->errors());
+        }
+        $Tag = Tag::with(
+            'category',
             'customTagShippingPrice',
 
-)->withCount('products');
+        )->withCount('products');
 
-if (!$request->is_paginate) {
-    $Tag = $Tag->get();
-} else {
-    $Tag = $Tag->paginate(15);
-}
-return $this->sendResponse($Tag, "Tag Seen Successfully");
-
-}
+        if (!$request->is_paginate) {
+            $Tag = $Tag->get();
+        } else {
+            $Tag = $Tag->paginate(15);
+        }
+        return $this->sendResponse($Tag, "Tag Seen Successfully");
+    }
     public function delete(TagRequest $request)
     {
         $process = $this->tagService->delete($request->id);

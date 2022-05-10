@@ -55,7 +55,7 @@ class TagRequest extends FormRequest
             'id' => 'required|exists:tags,id',
             'name_en' => 'min:2',
             'name_ar' => 'min:2',
-            'image' => 'required||mimes:jpg,png,jpeg',
+            'image' => 'required|mimes:jpg,png,jpeg',
         ];
     }
 

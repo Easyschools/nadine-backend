@@ -39,6 +39,8 @@ class Product extends Model
         'category_id',
         'active_offer',
         'price_after_offer',
+        'availability',
+        'gm_price',
     ];
 
     public function getNameAttribute()
@@ -79,11 +81,11 @@ class Product extends Model
     public function getImageAttribute()
     {
         return $this->variants()->exists() ?
-        $this->variants()->whereHas('images')->exists() ?
-        $this->variants()->whereHas('images', function ($q) {
-            $q->whereNotNull('image');
-        })->first()->images()->whereNotNull('image')->first()->image
-        : "" : "";
+            $this->variants()->whereHas('images')->exists() ?
+            $this->variants()->whereHas('images', function ($q) {
+                $q->whereNotNull('image');
+            })->first()->images()->whereNotNull('image')->first()->image
+            : "" : "";
     }
 
     public function getCurrencyAttribute()
@@ -110,7 +112,6 @@ class Product extends Model
                 // dd($offerItemPrice);
             } else {
                 return $this->attributes['price'] - $offer->discount;
-
             }
         }
 
@@ -174,7 +175,7 @@ class Product extends Model
         return null;
     }
 
-//    public function getCategoryIdAttribute()
+    //    public function getCategoryIdAttribute()
     //    {
     ////        dd();
     //        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
@@ -200,4 +201,15 @@ class Product extends Model
             ->join('offers', 'offers.id', '=', 'offer_tags.offer_id');
     }
 
+    public function getAvailabilityAttribute()
+    {
+        return 'in stock'; // calculate
+    }
+    public function getGmPriceAttribute()
+    {
+        return [
+            'value' => $this->price,
+            // 'currency' => $this->currency->code,
+        ];
+    }
 }

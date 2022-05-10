@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -21,9 +22,9 @@ class ProductApiController extends Controller
 
     public function __construct(ProductApiService $productApiService)
     {
-//        $this->middleware('auth:api');
-        $this->middleware(['auth:api','check.role:1,2 '])
-            ->only(['create','update']);
+        //        $this->middleware('auth:api');
+        $this->middleware(['auth:api', 'check.role:1,2 '])
+            ->only(['create', 'update']);
         $this->productApiService = $productApiService;
     }
 
@@ -38,6 +39,15 @@ class ProductApiController extends Controller
     public function all(ProductRequest $request)
     {
         $process = $this->productApiService->index($request);
+        if ($request->sendResponse) {
+            return $this->sendResponse($process);
+        }
+        return $this->sendResponse($process);
+    }
+
+    public function allWeb(ProductRequest $request)
+    {
+        $process = $this->productApiService->indexWeb($request);
         if ($request->sendResponse) {
             return $this->sendResponse($process);
         }
@@ -60,14 +70,11 @@ class ProductApiController extends Controller
     {
         $process = $this->productApiService->delete($request->id);
         return $this->sendResponse($process);
-
     }
 
     public function priceRange()
     {
         $process = $this->productApiService->priceRange();
         return $this->sendResponse($process);
-
     }
-
 }
