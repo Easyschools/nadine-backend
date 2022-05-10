@@ -68,7 +68,11 @@
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.category_id">
-                  <option v-for="category in categories" :value="category.id">
+                  <option
+                    v-for="category in categories"
+                    :value="category.id"
+                    :key="category.id"
+                  >
                     {{ category.name_ar }} -
                     {{ category.name_en }}
                   </option>
