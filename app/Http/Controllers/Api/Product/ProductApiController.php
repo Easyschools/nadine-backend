@@ -9,11 +9,9 @@
 
 namespace App\Http\Controllers\Api\Product;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
 use App\Services\Api\Product\ProductApiService;
-use Illuminate\Http\Request;
 
 class ProductApiController extends Controller
 {
@@ -28,13 +26,11 @@ class ProductApiController extends Controller
         $this->productApiService = $productApiService;
     }
 
-
     public function read(ProductRequest $request)
     {
         $process = $this->productApiService->get($request);
         return $this->sendResponse($process);
     }
-
 
     public function all(ProductRequest $request)
     {
@@ -75,6 +71,12 @@ class ProductApiController extends Controller
     public function priceRange()
     {
         $process = $this->productApiService->priceRange();
+        return $this->sendResponse($process);
+    }
+
+    public function search(ProductRequest $request)
+    {
+        $process = $this->productApiService->Product_category_search($request);
         return $this->sendResponse($process);
     }
 }

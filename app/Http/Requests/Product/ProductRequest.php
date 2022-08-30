@@ -35,6 +35,8 @@ class ProductRequest extends FormRequest
                 return $this->idValidation();
             case 'all':
                 return $this->allValidation();
+            case 'search':
+                return $this->searchValidation();
             default:
                 return [];
         }
@@ -86,7 +88,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'id' => 'exists:products,id',
-            'slug' => 'exists:products,slug'
+            'slug' => 'exists:products,slug',
         ];
     }
 
@@ -96,5 +98,13 @@ class ProductRequest extends FormRequest
             'is_paginate' => 'in:0,1',
             'is_banned' => 'in:0,1',
         ];
+    }
+
+    private function searchValidation()
+    {
+        return
+        [
+            'search' => 'required|min:3'
+        ]
     }
 }
