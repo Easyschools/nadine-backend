@@ -25,7 +25,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Fruitcake\Cors\HandleCors::class,
-        Localization::class
+        Localization::class,
 
     ];
 
@@ -79,7 +79,6 @@ class Kernel extends HttpKernel
         'check.role' => CheckRole::class,
         'locale' => Localization::class,
     ];
-
 
     /**
      * The priority-sorted list of middleware.
