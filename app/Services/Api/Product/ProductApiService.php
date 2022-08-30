@@ -387,7 +387,7 @@ class ProductApiService extends AppRepository
 
         $products = Product::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
         $categories = Category::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
-        $tags = Tag::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
+        $tags = Tag::query()->with(['category'])->where($name, 'LIKE', '%' . $request->search . '%')->get();
 
         return [
             'products' => $products,
