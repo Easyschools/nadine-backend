@@ -380,9 +380,9 @@ class ProductApiService extends AppRepository
     public function Product_category_search($request)
     {
 
-        $products = Product::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%');
-        $categories = Category::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%');
-        $tags = Tag::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%');
+        $products = Product::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
+        $categories = Category::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
+        $tags = Tag::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
 
         return [
             'products' => $products,
