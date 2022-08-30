@@ -105,6 +105,6 @@ class ProductRequest extends FormRequest
         return
         [
             'search' => 'required|min:3'
-        ]
+        ];
     }
 }

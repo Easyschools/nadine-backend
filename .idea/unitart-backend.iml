@@ -144,6 +144,11 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-uuid" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sentry/sentry" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sentry/sentry-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/moirei/laravel-google-merchant-api" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/google/apiclient" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/google/apiclient-services" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

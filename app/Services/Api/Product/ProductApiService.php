@@ -2,6 +2,7 @@
 
 namespace App\Services\Api\Product;
 
+use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
@@ -378,6 +379,18 @@ class ProductApiService extends AppRepository
 
     public function Product_category_search($request)
     {
-        $product=Product::where()
+        $lang = $request->header('x-localization');
+        if ($lang == 'en') $name = 'name_en';
+        elseif ($lang == 'ar') $name = 'name_ar';
+        $products = Product::query()->where($name, 'LIKE', '%' . $request->search . '%');
+        $categories = Category::query()->where($name, 'LIKE', '%' . $request->search . '%');
+        $tags = Tag::query()->where($name, 'LIKE', '%' . $request->search . '%');
+
+        return [
+            'products' => $products,
+            'categories' => $categories ,
+            'tags' => $tags
+        ];
+
     }
 }
