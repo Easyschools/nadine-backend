@@ -379,10 +379,15 @@ class ProductApiService extends AppRepository
 
     public function Product_category_search($request)
     {
+        $is_arabic = preg_match('/\p{Arabic}/u', $request->search);
 
-        $products = Product::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
-        $categories = Category::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
-        $tags = Tag::query()->where('name_' . app()->getLocale(), 'LIKE', '%' . $request->search . '%')->get();
+        if ($is_arabic) $name = 'name_ar';
+        else $name = 'name_en';
+
+
+        $products = Product::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
+        $categories = Category::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
+        $tags = Tag::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
 
         return [
             'products' => $products,
