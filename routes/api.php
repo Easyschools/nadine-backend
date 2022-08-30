@@ -223,8 +223,9 @@ Route::group([
         Route::post('update', 'ProductApiController@edit');
         Route::delete('delete', 'ProductApiController@delete');
         Route::get('price-range', 'ProductApiController@priceRange');
-    });
+        Route::get('search', 'ProductApiController@search');
 
+    });
 
     Route::group([
         'prefix' => 'web/product',
@@ -279,7 +280,6 @@ Route::group([
         Route::get('get', 'DimensionApiController@read');
     });
 
-
     Route::group([
         'prefix' => 'material',
         'namespace' => 'Option',
@@ -305,7 +305,6 @@ Route::group([
         Route::get('all', 'VariantApiController@all');
         Route::get('get', 'VariantApiController@read');
     });
-
 
     Route::group([
         'prefix' => 'web/variant',
@@ -333,7 +332,6 @@ Route::group([
         Route::get('all', 'CouponApiController@all');
         Route::get('get', 'CouponApiController@read');
     });
-
 
     Route::group([
         'prefix' => 'offer',
@@ -424,7 +422,6 @@ Route::group([
         Route::get('all', 'FavouriteApiController@all');
         Route::get('get', 'FavouriteApiController@read');
     });
-
 
     Route::group([
         'prefix' => 'contact-info',
