@@ -1,0 +1,21 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+@import "~vue2-editor/dist/vue2-editor.css";
+
+
+.imageDisplay{
+    width: 150px ;
+    height: 150px;
+    margin: auto;
+}
+.pcoded-navbar .pcoded-inner-navbar{
+    background-color: white!important;
+    padding: 30px 0px;
+}
