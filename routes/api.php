@@ -77,8 +77,10 @@ Route::group([
 
         Route::get('get', [CustomerApiController::class, 'get']);
         Route::post('update', [CustomerApiController::class, 'update']);
+        Route::post('edit', [CustomerApiController::class, 'update']);
         Route::get('all', [CustomerApiController::class, 'index']);
         Route::post('delete', [CustomerApiController::class, 'delete']);
+        Route::delete('delete', [CustomerApiController::class, 'delete']);
     });
     Route::group([
         'prefix' => 'web/customer',
@@ -99,8 +101,10 @@ Route::group([
 
         Route::get('get', [CustomerApiController::class, 'get']);
         Route::post('update', [CustomerApiController::class, 'update']);
+        Route::post('edit', [CustomerApiController::class, 'update']);
         Route::get('all', [CustomerApiController::class, 'index']);
         Route::post('delete', [CustomerApiController::class, 'delete']);
+        Route::delete('delete', [CustomerApiController::class, 'delete']);
     });
 
     Route::group([
@@ -252,6 +256,7 @@ Route::group([
         Route::get('get', [ProductApiController::class, 'read']);
         Route::post('create', [ProductApiController::class, 'create']);
         Route::post('update', [ProductApiController::class, 'edit']);
+        Route::post('edit', [ProductApiController::class, 'edit']);
         Route::delete('delete', [ProductApiController::class, 'delete']);
         Route::get('price-range', [ProductApiController::class, 'priceRange']);
         Route::get('search', [ProductApiController::class, 'search']);
@@ -424,7 +429,9 @@ Route::group([
         Route::get('get', [ReviewApiController::class, 'read']);
         Route::post('create', [ReviewApiController::class, 'create']);
         Route::post('update', [ReviewApiController::class, 'update']);
+        Route::post('edit', [ReviewApiController::class, 'update']);
         Route::get('delete', [ReviewApiController::class, 'delete']);
+        Route::delete('delete', [ReviewApiController::class, 'delete']);
     });
 
     Route::group([
@@ -443,6 +450,7 @@ Route::group([
         Route::get('get', [FavouriteApiController::class, 'read']);
         Route::post('create', [FavouriteApiController::class, 'create']);
         Route::get('delete', [FavouriteApiController::class, 'delete']);
+        Route::delete('delete', [FavouriteApiController::class, 'delete']);
     });
 
     Route::group([
@@ -461,7 +469,9 @@ Route::group([
         Route::get('get', [ContactInfoApiController::class, 'read']);
         Route::post('create', [ContactInfoApiController::class, 'create']);
         Route::post('update', [ContactInfoApiController::class, 'update']);
+        Route::post('edit', [ContactInfoApiController::class, 'update']);
         Route::get('delete', [ContactInfoApiController::class, 'delete']);
+        Route::delete('delete', [ContactInfoApiController::class, 'delete']);
     });
 
     Route::group([
@@ -500,7 +510,9 @@ Route::group([
         Route::get('get', [PaymentTypeApiController::class, 'read']);
         Route::post('create', [PaymentTypeApiController::class, 'create']);
         Route::post('update', [PaymentTypeApiController::class, 'update']);
+        Route::post('edit', [PaymentTypeApiController::class, 'update']);
         Route::get('delete', [PaymentTypeApiController::class, 'delete']);
+        Route::delete('delete', [PaymentTypeApiController::class, 'delete']);
     });
     Route::group([
         'prefix' => 'web/payment-type',
@@ -510,7 +522,9 @@ Route::group([
         Route::get('get', [PaymentTypeApiController::class, 'read']);
         Route::post('create', [PaymentTypeApiController::class, 'create']);
         Route::post('update', [PaymentTypeApiController::class, 'update']);
+        Route::post('edit', [PaymentTypeApiController::class, 'update']);
         Route::get('delete', [PaymentTypeApiController::class, 'delete']);
+        Route::delete('delete', [PaymentTypeApiController::class, 'delete']);
     });
 
     Route::group([
@@ -519,7 +533,9 @@ Route::group([
     ], function () {
         Route::post('add-to-cart', [CartApiController::class, 'addToCart']);
         Route::post('delete', [CartApiController::class, 'delete']);
+        Route::delete('delete', [CartApiController::class, 'delete']);
         Route::post('update', [CartApiController::class, 'update']);
+        Route::post('edit', [CartApiController::class, 'update']);
         Route::get('all', [CartApiController::class, 'index']);
     });
 
@@ -529,7 +545,9 @@ Route::group([
     ], function () {
         Route::post('add-to-cart', [CartApiController::class, 'addToCart']);
         Route::post('delete', [CartApiController::class, 'delete']);
+        Route::delete('delete', [CartApiController::class, 'delete']);
         Route::post('update', [CartApiController::class, 'update']);
+        Route::post('edit', [CartApiController::class, 'update']);
         Route::get('all', [CartApiController::class, 'index']);
     });
 
