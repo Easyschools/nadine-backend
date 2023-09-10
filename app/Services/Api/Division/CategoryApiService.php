@@ -46,6 +46,12 @@ class CategoryApiService extends AppRepository
         return $this->find($request->id);
     }
 
+    public function getProducts($request)
+    {
+        $this->setRelations(['products:products.id,products.slug,products.name_en,products.name_ar,products.price,products.price_after_discount,sku']);
+        return $this->find($request->id);
+    }
+
     /**
      * @param $request
      * @return mixed

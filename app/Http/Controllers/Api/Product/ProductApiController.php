@@ -79,4 +79,16 @@ class ProductApiController extends Controller
         $process = $this->productApiService->Product_category_search($request);
         return $this->sendResponse($process);
     }
+
+    public function offers(ProductRequest $request)
+    {
+        $process = $this->productApiService->offers($request);
+        return $this->sendResponse($process);
+    }
+
+    public function getBestSellers(ProductRequest $request)
+    {
+        $process = $this->productApiService->getBestSellers($request);
+        return $this->sendResponse($process);
+    }
 }

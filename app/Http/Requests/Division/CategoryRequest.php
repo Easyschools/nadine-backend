@@ -30,8 +30,9 @@ class CategoryRequest extends FormRequest
                 return $this->createValidation();
             case 'update':
                 return $this->updateValidation();
-//            case 'delete':
+                //            case 'delete':
             case 'get':
+            case 'products':
                 return $this->idValidation();
             case 'all':
                 return $this->allValidation();
@@ -71,5 +72,4 @@ class CategoryRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

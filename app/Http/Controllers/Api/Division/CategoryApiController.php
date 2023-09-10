@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -20,9 +21,9 @@ class CategoryApiController extends Controller
 
     public function __construct(CategoryApiService $categoryService)
     {
-//        $this->middleware('auth:api');
-//        $this->middleware('check.role:1,2 ')
-//            ->only(['index','read']);
+        //        $this->middleware('auth:api');
+        //        $this->middleware('check.role:1,2 ')
+        //            ->only(['index','read']);
         $this->categoryService = $categoryService;
     }
 
@@ -33,6 +34,11 @@ class CategoryApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getProducts(CategoryRequest $request)
+    {
+        $process = $this->categoryService->getProducts($request);
+        return $this->sendResponse($process);
+    }
 
     public function all(CategoryRequest $request)
     {

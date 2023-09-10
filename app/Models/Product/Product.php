@@ -9,6 +9,7 @@ use App\Models\Option\Color;
 use App\Models\Option\Material;
 use App\Models\Order\Offer;
 use App\Models\Order\OfferTag;
+use App\Models\Order\OrderItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,16 +101,15 @@ class Product extends Model
 
     public function getPriceAfterOfferAttribute()
     {
-        $tag_id = $this->attributes['tag_id'];
+        $tag_id = $this->tag_id;
         $offer = Offer::whereHas('tags', function ($q) use ($tag_id) {
             $q->where('tag_id', $tag_id);
         })
             ->where('expire_at', '>', now())->first();
-        // return
+
         if ($offer) {
             if ($offer->is_percentage) {
                 return $this->attributes['price'] - ($offer->discount * $this->attributes['price'] / 100);
-                // dd($offerItemPrice);
             } else {
                 return $this->attributes['price'] - $offer->discount;
             }
@@ -162,7 +162,6 @@ class Product extends Model
 
     public function getCategoryIdAttribute()
     {
-        // dd();
         if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) {
             return null;
         }
@@ -187,7 +186,7 @@ class Product extends Model
 
     public function getActiveOfferAttribute()
     {
-        $tag_id = $this->attributes['tag_id'];
+        $tag_id = $this->tag_id;
         $offer = Offer::whereHas('tags', function ($q) use ($tag_id) {
             $q->where('tag_id', $tag_id);
         })

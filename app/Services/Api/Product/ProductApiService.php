@@ -4,6 +4,7 @@ namespace App\Services\Api\Product;
 
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
+use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
@@ -394,6 +395,24 @@ class ProductApiService extends AppRepository
             'categories' => $categories,
             'tags' => $tags,
         ];
+    }
 
+    public function offers($request)
+    {
+        $this->setRelations(['offers']);
+
+        $products = Product::paginate(15);
+
+        return $products;
+    }
+
+    public function getBestSellers($request)
+    {
+        $collection = Collection::where('name_en', 'best sellers')->select('id')->first();
+        $products = Product::where('collection_id', $collection->id)
+            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
+            ->paginate(15);
+
+        return $products;
     }
 }
