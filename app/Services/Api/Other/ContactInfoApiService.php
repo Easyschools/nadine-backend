@@ -35,7 +35,6 @@ class ContactInfoApiService extends AppRepository
                 ]);
             }
         }
-
     }
 
     /**
@@ -64,8 +63,8 @@ class ContactInfoApiService extends AppRepository
         $contactInfo = ContactInfo::first();
 
         return $contactInfo->update([
-//            'phones' => implode(',', $request->phone),
-//            'emails' => implode(',', $request->email),
+            //            'phones' => implode(',', $request->phone),
+            //            'emails' => implode(',', $request->email),
             'phones' => $request->phone,
             'emails' => $request->email,
         ]);
@@ -74,9 +73,7 @@ class ContactInfoApiService extends AppRepository
 
     public function index(Request $request)
     {
-        if ($request->is_paginate)
-            $result = $this->paginate();
-        $result = $this->all();
+        $result = $request->is_paginate ? $this->paginate() : $this->all();
 
         $addresses = $this->contactAddressService->all();
 
@@ -84,7 +81,18 @@ class ContactInfoApiService extends AppRepository
             $result,
             'addresses' => $addresses
         ];
+    }
 
+    public function indexAll(Request $request)
+    {
+        $result = $request->is_paginate ? $this->paginate() : $this->all();
+
+        $addresses = $this->contactAddressService->all();
+
+        return [
+            "contacts" => $result,
+            'addresses' => $addresses
+        ];
     }
 
 
@@ -95,6 +103,4 @@ class ContactInfoApiService extends AppRepository
         $result['addresses'] = $addresses;
         return $result;
     }
-
-
 }

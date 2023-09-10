@@ -466,6 +466,7 @@ Route::group([
         'namespace' => 'Other',
     ], function () {
         Route::get('all', [ContactInfoApiController::class, 'all']);
+        Route::get('index', [ContactInfoApiController::class, 'index']);
         Route::get('get', [ContactInfoApiController::class, 'read']);
         Route::post('create', [ContactInfoApiController::class, 'create']);
         Route::post('update', [ContactInfoApiController::class, 'update']);
