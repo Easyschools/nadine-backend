@@ -33,13 +33,14 @@ class FavouriteRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
             case 'get':
                 return $this->idValidation();
-//            case 'all':
-//                return $this->allValidation();
+                //            case 'all':
+                //                return $this->allValidation();
             default:
                 return [];
         }
@@ -70,12 +71,12 @@ class FavouriteRequest extends FormRequest
             ];
     }
 
-//    public function allValidation()
-//    {
-//        $user_ids = implode(',', User::pluck('id')->toArray());
-//        return
-//            [
-//                'user_id' => "in:$user_ids",
-//            ];
-//    }
+    //    public function allValidation()
+    //    {
+    //        $user_ids = implode(',', User::pluck('id')->toArray());
+    //        return
+    //            [
+    //                'user_id' => "in:$user_ids",
+    //            ];
+    //    }
 }

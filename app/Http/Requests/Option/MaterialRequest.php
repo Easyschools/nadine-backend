@@ -28,6 +28,7 @@ class MaterialRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -43,8 +44,8 @@ class MaterialRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:materials,name_en',
+            'name_ar' => 'required|min:2|unique:materials,name_ar',
         ];
     }
 
@@ -52,8 +53,8 @@ class MaterialRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:materials,id',
-            'name_en' => 'min:2',
-            'name_ar' => 'min:2',
+            'name_en' => 'min:2|unique:materials,name_en' . $this->id,
+            'name_ar' => 'min:2|unique:materials,name_ar' . $this->id,
         ];
     }
 
@@ -71,5 +72,4 @@ class MaterialRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

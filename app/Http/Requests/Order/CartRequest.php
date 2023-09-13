@@ -29,6 +29,7 @@ class CartRequest extends FormRequest
         switch ($endPoint) {
             case 'add-to-cart':
                 return $this->addToCartValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -61,5 +62,4 @@ class CartRequest extends FormRequest
             'id' => 'required|integer|exists:carts,id'
         ];
     }
-
 }

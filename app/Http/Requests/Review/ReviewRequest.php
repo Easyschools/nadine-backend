@@ -30,6 +30,7 @@ class ReviewRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -45,15 +46,13 @@ class ReviewRequest extends FormRequest
     public function messages()
     {
         return [
-//            'order_id.in' => 'You Already had made a review on this order',
+            //            'order_id.in' => 'You Already had made a review on this order',
             'order_id.in' => 'can not rate this order',
         ];
     }
 
     public function createValidation()
     {
-
-
         return [
             'star' => 'required|numeric|between:0,5.00',
             'name' => 'string',

@@ -28,6 +28,7 @@ class TagRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -43,8 +44,8 @@ class TagRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:tags,name_en',
+            'name_ar' => 'required|min:2|unique:tags,name_ar',
             'image' => 'required|mimes:jpg,png,jpeg',
         ];
     }
@@ -53,8 +54,8 @@ class TagRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:tags,id',
-            'name_en' => 'min:2',
-            'name_ar' => 'min:2',
+            'name_en' => 'min:2|unique:tags,name_en' . $this->id,
+            'name_ar' => 'min:2|unique:tags,name_ar' . $this->id,
             'image' => 'required|mimes:jpg,png,jpeg',
         ];
     }

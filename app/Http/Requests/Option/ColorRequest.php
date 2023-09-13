@@ -28,6 +28,7 @@ class ColorRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -43,8 +44,8 @@ class ColorRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:colors,name_en',
+            'name_ar' => 'required|min:2|unique:colors,name_ar',
             'image' => 'required|mimes:png,jpg,jpeg',
         ];
     }
@@ -53,9 +54,9 @@ class ColorRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:colors,id',
-            'name_en' => 'min:2',
+            'name_en' => 'min:2|unique:colors,name_en' . $this->id,
+            'name_ar' => 'min:2|unique:colors,name_ar' . $this->id,
             'image' => 'required',
-            'name_ar' => 'min:2',
         ];
     }
 
@@ -73,5 +74,4 @@ class ColorRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

@@ -28,6 +28,7 @@ class ProductRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -47,8 +48,8 @@ class ProductRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
             'sku' => 'required|min:2',
+            'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',
@@ -70,6 +71,7 @@ class ProductRequest extends FormRequest
         return [
             'id' => 'required|exists:products,id',
             'sku' => 'required|min:2',
+            'name_en' => 'required|min:2',
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',

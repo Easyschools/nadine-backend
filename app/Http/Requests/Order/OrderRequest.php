@@ -44,6 +44,7 @@ class OrderRequest extends FormRequest
             case 'update-payment':
                 return $this->updatePaymentValidation();
             case 'recalculate':
+            case 'edit':
             case 'update':
                 return $this->recalculateValidation();
             case 'filter':
@@ -80,20 +81,20 @@ class OrderRequest extends FormRequest
     private function checkout()
     {
         return [
-//            'token' => 'required|exists:users,hash_token',
+            //            'token' => 'required|exists:users,hash_token',
             'address_id' => 'required|exists:addresses,id',
             'code' => 'nullable|exists:coupons,code',
             'payment_type_id' => 'required|exists:payment_types,id',
-//            'Amount' => 'required',
-//            'Currency' => 'required',
-//            'MerchantReference' => 'required',
-//            'NetworkReference' => 'required',
-//            'PaidThrough' => 'required',
-//            'PayerAccount' => 'required',
-//            'PayerName' => 'required',
-//            'SecureHash' => 'required',
-//            'SystemReference' => 'required',
-//            'TxnDate' => 'required',
+            //            'Amount' => 'required',
+            //            'Currency' => 'required',
+            //            'MerchantReference' => 'required',
+            //            'NetworkReference' => 'required',
+            //            'PaidThrough' => 'required',
+            //            'PayerAccount' => 'required',
+            //            'PayerName' => 'required',
+            //            'SecureHash' => 'required',
+            //            'SystemReference' => 'required',
+            //            'TxnDate' => 'required',
         ];
     }
 
