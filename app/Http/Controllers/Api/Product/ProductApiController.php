@@ -12,6 +12,10 @@ namespace App\Http\Controllers\Api\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
 use App\Services\Api\Product\ProductApiService;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
+use Illuminate\Support\Facades\Date;
 
 class ProductApiController extends Controller
 {
@@ -20,9 +24,8 @@ class ProductApiController extends Controller
 
     public function __construct(ProductApiService $productApiService)
     {
-        //        $this->middleware('auth:api');
-        $this->middleware(['auth:api', 'check.role:1,2 '])
-            ->only(['create', 'update']);
+        $this->middleware(['auth:api', 'check.role:1,2'])
+            ->only(['create', 'update', 'import', 'export']);
         $this->productApiService = $productApiService;
     }
 
@@ -90,5 +93,20 @@ class ProductApiController extends Controller
     {
         $process = $this->productApiService->getBestSellers($request);
         return $this->sendResponse($process);
+    }
+
+    public function import(ProductRequest $request)
+    {
+        Excel::import(new ProductsImport, $request->file('file'));
+        return [
+            'message' => 'Products modifications imported successfully',
+        ];
+    }
+
+    public function export()
+    {
+        $path = 'products-' . Date::now()->format('Y-m-d-H-i-s') . '.xlsx';
+        Excel::store(new ProductsExport, $path, 'public');
+        return $this->sendResponse(url('storage/' . $path), 'Products list url.');
     }
 }

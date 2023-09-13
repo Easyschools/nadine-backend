@@ -37,6 +37,8 @@ class ProductRequest extends FormRequest
                 return $this->allValidation();
             case 'search':
                 return $this->searchValidation();
+            case 'import':
+                return $this->importValidation();
             default:
                 return [];
         }
@@ -103,8 +105,16 @@ class ProductRequest extends FormRequest
     private function searchValidation()
     {
         return
-        [
-            'search' => 'required|min:3'
-        ];
+            [
+                'search' => 'required|min:3'
+            ];
+    }
+
+    private function importValidation()
+    {
+        return
+            [
+                'file' => 'required|file|mimes:xlsx,xls,csv'
+            ];
     }
 }
