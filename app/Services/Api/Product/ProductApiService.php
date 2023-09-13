@@ -366,7 +366,6 @@ class ProductApiService extends AppRepository
     public function createDimension($variant, $key = 'dimension')
     {
         if ($variant[$key]) {
-
             $dimension = Dimension::firstOrCreate([
                 'dimension' => $variant[$key],
             ]);
@@ -406,12 +405,18 @@ class ProductApiService extends AppRepository
         return $products;
     }
 
+    public function getLatest($request)
+    {
+        return Product::orderBy('created_at', 'desc')
+            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
+            ->limit(5)->get();
+    }
+
     public function getBestSellers($request)
     {
-        $collection = Collection::where('name_en', 'best sellers')->select('id')->first();
-        $products = Product::where('collection_id', $collection->id)
-            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
-            ->paginate(15);
+        $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
+            ->withCount('orderItems')
+            ->orderBy('order_items_count', 'desc')->limit(10)->get();
 
         return $products;
     }

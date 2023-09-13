@@ -36,7 +36,6 @@ class TagApiController extends Controller
         return $this->sendResponse($process);
     }
 
-
     public function all(Request $request)
     {
         $validator = Validator($request->all(), [
@@ -59,6 +58,18 @@ class TagApiController extends Controller
         }
         return $this->sendResponse($Tag, "Tag Seen Successfully");
     }
+
+    public function getTop(Request $request)
+    {
+        $Tag = Tag::with(
+            'category',
+            'customTagShippingPrice',
+        )->withCount('products')->orderBy('products_count', 'desc')->limit(10)->get();
+
+        return $this->sendResponse($Tag, "Top Tags Listed Successfully");
+    }
+
+
     public function delete(TagRequest $request)
     {
         $process = $this->tagService->delete($request->id);

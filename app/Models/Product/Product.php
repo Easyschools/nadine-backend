@@ -59,11 +59,6 @@ class Product extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function tag()
     {
         return $this->belongsTo(Tag::class, 'tag_id');
@@ -77,6 +72,11 @@ class Product extends Model
     public function variants()
     {
         return $this->hasMany(Variant::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Variant::class, 'product_id', 'variant_id', 'id', 'id');
     }
 
     public function getImageAttribute()

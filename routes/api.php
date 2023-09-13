@@ -116,7 +116,7 @@ Route::group([
         Route::delete('delete', [CategoryApiController::class, 'delete']);
         Route::post('create', [CategoryApiController::class, 'create']);
         Route::post('edit', [CategoryApiController::class, 'edit']);
-
+        
         Route::get('products', [CategoryApiController::class, 'getProducts']);
     });
     Route::group([
@@ -135,6 +135,8 @@ Route::group([
         Route::post('create', [TagApiController::class, 'create']);
         Route::post('edit', [TagApiController::class, 'edit']);
         Route::delete('delete', [TagApiController::class, 'delete']);
+
+        Route::get('top', [TagApiController::class, 'getTop']);
     });
 
     Route::group([
@@ -264,6 +266,7 @@ Route::group([
         Route::get('search', [ProductApiController::class, 'search']);
 
         Route::get('best-sellers', [ProductApiController::class, 'getBestSellers']);
+        Route::get('latest', [ProductApiController::class, 'getLatest']);
         Route::post('import', [ProductApiController::class, 'import']);
         Route::get('export', [ProductApiController::class, 'export']);
     });
