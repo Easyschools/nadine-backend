@@ -33,8 +33,8 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
 
-        $this->setSortOrder('asc');
-        $this->setSortBy('sku');
+        $this->setSortOrder($request->sort_order ?? 'asc');
+        $this->setSortBy(   $request->sort_by ?? 'sku');
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
@@ -66,7 +66,6 @@ class ProductApiService extends AppRepository
         ]);
 
         return $custom->merge($products);
-        //        dd($max_price , $min_price);
     }
 
     public function indexWeb($request)
