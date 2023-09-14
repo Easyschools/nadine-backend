@@ -40,6 +40,13 @@ class CategoryApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getBySlug(CategoryRequest $request)
+    {
+        $process = $this->categoryService->getBySlug($request);
+        return $this->sendResponse($process);
+    }
+
+
     public function all(CategoryRequest $request)
     {
         $process = $this->categoryService->index($request);

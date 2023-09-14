@@ -116,8 +116,9 @@ Route::group([
         Route::delete('delete', [CategoryApiController::class, 'delete']);
         Route::post('create', [CategoryApiController::class, 'create']);
         Route::post('edit', [CategoryApiController::class, 'edit']);
-        
+
         Route::get('products', [CategoryApiController::class, 'getProducts']);
+        Route::get('{slug}', [CategoryApiController::class, 'getBySlug']);
     });
     Route::group([
         'prefix' => 'web/category',
@@ -137,6 +138,7 @@ Route::group([
         Route::delete('delete', [TagApiController::class, 'delete']);
 
         Route::get('top', [TagApiController::class, 'getTop']);
+        Route::get('{slug}', [TagApiController::class, 'getBySlug']);
     });
 
     Route::group([
@@ -296,6 +298,8 @@ Route::group([
         Route::delete('delete', [CollectionApiController::class, 'delete']);
         Route::post('create', [CollectionApiController::class, 'create']);
         Route::post('edit', [CollectionApiController::class, 'edit']);
+
+        Route::get('{slug}', [CollectionApiController::class, 'getBySlug']);
     });
 
     Route::group([

@@ -7,7 +7,7 @@ use App\Models\Feature\Collection;
 use App\Repositories\AppRepository;
 
 
-Class CollectionApiService extends AppRepository
+class CollectionApiService extends AppRepository
 {
 
     public function __construct(Collection $collection)
@@ -49,18 +49,17 @@ Class CollectionApiService extends AppRepository
         return $this->find($request->id);
     }
 
-
-
     /**
      * @param $request
      * @return mixed
      */
     public function createCollection($request)
     {
-        return $this->model->create($request->only([
-            'name_en',
-            'name_ar',
-        ]));
+        return $this->model->create([
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
+            'slug' => \Illuminate\Support\Str::slug($request->name_en),
+        ]);
     }
 
     /**
@@ -69,13 +68,14 @@ Class CollectionApiService extends AppRepository
      */
     public function editCollection($request)
     {
-        $material = $this->find($request->id);
+        $collection = $this->find($request->id);
 
-        return $material->update($request->only([
-            'name_en',
-            'name_ar',
-        ]));
+        return $collection->update(
+            [
+                'name_ar' => $request->name_ar ?? $collection->name_ar,
+                'name_en' => $request->name_en ?? $collection->name_en,
+                'slug' => $request->name_en ? \Illuminate\Support\Str::slug($request->name_en) : $collection->slug,
+            ]
+        );
     }
-
-
 }

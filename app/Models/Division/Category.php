@@ -11,6 +11,7 @@ class Category extends Model
     protected $fillable = [
         'name_ar',
         'name_en',
+        'slug',
     ];
 
     protected $appends = [

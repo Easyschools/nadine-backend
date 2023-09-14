@@ -5,7 +5,6 @@ namespace App\Services\Api\Division;
 use App\Models\Division\Category;
 use App\Repositories\AppRepository;
 
-
 class CategoryApiService extends AppRepository
 {
 
@@ -20,10 +19,10 @@ class CategoryApiService extends AppRepository
      */
     public function index($request)
     {
-        $this->setColumns(['id', 'name_ar', 'name_en']);
+        $this->setColumns(['id', 'name_ar', 'name_en', 'slug']);
         $this->setRelations([
             'tags' => function ($tag) {
-                $tag->select('id', 'category_id', 'name_ar', 'name_en');
+                $tag->select('id', 'name_ar', 'name_en', 'slug', 'category_id');
             }
         ]);
         if ($request->is_paginate == 1) {
@@ -40,10 +39,27 @@ class CategoryApiService extends AppRepository
     {
         $this->setRelations([
             'tags' => function ($tag) {
-                $tag->select('id', 'name_ar', 'name_en', 'category_id');
+                $tag->select('id', 'name_ar', 'name_en', 'slug', 'category_id');
             },
         ]);
         return $this->find($request->id);
+    }
+
+    public function getBySlug($request)
+    {
+        $this->setConditions(['slug' => $request->slug]);
+        $this->setRelations([
+            'tags' => function ($tag) {
+                $tag->select('id', 'name_ar', 'name_en', 'slug', 'category_id');
+            },
+        ]);
+
+        $result = $this->all()->first();
+        if (!$result) {
+            throw new \App\Exceptions\NotFoundException(__('Not found.'));
+        }
+
+        return $result;
     }
 
     public function getProducts($request)
@@ -58,9 +74,11 @@ class CategoryApiService extends AppRepository
      */
     public function createCategory($request)
     {
-        $category = $this->model->create($request->only([
-            'name_ar', 'name_en'
-        ]));
+        $category = $this->model->create([
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
+            'slug' => \Illuminate\Support\Str::slug($request->name_en),
+        ]);
         return $category;
     }
 
@@ -71,9 +89,13 @@ class CategoryApiService extends AppRepository
     public function editCategory($request)
     {
         $category = $this->find($request->id);
-        $result = $category->update($request->only([
-            'name_ar', 'name_en'
-        ]));
+        $result = $category->update(
+            [
+                'name_ar' => $request->name_ar ?? $category->name_ar,
+                'name_en' => $request->name_en ?? $category->name_en,
+                'slug' => $request->name_en ? \Illuminate\Support\Str::slug($request->name_en) : $category->slug,
+            ]
+        );
         return $result;
     }
 }
