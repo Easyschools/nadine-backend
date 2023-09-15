@@ -54,8 +54,8 @@ class TagRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:tags,id',
-            'name_en' => 'min:2|unique:tags,name_en' . $this->id,
-            'name_ar' => 'min:2|unique:tags,name_ar' . $this->id,
+            'name_en' => 'min:2|unique:tags,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:tags,name_ar,' . $this->id,
             'image' => 'required|mimes:jpg,png,jpeg',
         ];
     }

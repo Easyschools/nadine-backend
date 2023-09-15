@@ -53,8 +53,8 @@ class MaterialRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:materials,id',
-            'name_en' => 'min:2|unique:materials,name_en' . $this->id,
-            'name_ar' => 'min:2|unique:materials,name_ar' . $this->id,
+            'name_en' => 'min:2|unique:materials,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:materials,name_ar,' . $this->id,
         ];
     }
 

@@ -53,8 +53,8 @@ class PaymentTypeRequest extends FormRequest
     private function updateValidation()
     {
         return [
-            'name_en' => 'required|min:2|unique:payment_types,name_en' . $this->id,
-            'name_ar' => 'required|min:2|unique:payment_types,name_ar' . $this->id,
+            'name_en' => 'required|min:2|unique:payment_types,name_en,' . $this->id,
+            'name_ar' => 'required|min:2|unique:payment_types,name_ar,' . $this->id,
             'image' => 'required',
         ];
     }

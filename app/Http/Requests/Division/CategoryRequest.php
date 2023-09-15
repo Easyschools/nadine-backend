@@ -54,8 +54,8 @@ class CategoryRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:categories,id',
-            'name_en' => 'min:2|unique:categories,name_en' . $this->id,
-            'name_ar' => 'min:2|unique:categories,name_ar' . $this->id,
+            'name_en' => 'min:2|unique:categories,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:categories,name_ar,' . $this->id,
         ];
     }
 

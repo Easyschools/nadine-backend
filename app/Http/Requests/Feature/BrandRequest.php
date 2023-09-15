@@ -53,8 +53,8 @@ class BrandRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:brands,id',
-            'name_en' => 'min:2|unique:brands,name_en' . $this->id,
-            'name_ar' => 'min:2|unique:brands,name_ar' . $this->id,
+            'name_en' => 'min:2|unique:brands,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:brands,name_ar,' . $this->id,
         ];
     }
 

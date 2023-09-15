@@ -58,8 +58,8 @@ class OfferRequest extends FormRequest
         return [
             'id' => 'required|exists:offers,id',
             'is_percentage' => 'required|boolean',
-            'name_en' => 'required|min:2|unique:offers,name_en' . $this->id,
-            'name_ar' => 'required|min:2|unique:offers,name_ar' . $this->id,
+            'name_en' => 'required|min:2|unique:offers,name_en,' . $this->id,
+            'name_ar' => 'required|min:2|unique:offers,name_ar,' . $this->id,
             'discount' => 'required|min:1',
             'category_id' => 'required|exists:categories,id',
             'expire_at' => 'required',

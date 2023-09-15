@@ -53,8 +53,8 @@ class CollectionRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:collections,id',
-            'name_en' => 'min:2|unique:collections,name_en' . $this->id,
-            'name_ar' => 'min:2|unique:collections,name_ar' . $this->id,
+            'name_en' => 'min:2|unique:collections,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:collections,name_ar,' . $this->id,
         ];
     }
 

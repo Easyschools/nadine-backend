@@ -54,8 +54,8 @@ class OrderstatusRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:order_statuses,id',
-            'name_en' => 'required|min:2|unique:order_statuses,name_en' . $this->id,
-            'name_ar' => 'required|min:2|unique:order_statuses,name_ar' . $this->id,
+            'name_en' => 'required|min:2|unique:order_statuses,name_en,' . $this->id,
+            'name_ar' => 'required|min:2|unique:order_statuses,name_ar,' . $this->id,
             'type' => 'required|in:active,inactive',
         ];
     }
