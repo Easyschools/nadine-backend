@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Product\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\HelperFunctions;
 
 class ProductRequest extends FormRequest
 {
@@ -49,7 +51,12 @@ class ProductRequest extends FormRequest
     {
         return [
             'sku' => 'required|min:2',
-            'name_en' => 'required|min:2',
+            'name_en' => ['required', 'min:2', function ($attribute, $value, $fail) {
+                $slug = HelperFunctions::makeSlug($this->name_en) . '-' . HelperFunctions::makeSlug($this->sku);
+                if (Product::where('slug', $slug)->exists()) {
+                    $fail("The combination name_en & sku should be unique.");
+                }
+            }],
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',
@@ -61,6 +68,8 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
+            'variants.*.images' => 'required|array',
+            'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             //            'variants.*.dimension_id' => 'exists:dimensions,id',
             'variants.*.dimension' => 'nullable',
         ];
@@ -71,7 +80,12 @@ class ProductRequest extends FormRequest
         return [
             'id' => 'required|exists:products,id',
             'sku' => 'required|min:2',
-            'name_en' => 'required|min:2',
+            'name_en' => ['required', 'min:2', function ($attribute, $value, $fail) {
+                $slug = HelperFunctions::makeSlug($this->name_en) . '-' . HelperFunctions::makeSlug($this->sku);
+                if (Product::where('slug', $slug)->where('id', '<>', $this->id)->exists()) {
+                    $fail("The combination name_en & sku should be unique.");
+                }
+            }],
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',
@@ -83,6 +97,8 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
+            'variants.*.images' => 'required|array',
+            'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             //            'variants.*.dimension_id' => 'exists:dimensions,id',
             'variants.*.dimension_value' => 'nullable',
         ];
