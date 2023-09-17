@@ -66,21 +66,24 @@ class CustomerApiAuthController extends Controller
 
     public function forgetPassword(AuthRequest $request)
     {
-        $user = $this->authService->forgetPassword($request, $this->verified_code);
+        $phone = $this->authService->forgetPassword($request, $this->verified_code);
 
-        $customer = User::where('phone', $request->phone)->first();
+        // $customer = User::where('phone', $request->phone)->first();
 
         //        // send sms message
         //        $msg = ' forget password code:  ';
         //        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
-        if ($user == false) {
+        if ($phone == false) {
             return $this->sendError(
                 'some thing wrong'
             );
         }
-        $user['code'] = $this->verified_code;
-        return $this->sendResponse($user);
+
+        return $this->sendResponse([
+            'phone' => $phone,
+            'code' => $this->verified_code
+        ]);
     }
 
     public function resetPassword(AuthRequest $request)
