@@ -97,8 +97,6 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
-            'variants.*.images' => 'required|array',
-            'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             //            'variants.*.dimension_id' => 'exists:dimensions,id',
             'variants.*.dimension_value' => 'nullable',
         ];

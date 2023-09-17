@@ -364,7 +364,7 @@ class ProductApiService extends AppRepository
 
     public function createDimension($variant, $key = 'dimension')
     {
-        if ($variant[$key]) {
+        if (isset($variant[$key]) && $variant[$key]) {
             $dimension = Dimension::firstOrCreate([
                 'dimension' => $variant[$key],
             ]);
