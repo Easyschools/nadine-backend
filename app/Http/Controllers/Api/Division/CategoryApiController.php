@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Api\Division;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Division\CategoryRequest;
+use App\Models\Division\Category;
 use App\Services\Api\Division\CategoryApiService;
 
 class CategoryApiController extends Controller
@@ -46,6 +47,13 @@ class CategoryApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getCategoriesWithSamples(CategoryRequest $request)
+    {
+        return Category::with(['simpleProducts' => function ($query) {
+            $query->select('products.id', 'products.name_en', 'products.name_ar', 'products.slug', 'products.sku', 'products.price', 'products.price_after_discount', 'products.tag_id')
+                ->take(6);
+        }])->paginate(16);
+    }
 
     public function all(CategoryRequest $request)
     {

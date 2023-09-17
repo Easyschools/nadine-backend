@@ -4,6 +4,7 @@ namespace App\Models\Division;
 
 use App\Models\Order\Offer;
 use App\Models\Product\Product;
+use App\Models\Product\SimpleProduct;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -36,5 +37,10 @@ class Category extends Model
     public function products()
     {
         return $this->hasManyThrough(Product::class, Tag::class, 'category_id', 'tag_id', 'id', 'id');
+    }
+
+    public function simpleProducts()
+    {
+        return $this->hasManyThrough(SimpleProduct::class, Tag::class, 'category_id', 'tag_id', 'id', 'id');
     }
 }

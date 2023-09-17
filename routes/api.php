@@ -118,6 +118,7 @@ Route::group([
         Route::post('edit', [CategoryApiController::class, 'edit']);
 
         Route::get('products', [CategoryApiController::class, 'getProducts']);
+        Route::get('samples', [CategoryApiController::class, 'getCategoriesWithSamples']);
         Route::get('{slug}', [CategoryApiController::class, 'getBySlug']);
     });
     Route::group([
