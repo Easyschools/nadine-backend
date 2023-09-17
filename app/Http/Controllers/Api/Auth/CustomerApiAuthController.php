@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\AuthRequest;
-
-;
+use App\Http\Requests\Auth\AuthRequest;;
 
 use App\Models\User\User;
 use App\Services\Api\Auth\CustomerApiAuthService;
@@ -36,7 +34,7 @@ class CustomerApiAuthController extends Controller
         $user = $this->authService->register($request, $this->verified_code);
 
         // send sms message
-//        $this->sendSmsMessage($user->phone, $this->verified_code);
+        //        $this->sendSmsMessage($user->phone, $this->verified_code);
 
         return $this->sendResponse($user);
     }
@@ -72,15 +70,16 @@ class CustomerApiAuthController extends Controller
 
         $customer = User::where('phone', $request->phone)->first();
 
-//        // send sms message
-//        $msg = ' forget password code:  ';
-//        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
+        //        // send sms message
+        //        $msg = ' forget password code:  ';
+        //        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
         if ($user == false) {
             return $this->sendError(
                 'some thing wrong'
             );
         }
+        $user['code'] = $this->verified_code;
         return $this->sendResponse($user);
     }
 
@@ -111,7 +110,7 @@ class CustomerApiAuthController extends Controller
     }
 
 
-//    changePassword
+    //    changePassword
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -127,7 +126,8 @@ class CustomerApiAuthController extends Controller
             // The passwords matches
             return $this->sendError(
                 "error",
-                "Your current password does not matches with the password you provided. Please try again.");
+                "Your current password does not matches with the password you provided. Please try again."
+            );
         }
 
         //Change Password
@@ -136,6 +136,4 @@ class CustomerApiAuthController extends Controller
 
         return $this->sendResponse("success", "Password changed successfully !");
     }
-
-
 }
