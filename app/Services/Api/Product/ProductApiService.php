@@ -407,13 +407,23 @@ class ProductApiService extends AppRepository
     public function getLatest($request)
     {
         return Product::orderBy('created_at', 'desc')
-            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
+            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
             ->limit(5)->get();
     }
 
     public function getBestSellers($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->limit(10)->get();
 
