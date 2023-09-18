@@ -73,7 +73,13 @@ class CategoryApiController extends Controller
     {
         $categories = Category::paginate(16);
         foreach ($categories as $category) {
-            $category->products = $category->simpleProducts()->limit(6)->get();
+            $category->products = $category->simpleProducts()
+                ->with([
+                    'variants:id,color_id,dimension_id,additional_price,product_id',
+                    'variants.color:id,name_en,name_ar',
+                    'variants.dimension:id,dimension',
+                ])
+                ->limit(6)->get();
         }
 
         return $categories;
