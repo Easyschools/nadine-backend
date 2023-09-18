@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -26,8 +27,13 @@ class CartApiService extends AppRepository
 
         $this->setRelations([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'dimension_id',
-                    'additional_price')->with([
+                $variant->select(
+                    'id',
+                    'product_id',
+                    'color_id',
+                    'dimension_id',
+                    'additional_price'
+                )->with([
                     'product' => function ($product) {
                         $product->select(
                             'id',
@@ -37,6 +43,20 @@ class CartApiService extends AppRepository
                             'price_after_discount',
                             'tag_id',
                             'price'
+                        );
+                    },
+                    'color' => function ($color) {
+                        $color->select(
+                            'id',
+                            'name_ar',
+                            'name_en',
+                            'image'
+                        );
+                    },
+                    'dimension' => function ($dimension) {
+                        $dimension->select(
+                            'id',
+                            'dimension'
                         );
                     },
                 ]);
@@ -68,7 +88,6 @@ class CartApiService extends AppRepository
                 'user_id' => $request->user_id,
                 'quantity' => $request['qty'],
             ]);
-
         }
         return true;
     }
@@ -84,5 +103,4 @@ class CartApiService extends AppRepository
     {
         return $this->model->delete($request->cart_id);
     }
-
 }
