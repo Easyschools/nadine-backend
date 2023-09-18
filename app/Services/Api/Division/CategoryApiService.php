@@ -45,23 +45,6 @@ class CategoryApiService extends AppRepository
         return $this->find($request->id);
     }
 
-    public function getBySlug($request)
-    {
-        $this->setConditions(['slug' => $request->slug]);
-        $this->setRelations([
-            'tags' => function ($tag) {
-                $tag->select('id', 'name_ar', 'name_en', 'slug', 'category_id');
-            },
-        ]);
-
-        $result = $this->all()->first();
-        if (!$result) {
-            throw new \App\Exceptions\NotFoundException(__('Not found.'));
-        }
-
-        return $result;
-    }
-
     public function getProducts($request)
     {
         $this->setRelations(['products:products.id,products.slug,products.name_en,products.name_ar,products.price,products.price_after_discount,sku']);

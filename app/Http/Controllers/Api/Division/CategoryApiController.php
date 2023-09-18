@@ -43,8 +43,30 @@ class CategoryApiController extends Controller
 
     public function getBySlug(CategoryRequest $request)
     {
-        $process = $this->categoryService->getBySlug($request);
-        return $this->sendResponse($process);
+        $category = Category::where('slug', $request->slug)
+            ->with([
+                'tags' => function ($tag) {
+                    $tag->select('tags.id', 'tags.name_ar', 'tags.name_en', 'tags.slug', 'tags.category_id');
+                },
+            ])->first();
+
+        if (!$category) {
+            throw new \App\Exceptions\NotFoundException(__('Not found.'));
+        }
+
+        $products = $category->simpleProducts()
+            ->select('products.id', 'products.name_en', 'products.name_ar', 'products.slug', 'products.sku', 'products.price', 'products.price_after_discount', 'products.tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->paginate(16);
+
+        return $this->sendResponse(array_merge(
+            $category->toArray(),
+            ['products' => $products],
+        ));
     }
 
     public function getCategoriesWithSamples(CategoryRequest $request)
