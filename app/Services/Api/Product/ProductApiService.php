@@ -34,7 +34,7 @@ class ProductApiService extends AppRepository
         $this->filter($request);
 
         $this->setSortOrder($request->sort_order ?? 'asc');
-        $this->setSortBy(   $request->sort_by ?? 'sku');
+        $this->setSortBy($request->sort_by ?? 'sku');
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
@@ -413,7 +413,7 @@ class ProductApiService extends AppRepository
 
     public function getBestSellers($request)
     {
-        $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku')
+        $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->limit(10)->get();
 
