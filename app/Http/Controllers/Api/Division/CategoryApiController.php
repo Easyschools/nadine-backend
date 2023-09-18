@@ -49,10 +49,12 @@ class CategoryApiController extends Controller
 
     public function getCategoriesWithSamples(CategoryRequest $request)
     {
-        return Category::with(['simpleProducts' => function ($query) {
-            $query->select('products.id', 'products.name_en', 'products.name_ar', 'products.slug', 'products.sku', 'products.price', 'products.price_after_discount', 'products.tag_id')
-                ->take(6);
-        }])->paginate(16);
+        $categories = Category::paginate(16);
+        foreach ($categories as $category) {
+            $category->products = $category->simpleProducts()->limit(6)->get();
+        }
+
+        return $categories;
     }
 
     public function all(CategoryRequest $request)
