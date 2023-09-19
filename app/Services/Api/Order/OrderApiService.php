@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -60,9 +61,11 @@ class OrderApiService extends AppRepository
     public function setShippingPrice()
     {
         $shippingPrice = 200;
-        if ($this->address
+        if (
+            $this->address
             && $this->address->district
-            && $this->address->district->city) {
+            && $this->address->district->city
+        ) {
             $shippingPrice = $this->address->district->city->shipping_cost;
         }
 
@@ -107,7 +110,7 @@ class OrderApiService extends AppRepository
      */
     public function getOfferPrice($item)
     {
-//        dd($item->variant->product->category->offers()->first()->expire_at);
+        //        dd($item->variant->product->category->offers()->first()->expire_at);
         //        dd($item->variant);
         $offer = $item->variant->product->category->offers()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
@@ -119,7 +122,7 @@ class OrderApiService extends AppRepository
         if ($offer) {
             if ($offer->is_percentage) {
                 $offerItemPrice = $productPrice - ($offer->discount * $productPrice / 100);
-//                dd($offerItemPrice);
+                //                dd($offerItemPrice);
             } else {
                 $offerItemPrice = $productPrice - $offer->discount;
             }
@@ -141,8 +144,10 @@ class OrderApiService extends AppRepository
             ['checkout', 0],
         ])->with([
             'variant' => function ($variant) {
-                $variant->select('id', 'product_id', 'additional_price')
+                $variant->select('id', 'product_id', 'color_id', 'dimension_id', 'additional_price')
                     ->with([
+                        'dimension',
+                        'color',
                         'product' => function ($product) {
                             $product->select(
                                 'id',
@@ -244,7 +249,7 @@ class OrderApiService extends AppRepository
         if ($this->coupon) {
             if (($this->coupon->all_users == 1 || in_array(Auth::id(), $this->coupon->users)) && $this->coupon->min_total <= $subtotal) {
                 $this->couponValue = ($this->coupon->is_percentage == 0) ? $this->coupon->value :
-                $subtotal * ($this->coupon->value / 100);
+                    $subtotal * ($this->coupon->value / 100);
                 // $this->coupon->update([
                 //     'used_times' => $this->coupon->used_times + 1,
                 // ]);
@@ -334,7 +339,7 @@ class OrderApiService extends AppRepository
     private function addOrderItems($orderItems)
     {
         foreach ($orderItems as $item) {
-//            dd($item->toArray());
+            //            dd($item->toArray());
 
             $this->order->orderItems()->create([
                 'variant_id' => $item->variant_id,
