@@ -245,11 +245,13 @@ class ProductApiService extends AppRepository
         foreach ($request->variants as $variant) {
             $variant = $this->createDimension($variant);
 
-            $variantModel = Variant::create(array_merge($variant, [
+            $variantModel = Variant::firstOrCreate([
+                'color_id' => $variant['color_id'],
+                'dimension_id' => $variant['dimension_id'],
                 'product_id' => $product->id,
-            ]));
+            ], []);
 
-            if (count($variant['images'])) {
+            if (isset($variant['images']) && count($variant['images'])) {
                 foreach ($variant['images'] as $img) {
                     $variantModel->images()->firstOrcreate([
                         'image' => $img,
@@ -275,7 +277,6 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
-        //        dd($request->all());
         $product = $this->find($request->id);
         $product->update($request->only([
             'name_ar',
@@ -300,7 +301,7 @@ class ProductApiService extends AppRepository
 
             $variant = $this->createDimension($variant, 'dimension_value');
 
-            if ($variant['id']) {
+            if (isset($variant['id']) && $variant['id']) {
 
                 $variantModel = $this->variantRepo->find($variant['id']);
                 $variantModel->update($variant);
@@ -309,9 +310,11 @@ class ProductApiService extends AppRepository
 
                 $arr[] = $variant['id'];
             } else {
-                $variantModel = Variant::create(array_merge($variant, [
+                $variantModel = Variant::firstOrCreate([
+                    'color_id' => $variant['color_id'],
+                    'dimension_id' => $variant['dimension_id'],
                     'product_id' => $product->id,
-                ]));
+                ], []);
 
                 $this->updateImagesOfVariants($variant, $variantModel);
             }
@@ -327,7 +330,7 @@ class ProductApiService extends AppRepository
     public function updateImagesOfVariants($variant, $variantModel)
     {
         $hasNewFiles = 0;
-        if (count($variant['images'])) {
+        if (isset($variant['images']) && count($variant['images'])) {
             foreach ($variant['images'] as $img) {
                 if (!is_array($img) && is_file($img) && !$hasNewFiles) {
                     $variantModel->images()->delete();
