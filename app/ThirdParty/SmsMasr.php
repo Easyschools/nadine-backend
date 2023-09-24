@@ -9,25 +9,6 @@ use GuzzleHttp\Client;
 class SmsMasr
 {
 
-    /**
-     * @var string
-     */
-    private $url = 'https://smsmisr.com/api/webapi';
-    /**
-     * @var string
-     */
-    private $username = 'ZnyOBzTn';
-    /**
-     * @var string
-     */
-    private $password = 'KqAbdu3r1l';
-    /**
-     * @var string
-     */
-    private $sender = 'Maintenance';
-    /**
-     * @var string
-     */
     private $message;
     /**
      * @var string
@@ -106,16 +87,16 @@ class SmsMasr
      */
     public function sendMessage()
     {
-//        dd(get_object_vars($this));
         $client = new Client();
-        $response = $client->post($this->url, [
+        $response = $client->post(env('SMSMISR_ENDPOINT'), [
             'query' => [
-                'username' => $this->username,
-                'password' => $this->password,
+                'username' => env('SMSMISR_USERNAME'),
+                'password' =>  env('SMSMISR_PASSWORD'),
                 'message' => $this->message,
                 'language' => $this->lang,
-                'sender' => $this->sender,
+                'sender' => env('SMSMISR_SENDER'),
                 'mobile' => $this->numbers,
+                'environment' => env('SMSMISR_ENVIRONMENT') ?? 1,
             ]
         ]);
         $body = $response->getBody();

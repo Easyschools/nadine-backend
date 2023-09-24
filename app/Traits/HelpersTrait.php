@@ -26,12 +26,11 @@ trait HelpersTrait
      * @param $msg
      * @return bool
      */
-    public function sendSmsMessage($phone, $token, $msg = ' activation code: ')
+    public function sendSmsMessage($phone, $token, $msg = 'Activation code: ', $lang = 2)
     {
-        $message = $msg . $token ;
-        $smsMasr = new SmsMasr($message, [$phone]);
+        $message = $msg . $token;
+        $smsMasr = new SmsMasr($message, [$phone], $lang);
         $smsMasr->sendMessage();
         return true;
     }
-
 }

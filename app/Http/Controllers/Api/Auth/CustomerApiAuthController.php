@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\AuthRequest;;
+use App\Http\Requests\Auth\AuthRequest;
 
 use App\Models\User\User;
-use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Traits\FirebaseFCM;
 use App\Traits\HelpersTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerApiAuthController extends Controller
@@ -68,22 +68,28 @@ class CustomerApiAuthController extends Controller
     {
         $phone = $this->authService->forgetPassword($request, $this->verified_code);
 
-        // $customer = User::where('phone', $request->phone)->first();
+        $msg = 'Reset password code: ';
 
-        //        // send sms message
-        //        $msg = ' forget password code:  ';
-        //        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
         if ($phone == false) {
             return $this->sendError(
-                'some thing wrong'
+                'Something went wrong.'
             );
         }
 
-        return $this->sendResponse([
-            'phone' => $phone,
-            'code' => $this->verified_code
-        ]);
+        try {
+            $response = $this->sendSmsMessage($phone, $this->verified_code, $msg, 1);
+
+            return $this->sendResponse([
+                'phone' => $phone,
+                'result' => $response
+            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return $this->sendError(
+                'Something went wrong.'
+            );
+        }
     }
 
     public function resetPassword(AuthRequest $request)
