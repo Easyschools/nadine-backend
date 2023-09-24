@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: amir
@@ -38,12 +39,17 @@ class CustomerApiAuthService extends AppRepository
         ]);
         $user = $this->model->create(
             array_merge($request->only(
-                'name', 'phone', 'password', 'type', 'email',
+                'name',
+                'phone',
+                'password',
+                'type',
+                'email',
                 'image'
             ), [
                 'verified_code' => $verified_code,
-                'password' => $request->password    ,
-            ]));
+                'password' => $request->password,
+            ])
+        );
 
         unset($user['verified_code']);
         $user['token'] = $user->createToken('Customer Token')->accessToken;
@@ -51,11 +57,9 @@ class CustomerApiAuthService extends AppRepository
     }
 
 
-    public function forgetPassword(Request $request , $verified_code = 0)
+    public function forgetPassword(Request $request, $verified_code = 0)
     {
-        $user = $this->findByColumn(
-            'phone', $request->phone
-        );
+        $user = $this->findByColumn('phone', $request->phone);
 
         if ($user->type != 2) {
             return false;
@@ -70,12 +74,10 @@ class CustomerApiAuthService extends AppRepository
 
     public function resetPassword(Request $request)
     {
-//        $this->passwordReset->setConditions([[
-//            'token', $request->code
-//        ]]);
-        $reset = $this->passwordReset->findByColumn(
-            'phone', $request->phone
-        );
+        //        $this->passwordReset->setConditions([[
+        //            'token', $request->code
+        //        ]]);
+        $reset = $this->passwordReset->findByColumn('phone', $request->phone);
         if ($reset) {
             $this->model->where('phone', $request->phone)
                 ->where('type', 2)
@@ -104,7 +106,10 @@ class CustomerApiAuthService extends AppRepository
                 'password' => Str::random(10),
             ]);
             $user = $this->model->create($request->only(
-                'name', 'phone', 'password', 'type'
+                'name',
+                'phone',
+                'password',
+                'type'
             ));
             $user->basicInfo()->create([]);
             $user->social()->create([
@@ -119,11 +124,11 @@ class CustomerApiAuthService extends AppRepository
     public function checkCode(Request $request)
     {
         $exists = $this->passwordReset->model->where(
-            'phone', $request->phone
+            'phone',
+            $request->phone
         )
             ->where('token', $request->code)
             ->exists();
         return $exists;
     }
-
 }
