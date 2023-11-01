@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Auth\FavouriteApiController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Api\Division\CategoryApiController;
 use App\Http\Controllers\Api\Division\TagApiController;
+use App\Http\Controllers\Api\ExportExcel\ExportProductsExcel;
 use App\Http\Controllers\Api\Feature\BrandApiController;
 use App\Http\Controllers\Api\Feature\CollectionApiController;
 use App\Http\Controllers\Api\Option\ColorApiController;
@@ -31,6 +32,8 @@ use App\Http\Controllers\Api\Region\CountryApiController;
 use App\Http\Controllers\Api\Region\DistrictApiController;
 use App\Http\Controllers\Api\Review\ReviewApiController;
 use App\Http\Controllers\Api\Slider\SliderApiController;
+use App\Http\Controllers\Api\GoogleSheet\GoogleSheetController;
+use App\Http\Controllers\Api\GoogleSheet\HandlingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -587,3 +590,11 @@ Route::group([
         Route::delete('/delete', [OrderApiController::class, 'delete']);
     });
 });
+
+//////////////////////google sheet/////////////////////////////////////
+Route::get('sheet',[GoogleSheetController::class, 'updateSheet']);
+Route::get('delete-sheet',[GoogleSheetController::class, 'deleteSheet']);
+Route::get('handling',[HandlingController::class, 'handling'])->name('handling');
+Route::get('add-header',[GoogleSheetController::class, 'addHeaders']);
+//////////////////////export//////////////////////////////////////////
+Route::get('export',[ExportProductsExcel::class, 'export']);
