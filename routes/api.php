@@ -119,6 +119,10 @@ Route::group([
         Route::delete('delete', [CategoryApiController::class, 'delete']);
         Route::post('create', [CategoryApiController::class, 'create']);
         Route::post('edit', [CategoryApiController::class, 'edit']);
+
+        Route::get('products', [CategoryApiController::class, 'getProducts']);
+        Route::get('samples', [CategoryApiController::class, 'getCategoriesWithSamples']);
+        Route::get('{slug}', [CategoryApiController::class, 'getBySlug']);
     });
     Route::group([
         'prefix' => 'web/category',
@@ -136,6 +140,9 @@ Route::group([
         Route::post('create', [TagApiController::class, 'create']);
         Route::post('edit', [TagApiController::class, 'edit']);
         Route::delete('delete', [TagApiController::class, 'delete']);
+
+        Route::get('top', [TagApiController::class, 'getTop']);
+        Route::get('{slug}', [TagApiController::class, 'getBySlug']);
     });
 
     Route::group([
@@ -263,6 +270,11 @@ Route::group([
         Route::delete('delete', [ProductApiController::class, 'delete']);
         Route::get('price-range', [ProductApiController::class, 'priceRange']);
         Route::get('search', [ProductApiController::class, 'search']);
+
+        Route::get('best-sellers', [ProductApiController::class, 'getBestSellers']);
+        Route::get('latest', [ProductApiController::class, 'getLatest']);
+        Route::post('import', [ProductApiController::class, 'import']);
+        Route::get('export', [ProductApiController::class, 'export']);
     });
 
     Route::group([
@@ -290,6 +302,8 @@ Route::group([
         Route::delete('delete', [CollectionApiController::class, 'delete']);
         Route::post('create', [CollectionApiController::class, 'create']);
         Route::post('edit', [CollectionApiController::class, 'edit']);
+
+        Route::get('{slug}', [CollectionApiController::class, 'getBySlug']);
     });
 
     Route::group([
@@ -469,6 +483,7 @@ Route::group([
         'namespace' => 'Other',
     ], function () {
         Route::get('all', [ContactInfoApiController::class, 'all']);
+        Route::get('index', [ContactInfoApiController::class, 'index']);
         Route::get('get', [ContactInfoApiController::class, 'read']);
         Route::post('create', [ContactInfoApiController::class, 'create']);
         Route::post('update', [ContactInfoApiController::class, 'update']);

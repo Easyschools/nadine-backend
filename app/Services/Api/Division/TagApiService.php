@@ -55,10 +55,15 @@ class TagApiService extends AppRepository
      */
     public function createTag($request)
     {
-        $tag = $this->model->create($request->only([
-            'name_ar', 'name_en', 'image',
-            'category_id'
-        ]));
+        $tag = $this->model->create(
+            [
+                'name_ar' => $request->name_ar,
+                'name_en' => $request->name_en,
+                'slug' => \Illuminate\Support\Str::slug($request->name_en),
+                'image' => $request->image,
+                'category_id' => $request->category_id,
+            ]
+        );
         if ($request->cost_inside_cairo || $request->cost_outside_cairo) {
             $this->customTagShippingPriceApiService->model->create([
                 'tag_id' => $tag->id,
@@ -83,10 +88,13 @@ class TagApiService extends AppRepository
                 'cost_outside_cairo' => $request->cost_outside_cairo,
             ]);
         }
-        return $tag->update($request->only([
-            'name_ar', 'name_en', 'image',
-            'category_id'
-        ]));
+        return $tag->update([
+            'name_ar' => $request->name_ar ?? $tag->name_ar,
+            'name_en' => $request->name_en ?? $tag->name_en,
+            'slug' => $request->name_en ? \Illuminate\Support\Str::slug($request->name_en) : $tag->slug,
+            'image' => $request->image ?? $tag->image,
+            'category_id' => $request->category_id ?? $tag->category_id,
+        ]);
     }
 
 

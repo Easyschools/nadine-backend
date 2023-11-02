@@ -32,6 +32,7 @@ class CustomerRequest extends FormRequest
                 return $this->allValidation();
             case 'get':
                 return $this->getValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'get-complain':
@@ -63,11 +64,11 @@ class CustomerRequest extends FormRequest
         return [
             'id' => 'exists:users,id',
             'name' => 'min:2|max:100',
-//            'image' => 'mimes:jpg,png,jpeg',
+            //            'image' => 'mimes:jpg,png,jpeg',
             'phone' => 'unique:users,phone,' . $id,
             'addresses' => 'array',
             'addresses.*.id' => 'nullable|exists:addresses,id',
-//            'addresses.*.city_id' => 'required|exists:cities,id',
+            //            'addresses.*.city_id' => 'required|exists:cities,id',
             'addresses.*.district_id' => 'required|exists:districts,id',
             'addresses.*.address' => 'required|min:2',
         ];
@@ -86,6 +87,4 @@ class CustomerRequest extends FormRequest
             'is_paginate' => 'in:1,0'
         ];
     }
-
-
 }

@@ -5,6 +5,7 @@ namespace App\Models\Division;
 use App\Models\Order\CustomTagShippingPrice;
 use App\Models\Order\Offer;
 use App\Models\Product\Product;
+use App\Models\Product\SimpleProduct;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
@@ -12,6 +13,7 @@ class Tag extends Model
     protected $fillable = [
         'name_ar',
         'name_en',
+        'slug',
         'category_id',
         'image',
     ];
@@ -47,7 +49,10 @@ class Tag extends Model
         return $this->hasMany(Product::class, 'tag_id');
     }
 
-      
+    public function simpleProducts()
+    {
+        return $this->hasMany(SimpleProduct::class, 'tag_id');
+    }
 
     public function customTagShippingPrice()
     {
@@ -57,7 +62,5 @@ class Tag extends Model
     public function offers()
     {
         return $this->belongsToMany(Offer::class, 'offer_tags', 'tag_id', 'offer_id');
-
     }
-
 }

@@ -3,14 +3,16 @@
 namespace App\Models\Feature;
 
 use App\Models\Product\Product;
+use App\Models\Product\SimpleProduct;
 use Illuminate\Database\Eloquent\Model;
 
 class Collection extends Model
 {
-    protected $fillable =[
-      'name_ar',
-      'name_en',
-      'image',
+    protected $fillable = [
+        'name_ar',
+        'name_en',
+        'slug',
+        'image',
     ];
 
 
@@ -42,4 +44,8 @@ class Collection extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function simpleProducts()
+    {
+        return $this->hasMany(SimpleProduct::class, 'collection_id');
+    }
 }

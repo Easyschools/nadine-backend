@@ -28,6 +28,7 @@ class ContactInfoRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -60,7 +61,7 @@ class ContactInfoRequest extends FormRequest
     private function idValidation()
     {
         return [
-//            'id' => 'nullable|exists:contact_info,id'
+            //            'id' => 'nullable|exists:contact_info,id'
         ];
     }
 
@@ -71,5 +72,4 @@ class ContactInfoRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

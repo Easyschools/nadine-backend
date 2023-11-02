@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Product;
 
+use App\Models\Product\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\HelperFunctions;
 
 class ProductRequest extends FormRequest
 {
@@ -28,6 +30,7 @@ class ProductRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -37,6 +40,8 @@ class ProductRequest extends FormRequest
                 return $this->allValidation();
             case 'search':
                 return $this->searchValidation();
+            case 'import':
+                return $this->importValidation();
             default:
                 return [];
         }
@@ -45,8 +50,13 @@ class ProductRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
             'sku' => 'required|min:2',
+            'name_en' => ['required', 'min:2', function ($attribute, $value, $fail) {
+                $slug = HelperFunctions::makeSlug($this->name_en) . '-' . HelperFunctions::makeSlug($this->sku);
+                if (Product::where('slug', $slug)->exists()) {
+                    $fail("The combination name_en & sku should be unique.");
+                }
+            }],
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',
@@ -58,7 +68,8 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
-            //            'variants.*.dimension_id' => 'exists:dimensions,id',
+            'variants.*.images' => 'nullable|array',
+            'variants.*.images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'variants.*.dimension' => 'nullable',
         ];
     }
@@ -68,6 +79,12 @@ class ProductRequest extends FormRequest
         return [
             'id' => 'required|exists:products,id',
             'sku' => 'required|min:2',
+            'name_en' => ['required', 'min:2', function ($attribute, $value, $fail) {
+                $slug = HelperFunctions::makeSlug($this->name_en) . '-' . HelperFunctions::makeSlug($this->sku);
+                if (Product::where('slug', $slug)->where('id', '<>', $this->id)->exists()) {
+                    $fail("The combination name_en & sku should be unique.");
+                }
+            }],
             'name_ar' => 'required|min:2',
             'description_en' => 'required|min:2',
             'description_ar' => 'required|min:2',
@@ -79,7 +96,8 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
-            //            'variants.*.dimension_id' => 'exists:dimensions,id',
+            'variants.*.images' => 'nullable|array',
+            'variants.*.images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'variants.*.dimension_value' => 'nullable',
         ];
     }
@@ -103,8 +121,16 @@ class ProductRequest extends FormRequest
     private function searchValidation()
     {
         return
-        [
-            'search' => 'required|min:3'
-        ];
+            [
+                'search' => 'required|min:3'
+            ];
+    }
+
+    private function importValidation()
+    {
+        return
+            [
+                'file' => 'required|file|mimes:xlsx,xls,csv'
+            ];
     }
 }

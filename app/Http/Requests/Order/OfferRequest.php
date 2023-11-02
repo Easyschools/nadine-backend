@@ -28,6 +28,7 @@ class OfferRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -44,8 +45,8 @@ class OfferRequest extends FormRequest
     {
         return [
             'is_percentage' => 'required|boolean',
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:offers,name_en',
+            'name_ar' => 'required|min:2|unique:offers,name_ar',
             'discount' => 'required|min:1',
             'category_id' => 'required|exists:categories,id',
             'expire_at' => 'required',
@@ -56,12 +57,11 @@ class OfferRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:offers,id',
-            'is_percentage' => 'required|min:2',
-            'name_en' => 'required|min:2',
+            'is_percentage' => 'required|boolean',
+            'name_en' => 'required|min:2|unique:offers,name_en,' . $this->id,
+            'name_ar' => 'required|min:2|unique:offers,name_ar,' . $this->id,
             'discount' => 'required|min:1',
-            'name_ar' => 'required|min:2',
-            'model_type' => 'required',
-            'model_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'expire_at' => 'required',
         ];
     }
@@ -80,5 +80,4 @@ class OfferRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

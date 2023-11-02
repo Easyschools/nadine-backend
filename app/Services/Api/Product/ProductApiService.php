@@ -4,6 +4,7 @@ namespace App\Services\Api\Product;
 
 use App\Models\Division\Category;
 use App\Models\Division\Tag;
+use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
@@ -32,8 +33,8 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
 
-        $this->setSortOrder('asc');
-        $this->setSortBy('sku');
+        $this->setSortOrder($request->sort_order ?? 'asc');
+        $this->setSortBy($request->sort_by ?? 'sku');
         $this->setRelations([
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
@@ -65,7 +66,6 @@ class ProductApiService extends AppRepository
         ]);
 
         return $custom->merge($products);
-        //        dd($max_price , $min_price);
     }
 
     public function indexWeb($request)
@@ -245,11 +245,13 @@ class ProductApiService extends AppRepository
         foreach ($request->variants as $variant) {
             $variant = $this->createDimension($variant);
 
-            $variantModel = Variant::create(array_merge($variant, [
+            $variantModel = Variant::firstOrCreate([
+                'color_id' => $variant['color_id'],
+                'dimension_id' => $variant['dimension_id'],
                 'product_id' => $product->id,
-            ]));
+            ], []);
 
-            if (count($variant['images'])) {
+            if (isset($variant['images']) && count($variant['images'])) {
                 foreach ($variant['images'] as $img) {
                     $variantModel->images()->firstOrcreate([
                         'image' => $img,
@@ -275,7 +277,6 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
-        //        dd($request->all());
         $product = $this->find($request->id);
         $product->update($request->only([
             'name_ar',
@@ -300,7 +301,7 @@ class ProductApiService extends AppRepository
 
             $variant = $this->createDimension($variant, 'dimension_value');
 
-            if ($variant['id']) {
+            if (isset($variant['id']) && $variant['id']) {
 
                 $variantModel = $this->variantRepo->find($variant['id']);
                 $variantModel->update($variant);
@@ -309,9 +310,11 @@ class ProductApiService extends AppRepository
 
                 $arr[] = $variant['id'];
             } else {
-                $variantModel = Variant::create(array_merge($variant, [
+                $variantModel = Variant::firstOrCreate([
+                    'color_id' => $variant['color_id'],
+                    'dimension_id' => $variant['dimension_id'],
                     'product_id' => $product->id,
-                ]));
+                ], []);
 
                 $this->updateImagesOfVariants($variant, $variantModel);
             }
@@ -327,7 +330,7 @@ class ProductApiService extends AppRepository
     public function updateImagesOfVariants($variant, $variantModel)
     {
         $hasNewFiles = 0;
-        if (count($variant['images'])) {
+        if (isset($variant['images']) && count($variant['images'])) {
             foreach ($variant['images'] as $img) {
                 if (!is_array($img) && is_file($img) && !$hasNewFiles) {
                     $variantModel->images()->delete();
@@ -364,8 +367,7 @@ class ProductApiService extends AppRepository
 
     public function createDimension($variant, $key = 'dimension')
     {
-        if ($variant[$key]) {
-
+        if (isset($variant[$key]) && $variant[$key]) {
             $dimension = Dimension::firstOrCreate([
                 'dimension' => $variant[$key],
             ]);
@@ -394,6 +396,40 @@ class ProductApiService extends AppRepository
             'categories' => $categories,
             'tags' => $tags,
         ];
+    }
 
+    public function offers($request)
+    {
+        $this->setRelations(['offers']);
+
+        $products = Product::paginate(15);
+
+        return $products;
+    }
+
+    public function getLatest($request)
+    {
+        return Product::orderBy('created_at', 'desc')
+            ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->limit(5)->get();
+    }
+
+    public function getBestSellers($request)
+    {
+        $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->withCount('orderItems')
+            ->orderBy('order_items_count', 'desc')->limit(10)->get();
+
+        return $products;
     }
 }

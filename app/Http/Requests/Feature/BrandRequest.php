@@ -28,6 +28,7 @@ class BrandRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -43,8 +44,8 @@ class BrandRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:brands,name_en',
+            'name_ar' => 'required|min:2|unique:brands,name_ar',
         ];
     }
 
@@ -52,8 +53,8 @@ class BrandRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:brands,id',
-            'name_en' => 'min:2',
-            'name_ar' => 'min:2',
+            'name_en' => 'min:2|unique:brands,name_en,' . $this->id,
+            'name_ar' => 'min:2|unique:brands,name_ar,' . $this->id,
         ];
     }
 
@@ -71,5 +72,4 @@ class BrandRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

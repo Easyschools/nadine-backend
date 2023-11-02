@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthRequest;
 
-;
-
 use App\Models\User\User;
-use App\Services\Api\Auth\CustomerApiAuthService;
 use App\Traits\FirebaseFCM;
 use App\Traits\HelpersTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerApiAuthController extends Controller
@@ -36,7 +34,7 @@ class CustomerApiAuthController extends Controller
         $user = $this->authService->register($request, $this->verified_code);
 
         // send sms message
-//        $this->sendSmsMessage($user->phone, $this->verified_code);
+        //        $this->sendSmsMessage($user->phone, $this->verified_code);
 
         return $this->sendResponse($user);
     }
@@ -68,20 +66,30 @@ class CustomerApiAuthController extends Controller
 
     public function forgetPassword(AuthRequest $request)
     {
-        $user = $this->authService->forgetPassword($request, $this->verified_code);
+        $phone = $this->authService->forgetPassword($request, $this->verified_code);
 
-        $customer = User::where('phone', $request->phone)->first();
+        $msg = 'Reset password code: ';
 
-//        // send sms message
-//        $msg = ' forget password code:  ';
-//        $this->sendSmsMessage($customer->phone, $this->verified_code, $msg);
 
-        if ($user == false) {
+        if ($phone == false) {
             return $this->sendError(
-                'some thing wrong'
+                'Something went wrong.'
             );
         }
-        return $this->sendResponse($user);
+
+        try {
+            $response = $this->sendSmsMessage($phone, $this->verified_code, $msg, 1);
+
+            return $this->sendResponse([
+                'phone' => $phone,
+                'result' => $response
+            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return $this->sendError(
+                'Something went wrong.'
+            );
+        }
     }
 
     public function resetPassword(AuthRequest $request)
@@ -111,7 +119,7 @@ class CustomerApiAuthController extends Controller
     }
 
 
-//    changePassword
+    //    changePassword
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -127,7 +135,8 @@ class CustomerApiAuthController extends Controller
             // The passwords matches
             return $this->sendError(
                 "error",
-                "Your current password does not matches with the password you provided. Please try again.");
+                "Your current password does not matches with the password you provided. Please try again."
+            );
         }
 
         //Change Password
@@ -136,6 +145,4 @@ class CustomerApiAuthController extends Controller
 
         return $this->sendResponse("success", "Password changed successfully !");
     }
-
-
 }

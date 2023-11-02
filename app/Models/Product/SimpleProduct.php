@@ -2,19 +2,18 @@
 
 namespace App\Models\Product;
 
-use App\Models\Division\Category;
 use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
-use App\Models\Option\Color;
 use App\Models\Option\Material;
 use App\Models\Order\Offer;
 use App\Models\Order\OfferTag;
 use App\Models\Order\OrderItem;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
-class Product extends Model
+class SimpleProduct extends Model
 {
+    protected $table = 'products';
+
     protected $fillable = [
         'sku',
         'name_ar',
@@ -36,8 +35,6 @@ class Product extends Model
         'type',
         'name',
         'description',
-        'category',
-        'category_id',
         'active_offer',
         'price_after_offer',
         'availability',
@@ -56,22 +53,22 @@ class Product extends Model
 
     public function material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id', 'id');
     }
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class, 'tag_id');
+        return $this->belongsTo(Tag::class, 'tag_id', 'id');
     }
 
     public function collection()
     {
-        return $this->belongsTo(Collection::class);
+        return $this->belongsTo(Collection::class, 'collection_id');
     }
 
     public function variants()
     {
-        return $this->hasMany(Variant::class);
+        return $this->hasMany(Variant::class, 'product_id', 'id');
     }
 
     public function orderItems()
@@ -96,11 +93,6 @@ class Product extends Model
         return 'pound';
     }
 
-    // public function getPriceAttribute()
-    // {
-    //     return $this->attributes['price_after_discount'];
-    // }
-
     public function getPriceAfterOfferAttribute()
     {
         $tag_id = $this->tag_id;
@@ -116,8 +108,6 @@ class Product extends Model
                 return $this->attributes['price'] - $offer->discount;
             }
         }
-
-        // return $this->attributes['price'];
     }
 
     public function getTypeAttribute()
@@ -147,44 +137,6 @@ class Product extends Model
 
         return $arr;
     }
-
-    public function getCategoryAttribute()
-    {
-        $tag = $this->tag()->with([
-            'category' => function ($category) {
-                $category->with('offers:id,category_id,discount,is_percentage');
-            },
-        ])->first();
-        if ($tag) {
-            return $tag->category;
-        }
-
-        return null;
-    }
-
-    public function getCategoryIdAttribute()
-    {
-        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) {
-            return null;
-        }
-
-        $tag = $this->tag()->with('category')->first();
-        if ($tag) {
-            return $tag->category;
-        }
-
-        return null;
-    }
-
-    //    public function getCategoryIdAttribute()
-    //    {
-    ////        dd();
-    //        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) return null;
-    //        $tag = $this->tag()->with('category')->first();
-    //        if ($tag)
-    //            return $tag->category;
-    //        return null;
-    //    }
 
     public function getActiveOfferAttribute()
     {

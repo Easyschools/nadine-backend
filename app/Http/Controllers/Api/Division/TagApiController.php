@@ -11,7 +11,6 @@ namespace App\Http\Controllers\Api\Division;
 
 use Illuminate\Http\Request;
 use App\Models\Division\Tag;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Division\TagRequest;
 use App\Services\Api\Division\TagApiService;
@@ -36,6 +35,32 @@ class TagApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getBySlug(TagRequest $request)
+    {
+        $tag = Tag::where('slug', $request->slug)
+            ->with(
+                'category',
+                'customTagShippingPrice:id,tag_id,cost_inside_cairo,cost_outside_cairo'
+            )->first();
+
+        if (!$tag) {
+            throw new \App\Exceptions\NotFoundException(__('Not found.'));
+        }
+
+        $products = $tag->simpleProducts()
+            ->select('id', 'name_en', 'name_ar', 'slug', 'sku', 'price', 'price_after_discount', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->paginate(16);
+
+        return $this->sendResponse(array_merge(
+            $tag->toArray(),
+            ['products' => $products],
+        ));
+    }
 
     public function all(Request $request)
     {
@@ -59,6 +84,18 @@ class TagApiController extends Controller
         }
         return $this->sendResponse($Tag, "Tag Seen Successfully");
     }
+
+    public function getTop(Request $request)
+    {
+        $Tag = Tag::with(
+            'category',
+            'customTagShippingPrice',
+        )->withCount('products')->orderBy('products_count', 'desc')->limit(10)->get();
+
+        return $this->sendResponse($Tag, "Top Tags Listed Successfully");
+    }
+
+
     public function delete(TagRequest $request)
     {
         $process = $this->tagService->delete($request->id);

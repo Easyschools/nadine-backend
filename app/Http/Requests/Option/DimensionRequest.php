@@ -29,6 +29,7 @@ class DimensionRequest extends FormRequest
             case 'create':
                 return $this->createValidation();
             case 'edit':
+            case 'update':
                 return $this->updateValidation();
             case 'delete':
             case 'get':
@@ -52,7 +53,6 @@ class DimensionRequest extends FormRequest
         return [
             'id' => 'required|exists:dimensions,id',
             'dimension' => 'required|min:2|unique:dimensions,dimension,' . $this->id,
-//            'dimension' => ['required', \Illuminate\Validation\Rule::unique('dimensions')->ignore($this->id)],
         ];
     }
 
@@ -70,5 +70,4 @@ class DimensionRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

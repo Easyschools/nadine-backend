@@ -28,6 +28,7 @@ class PaymentTypeRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -43,8 +44,8 @@ class PaymentTypeRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:payment_types,name_en',
+            'name_ar' => 'required|min:2|unique:payment_types,name_ar',
             'image' => 'required',
         ];
     }
@@ -52,8 +53,8 @@ class PaymentTypeRequest extends FormRequest
     private function updateValidation()
     {
         return [
-            'name_en' => 'required|min:2',
-            'name_ar' => 'required|min:2',
+            'name_en' => 'required|min:2|unique:payment_types,name_en,' . $this->id,
+            'name_ar' => 'required|min:2|unique:payment_types,name_ar,' . $this->id,
             'image' => 'required',
         ];
     }
@@ -72,5 +73,4 @@ class PaymentTypeRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

@@ -28,6 +28,7 @@ class VariantRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -54,8 +55,8 @@ class VariantRequest extends FormRequest
         return [
             'id' => 'required|exists:variants,id',
             'name_en' => 'min:2',
-            'code' => 'min:2',
             'name_ar' => 'min:2',
+            'code' => 'min:2',
         ];
     }
 
@@ -74,5 +75,4 @@ class VariantRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }

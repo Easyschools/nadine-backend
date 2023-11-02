@@ -46,10 +46,15 @@ class ContactInfoApiController extends Controller
         return $this->sendResponse($process);
     }
 
-
     public function all(ContactInfoRequest $request)
     {
         $process = $this->contactInfoService->index($request);
+        return $this->sendResponse($process);
+    }
+
+    public function index(ContactInfoRequest $request)
+    {
+        $process = $this->contactInfoService->indexAll($request);
         return $this->sendResponse($process);
     }
 }

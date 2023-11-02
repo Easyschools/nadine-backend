@@ -28,6 +28,7 @@ class CouponRequest extends FormRequest
         switch ($endPoint) {
             case 'create':
                 return $this->createValidation();
+            case 'edit':
             case 'update':
                 return $this->updateValidation();
             case 'delete':
@@ -81,5 +82,4 @@ class CouponRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-
 }
