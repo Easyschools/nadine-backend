@@ -36,9 +36,9 @@ class HandleSheetCommand extends Command
         if (Storage::disk('local')->exists($filePath)) {
             Storage::disk('local')->delete($filePath);
             info('yes');
-            $path = Excel::store(new ProductsExport, 'exports/' . $fileName, 'local');
+            $path = Excel::store(new ProductsExport, 'exports/' . $fileName, 'public');
         } else {
-            $path = Excel::store(new ProductsExport, 'exports/' . $fileName, 'local');
+            $path = Excel::store(new ProductsExport, 'exports/' . $fileName, 'public');
         }
 
 
@@ -48,9 +48,9 @@ class HandleSheetCommand extends Command
         if (Storage::disk('local')->exists($filePath)) {
             Storage::disk('local')->delete($filePath);
             info('yes');
-            $path = Excel::store(new ProductsExportAr, 'exports/' . $fileName, 'local');
+            $path = Excel::store(new ProductsExportAr, 'exports/' . $fileName, 'public');
         } else {
-            $path = Excel::store(new ProductsExportAr, 'exports/' . $fileName, 'local');
+            $path = Excel::store(new ProductsExportAr, 'exports/' . $fileName, 'public');
         }
     }
 }
