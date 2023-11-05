@@ -52,6 +52,7 @@ class ProductsExportAr implements FromArray, WithHeadings
                 'condition' => 'new',
                 'fb_product_category' => $product->tag->name_en,
                 'google_product_category' => $product->tag->name_en,
+                'currency' =>'EGP'
             ];
         }
 
@@ -85,7 +86,8 @@ class ProductsExportAr implements FromArray, WithHeadings
             'availability',
             'condition',
             'fb_product_category',
-            'google_product_category'
+            'google_product_category',
+            'currency'
         ];
     }
 }
