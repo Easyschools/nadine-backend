@@ -74,8 +74,8 @@ class AuthRequest extends FormRequest
     private function forgetPassword()
     {
         return [
-            'phone' => 'required|exists:users,phone',
-            // 'email' => 'required|exists:users,email',
+            // 'phone' => 'required|exists:users,phone',
+            'email' => 'required|exists:users,email',
         ];
     }
 

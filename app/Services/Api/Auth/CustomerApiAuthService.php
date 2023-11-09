@@ -59,13 +59,13 @@ class CustomerApiAuthService extends AppRepository
 
     public function forgetPassword(Request $request, $verified_code = 0)
     {
-        $user = $this->findByColumn('phone', $request->phone);
+        $user = $this->findByColumn('email', $request->email);
 
         if ($user->type != 2) {
             return false;
         }
         $this->passwordReset->model->updateOrCreate([
-            'phone' => $request->phone
+            'phone' => $user->phone
         ], [
             'token' => $verified_code
         ]);
