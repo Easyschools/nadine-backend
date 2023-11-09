@@ -66,30 +66,43 @@ class CustomerApiAuthController extends Controller
 
     public function forgetPassword(AuthRequest $request)
     {
-        $phone = $this->authService->forgetPassword($request, $this->verified_code);
+    //   $phone = $this->authService->forgetPassword($request, $this->verified_code);
+      $email = $this->authService->forgetPassword($request, $this->verified_code);
 
         $msg = 'Reset password code: ';
 
 
-        if ($phone == false) {
+        if ($email == false) {
             return $this->sendError(
                 'Something went wrong.'
             );
         }
-
-        try {
-            $response = $this->sendSmsMessage($phone, $this->verified_code, $msg, 1);
-
+        try{
+            $res = $this->sendMail($email, $this->verified_code, $msg);
             return $this->sendResponse([
-                'phone' => $phone,
-                'result' => $response
-            ]);
-        } catch (\Exception $e) {
-            return $e->getMessage();
+                'code sending via mail'
+                        // 'phone' => $phone,
+                        // 'result' => $response
+                    ]);
+        } catch(\Exception $e){
             return $this->sendError(
-                'Something went wrong.'
-            );
+                        'Something went wrongsss.'
+                    );
         }
+
+        // try {
+        //     $response = $this->sendSmsMessage($phone, $this->verified_code, $msg, 1);
+
+        //     return $this->sendResponse([
+        //         'phone' => $phone,
+        //         'result' => $response
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return $e->getMessage();
+        //     return $this->sendError(
+        //         'Something went wrong.'
+        //     );
+        // }
     }
 
     public function resetPassword(AuthRequest $request)

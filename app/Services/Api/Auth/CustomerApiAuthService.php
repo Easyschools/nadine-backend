@@ -69,7 +69,7 @@ class CustomerApiAuthService extends AppRepository
         ], [
             'token' => $verified_code
         ]);
-        return $user->phone;
+        return $user->email;
     }
 
     public function resetPassword(Request $request)

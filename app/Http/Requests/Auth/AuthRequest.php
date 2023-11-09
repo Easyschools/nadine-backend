@@ -75,6 +75,7 @@ class AuthRequest extends FormRequest
     {
         return [
             'phone' => 'required|exists:users,phone',
+            // 'email' => 'required|exists:users,email',
         ];
     }
 
