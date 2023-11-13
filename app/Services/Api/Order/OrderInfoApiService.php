@@ -86,8 +86,12 @@ class OrderInfoApiService
             'paymentType',
             'address',
             'orderItems',
+            'orderItems.variant:id,product_id',
+            'orderItems.variant.product:id,slug,name_'. app()->getLocale(),
             'orderStatus',
         ]);
+
+        
         if ($request->username) {
             $username = $request->username;
             return $this->order->paginateQuery()
@@ -102,6 +106,11 @@ class OrderInfoApiService
                     $q->where('phone', 'like', '%' . $phone . '%');
                 })->paginate();
         }
+     
+        $this->order->setAppends([
+            '',
+        ]);
+
         return $this->order->paginate();
     }
 
