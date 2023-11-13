@@ -62,7 +62,7 @@
         </p>
 
         <p>
-            <strong>shiping price : </strong> {{ $order->shipping_price }}
+            <strong>shiping : </strong> {{ $order->shipping_price }}
         </p>
         <p>
             <strong>Sub Total: </strong>{{ $order->subtotal }}
