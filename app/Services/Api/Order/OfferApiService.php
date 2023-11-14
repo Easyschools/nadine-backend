@@ -37,6 +37,7 @@ class OfferApiService extends AppRepository
     {
         $this->setRelations([
             'tags',
+            'category:id,slug,name_'. app()->getLocale()
         ]);
         return $this->find($request->id);
     }
