@@ -74,12 +74,13 @@ class CustomerApiAuthService extends AppRepository
 
     public function resetPassword(Request $request)
     {
-        //        $this->passwordReset->setConditions([[
-        //            'token', $request->code
-        //        ]]);
-        $reset = $this->passwordReset->findByColumn('phone', $request->phone);
+        //    $this->passwordReset->setConditions([[
+        //        'token', $request->code
+        //    ]]);
+        $user = $this->findByColumn('email', $request->email);
+        $reset = $this->passwordReset->findByColumn('phone', $user->phone);
         if ($reset) {
-            $this->model->where('phone', $request->phone)
+            $this->model->where('phone', $user->phone)
                 ->where('type', 2)
                 ->first()
                 ->update([

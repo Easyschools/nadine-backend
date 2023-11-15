@@ -45,7 +45,7 @@ class AuthRequest extends FormRequest
 
     private function registerRules()
     {
-//        var_dump($this);
+        //        var_dump($this);
         return [
             'name' => 'required',
             'phone' => 'required|digits:11|unique:users,phone',
@@ -82,9 +82,10 @@ class AuthRequest extends FormRequest
     private function resetPassword()
     {
         return [
-            'phone' => 'required|exists:users,phone',
+            // 'phone' => 'required|exists:users,phone',
+            'email' => 'required|exists:users,email',
             'password' => 'required|min:8|max:22|confirmed',
-//            'code' => 'required|exists:password_resets,token',
+            'code' => 'required|exists:password_resets,token',
         ];
     }
 
