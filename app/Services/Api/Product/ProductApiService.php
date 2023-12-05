@@ -314,6 +314,7 @@ class ProductApiService extends AppRepository
                     'color_id' => $variant['color_id'],
                     'dimension_id' => $variant['dimension_id'],
                     'product_id' => $product->id,
+                    'additional_price' => $variant['additional_price'],
                 ], []);
 
                 $this->updateImagesOfVariants($variant, $variantModel);
