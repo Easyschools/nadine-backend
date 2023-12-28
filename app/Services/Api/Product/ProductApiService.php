@@ -35,7 +35,7 @@ class ProductApiService extends AppRepository
 
         $this->setSortOrder($request->sort_order ?? 'asc');
         $this->setSortBy($request->sort_by ?? 'sku');
-        $this->setRelations([
+        $this->setRelations(['material',
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
                     'Color:id,name_en,name_ar,code,image',
@@ -135,6 +135,13 @@ class ProductApiService extends AppRepository
                 $q->whereIn('id', $tag_ids);
             });
         }
+        if ($request->occasional_name) {
+            $productQuery = $productQuery->whereHas('material', function ($q) use ($request) {
+                $q->where('name_en', 'like', '%' . $request->occasional_name . '%')
+                    ->orWhere('name_ar', 'like', '%' . $request->occasional_name . '%');
+            });
+        }
+    
 
         if ($request->color) {
             $colorIDs = explode(',', $request->color);
@@ -361,7 +368,7 @@ class ProductApiService extends AppRepository
         if ($request->id) {
             $conditions[] = ['id', $request->id];
         }
-
+        
         $this->setConditions($conditions);
         $this->setOrConditions($orConditions);
     }

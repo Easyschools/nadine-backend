@@ -6,7 +6,7 @@
             <router-link   to="/admin/home" class="b-brand" style="font-size: 40px">
 
                 <!-- ========   change your logo hear   ============ -->
-                Unitart
+                Nadine
                 <!--<img height="150" width="180" src="/img/logo.png" alt="" class="logo">-->
                 <!--<pre>-->
                 <!--تعليم وتعلم-->

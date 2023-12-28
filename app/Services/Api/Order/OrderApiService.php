@@ -303,14 +303,14 @@ class OrderApiService extends AppRepository
 
         // create email based on order
 
-        try {
-            Mail::to('unitart4@gmail.com')
-                ->cc('marwanelkahky@developnetwork.net')
-                ->send(new OrderMail($this->order));
-        } catch (\Throwable $th) {
-            \Log::info("order mail error :", [$th]);
-            //throw $th;
-        }
+        // try {
+        //     Mail::to('unitart4@gmail.com')
+        //         ->cc('marwanelkahky@developnetwork.net')
+        //         ->send(new OrderMail($this->order));
+        // } catch (\Throwable $th) {
+        //     \Log::info("order mail error :", [$th]);
+        //     //throw $th;
+        // }
 
         return $this->order;
     }
