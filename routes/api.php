@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\CustomerApiAuthController;
 use App\Http\Controllers\Api\Auth\CustomerApiController;
 use App\Http\Controllers\Api\Auth\FavouriteApiController;
+use App\Http\Controllers\Api\Celebrity\CelebrityController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Api\Division\CategoryApiController;
 use App\Http\Controllers\Api\Division\TagApiController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\Api\Review\ReviewApiController;
 use App\Http\Controllers\Api\Slider\SliderApiController;
 use App\Http\Controllers\Api\GoogleSheet\GoogleSheetController;
 use App\Http\Controllers\Api\GoogleSheet\HandlingController;
+use App\Http\Controllers\Api\MediaPress\MediaPressApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -214,7 +216,46 @@ Route::group([
         Route::post('edit', [SliderApiController::class, 'edit']);
         Route::delete('delete', [SliderApiController::class, 'delete']);
     });
-
+    Route::group([
+        'prefix' => 'celebrity',
+        'namespace' => 'Celebrity',
+    ], function () {
+        Route::get('all', [CelebrityController::class, 'all']);
+        Route::get('get', [CelebrityController::class, 'read']);
+        Route::post('create', [CelebrityController::class, 'create']);
+        Route::post('edit', [CelebrityController::class, 'edit']);
+        Route::delete('delete', [CelebrityController::class, 'delete']);
+    });
+    Route::group([
+        'prefix' => 'web/celebrity',
+        'namespace' => 'Celebrity',
+    ], function () {
+        Route::get('all', [CelebrityController::class, 'all']);
+        Route::get('get', [CelebrityController::class, 'read']);
+        Route::post('create', [CelebrityController::class, 'create']);
+        Route::post('edit', [CelebrityController::class, 'edit']);
+        Route::delete('delete', [CelebrityController::class, 'delete']);
+    });
+    Route::group([
+        'prefix' => 'media',
+        'namespace' => 'MediaPress',
+    ], function () {
+        Route::get('all', [MediaPressApiController::class, 'all']);
+        Route::get('get', [MediaPressApiController::class, 'read']);
+        Route::post('create', [MediaPressApiController::class, 'create']);
+        Route::post('edit', [MediaPressApiController::class, 'edit']);
+        Route::delete('delete', [MediaPressApiController::class, 'delete']);
+    });
+    Route::group([
+        'prefix' => 'web/media',
+        'namespace' => 'MediaPress',
+    ], function () {
+        Route::get('all', [MediaPressApiController::class, 'all']);
+        Route::get('get', [MediaPressApiController::class, 'read']);
+        Route::post('create', [MediaPressApiController::class, 'create']);
+        Route::post('edit', [MediaPressApiController::class, 'edit']);
+        Route::delete('delete', [MediaPressApiController::class, 'delete']);
+    });
     Route::group([
         'prefix' => 'city',
         'namespace' => 'Region',
