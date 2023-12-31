@@ -47,6 +47,7 @@ Class MediaPressApiService extends AppRepository
             'name_ar',
             'name_en',
             'image'
+            'url',
         ]));
         return $model;
     }
