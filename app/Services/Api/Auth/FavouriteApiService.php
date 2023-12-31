@@ -48,7 +48,13 @@ class FavouriteApiService extends AppRepository
             ]);
 
             $this->setRelations([
-                'product'
+                // 'product',
+                'product.variants' => function ($variant) {
+                    $variant->select('product_id', 'dimension_id', 'id')->with(
+                        'Dimension:id,dimension',
+                        'images:id,variant_id,image'
+                    );
+                },
             ]);
 
         }else{
