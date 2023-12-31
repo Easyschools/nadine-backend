@@ -46,7 +46,7 @@ Class MediaPressApiService extends AppRepository
         $model = $this->model->create($request->only([
             'name_ar',
             'name_en',
-            'image'
+            'image',
             'url',
         ]));
         return $model;
