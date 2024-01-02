@@ -60,15 +60,16 @@ Class MediaPressApiService extends AppRepository
     public function editMediaPress($request)
     {
         $model = $this->find($request->id);
+    
         $result = $model->update($request->only([
             'name_ar',
             'name_en',
-            'image',
             'url',
             'type',
+            'image' => $request->image === null ? null : $request->image,
 
         ]));
-        return $result;
+        return $result ;
     }
 
 }

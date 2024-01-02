@@ -46,7 +46,7 @@ class MediaPressRequest extends FormRequest
         return [
             'name_ar' => 'required|min:2|max:50',
             'name_en' => 'required|min:2|max:50',
-            'image' => 'required|image',
+            'image' => 'nullable',
             'url' => 'nullable',
             'type' => 'nullable',
             
@@ -59,7 +59,7 @@ class MediaPressRequest extends FormRequest
             'id' => 'required|exists:media_presses,id',
             'name_ar' => 'required|min:2|max:50',
             'name_en' => 'required|min:2|max:50',
-            'image' => 'required|image',
+            'image' => 'nullable',
             'url' => 'nullable',
             'type' => 'nullable',
         ];

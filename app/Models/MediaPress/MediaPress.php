@@ -31,7 +31,7 @@ class MediaPress extends Model
     public function setImageAttribute($value)
     {
         if (is_file($value)) {
-            $this->attributes['image'] = 'uploads/' . $value->store('Celebrity');
+            $this->attributes['image'] = 'uploads/' . $value->store('PressMedia');
         }
     }
 }

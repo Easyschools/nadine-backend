@@ -45,7 +45,7 @@ class MediaPressApiController extends Controller
     }
     public function edit(MediaPressRequest $request)
     {
-        $process = $this->mediaPressApiService->editSlider($request);
+        $process = $this->mediaPressApiService->editMediaPress($request);
         return $this->sendResponse($process);
     }
 }

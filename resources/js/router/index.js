@@ -34,6 +34,9 @@ import sliderEdit from "./../views/slider/Edit.vue";
 import celebrityList from "./../views/celebrity/List.vue";
 import celebrityCreate from "./../views/celebrity/Create.vue";
 import celebrityEdit from "./../views/celebrity/Edit.vue";
+import pressMediaList from "./../views/pressMedia/List.vue";
+import pressMediaCreate from "./../views/pressMedia/Create.vue";
+import pressMediaEdit from "./../views/pressMedia/Edit.vue";
 
 import brandList from "./../views/brand/List.vue";
 import brandCreate from "./../views/brand/Create.vue";
@@ -318,6 +321,26 @@ function configRoutes() {
                 {
                     path: "edit/:id",
                     component: celebrityEdit
+                }
+            ]
+        },
+        {
+            path: "/admin/pressMedia",
+            component: View,
+            redirect: "admin/pressMedia/list",
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: "list",
+                    component: pressMediaList
+                },
+                {
+                    path: "create",
+                    component: pressMediaCreate
+                },
+                {
+                    path: "edit/:id",
+                    component: pressMediaEdit
                 }
             ]
         },
