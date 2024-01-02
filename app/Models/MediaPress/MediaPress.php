@@ -32,6 +32,9 @@ class MediaPress extends Model
     {
         if (is_file($value)) {
             $this->attributes['image'] = 'uploads/' . $value->store('PressMedia');
+        }else{
+            $this->attributes['image'] = null;
+
         }
     }
 }

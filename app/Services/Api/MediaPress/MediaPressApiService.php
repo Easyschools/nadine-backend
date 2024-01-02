@@ -6,7 +6,7 @@ use App\Models\MediaPress\MediaPress;
 use App\Repositories\AppRepository;
 
 
-Class MediaPressApiService extends AppRepository
+class MediaPressApiService extends AppRepository
 {
 
     public function __construct(MediaPress $mediaPress)
@@ -59,17 +59,33 @@ Class MediaPressApiService extends AppRepository
      */
     public function editMediaPress($request)
     {
+
         $model = $this->find($request->id);
-    
-        $result = $model->update($request->only([
+
+        // Handle 'image' separately to set it to null if it's not provided
+        $updateData = $request->only([
             'name_ar',
             'name_en',
-            'url',
             'type',
-            'image' => $request->image === null ? null : $request->image,
+        ]);
 
-        ]));
-        return $result ;
+        // Check if 'image' is provided in the request
+        if ($request->type == 'image'||  $request->type == 'article') {
+            $updateData['image'] = $request->image;
+        } else {
+            $updateData['image'] = null;
+        }
+        // Check if 'url' is provided in the request
+        if ($request->type == 'video' || $request->type == 'article') {
+            $updateData['url'] = $request->url;
+        } else {
+            // If 'image' is not provided, set it to null
+            $updateData['url'] = null;
+        }
+
+
+        $result = $model->update($updateData);
+
+        return $result;
     }
-
 }
