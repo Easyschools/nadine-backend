@@ -33,8 +33,8 @@
 </template>
 
 <script>
-    import TheHeader from "./TheHeader";
-    import TheSideBar from "./TheSideBar";
+    import TheHeader from "./TheHeader.vue";
+    import TheSideBar from "./TheSideBar.vue";
     export default {
         name: "TheContainer",
         components: {TheSideBar, TheHeader}

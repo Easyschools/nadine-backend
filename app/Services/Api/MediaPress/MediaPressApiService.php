@@ -48,6 +48,7 @@ Class MediaPressApiService extends AppRepository
             'name_en',
             'image',
             'url',
+            'type',
         ]));
         return $model;
     }
@@ -62,7 +63,9 @@ Class MediaPressApiService extends AppRepository
         $result = $model->update($request->only([
             'name_ar',
             'name_en',
-            'image'
+            'image',
+            'url',
+            'type',
 
         ]));
         return $result;

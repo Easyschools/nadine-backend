@@ -95,6 +95,13 @@ class ProductApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getLimitedEdtion(ProductRequest $request)
+    {
+        $process = $this->productApiService->getLimitedEdtion($request);
+        return $this->sendResponse($process);
+    }
+    
+
     public function getLatest(ProductRequest $request)
     {
         $process = $this->productApiService->getLatest($request);

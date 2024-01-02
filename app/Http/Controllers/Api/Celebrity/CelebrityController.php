@@ -29,6 +29,7 @@ class CelebrityController extends Controller
 
     public function all(CelebrityRequest $request)
     {
+
         $process = $this->celebrityApiService->index($request);
         return $this->sendResponse($process);
     }
@@ -45,7 +46,7 @@ class CelebrityController extends Controller
     }
     public function edit(CelebrityRequest $request)
     {
-        $process = $this->celebrityApiService->editSlider($request);
+        $process = $this->celebrityApiService->editCelebrity($request);
         return $this->sendResponse($process);
     }
 }

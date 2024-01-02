@@ -13,6 +13,7 @@ class MediaPress extends Model
         'name_en',
         'image',
         'url',
+        'type',
       ];
 
       

@@ -28,6 +28,8 @@ class Product extends Model
         'collection_id',
         'tag_id',
         'material_id',
+        'best_selling',
+        'limited_edition',
     ];
 
     protected $appends = [

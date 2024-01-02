@@ -1,77 +1,82 @@
-import Vue from "vue";
-import Router from "vue-router";
+// import Vue from "vue";
+import Vue from 'vue/dist/vue.js';
+
+import VueRouter from "vue-router";
 import AuthMiddleware from "../router/middleware/auth";
 
-const originalPush = Router.prototype.push;
+const originalPush = VueRouter.prototype.push;
 
-Router.prototype.push = function push(location) {
+VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err);
 };
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-import categoryList from "./../views/category/List";
-import categoryEdit from "./../views/category/Edit";
-import materialList from "./../views/material/List";
-import materialEdit from "./../views/material/Edit";
-import collectionList from "./../views/collection/List";
-import collectionEdit from "./../views/collection/Edit";
+import categoryList from "./../views/category/List.vue";
+import categoryEdit from "./../views/category/Edit.vue";
+import materialList from "./../views/material/List.vue";
+import materialEdit from "./../views/material/Edit.vue";
+import collectionList from "./../views/collection/List.vue";
+import collectionEdit from "./../views/collection/Edit.vue";
 
-import dimensionList from "./../views/dimension/List";
-import dimensionEdit from "./../views/dimension/Edit";
-import informationList from "./../views/information/List";
-import informationEdit from "./../views/information/Edit";
-import informationCreate from "./../views/information/Create";
-import colorList from "./../views/color/List";
-import colorEdit from "./../views/color/Edit";
-import Home from "./../views/Home";
-import Login from "./../views/Login";
-import sliderList from "./../views/slider/List";
-import sliderCreate from "./../views/slider/Create";
-import sliderEdit from "./../views/slider/Edit";
-import brandList from "./../views/brand/List";
-import brandCreate from "./../views/brand/Create";
-import brandEdit from "./../views/brand/Edit";
-import couponList from "./../views/coupon/List";
-import couponCreate from "./../views/coupon/Create";
-import couponEdit from "./../views/coupon/Edit";
-import tagList from "./../views/tag/List";
-import tagCreate from "./../views/tag/Create";
-import tagEdit from "./../views/tag/Edit";
-import statusList from "./../views/status/List";
-import statusCreate from "./../views/status/Create";
-import statusEdit from "./../views/status/Edit";
-import offerList from "./../views/offer/List";
-import offerCreate from "./../views/offer/Create";
-import offerEdit from "./../views/offer/Edit";
-import cityList from "./../views/city/List";
-import cityCreate from "./../views/city/Create";
-import cityEdit from "./../views/city/Edit";
-import productList from "../views/product/List";
-import productCreate from "../views/product/Create";
-import productEdit from "../views/product/Edit";
-import orderList from "../views/order/List";
-import orderCreate from "../views/order/Create";
-import orderEdit from "../views/order/Edit";
-import orderShow from "../views/order/Show";
-import definitionList from "./../views/definition/List";
-import definitionCreate from "./../views/definition/Create";
-import definitionEdit from "./../views/definition/Edit";
-import lessonList from "./../views/lesson/List";
-import lessonCreate from "./../views/lesson/Create";
-import lessonEdit from "./../views/lesson/Edit";
-import customerList from "./../views/customer/List";
-import customerCreate from "./../views/customer/Create";
-import customerEdit from "./../views/customer/Edit";
-import exerciseList from "./../views/exercise/List";
-import exerciseCreate from "./../views/exercise/Create";
-import exerciseEdit from "./../views/exercise/Edit";
-import Messages from "./../views/message/List";
-import Favourites from "./../views/favourite/List";
+import dimensionList from "./../views/dimension/List.vue";
+import dimensionEdit from "./../views/dimension/Edit.vue";
+import informationList from "./../views/information/List.vue";
+import informationEdit from "./../views/information/Edit.vue";
+import informationCreate from "./../views/information/Create.vue";
+import colorList from "./../views/color/List.vue";
+import colorEdit from "./../views/color/Edit.vue";
+import Home from "./../views/Home.vue";
+import Login from "./../views/Login.vue";
+import sliderList from "./../views/slider/List.vue";
+import sliderCreate from "./../views/slider/Create.vue";
+import sliderEdit from "./../views/slider/Edit.vue";
+import celebrityList from "./../views/celebrity/List.vue";
+import celebrityCreate from "./../views/celebrity/Create.vue";
+import celebrityEdit from "./../views/celebrity/Edit.vue";
 
-const View = () => import("./../components/View");
+import brandList from "./../views/brand/List.vue";
+import brandCreate from "./../views/brand/Create.vue";
+import brandEdit from "./../views/brand/Edit.vue";
+import couponList from "./../views/coupon/List.vue";
+import couponCreate from "./../views/coupon/Create.vue";
+import couponEdit from "./../views/coupon/Edit.vue";
+import tagList from "./../views/tag/List.vue";
+import tagCreate from "./../views/tag/Create.vue";
+import tagEdit from "./../views/tag/Edit.vue";
+import statusList from "./../views/status/List.vue";
+import statusCreate from "./../views/status/Create.vue";
+import statusEdit from "./../views/status/Edit.vue";
+import offerList from "./../views/offer/List.vue";
+import offerCreate from "./../views/offer/Create.vue";
+import offerEdit from "./../views/offer/Edit.vue";
+import cityList from "./../views/city/List.vue";
+import cityCreate from "./../views/city/Create.vue";
+import cityEdit from "./../views/city/Edit.vue";
+import productList from "../views/product/List.vue";
+import productCreate from "../views/product/Create.vue";
+import productEdit from "../views/product/Edit.vue";
+import orderList from "../views/order/List.vue";
+import orderCreate from "../views/order/Create.vue";
+import orderEdit from "../views/order/Edit.vue";
+import orderShow from "../views/order/Show.vue";
+import definitionList from "./../views/definition/List.vue";
+import definitionCreate from "./../views/definition/Create.vue";
+import definitionEdit from "./../views/definition/Edit.vue";
+import lessonList from "./../views/lesson/List.vue";
+import lessonCreate from "./../views/lesson/Create.vue";
+import lessonEdit from "./../views/lesson/Edit.vue";
+import customerList from "./../views/customer/List.vue";
+import customerCreate from "./../views/customer/Create.vue";
+import customerEdit from "./../views/customer/Edit.vue";
+import exerciseList from "./../views/exercise/List.vue";
+import exerciseCreate from "./../views/exercise/Create.vue";
+import exerciseEdit from "./../views/exercise/Edit.vue";
+import Messages from "./../views/message/List.vue";
+import Favourites from "./../views/favourite/List.vue";
 
-const router = new Router({
+const View = () => import("./../components/View.vue");
+const router = new VueRouter({
     mode: "history",
     routes: configRoutes()
 });
@@ -81,7 +86,6 @@ router.beforeEach((to, from, next) => {
     }
     next(); // make sure to always call next()!
 });
-
 function configRoutes() {
     return [
         {
@@ -294,6 +298,26 @@ function configRoutes() {
                 {
                     path: "edit/:id",
                     component: sliderEdit
+                }
+            ]
+        },
+        {
+            path: "/admin/celebrity",
+            component: View,
+            redirect: "admin/celebrity/list",
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: "list",
+                    component: celebrityList
+                },
+                {
+                    path: "create",
+                    component: celebrityCreate
+                },
+                {
+                    path: "edit/:id",
+                    component: celebrityEdit
                 }
             ]
         },

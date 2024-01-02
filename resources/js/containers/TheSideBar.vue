@@ -4,8 +4,6 @@
             <div class="navbar-content scroll-div">
                 <button class="btn btn-outline-primary mt-2" id="closeSideBar" v-on:click="closeSideBar">close</button>
                 <ul class="nav pcoded-inner-navbar ">
-
-
                     <li class="nav-item pcoded-menu-caption">
                         <label>المناطق</label>
                     </li>
@@ -27,6 +25,14 @@
                                 <i class="fas fa-images"></i>
                             </span>
                             <span class="pcoded-mtext">صور الواجهة</span>
+                        </router-link>
+                    </li>
+                            <li class="nav-item pcoded-hasmenu">
+                        <router-link to="/admin/celebrity">
+                            <span class="pcoded-micon">
+                                <i class="fas fa-images"></i>
+                            </span>
+                            <span class="pcoded-mtext">مشاهير</span>
                         </router-link>
                     </li>
                     <li class="nav-item pcoded-hasmenu">

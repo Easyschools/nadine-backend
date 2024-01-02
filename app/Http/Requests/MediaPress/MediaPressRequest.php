@@ -47,6 +47,9 @@ class MediaPressRequest extends FormRequest
             'name_ar' => 'required|min:2|max:50',
             'name_en' => 'required|min:2|max:50',
             'image' => 'required|image',
+            'url' => 'nullable',
+            'type' => 'nullable',
+            
         ];
     }
 
@@ -54,9 +57,11 @@ class MediaPressRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:media_presses,id',
-            'name_ar' => 'required|min:2|max:25',
-            'name_en' => 'required|min:2|max:25',
-            'image' => 'required|min:2',
+            'name_ar' => 'required|min:2|max:50',
+            'name_en' => 'required|min:2|max:50',
+            'image' => 'required|image',
+            'url' => 'nullable',
+            'type' => 'nullable',
         ];
     }
 

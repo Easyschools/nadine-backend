@@ -44,8 +44,8 @@ class CelebrityRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_ar' => 'required|min:2|max:50',
-            'name_en' => 'required|min:2|max:50',
+            'name_ar' => 'required|min:2|max:100',
+            'name_en' => 'required|min:2|max:100',
             'image' => 'required|image',
         ];
     }
@@ -54,9 +54,9 @@ class CelebrityRequest extends FormRequest
     {
         return [
             'id' => 'required|exists:celebrities,id',
-            'name_ar' => 'required|min:2|max:25',
-            'name_en' => 'required|min:2|max:25',
-            'image' => 'required|min:2',
+            'name_ar' => 'required|min:2|max:100',
+            'name_en' => 'required|min:2|max:100',
+            'image' => 'nullable|min:2',
         ];
     }
 

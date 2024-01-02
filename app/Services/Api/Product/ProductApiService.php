@@ -247,6 +247,8 @@ class ProductApiService extends AppRepository
             'tag_id',
             'material_id',
             'tag_id',
+            'limited_edition',
+            'best_selling',
         ]));
 
         foreach ($request->variants as $variant) {
@@ -299,6 +301,8 @@ class ProductApiService extends AppRepository
             'tag_id',
             'material_id',
             'color_id',
+            'limited_edition',
+            'best_selling',
         ]));
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
@@ -435,9 +439,25 @@ class ProductApiService extends AppRepository
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
             ])
+            ->where('best_selling',1)
             ->withCount('orderItems')
-            ->orderBy('order_items_count', 'desc')->limit(10)->get();
+            ->orderBy('order_items_count', 'desc')->paginate();
 
         return $products;
     }
+    public function getLimitedEdtion($request)
+    {
+        $products = Product::select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->where('limited_edition',1)
+            ->withCount('orderItems')
+            ->orderBy('order_items_count', 'desc')->paginate();
+
+        return $products;
+    }
+    
 }

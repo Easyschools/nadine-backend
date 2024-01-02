@@ -313,6 +313,7 @@ Route::group([
         Route::get('search', [ProductApiController::class, 'search']);
 
         Route::get('best-sellers', [ProductApiController::class, 'getBestSellers']);
+        Route::get('limited-edition', [ProductApiController::class, 'getLimitedEdtion']);
         Route::get('latest', [ProductApiController::class, 'getLatest']);
         Route::post('import', [ProductApiController::class, 'import']);
         Route::get('export', [ProductApiController::class, 'export']);

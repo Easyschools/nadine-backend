@@ -199,7 +199,7 @@
 </template>
 
 <script>
-    import FormTesting from "../components/FormTesting";
+    import FormTesting from "../components/FormTesting.vue";
 
     export default {
         name: "Home",
