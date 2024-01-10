@@ -108,6 +108,12 @@ class ProductApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function getNewArrival(ProductRequest $request)
+    {
+        $process = $this->productApiService->getNewArrival($request);
+        return $this->sendResponse($process);
+    }
+
     public function import(ProductRequest $request)
     {
         Excel::import(new ProductsImport, $request->file('file'));

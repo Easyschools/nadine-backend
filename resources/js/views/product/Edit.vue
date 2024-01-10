@@ -143,6 +143,23 @@
 
                         </div>
 
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">جديد</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-check align-bottom mt-2">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input  align-bottom"
+                                        v-model="item.new_arrival"
+                                       
+                                    />
+                                </div>
+                                
+                            </div>
+                        </div>
+
 
                     </form>
                 </div>
@@ -317,6 +334,7 @@ export default {
                 slug: '',
                 images: [],
                 weight: 0,
+                new_arrival: '',
                 tag: {
                     category: {
                         id: null

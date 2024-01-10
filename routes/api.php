@@ -315,6 +315,7 @@ Route::group([
         Route::get('best-sellers', [ProductApiController::class, 'getBestSellers']);
         Route::get('limited-edition', [ProductApiController::class, 'getLimitedEdtion']);
         Route::get('latest', [ProductApiController::class, 'getLatest']);
+        Route::get('new-arrival', [ProductApiController::class, 'getNewArrival']);
         Route::post('import', [ProductApiController::class, 'import']);
         Route::get('export', [ProductApiController::class, 'export']);
     });
@@ -649,9 +650,9 @@ Route::group([
 });
 
 //////////////////////google sheet/////////////////////////////////////
-Route::get('sheet',[GoogleSheetController::class, 'updateSheet']);
-Route::get('delete-sheet',[GoogleSheetController::class, 'deleteSheet']);
-Route::get('handling',[HandlingController::class, 'handling'])->name('handling');
-Route::get('add-header',[GoogleSheetController::class, 'addHeaders']);
+Route::get('sheet', [GoogleSheetController::class, 'updateSheet']);
+Route::get('delete-sheet', [GoogleSheetController::class, 'deleteSheet']);
+Route::get('handling', [HandlingController::class, 'handling'])->name('handling');
+Route::get('add-header', [GoogleSheetController::class, 'addHeaders']);
 //////////////////////export//////////////////////////////////////////
-Route::get('export',[ExportProductsExcel::class, 'export']);
+Route::get('export', [ExportProductsExcel::class, 'export']);

@@ -249,6 +249,7 @@ class ProductApiService extends AppRepository
             'tag_id',
             'limited_edition',
             'best_selling',
+            'new_arrival'
         ]));
 
         foreach ($request->variants as $variant) {
@@ -256,6 +257,7 @@ class ProductApiService extends AppRepository
 
             $variantModel = Variant::firstOrCreate([
                 'color_id' => $variant['color_id'],
+                'additional_price' => $variant['additional_price'],
                 'dimension_id' => $variant['dimension_id'],
                 'product_id' => $product->id,
             ], []);
@@ -303,6 +305,7 @@ class ProductApiService extends AppRepository
             'color_id',
             'limited_edition',
             'best_selling',
+            'new_arrival'
         ]));
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
@@ -431,6 +434,8 @@ class ProductApiService extends AppRepository
             ->limit(5)->get();
     }
 
+  
+
     public function getBestSellers($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
@@ -456,6 +461,20 @@ class ProductApiService extends AppRepository
             ->where('limited_edition',1)
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->paginate();
+
+        return $products;
+    }
+    public function getNewArrival($request)
+    {
+        $products = Product::select('id', 'slug', 'name_en', 'name_ar')
+            ->with([
+                'variants:id,color_id,dimension_id,additional_price,product_id',
+                'variants.color:id,name_en,name_ar',
+                'variants.dimension:id,dimension',
+            ])
+            ->where('new_arrival',1)
+            ->withCount('orderItems')
+            ->orderBy('order_items_count', 'desc')->paginate(3);
 
         return $products;
     }
