@@ -8,6 +8,7 @@ use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
 use App\Models\Product\Product;
+use App\Models\Product\ProductDetail;
 use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 use App\ThirdParty\Pixel;
@@ -35,7 +36,7 @@ class ProductApiService extends AppRepository
 
         $this->setSortOrder($request->sort_order ?? 'asc');
         $this->setSortBy($request->sort_by ?? 'sku');
-        $this->setRelations(['material',
+        $this->setRelations(['productDetail','material',
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
                     'Color:id,name_en,name_ar,code,image',
@@ -74,7 +75,7 @@ class ProductApiService extends AppRepository
 
         $this->setSortOrder('asc');
         $this->setSortBy('sku');
-        $this->setRelations([
+        $this->setRelations(['productDetail',
             'variants' => function ($variant) {
                 $variant->select('product_id', 'dimension_id', 'id')->with(
                     'Dimension:id,dimension',
@@ -206,6 +207,7 @@ class ProductApiService extends AppRepository
     {
         Pixel::viewContent();
         $this->setRelations([
+            'productDetail',
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images']);
             },
@@ -251,6 +253,11 @@ class ProductApiService extends AppRepository
             'best_selling',
             'new_arrival'
         ]));
+        $productDetails = ProductDetail::create([
+            'details'=>$request->product_details,
+            'image'=>$request->product_details_image,
+            'product_id'=>$product->id
+        ]);
 
         foreach ($request->variants as $variant) {
             $variant = $this->createDimension($variant);
@@ -307,6 +314,11 @@ class ProductApiService extends AppRepository
             'best_selling',
             'new_arrival'
         ]));
+        $productDetails = ProductDetail::where('product_id', $request->id)->first();
+        $productDetails->update([
+            'details'=>$request->product_details,
+            'image'=>$request->product_details_image  
+        ]);
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr = [];
@@ -402,7 +414,7 @@ class ProductApiService extends AppRepository
         else $name = 'name_en';
 
 
-        $products = Product::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
+        $products = Product::query()->where($name, 'LIKE', '%' . $request->search . '%')->with('productdetail')->get();
         $categories = Category::query()->where($name, 'LIKE', '%' . $request->search . '%')->get();
         $tags = Tag::query()->with(['category'])->where($name, 'LIKE', '%' . $request->search . '%')->get();
 
@@ -415,7 +427,7 @@ class ProductApiService extends AppRepository
 
     public function offers($request)
     {
-        $this->setRelations(['offers']);
+        $this->setRelations(['offers', 'productDetail']);
 
         $products = Product::paginate(15);
 
@@ -426,7 +438,7 @@ class ProductApiService extends AppRepository
     {
         return Product::orderBy('created_at', 'desc')
             ->select('id', 'slug', 'name_en', 'name_ar', 'price', 'price_after_discount', 'sku', 'tag_id')
-            ->with([
+            ->with(['productDetail',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
@@ -439,7 +451,7 @@ class ProductApiService extends AppRepository
     public function getBestSellers($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
-            ->with([
+            ->with(['productDetail',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
@@ -453,7 +465,7 @@ class ProductApiService extends AppRepository
     public function getLimitedEdtion($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
-            ->with([
+            ->with(['productDetail',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
@@ -467,7 +479,7 @@ class ProductApiService extends AppRepository
     public function getNewArrival($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
-            ->with([
+            ->with(['productDetail',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',

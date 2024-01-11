@@ -37,6 +37,23 @@ class CustomerApiAuthService extends AppRepository
             'type' => 2,
             'verified_code' => $verified_code
         ]);
+
+        if ($request->type_login == 'customer') {
+            $user = $this->createCustomerUser($request, $verified_code);
+        } elseif ($request->type_login == 'guest') {
+
+            $user = $this->createGuestUser($verified_code);
+        }
+
+        unset($user['verified_code']);
+        $user['type_login'] = $request->type_login;
+        $user['token'] = $user->createToken('Customer Token')->accessToken;
+
+        return $user;
+    }
+
+    private function createCustomerUser($request, $verified_code)
+    {
         $user = $this->model->create(
             array_merge($request->only(
                 'name',
@@ -51,8 +68,33 @@ class CustomerApiAuthService extends AppRepository
             ])
         );
 
-        unset($user['verified_code']);
-        $user['token'] = $user->createToken('Customer Token')->accessToken;
+        return $user;
+    }
+
+    private function createGuestUser($verified_code)
+    {
+        $email = Str::random(10) . '@example.com';
+        $phone = '555-' . Str::random(7);
+        $randomNumber = rand(1000, 9999);
+
+        // Ensure the generated email is unique
+        while (User::where('email', $email)->exists()) {
+            $email = Str::random(10) . '@example.com';
+        }
+
+        // Ensure the generated phone number is unique
+        while (User::where('phone', $phone)->exists()) {
+            $phone = '01' . Str::random(9);
+        }
+        $user = $this->model->create([
+            'name' => 'Guest' . $randomNumber,
+            'phone' => $phone,
+            'password' => 12345678,
+            'type' => 2,
+            'email' => $email,
+            'image' => null,
+            'verified_code' => $verified_code,
+        ]);
         return $user;
     }
 

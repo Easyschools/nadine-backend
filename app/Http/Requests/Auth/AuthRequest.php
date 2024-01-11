@@ -45,13 +45,23 @@ class AuthRequest extends FormRequest
 
     private function registerRules()
     {
-        //        var_dump($this);
-        return [
-            'name' => 'required',
-            'phone' => 'required|digits:11|unique:users,phone',
-            'email' => 'required|unique:users,email',
-            'password' => 'required|min:8|confirmed'
+        $rules = [
+            'name' => 'nullable',
+            'phone' => 'nullable|digits:11|unique:users,phone',
+            'email' => 'nullable|unique:users,email',
+            'password' => 'nullable|min:8|confirmed',
+            'type_login' => 'required|in:customer,guest',
         ];
+
+        // If type_login is 'customer', make all fields required
+        if ($this->all()['type_login'] === 'customer') {
+            $rules['name'] = 'required';
+            $rules['phone'] = 'required|digits:11|unique:users,phone';
+            $rules['email'] = 'required|unique:users,email';
+            $rules['password'] = 'required|min:8|confirmed';
+        }
+
+        return $rules;
     }
 
     private function loginRules()

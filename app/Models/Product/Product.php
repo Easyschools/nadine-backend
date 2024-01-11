@@ -216,4 +216,9 @@ class Product extends Model
             // 'currency' => $this->currency->code,
         ];
     }
+
+    public function productDetail()
+    {
+        return $this->hasOne(ProductDetail::class, 'product_id', 'id');
+    }
 }

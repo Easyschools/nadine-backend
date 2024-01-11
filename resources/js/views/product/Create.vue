@@ -184,18 +184,78 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
+                                <label class="col-form-label"
+                                    >تفاصيل المنتج
+                                </label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    v-model="item.product_details"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label"
+                                    >صورة المنتج
+                                </label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    @change="handleFileChange"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-3">
                                 <label class="col-form-label">جديد</label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="form-check align-bottom mt-2">
                                     <input
                                         type="checkbox"
-                                        class="form-check-input  align-bottom"
+                                        class="form-check-input align-bottom"
                                         v-model="item.new_arrival"
-                                       
                                     />
                                 </div>
-                                
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">منتج محدود</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-check align-bottom mt-2">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input align-bottom"
+                                        v-model="item.limited_edition"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="col-form-label">
+                                    افضل مبيعا</label
+                                >
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="form-check align-bottom mt-2">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input align-bottom"
+                                        v-model="item.best_selling"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -430,6 +490,10 @@ export default {
                 collection: "",
                 price: null,
                 new_arrival: 0,
+                best_selling: 0,
+                limited_edition: 0,
+                product_details_image: null,
+                product_details: null,
                 // image: null,
                 variants: [
                     {
@@ -490,6 +554,32 @@ export default {
         this.getDimension();
     },
     methods: {
+        handleFileChange(event) {
+            const file = event.target.files[0];
+
+            // Update the data property with the selected file
+            this.item.product_details_image = file;
+
+            // You can also preview the image if needed
+            this.previewImage(file);
+        },
+
+        previewImage(file) {
+            // Perform image preview logic if needed
+            // For example, using FileReader to display a preview
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                // Access the image URL
+                const imageUrl = e.target.result;
+
+                // Update the image preview logic here
+                // For example, setting a preview image in your component
+                // this.previewImageUrl = imageUrl;
+            };
+
+            reader.readAsDataURL(file);
+        },
         getCategory() {
             axios
                 .get("category/all")
@@ -539,10 +629,10 @@ export default {
                 .catch((err) => console.log(err));
         },
         createItem() {
-          // console.log(.this.item.new_arrival);
+            // console.log(.this.item.new_arrival);
             this.disableButton = true;
             let data = this.getFormData();
-             console.log(data);
+            console.log(data);
 
             axios
                 .post("/product/create", data)

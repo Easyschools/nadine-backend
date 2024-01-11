@@ -31,6 +31,7 @@ class CustomerApiAuthController extends Controller
 
     public function register(AuthRequest $request)
     {
+        
         $user = $this->authService->register($request, $this->verified_code);
 
         // send sms message
