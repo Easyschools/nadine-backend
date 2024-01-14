@@ -182,7 +182,7 @@
                             </div>
                         </div>
 
-                        <div class="row form-group">
+                        <!-- <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
                                     >تفاصيل المنتج
@@ -210,7 +210,7 @@
                                     @change="handleFileChange"
                                 />
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row form-group">
                             <div class="col-sm-3">
@@ -492,8 +492,8 @@ export default {
                 new_arrival: 0,
                 best_selling: 0,
                 limited_edition: 0,
-                product_details_image: null,
-                product_details: null,
+                // product_details_image: null,
+                // product_details: null,
                 // image: null,
                 variants: [
                     {
@@ -554,32 +554,32 @@ export default {
         this.getDimension();
     },
     methods: {
-        handleFileChange(event) {
-            const file = event.target.files[0];
+        // handleFileChange(event) {
+        //     const file = event.target.files[0];
 
-            // Update the data property with the selected file
-            this.item.product_details_image = file;
+        //     // Update the data property with the selected file
+        //     this.item.product_details_image = file;
 
-            // You can also preview the image if needed
-            this.previewImage(file);
-        },
+        //     // You can also preview the image if needed
+        //     this.previewImage(file);
+        // },
 
-        previewImage(file) {
-            // Perform image preview logic if needed
-            // For example, using FileReader to display a preview
-            const reader = new FileReader();
+        // previewImage(file) {
+        //     // Perform image preview logic if needed
+        //     // For example, using FileReader to display a preview
+        //     const reader = new FileReader();
 
-            reader.onload = (e) => {
-                // Access the image URL
-                const imageUrl = e.target.result;
+        //     reader.onload = (e) => {
+        //         // Access the image URL
+        //         const imageUrl = e.target.result;
 
-                // Update the image preview logic here
-                // For example, setting a preview image in your component
-                // this.previewImageUrl = imageUrl;
-            };
+        //         // Update the image preview logic here
+        //         // For example, setting a preview image in your component
+        //         // this.previewImageUrl = imageUrl;
+        //     };
 
-            reader.readAsDataURL(file);
-        },
+        //     reader.readAsDataURL(file);
+        // },
         getCategory() {
             axios
                 .get("category/all")

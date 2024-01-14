@@ -196,7 +196,7 @@
                             </div>
                         </div>
 
-                         <div class="row form-group">
+                         <!-- <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
                                     >تفاصيل المنتج
@@ -209,9 +209,9 @@
                                     v-model="item.product_details"
                                 />
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="row form-group">
+                        <!-- <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
                                     >صورة المنتج
@@ -224,7 +224,7 @@
                                     @change="handleFileChange"
                                 />
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row form-group">
                             <div class="col-sm-3">
@@ -513,8 +513,8 @@ export default {
                 new_arrival: "",
                 best_selling: "",
                 limited_edition: "",
-                product_details_image: null,
-                product_details: null,
+                // product_details_image: null,
+                // product_details: null,
                 tag: {
                     category: {
                         id: null,
@@ -591,32 +591,32 @@ export default {
         this.getDimension();
     },
     methods: {
-          handleFileChange(event) {
-            const file = event.target.files[0];
+        //   handleFileChange(event) {
+        //     const file = event.target.files[0];
 
-            // Update the data property with the selected file
-            this.item.product_details_image = file;
+        //     // Update the data property with the selected file
+        //     this.item.product_details_image = file;
 
-            // You can also preview the image if needed
-            this.previewImage(file);
-        },
+        //     // You can also preview the image if needed
+        //     this.previewImage(file);
+        // },
 
-        previewImage(file) {
-            // Perform image preview logic if needed
-            // For example, using FileReader to display a preview
-            const reader = new FileReader();
+        // previewImage(file) {
+        //     // Perform image preview logic if needed
+        //     // For example, using FileReader to display a preview
+        //     const reader = new FileReader();
 
-            reader.onload = (e) => {
-                // Access the image URL
-                const imageUrl = e.target.result;
+        //     reader.onload = (e) => {
+        //         // Access the image URL
+        //         const imageUrl = e.target.result;
 
-                // Update the image preview logic here
-                // For example, setting a preview image in your component
-                // this.previewImageUrl = imageUrl;
-            };
+        //         // Update the image preview logic here
+        //         // For example, setting a preview image in your component
+        //         // this.previewImageUrl = imageUrl;
+        //     };
 
-            reader.readAsDataURL(file);
-        },
+        //     reader.readAsDataURL(file);
+        // },
         getCategory() {
             axios
                 .get("category/all")
@@ -752,22 +752,31 @@ export default {
             return formData;
         },
 
-        uploadVariantImage(index) {
-            const input = this.$refs["mainImages" + index][0];
-            const images = input.files;
+        // uploadVariantImage(index) {
+        //     const input = this.$refs["mainImages" + index][0];
+        //     const images = input.files;
 
-            // Check if images were uploaded
-            if (images && images.length > 0) {
-                this.item.variants[index].images = [];
-                Array.from(images).forEach((item, indx) => {
-                    this.item.variants[index].images.push(item);
-                });
-                console.log(this.item.variants[index].images);
-            } else {
-                // If no images are uploaded, set images to an empty array or handle accordingly
-                this.item.variants[index].images = [];
-                console.log("No images uploaded for variant " + index);
-            }
+        //     // Check if images were uploaded
+        //     if (images && images.length > 0) {
+        //         this.item.variants[index].images = [];
+        //         Array.from(images).forEach((item, indx) => {
+        //             this.item.variants[index].images.push(item);
+        //         });
+        //         console.log(this.item.variants[index].images);
+        //     } else {
+        //         // If no images are uploaded, set images to an empty array or handle accordingly
+        //         this.item.variants[index].images = [];
+        //         console.log("No images uploaded for variant " + index);
+        //     }
+        // },
+
+        uploadVariantImage(index) {
+            // console.log(this.$refs['mainImages'+index][index].files[0])
+            console.log(this.$refs['mainImages' + index][0])
+            Array.from(this.$refs['mainImages' + index][0].files).forEach((item, indx) => {
+                this.item.variants[index].images.push(item);
+                console.log(this.item.variants[index].images)
+            });
         },
 
         //     uploadVariantImage(index) {

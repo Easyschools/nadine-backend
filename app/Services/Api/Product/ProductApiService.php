@@ -253,11 +253,7 @@ class ProductApiService extends AppRepository
             'best_selling',
             'new_arrival'
         ]));
-        $productDetails = ProductDetail::create([
-            'details'=>$request->product_details,
-            'image'=>$request->product_details_image,
-            'product_id'=>$product->id
-        ]);
+       
 
         foreach ($request->variants as $variant) {
             $variant = $this->createDimension($variant);
@@ -314,20 +310,39 @@ class ProductApiService extends AppRepository
             'best_selling',
             'new_arrival'
         ]));
-        $productDetails = ProductDetail::where('product_id', $request->id)->first();
-        $productDetails->update([
-            'details'=>$request->product_details,
-            'image'=>$request->product_details_image  
-        ]);
+      
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr = [];
         //        dd($request->variants);
+        // foreach ($request->variants as $index => $variant) {
+
+        //     $variant = $this->createDimension($variant, 'dimension_value');
+
+        //     if (isset($variant['id']) && $variant['id']) {
+
+        //         $variantModel = $this->variantRepo->find($variant['id']);
+        //         $variantModel->update($variant);
+
+        //         $this->updateImagesOfVariants($variant, $variantModel);
+
+        //         $arr[] = $variant['id'];
+        //     } else {
+        //         $variantModel = Variant::firstOrCreate([
+        //             'color_id' => $variant['color_id'],
+        //             'dimension_id' => $variant['dimension_id'],
+        //             'product_id' => $product->id,
+        //             'additional_price' => $variant['additional_price'],
+        //         ], []);
+
+        //         $this->updateImagesOfVariants($variant, $variantModel);
+        //     }
+        // }
+
         foreach ($request->variants as $index => $variant) {
 
             $variant = $this->createDimension($variant, 'dimension_value');
-
-            if (isset($variant['id']) && $variant['id']) {
+            if ($variant['id']) {
 
                 $variantModel = $this->variantRepo->find($variant['id']);
                 $variantModel->update($variant);
@@ -336,12 +351,9 @@ class ProductApiService extends AppRepository
 
                 $arr[] = $variant['id'];
             } else {
-                $variantModel = Variant::firstOrCreate([
-                    'color_id' => $variant['color_id'],
-                    'dimension_id' => $variant['dimension_id'],
+                $variantModel = Variant::create(array_merge($variant, [
                     'product_id' => $product->id,
-                    'additional_price' => $variant['additional_price'],
-                ], []);
+                ]));
 
                 $this->updateImagesOfVariants($variant, $variantModel);
             }

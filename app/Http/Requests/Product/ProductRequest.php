@@ -103,9 +103,9 @@ class ProductRequest extends FormRequest
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
             
-            'variants.*.images' => 'nullable|array',
+            // 'variants.*.images' => 'nullable|array',
             // 'variants.*.images.*' => 'image',
-            'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            // 'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'variants.*.dimension_value' => 'nullable',
             'variants.*.additional_price' => 'required|numeric',
         ];
