@@ -36,6 +36,7 @@ use App\Http\Controllers\Api\Slider\SliderApiController;
 use App\Http\Controllers\Api\GoogleSheet\GoogleSheetController;
 use App\Http\Controllers\Api\GoogleSheet\HandlingController;
 use App\Http\Controllers\Api\MediaPress\MediaPressApiController;
+use App\Http\Controllers\HighJewellery\HighJewelleryCollectionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -355,6 +356,21 @@ Route::group([
     ], function () {
         Route::get('all', [CollectionApiController::class, 'all']);
         Route::get('get', [CollectionApiController::class, 'read']);
+    });
+
+    Route::group([
+        'prefix' => 'high-jewellery',
+    ], function () {
+        Route::group([
+            'prefix' => 'collection',
+        ], function () {
+            Route::post('create', [HighJewelleryCollectionsController::class, 'create']);
+            Route::post('update', [HighJewelleryCollectionsController::class, 'update']);
+            Route::get('all', [HighJewelleryCollectionsController::class, 'all']);
+            Route::get('get/{collection_id}', [HighJewelleryCollectionsController::class, 'get']);
+            Route::get('filter', [HighJewelleryCollectionsController::class, 'filter']);
+
+        });
     });
 
     Route::group([
