@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">حالات الطلب </h5>
+                <h5 style="font-size: 35px">{{translations.status.status}} </h5>
                 <router-link
                     to="/admin/status/create"
                     class="btn btn-outline-primary float-right">
-                    اضافة جديد
+                    {{translations.general.add}}
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -15,10 +15,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم بالعربية</th>
-                            <th>الاسم بالانجليزية</th>
-                            <th>الحالات</th>
-                            <th>الخيارات</th>
+                            <th>{{translations.general.nameAr}}</th>
+                            <th>{{translations.general.nameEn}}</th>
+                            <th>{{translations.status.status}}</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -26,14 +26,14 @@
                             <td>{{item.id}}</td>
                             <td>{{item.name_ar}}</td>
                             <td>{{item.name_en}}</td>
-                            <td v-if="item.type == 'active'">نشطة</td>
-                            <td v-else-if="item.type == 'inactive'">غير نشطة</td>
+                            <td v-if="item.type == 'active'">{{translations.status.active}}</td>
+                            <td v-else-if="item.type == 'inactive'">{{translations.status.inActive}}</td>
                             <td v-else></td>
                             <td>
                                 <router-link
                                     :to="{path:'/admin/status/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >{{translations.general.edit}}
                                 </router-link>
                                 <!--<button type="button"-->
                                         <!--@click="deleteItem(item.id,index)"-->

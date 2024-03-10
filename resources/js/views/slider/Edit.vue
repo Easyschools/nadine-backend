@@ -3,13 +3,13 @@
     <div class="offset-2 col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5>تعديل واجهة المستخدم</h5>
+          <h5>{{translations.general.edit}} {{translations.slider.sliderImage}}</h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالعربية</label>
+                <label class="col-form-label">{{translations.general.nameAr}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_ar" />
@@ -17,7 +17,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالانجليزية</label>
+                <label class="col-form-label">{{translations.general.nameEn}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_en" />
@@ -26,7 +26,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الوصف بالعربية</label>
+                <label class="col-form-label">{{translations.general.descriptionAr}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.text_ar" />
@@ -34,7 +34,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الوصف بالانجليزية</label>
+                <label class="col-form-label">{{translations.general.descriptionEn}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.text_en" />
@@ -47,15 +47,15 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">صورة</label>
+                <label class="col-form-label">{{translations.general.image}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control" />
               </div>
             </div>
             <div class="text-center mt-5">
-              <router-link to="/admin/slider" class="btn btn-secondary">الغاء</router-link>
-              <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
+              <router-link to="/admin/slider" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+              <button type="button" @click="editItem()" class="btn btn-primary">{{translations.general.edit}}</button>
             </div>
           </form>
         </div>

@@ -2,14 +2,14 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">Colors</h5>
+                <h5 style="font-size: 35px">{{translations.color.colors}}</h5>
                 <button
                     type="button"
                     data-toggle="modal" data-target="#exampleModal"
                     data-backdrop="static" data-keyboard="false"
                     data-whatever="@getbootstrap"
                     class="btn btn-outline-primary float-right">
-                    اضافة جديد
+                    {{translations.general.add}}
                 </button>
             </div>
             <div class="card-body table-border-style">
@@ -18,10 +18,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم بالعربية</th>
-                            <th>الاسم بالانجليزية</th>
-                            <th>الصورة</th>
-                            <th>الخيارات</th>
+                            <th>{{translations.general.nameAr}}</th>
+                            <th>{{translations.general.nameEn}}</th>
+                            <th>{{translations.general.image}}</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,11 +44,11 @@
                                 <router-link
                                     :to="{path:'/admin/color/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >{{translations.general.edit}}
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">{{translations.general.delete}}
                                 </button>
                             </td>
                         </tr>
@@ -68,7 +68,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">اضافة جديد Color</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">{{translations.general.add}} {{translations.color.colors}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -76,12 +76,12 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">الاسم بالعربية:</label>
+                                    <label for="recipient-name" class="col-form-label">{{translations.general.nameAr}}:</label>
                                     <input type="text" v-model="newItem.name_ar" class="form-control"
                                            id="recipient-name">
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">الاسم بالانجليزية:</label>
+                                    <label class="col-form-label">{{translations.general.nameEn}}:</label>
                                     <input type="text" v-model="newItem.name_en" class="form-control"
                                            id="recipient-name_ar">
 
@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-form-label">الصورة:</label>
+                                    <label class="col-form-label">{{translations.general.image}}:</label>
                                     <input type="file" ref="myImage" v-on:change="attachImage"
                                            class="form-control"
                                            id="recipient-image">
@@ -107,8 +107,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="button" @click="createItem()" class="btn btn-primary">Add</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{translations.general.cancel}}</button>
+                            <button type="button" @click="createItem()" class="btn btn-primary">{{translations.general.add}}</button>
                         </div>
                     </div>
                 </div>

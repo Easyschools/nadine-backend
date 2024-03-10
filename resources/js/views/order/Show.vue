@@ -3,12 +3,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>تفاصيل الطلب</h5>
+          <h5>{{translations.general.show}} {{translations.order.orders}}</h5>
         </div>
         <div class="card-body">
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">الكود</label>
+              <label class="col-form-label">{{translations.order.code}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.code}}</div>
@@ -16,7 +16,7 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">المستخدم</label>
+              <label class="col-form-label">{{translations.order.user}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.user.name}}</div>
@@ -25,7 +25,7 @@
 
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">رقم التلفون</label>
+              <label class="col-form-label">{{translations.order.phone}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.user.phone}}</div>
@@ -34,7 +34,7 @@
 
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">العنوان</label>
+              <label class="col-form-label">{{translations.order.address}}</label>
             </div>
 
             <div class="col-sm-9">
@@ -43,7 +43,7 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">حالة الطلب</label>
+              <label class="col-form-label">{{translations.order.status}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{getCurrentStatus()}}</div>
@@ -51,24 +51,24 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">كوبون</label>
+              <label class="col-form-label">{{translations.order.copoun}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{getCurrentCoupon()}}</div>
             </div>
           </div>
-          <div class="row form-group">
+          <!-- <div class="row form-group">
             <div class="col-sm-3">
               <label class="col-form-label">كوبون</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{getCurrentCoupon()}}</div>
             </div>
-          </div>
+          </div> -->
 
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">نوع الدفع</label>
+              <label class="col-form-label">{{translations.order.typeOfPayment}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{getCurrentPaymentType()}}</div>
@@ -76,7 +76,7 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">القيمة الكلية</label>
+              <label class="col-form-label">{{translations.order.TheAmountPaid}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.subtotal}}</div>
@@ -84,7 +84,7 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">سعر الكوبون</label>
+              <label class="col-form-label">{{translations.order.couponPrice}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.coupon_price}}</div>
@@ -92,7 +92,7 @@
           </div>
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">تكلفة التوصيل</label>
+              <label class="col-form-label">{{translations.order.deliveryCost}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.shipping_price}}</div>
@@ -101,7 +101,7 @@
 
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">المبلغ المدفوع</label>
+              <label class="col-form-label">{{translations.order.theAmountPaid}}</label>
             </div>
             <div class="col-sm-9">
               <div class="form-control">{{item.grand_total}}</div>
@@ -111,11 +111,11 @@
       </div>
     </div>
     <div class="col-md-12">
-      <h1 class="card-header" v-if="item.order_items.length > 0">المنتجات</h1>
+      <h1 class="card-header" v-if="item.order_items.length > 0">{{translations.product.product}}</h1>
       <div class="card" v-for="(item, index) in item.order_items" :key="index">
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">رابط المنتج</label>
+            <label class="col-form-label"> {{translations.product.product}} {{translations.journalisticMedia.link}}</label>
           </div>
           <div class="col-sm-9">
             <div class="form-control">
@@ -130,7 +130,7 @@
 
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">اسم المنتج</label>
+            <label class="col-form-label">{{translations.product.product}} {{translations.general.name}} </label>
           </div>
           <div class="col-sm-9">
             <div
@@ -140,7 +140,7 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">صورة المنتج</label>
+            <label class="col-form-label">{{translations.product.product}} {{translations.general.image}}</label>
           </div>
           <div class="col-sm-9">
             <img :src="item.variant.image" alt class="img-thumbnail" width="200px" height="200px" />
@@ -149,7 +149,7 @@
 
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">الكميه</label>
+            <label class="col-form-label">{{translations.order.amount}}</label>
           </div>
           <div class="col-sm-9">
             <div class="form-control">{{item.quantity}}</div>
@@ -158,7 +158,7 @@
 
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">السعر قبل الخصم</label>
+            <label class="col-form-label">{{translations.product.priceAfterDiscount}}</label>
           </div>
           <div class="col-sm-9">
             <div class="form-control">{{item.variant.product.price}}</div>
@@ -167,7 +167,7 @@
 
         <div class="form-group row">
           <div class="col-sm-3">
-            <label class="col-form-label">اجمالى السعر</label>
+            <label class="col-form-label">{{translations.product.totalPrice}}</label>
           </div>
           <div class="col-sm-9">
             <div class="form-control">{{item.total_item_price}}</div>
@@ -175,8 +175,8 @@
         </div>
       </div>
       <div class="text-center">
-        <router-link to="/admin/order" class="btn btn-secondary">الغاء</router-link>
-        <router-link :to="`/admin/order/edit/${item.id}`" class="btn btn-primary">تعديل</router-link>
+        <router-link to="/admin/order" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+        <router-link :to="`/admin/order/edit/${item.id}`" class="btn btn-primary">{{translations.general.edit}}</router-link>
       </div>
     </div>
   </div>

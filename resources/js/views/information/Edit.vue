@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل معلومات الاتصال</h5>
+                    <h5>{{translations.general.edit}} {{translations.contact.contact}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -11,7 +11,7 @@
                         <div class="row form-group" v-for="(phone,key) in item.phone" :key="key">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">التليفون  {{key+1}}</label>
+                                <label class="col-form-label">{{translations.contact.phone}}  {{key+1}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.phone[key]">
@@ -21,7 +21,7 @@
                         <div class="row form-group" v-for="(email,key) in item.email" :key="key">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">البريد الالكترونى</label>
+                                <label class="col-form-label">{{translations.contact.email}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.email[key]">
@@ -41,7 +41,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addAddress()">
-                    اضافة جديد عناوين
+                    {{translations.general.add}} {{translations.contact.newAddress}}
                 </button>
             </div>
 
@@ -56,7 +56,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#address'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        عنوان {{ index }}
+                                        {{translations.contact.address}} {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -71,7 +71,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                عنوان {{ index }}
+                                                {{translations.contact.address}} {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -87,7 +87,7 @@
 
 
                                            <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">العنوان</label>
+                                                <label style="font-weight: bold;">{{translations.contact.address}}</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <input type="text" class="form-control" v-model="address.address"/>
@@ -111,14 +111,13 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/information" class="btn btn-secondary">
-                    الغاء
+                    {{translations.general.delete}}
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    اضافة
+                    {{translations.general.add}}
                 </button>
             </div>
         </div>
-
     </div>
 </template>
 

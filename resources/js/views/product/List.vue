@@ -2,11 +2,11 @@
   <div class="col-md-12">
     <div class="card" style="min-height: 720px">
       <div class="card-header">
-        <h5 style="font-size: 35px">منتجات</h5>
+        <h5 style="font-size: 35px">{{translations.product.product}}</h5>
         <router-link
           to="/admin/product/create"
           class="btn btn-outline-primary float-right"
-        >اضافة جديد</router-link>
+        >{{translations.general.add}}</router-link>
       </div>
       <div class="card-body table-border-style">
         <div class="table-responsive text-center">
@@ -14,7 +14,7 @@
             <div class="col-md-4">
               <div id="report-2" class="dataTables_filter">
                 <label>
-                  الرقم:
+                  {{translations.product.number}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -29,7 +29,7 @@
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
                 <label>
-                  الاسم:
+                  {{translations.general.name}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -44,7 +44,7 @@
             <div class="col-md-4">
               <div id class="dataTables_filter">
                 <label>
-                  الفئة:
+                  {{translations.category.categories}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -59,7 +59,7 @@
             <div class="col-md-4">
               <div id class="dataTables_filter">
                 <label>
-                  النوع:
+                  {{translations.product.type}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -76,14 +76,14 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Sku</th>
-                <th>الاسم بالعربية</th>
-                <th>الاسم بالانجليزية</th>
-                <th>النوع</th>
-                <th>الفئة</th>
-                <th>السعر</th>
-                <th>الصورة</th>
-                <th>الخيارات</th>
+                <th>{{translations.product.sku}}</th>
+                <th>{{translations.general.nameAr}}</th>
+                <th>{{translations.general.nameEn}}</th>
+                <th>{{translations.product.type}}</th>
+                <th>{{translations.category.categories}}</th>
+                <th>{{translations.product.price}}</th>
+                <th>{{translations.general.image}}</th>
+                <th>{{translations.general.options}}</th>
               </tr>
             </thead>
             <tbody>
@@ -111,12 +111,12 @@
                                      page: currentPage,
                                      }}"
                     class="btn btn-outline-warning"
-                  >تعديل</router-link>
+                  >{{translations.general.edit}}</router-link>
                   <button
                     type="button"
                     @click="deleteItem(item.id,index)"
                     class="btn btn-outline-danger"
-                  >حذف</button>
+                  >{{translations.general.delete}}</button>
                 </td>
               </tr>
             </tbody>

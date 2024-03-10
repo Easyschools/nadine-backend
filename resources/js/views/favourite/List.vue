@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">المُفضلة</h5>
+                <h5 style="font-size: 35px">{{translations.favourite.favourite}}</h5>
 
             </div>
             <div class="card-body table-border-style">
@@ -11,8 +11,8 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>المستخدم</th>
-                            <th>Slug المنتج</th>
+                            <th>{{translations.favourite.user}}</th>
+                            <th>Slug {{translations.product.product}}</th>
                         </tr>
                         </thead>
                         <tbody>

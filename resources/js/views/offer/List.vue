@@ -2,8 +2,8 @@
   <div class="col-md-12">
     <div class="card" style="min-height: 720px">
       <div class="card-header">
-        <h5 style="font-size: 35px">العروض</h5>
-        <router-link to="/admin/offer/create" class="btn btn-outline-primary float-right">اضافة جديد</router-link>
+        <h5 style="font-size: 35px">{{translations.offer.offer}}</h5>
+        <router-link to="/admin/offer/create" class="btn btn-outline-primary float-right">{{translations.general.add}}</router-link>
       </div>
       <div class="card-body table-border-style">
         <div class="table-responsive text-center">
@@ -11,14 +11,14 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>الاسم بالعربية</th>
-                <th>الاسم بالانجليزية</th>
+                <th>{{translations.general.nameAr}}</th>
+                <th>{{translations.general.nameEn}}</th>
 
-                <th>نسبة مئوية</th>
-                <th>التخفيض</th>
-                <th>تاريخ الانتهاء</th>
-                <th>الفئة</th>
-                <th>الخيارات</th>
+                <th>{{translations.offer.percentage}}</th>
+                <th>{{translations.offer.discount}}</th>
+                <th>{{translations.offer.expireDate}}</th>
+                <th>{{translations.category.categories}}</th>
+                <th>{{translations.general.options}}</th>
               </tr>
             </thead>
             <tbody>
@@ -35,12 +35,12 @@
                   <router-link
                     :to="{path:'/admin/offer/edit/' +item.id,params: { id: item.id }}"
                     class="btn btn-outline-warning"
-                  >تعديل</router-link>
+                  >{{translations.general.edit}}</router-link>
                   <button
                     type="button"
                     @click="deleteItem(item.id,index)"
                     class="btn btn-outline-danger"
-                  >حذف</button>
+                  >{{translations.general.delete}}</button>
                 </td>
               </tr>
             </tbody>

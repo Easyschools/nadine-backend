@@ -11,26 +11,26 @@
         </button>
         <ul class="nav pcoded-inner-navbar">
           <li class="nav-item pcoded-menu-caption">
-            <label>المناطق</label>
+            <label>{{translations.city.area}}</label>
           </li>
           <li class="nav-item pcoded-hasmenu">
             <router-link to="/admin/city">
               <span class="pcoded-micon">
                 <i class="fas fa-city"></i>
               </span>
-              <span class="pcoded-mtext">المدن</span>
+              <span class="pcoded-mtext">{{translations.sidebar.city}}</span>
             </router-link>
           </li>
 
           <li class="nav-item pcoded-menu-caption">
-            <label>الواجهات</label>
+            <label>{{translations.sidebar.slider}}</label>
           </li>
           <li class="nav-item pcoded-hasmenu">
             <router-link to="/admin/slider">
               <span class="pcoded-micon">
                 <i class="fas fa-images"></i>
               </span>
-              <span class="pcoded-mtext">صور الواجهة</span>
+              <span class="pcoded-mtext">{{translations.sidebar.slider}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -38,7 +38,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-images"></i>
               </span>
-              <span class="pcoded-mtext">مشاهير</span>
+              <span class="pcoded-mtext">{{translations.sidebar.celebrities}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -46,7 +46,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-images"></i>
               </span>
-              <span class="pcoded-mtext">الاعلام الصحافي</span>
+              <span class="pcoded-mtext">{{translations.sidebar.journalisticMedia}}</span>
             </router-link>
           </li>
 
@@ -55,19 +55,19 @@
               <span class="pcoded-micon">
                 <i class="fas fa-id-card"></i>
               </span>
-              <span class="pcoded-mtext">معلومات الإتصال</span>
+              <span class="pcoded-mtext">{{translations.sidebar.contact}}</span>
             </router-link>
           </li>
 
           <li class="nav-item pcoded-menu-caption">
-            <label>الأنواع</label>
+            <label>{{translations.sidebar.categories}}</label>
           </li>
           <li class="nav-item pcoded-hasmenu">
             <router-link to="/admin/category">
               <span class="pcoded-micon">
                 <i class="fas fa-th-large"></i>
               </span>
-              <span class="pcoded-mtext">فئات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.categories}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -75,7 +75,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-tags"></i>
               </span>
-              <span class="pcoded-mtext">أنواع</span>
+              <span class="pcoded-mtext">{{translations.sidebar.types}}</span>
             </router-link>
           </li>
 
@@ -105,7 +105,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-thumbtack"></i>
               </span>
-              <span class="pcoded-mtext">خامات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.material}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -113,7 +113,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-clone"></i>
               </span>
-              <span class="pcoded-mtext">مجموعات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.collection}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -121,7 +121,7 @@
               <span class="pcoded-micon">
                 <i class="feather icon-edit-1"></i>
               </span>
-              <span class="pcoded-mtext">مقاسات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.sizes}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -129,7 +129,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-palette"></i>
               </span>
-              <span class="pcoded-mtext">ألوان</span>
+              <span class="pcoded-mtext">{{translations.sidebar.colors}}</span>
             </router-link>
           </li>
 
@@ -143,14 +143,14 @@
           <!--</li>-->
 
           <li class="nav-item pcoded-menu-caption">
-            <label>المنتجات</label>
+            <label>{{translations.sidebar.products}}</label>
           </li>
           <li class="nav-item pcoded-hasmenu">
             <router-link to="/admin/product">
               <span class="pcoded-micon">
                 <i class="fas fa-couch"></i>
               </span>
-              <span class="pcoded-mtext">منتجات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.products}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -158,7 +158,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-star"></i>
               </span>
-              <span class="pcoded-mtext">مُفضلة</span>
+              <span class="pcoded-mtext">{{translations.sidebar.favourite}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">
@@ -166,7 +166,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-book-open"></i>
               </span>
-              <span class="pcoded-mtext">كوبونات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.coupon}}</span>
             </router-link>
           </li>
           <!--                    <li class="nav-item pcoded-hasmenu">-->
@@ -188,7 +188,7 @@
           <!--                    </li>-->
 
           <li class="nav-item pcoded-menu-caption">
-            <label>الطلبات</label>
+            <label>{{translations.sidebar.orders}}</label>
           </li>
 
           <li class="nav-item pcoded-hasmenu">
@@ -196,7 +196,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-percentage"></i>
               </span>
-              <span class="pcoded-mtext">عروض</span>
+              <span class="pcoded-mtext">{{translations.sidebar.offers}}</span>
             </router-link>
           </li>
 
@@ -205,7 +205,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-battery-quarter"></i>
               </span>
-              <span class="pcoded-mtext">حالات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.status}}</span>
             </router-link>
           </li>
 
@@ -214,12 +214,12 @@
               <span class="pcoded-micon">
                 <i class="feather icon-shopping-cart"></i>
               </span>
-              <span class="pcoded-mtext">طلبات</span>
+              <span class="pcoded-mtext">{{translations.sidebar.orders}}</span>
             </router-link>
           </li>
 
           <li class="nav-item pcoded-menu-caption">
-            <label>المستخدمين</label>
+            <label>{{translations.sidebar.users}}</label>
           </li>
 
           <li class="nav-item pcoded-hasmenu">
@@ -227,7 +227,7 @@
               <span class="pcoded-micon">
                 <i class="feather icon-users"></i>
               </span>
-              <span class="pcoded-mtext">مستخدمين</span>
+              <span class="pcoded-mtext">{{translations.sidebar.users}}</span>
             </router-link>
           </li>
           <li class="nav-item pcoded-hasmenu">

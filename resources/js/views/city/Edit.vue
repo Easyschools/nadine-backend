@@ -3,13 +3,13 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>تعديل المدينة</h5>
+          <h5>{{translations.general.edit}} {{translations.city.city}}</h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالعربية</label>
+                <label class="col-form-label">{{translations.general.nameAr}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_ar" />
@@ -18,7 +18,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالانجليزية</label>
+                <label class="col-form-label">{{translations.general.nameEn}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_en" />
@@ -26,7 +26,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">تكلفة الشحن</label>
+                <label class="col-form-label">{{translations.city.shippingCharges}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="number" step="0.01" class="form-control" v-model="item.shipping_cost" />
@@ -41,7 +41,7 @@
 
     <div class="col-sm-12">
       <div class="col-md-12 text-right">
-        <button class="btn btn-secondary mb-3" type="button" @click="addDistrict()">اضافة جديد منظقة</button>
+        <button class="btn btn-secondary mb-3" type="button" @click="addDistrict()">{{translations.general.add}} {{translations.city.newArea}}</button>
       </div>
 
       <div class="card">
@@ -63,7 +63,7 @@
                     role="tab"
                     aria-controls="v-pills-home"
                     aria-selected="true"
-                  >منطقة {{ index }}</a>
+                  >{{translations.city.area}} {{ index }}</a>
                 </li>
               </ul>
             </div>
@@ -82,7 +82,7 @@
                       <strong
                         class="col-md-5 text-capitalize"
                         style="font-size: 18px"
-                      >منطقة {{ index }}</strong>
+                      >{{translations.city.area}} {{ index }}</strong>
 
                       <button
                         type="button"
@@ -95,14 +95,14 @@
                     </div>
                     <div class="row">
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">الاسم بالعربية</label>
+                        <label style="font-weight: bold;">{{translations.general.nameAr}} </label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input type="text" v-model="district.name_ar" class="form-control" />
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">الاسم بالانجليزية</label>
+                        <label style="font-weight: bold;">{{translations.general.nameAr}} </label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input type="text" v-model="district.name_en" class="form-control" />
@@ -116,8 +116,8 @@
         </div>
       </div>
       <div class="text-center">
-        <router-link to="/admin/city" class="btn btn-secondary">الغاء</router-link>
-        <button type="button" @click="editItem" class="btn btn-primary">تعديل</button>
+        <router-link to="/admin/city" class="btn btn-secondary">{{translations.general.cancel}} </router-link>
+        <button type="button" @click="editItem" class="btn btn-primary">{{translations.general.edit}} </button>
       </div>
     </div>
   </div>

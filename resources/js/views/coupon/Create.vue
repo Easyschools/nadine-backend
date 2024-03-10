@@ -3,13 +3,13 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>اضافة جديد كوبون</h5>
+                    <h5>{{translations.general.add}} {{translations.copoun.copouns}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الكود</label>
+                                <label class="col-form-label">{{translations.copoun.code}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -23,7 +23,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >كل المستخدمين</label
+                                    >{{translations.copoun.allUsers}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -37,7 +37,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">المستخدمين</label>
+                                <label class="col-form-label">{{translations.copoun.users}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <!--<input type="text" class="form-control" v-model="item.users">-->
@@ -60,7 +60,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">نسبة مئوية</label>
+                                <label class="col-form-label">{{translations.copoun.percentage}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -73,7 +73,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">القيمة</label>
+                                <label class="col-form-label">{{translations.copoun.value}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -88,7 +88,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >أقصى عدد للإستخدام</label
+                                    >{{translations.copoun.maximumNumberOfUsage}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">قيمة الطلب</label>
+                                <label class="col-form-label">{{translations.copoun.orderValue}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -118,14 +118,14 @@
                             <router-link
                                 to="/admin/coupon"
                                 class="btn btn-secondary"
-                                >الغاء</router-link
+                                >{{translations.general.cancel}}</router-link
                             >
                             <button
                                 type="button"
                                 @click="createItem()"
                                 class="btn btn-primary"
                             >
-                                اضافة
+                                {{translations.general.add}}
                             </button>
                         </div>
                     </form>

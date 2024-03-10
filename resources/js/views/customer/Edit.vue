@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل المستخدم</h5>
+                    <h5>{{translations.general.edit}} {{translations.user.users}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
@@ -21,7 +21,7 @@
 
                                     <div class="col-sm-3">
                                         <label style="font-weight: bold;"
-                                               class="col-form-label ">الصورة</label>
+                                               class="col-form-label ">{{translations.general.image}}</label>
                                     </div>
 
                                     <div class="col-md-9">
@@ -37,7 +37,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الاسم</label>
+                                <label class="col-form-label">{{translations.general.name}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name">
@@ -48,7 +48,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">البريد الالكترونى</label>
+                                <label class="col-form-label">{{translations.user.email}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.email">
@@ -59,7 +59,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">محظور</label>
+                                <label class="col-form-label">{{translations.user.ban}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.is_ban">
@@ -69,7 +69,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">التليفون</label>
+                                <label class="col-form-label">{{translations.user.phone}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" v-model="item.phone">
@@ -89,7 +89,7 @@
         <div class="col-sm-12">
             <div class="col-md-12 text-right">
                 <button class="btn btn-secondary mb-3" type="button" @click="addAddress()">
-                    اضافة جديد عنوان للمستخدم
+                    {{translations.general.add}} {{translations.user.address}}
                 </button>
             </div>
 
@@ -104,7 +104,7 @@
                                        id="v-pills-home-tab" data-toggle="pill"
                                        :href="'#address'+index" role="tab"
                                        aria-controls="v-pills-home" aria-selected="true">
-                                        عنوان {{ index }}
+                                        {{translations.user.address}} {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -119,7 +119,7 @@
                                         <div class="row mb-4">
                                             <strong class="col-md-5 text-capitalize"
                                                     style="font-size: 18px">
-                                                عنوان {{ index }}
+                                                {{translations.user.address}} {{ index }}
                                             </strong>
 
                                             <button type="button"
@@ -134,7 +134,7 @@
                                         <div class="row ">
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">المدينة</label>
+                                                <label style="font-weight: bold;">{{translations.city.city}}</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <select v-on:change="getDistrict($event)" class="form-control"
@@ -148,7 +148,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">المنطقة</label>
+                                                <label style="font-weight: bold;">{{translations.city.area}}</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
                                                 <select class="form-control" v-model="address.district_id">
@@ -161,7 +161,7 @@
 
 
                                             <div class="col-md-3 mt-4 mb-3">
-                                                <label style="font-weight: bold;">العنوان</label>
+                                                <label style="font-weight: bold;">{{translations.user.address}}</label>
                                             </div>
                                             <div class="col-md-9 mt-3">
 
@@ -184,10 +184,10 @@
             </div>
             <div class="text-center">
                 <router-link to="/admin/customer" class="btn btn-secondary">
-                    الغاء
+                    {{translations.general.cancel}}
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    اضافة
+                    {{translations.general.add}}
                 </button>
             </div>
         </div>

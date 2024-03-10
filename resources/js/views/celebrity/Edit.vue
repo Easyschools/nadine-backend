@@ -3,13 +3,15 @@
     <div class="offset-2 col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5>تعديل واجهة المستخدم</h5>
+          <h5>
+            {{ translations.general.add }} {{ translations.celebrities.celebrities }}
+          </h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالعربية</label>
+                <label class="col-form-label">{{ translations.general.nameAr }} </label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_ar" />
@@ -17,7 +19,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالانجليزية</label>
+                <label class="col-form-label">{{ translations.general.nameEn }} </label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_en" />
@@ -30,7 +32,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">صورة</label>
+                <label class="col-form-label">{{ translations.general.image }} </label>
               </div>
               <div class="col-sm-9">
                 <input
@@ -43,10 +45,10 @@
             </div>
             <div class="text-center mt-5">
               <router-link to="/admin/celebrity" class="btn btn-secondary"
-                >الغاء</router-link
-              >
+                >{{ translations.general.cancel }}
+              </router-link>
               <button type="button" @click="editItem()" class="btn btn-primary">
-                تعديل
+                {{ translations.general.edit }}
               </button>
             </div>
           </form>
@@ -77,7 +79,7 @@ export default {
     this.getItem();
   },
   methods: {
-   attachImage() {
+    attachImage() {
       const fileInput = this.$refs.myImage;
 
       if (fileInput.files.length > 0) {
@@ -113,10 +115,9 @@ export default {
       }
 
       // Append image only if it has changed
-        if (this.image_is_changed) {
+      if (this.image_is_changed) {
         data.append("image", this.item.image);
       }
-
 
       // data.append('id', this.item.id);
       axios

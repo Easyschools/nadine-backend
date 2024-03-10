@@ -3,13 +3,13 @@
         <div class="offset-2 col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل مجموعات</h5>
+                    <h5>{{translations.general.edit}} {{translations.collection.collection}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الاسم بالعربية:</label>
+                                <label class="col-form-label">{{translations.general.nameAr}}:</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
@@ -17,15 +17,15 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الاسم بالانجليزية:</label>
+                                <label class="col-form-label">{{translations.general.nameEn}}:</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <router-link to="/admin/collection" class="btn btn-secondary">الغاء</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
+                            <router-link to="/admin/collection" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">{{translations.general.edit}}</button>
                         </div>
                     </form>
                 </div>

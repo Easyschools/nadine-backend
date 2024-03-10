@@ -3,14 +3,14 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل كوبون</h5>
+                    <h5>{{translations.general.edit}} {{translations.copoun.copouns}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الكود</label>
+                                <label class="col-form-label">{{translations.copoun.code}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.code">
@@ -20,7 +20,7 @@
                         <div class="row form-group ">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">كل المستخدمين</label>
+                                <label class="col-form-label">{{translations.copoun.allUsers}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="checkbox"
@@ -31,7 +31,7 @@
                         <div class="row form-group ">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">المستخدمين</label>
+                                <label class="col-form-label">{{translations.copoun.users}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <!--<input type="text" class="form-control" v-model="item.users">-->
@@ -48,7 +48,7 @@
                         <div class="row form-group ">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">نسبة مئوية</label>
+                                <label class="col-form-label">{{translations.copoun.percentage}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="checkbox" v-model="item.is_percentage"
@@ -60,7 +60,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">القيمة</label>
+                                <label class="col-form-label">{{translations.copoun.value}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="number" class="form-control" v-model="item.value">
@@ -70,7 +70,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">أقصى عدد للإستخدام</label>
+                                <label class="col-form-label">{{translations.copoun.maximumNumberOfUsage}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="number" class="form-control" v-model="item.max_usage">
@@ -79,7 +79,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">قيمة الطلب</label>
+                                <label class="col-form-label">{{translations.copoun.orderValue}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="number" class="form-control" v-model="item.min_total">
@@ -88,8 +88,8 @@
 
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/coupon" class="btn btn-secondary">الغاء</router-link>
-                            <button type="button" @click="editItem()" class="btn btn-primary">تعديل</button>
+                            <router-link to="/admin/coupon" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+                            <button type="button" @click="editItem()" class="btn btn-primary">{{translations.general.edit}}</button>
                         </div>
                     </form>
                 </div>

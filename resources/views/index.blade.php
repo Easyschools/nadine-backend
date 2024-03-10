@@ -22,8 +22,18 @@
 
     <link rel="stylesheet" href="{{asset("assets/css/style.css")}}">
 
-    <link rel="stylesheet" href="{{asset("assets/css/layout-rtl.css")}}">
+    <!-- <link rel="stylesheet" href="{{asset("assets/css/layout-rtl.css")}}"> -->
+    <script>
+        // Retrieve the selected language from local storage
+        var selectedLanguage = localStorage.getItem('language');
 
+        // Conditionally load RTL or LTR stylesheet
+        if (selectedLanguage === 'en') {
+            document.write('<link rel="stylesheet" href="{{asset("assets/css/layout-ltr.css")}}">');
+        } else {
+            document.write('<link rel="stylesheet" href="{{asset("assets/css/layout-rtl.css")}}">');
+        }
+    </script>
 
 </head>
 <body>

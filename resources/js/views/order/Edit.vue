@@ -3,13 +3,13 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>تعديل منتج</h5>
+          <h5>{{translations.general.edit}} {{translations.order.orders}}</h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الكود</label>
+                <label class="col-form-label">{{translations.order.code}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="text" class="form-control" v-model="item.code" />
@@ -17,7 +17,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">المستخدم</label>
+                <label class="col-form-label">{{translations.order.user}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="text" class="form-control" v-model="item.user.name" />
@@ -25,7 +25,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">العنوان</label>
+                <label class="col-form-label">{{translations.order.address}}</label>
               </div>
 
               <div class="col-sm-9">
@@ -40,7 +40,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">حالة الطلب</label>
+                <label class="col-form-label">{{translations.order.status}}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.order_status_id">
@@ -54,7 +54,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">كوبون</label>
+                <label class="col-form-label">{{translations.order.copoun}}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.coupon_id">
@@ -69,7 +69,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">نوع الدفع</label>
+                <label class="col-form-label">{{translations.order.typeOfPayment}}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.payment_type_id">
@@ -84,7 +84,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">القيمة الكلية</label>
+                <label class="col-form-label">{{translations.order.totalValue}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="number" class="form-control" v-model="item.subtotal" />
@@ -92,7 +92,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">سعر الكوبون</label>
+                <label class="col-form-label">{{translations.order.couponPrice}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="number" class="form-control" v-model="item.coupon_price" />
@@ -100,7 +100,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">تكلفة التوصيل</label>
+                <label class="col-form-label">{{translations.order.deliveryCost}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="number" class="form-control" v-model="item.shipping_price" />
@@ -108,7 +108,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">المبلغ المدفوع</label>
+                <label class="col-form-label">{{translations.order.theAmountPaid}}</label>
               </div>
               <div class="col-sm-9">
                 <input disabled type="number" class="form-control" v-model="item.grand_total" />
@@ -127,7 +127,7 @@
           class="btn btn-secondary mb-3"
           type="button"
           @click="addOrderItem()"
-        >اضافة جديد منتج القطع</button>
+        >{{translations.general.add}} {{translations.product.product}}</button>
       </div>
 
       <div class="card">
@@ -149,7 +149,7 @@
                     role="tab"
                     aria-controls="v-pills-home"
                     aria-selected="true"
-                  >قطعة {{ index }}</a>
+                  >{{translations.order.piece}} {{ index }}</a>
                 </li>
               </ul>
             </div>
@@ -168,7 +168,7 @@
                       <strong
                         class="col-md-5 text-capitalize"
                         style="font-size: 18px"
-                      >قطعة {{ index }}</strong>
+                      >{{translations.order.piece}} {{ index }}</strong>
 
                       <button
                         type="button"
@@ -205,7 +205,7 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">منتج</label>
+                        <label style="font-weight: bold;">{{translations.product.product}}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <select
@@ -227,7 +227,7 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">نوع</label>
+                        <label style="font-weight: bold;">{{translations.product.type}}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <select
@@ -247,7 +247,7 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">الكمية</label>
+                        <label style="font-weight: bold;">{{translations.order.amount}}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input
@@ -260,7 +260,7 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">سعر القطعة</label>
+                        <label style="font-weight: bold;">{{translations.product.price}} {{translations.order.piece}} </label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input
@@ -274,7 +274,7 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold;">السعر الكلي</label>
+                        <label style="font-weight: bold;">{{translations.product.totalPrice}}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input
@@ -295,8 +295,8 @@
         </div>
       </div>
       <div class="text-center">
-        <router-link to="/admin/order" class="btn btn-secondary">الغاء</router-link>
-        <button type="button" @click="editItem" class="btn btn-primary">اضافة</button>
+        <router-link to="/admin/order" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+        <button type="button" @click="editItem" class="btn btn-primary">{{translations.general.add}}</button>
       </div>
     </div>
   </div>

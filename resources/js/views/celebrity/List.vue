@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">مشاهير</h5>
+                <h5 style="font-size: 35px">{{translations.celebrities.celebrities}}</h5>
                 <router-link
                     to="/admin/celebrity/create"
                     class="btn btn-outline-primary float-right">
-                    اضافة جديد
+                    {{translations.general.add}}
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -15,10 +15,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم بالعربية</th>
-                            <th>الاسم بالانجليزية</th>
-                            <th>صورة</th>
-                            <th>الخيارات</th>
+                            <th>{{translations.general.nameAr}}</th>
+                            <th>{{translations.general.nameEn}}</th>
+                            <th>{{translations.general.image}}</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,11 +34,11 @@
                                 <router-link
                                     :to="{path:'/admin/celebrity/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >{{translations.general.edit}}
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">{{translations.general.delete}}
                                 </button>
                             </td>
                         </tr>

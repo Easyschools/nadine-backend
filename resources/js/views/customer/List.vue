@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">المستخدمين</h5>
+                <h5 style="font-size: 35px">{{translations.user.users}}</h5>
                 <!--<router-link-->
                 <!--to="/admin/customer/create"-->
                 <!--class="btn btn-outline-primary float-right">-->
@@ -15,12 +15,12 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم</th>
-                            <th>البريد الالكترونى</th>
-                            <th>التليفون</th>
-                            <th>محظور</th>
-                            <th>الصورة</th>
-                            <th>الخيارات</th>
+                            <th>{{translations.general.name}}</th>
+                            <th>{{translations.user.email}}</th>
+                            <th>{{translations.user.phone}}</th>
+                            <th>{{translations.user.ban}}</th>
+                            <th>{{translations.general.image}}</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,11 +37,11 @@
                                 <router-link
                                     :to="{path:'/admin/customer/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >{{translations.general.edit}}
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">{{translations.general.delete}}
                                 </button>
                             </td>
                         </tr>

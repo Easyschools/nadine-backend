@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card" style="min-height: 720px">
       <div class="card-header">
-        <h5 style="font-size: 35px">طلبات</h5>
+        <h5 style="font-size: 35px">{{translations.order.orders}}</h5>
         <!--<router-link-->
         <!--to="/admin/product/create"-->
         <!--class="btn btn-outline-primary float-right">-->
@@ -15,7 +15,7 @@
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
                 <label>
-                  الكود:
+                  {{translations.order.code}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -31,7 +31,7 @@
             <div class="col-md-4">
               <div class="dataTables_filter">
                 <label>
-                  التليفون:
+                  {{translations.order.phone}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -47,7 +47,7 @@
             <div class="col-md-4">
               <div class="dataTables_filter">
                 <label>
-                  الاسم:
+                  {{translations.general.name}}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -64,19 +64,19 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>الكود</th>
-                <th>المستخدم</th>
-                <th>التليفون</th>
-                <th>العنوان</th>
-                <th>الحالة</th>
-                <th>نوع الدفع</th>
-                <th>كوبون</th>
-                <th>القيمة الكلية</th>
-                <th>سعر الكوبون</th>
-                <th>تكلفة التوصيل</th>
-                <th>المبلغ المدفوع</th>
-                <th>ملاحظات</th>
-                <th>الخيارات</th>
+                <th>{{translations.order.code}}</th>
+                <th>{{translations.order.user}}</th>
+                <th>{{translations.order.phone}}</th>
+                <th>{{translations.order.address}}</th>
+                <th>{{translations.order.status}}</th>
+                <th>{{translations.order.typeOfPayment}}</th>
+                <th>{{translations.order.copoun}}</th>
+                <th>{{translations.order.totalValue}}</th>
+                <th>{{translations.order.couponPrice}}</th>
+                <th>{{translations.order.deliveryCost}}</th>
+                <th>{{translations.order.TheAmountPaid}}</th>
+                <th>{{translations.order.notice}}</th>
+                <th>{{translations.general.options}}</th>
               </tr>
             </thead>
             <tbody>
@@ -101,19 +101,19 @@
                       params: { id: item.id },
                     }"
                     class="btn btn-outline-primary"
-                  >التفاصيل</router-link>
+                  >{{translations.general.show}}</router-link>
                   <router-link
                     :to="{
                       path: '/admin/order/edit/' + item.id,
                       params: { id: item.id },
                     }"
                     class="btn btn-outline-warning"
-                  >تعديل</router-link>
+                  >{{translations.general.edit}}</router-link>
                   <button
                     type="button"
                     @click="deleteItem(item.id, index)"
                     class="btn btn-outline-danger"
-                  >حذف</button>
+                  >{{translations.general.delete}}</button>
                 </td>
               </tr>
             </tbody>

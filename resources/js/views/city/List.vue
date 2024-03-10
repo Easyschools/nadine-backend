@@ -2,8 +2,8 @@
   <div class="col-md-12">
     <div class="card" style="min-height: 720px">
       <div class="card-header">
-        <h5 style="font-size: 35px">المدن</h5>
-        <router-link to="/admin/city/create" class="btn btn-outline-primary float-right">اضافة جديد</router-link>
+        <h5 style="font-size: 35px">{{ translations.city.cities }}</h5>
+        <router-link to="/admin/city/create" class="btn btn-outline-primary float-right">{{ translations.general.add }}</router-link>
       </div>
       <div class="card-body table-border-style">
         <div class="table-responsive text-center">
@@ -11,7 +11,7 @@
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
                 <label>
-                  الاسم:
+                  {{ translations.general.name}} :
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -28,10 +28,10 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>الاسم بالعربية</th>
-                <th>الاسم بالانجليزية</th>
-                <th>تكلفة الشحن</th>
-                <th>الخيارات</th>
+                <th>{{ translations.general.nameAr}}</th>
+                <th>{{ translations.general.nameEn}}</th>
+                <th>{{ translations.city.shippingCharges}}</th>
+                <th>{{ translations.general.options}}</th>
               </tr>
             </thead>
             <tbody>
@@ -45,12 +45,12 @@
                   <router-link
                     :to="{path:'/admin/city/edit/' +item.id,params: { id: item.id }}"
                     class="btn btn-outline-warning"
-                  >تعديل</router-link>
+                  >{{ translations.general.edit}}</router-link>
                   <button
                     type="button"
                     @click="deleteItem(item.id,index)"
                     class="btn btn-outline-danger"
-                  >حذف</button>
+                  >{{ translations.general.delete}}</button>
                 </td>
               </tr>
             </tbody>

@@ -3,13 +3,13 @@
     <div class="offset-2 col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5>اضافة جديد واجهة المستخدم</h5>
+          <h5>{{translations.general.add}} {{translations.journalisticMedia.journalisticMedia}}</h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالعربية</label>
+                <label class="col-form-label">{{translations.general.nameAr}}</label>
               </div>
 
               <div class="col-sm-9">
@@ -18,7 +18,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالانجليزية</label>
+                <label class="col-form-label">{{translations.general.nameEn}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_en" />
@@ -30,13 +30,13 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">النوع</label>
+                <label class="col-form-label">{{translations.journalisticMedia.type}}</label>
               </div>
               <div class="col-sm-9">
                 <select v-model="item.type" class="form-control">
-                  <option value="image">صورة</option>
-                  <option value="article">مقال</option>
-                  <option value="video">فيديو</option>
+                  <option value="image">{{translations.general.image}}</option>
+                  <option value="article">{{translations.journalisticMedia.article}}</option>
+                  <option value="video">{{translations.journalisticMedia.video}}</option>
                 </select>
               </div>
             </div>
@@ -44,7 +44,7 @@
             <!-- Conditional rendering based on selected type -->
                <div v-if="item.type === 'image'" class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">صورة</label>
+                <label class="col-form-label">{{translations.general.image}}</label>
               </div>
               <div class="col-sm-9">
                 <input
@@ -57,7 +57,7 @@
             </div>
       <div v-if="item.type === 'article'" class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">صورة</label>
+                <label class="col-form-label">{{translations.general.image}}</label>
               </div>
               <div class="col-sm-9">
                 <input
@@ -68,7 +68,7 @@
                 />
               </div>
               <div class="col-sm-3">
-                <label class="col-form-label">الرابط</label>
+                <label class="col-form-label">{{translations.journalisticMedia.link}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.url" />
@@ -77,7 +77,7 @@
 
             <div v-if="item.type === 'video'" class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الرابط</label>
+                <label class="col-form-label">{{translations.journalisticMedia.link}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.url" />
@@ -86,10 +86,10 @@
 
             <div class="text-center mt-5">
               <router-link to="/admin/pressMedia" class="btn btn-secondary"
-                >الغاء</router-link
+                >{{translations.general.cancel}}</router-link
               >
               <button type="button" @click="createItem()" class="btn btn-primary">
-                اضافة
+                {{translations.general.add}}
               </button>
             </div>
           </form>

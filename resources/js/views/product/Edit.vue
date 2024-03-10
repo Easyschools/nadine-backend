@@ -3,13 +3,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>تعديل منتج</h5>
+                    <h5>{{translations.general.edit}} {{translations.product.product}} </h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الكود</label>
+                                <label class="col-form-label">{{translations.product.sku}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -22,7 +22,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >الاسم بالعربية</label
+                                    >{{translations.general.nameAr}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -36,7 +36,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >الاسم بالانجليزية</label
+                                    >{{translations.general.nameEn}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -50,7 +50,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >الوصف بالعربية</label
+                                    >{{translations.general.descriptionAr}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -64,7 +64,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >الوصف بالانجليزية</label
+                                    >{{translations.general.descriptionEn}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -78,7 +78,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">السعر</label>
+                                <label class="col-form-label">{{translations.product.price}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input
@@ -92,7 +92,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label"
-                                    >السعر بعد الخصم</label
+                                    >{{translations.product.priceAfterDiscount}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -106,7 +106,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الفئة</label>
+                                <label class="col-form-label">{{translations.category.categories}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <select
@@ -143,7 +143,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">النوع</label>
+                                <label class="col-form-label">{{translations.product.type}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <select
@@ -158,7 +158,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">الخامة</label>
+                                <label class="col-form-label">{{translations.material.materials}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <select
@@ -178,7 +178,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">المجموعة</label>
+                                <label class="col-form-label">{{translations.collection.collection}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <select
@@ -228,7 +228,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">جديد</label>
+                                <label class="col-form-label">{{translations.product.new}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="form-check align-bottom mt-2">
@@ -243,7 +243,7 @@
 
                         <div class="row form-group">
                             <div class="col-sm-3">
-                                <label class="col-form-label">منتج محدود</label>
+                                <label class="col-form-label">{{translations.product.LimitedProduct}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <div class="form-check align-bottom mt-2">
@@ -259,7 +259,7 @@
                         <div class="row form-group">
                             <div class="col-sm-3">
                                 <label class="col-form-label">
-                                    افضل مبيعا</label
+                                    {{translations.product.bestSeller}}</label
                                 >
                             </div>
                             <div class="col-sm-9">
@@ -287,7 +287,7 @@
                     type="button"
                     @click="addVariant()"
                 >
-                    اضافة جديد توع منتج
+                    {{translations.general.add}} {{translations.general.new}} {{translations.general.product}}
                 </button>
             </div>
 
@@ -315,7 +315,7 @@
                                         aria-controls="v-pills-home"
                                         aria-selected="true"
                                     >
-                                        نوع {{ index }}
+                                        {{translations.product.type}} {{ index }}
                                     </a>
                                 </li>
                             </ul>
@@ -339,7 +339,7 @@
                                                 class="col-md-5 text-capitalize"
                                                 style="font-size: 18px"
                                             >
-                                                نوع {{ index }}
+                                                {{translations.product.type}} {{ index }}
                                             </strong>
 
                                             <button
@@ -382,7 +382,7 @@
                                                                 font-weight: bold;
                                                             "
                                                             class="col-form-label"
-                                                            >الصورة</label
+                                                            >{{translations.general.image}}</label
                                                         >
                                                     </div>
 
@@ -417,7 +417,7 @@
                                             <!--                                            &lt;!&ndash;                                            </div>&ndash;&gt;-->
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold"
-                                                    >اللون</label
+                                                    >{{translations.color.colors}}</label
                                                 >
                                             </div>
                                             <div class="col-md-9 mt-3">
@@ -437,7 +437,7 @@
                                             </div>
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold"
-                                                    >المقاس</label
+                                                    >{{translations.size.sizes}}</label
                                                 >
                                             </div>
                                             <div class="col-md-9 mt-3">
@@ -452,7 +452,7 @@
 
                                             <div class="col-md-3 mt-4 mb-3">
                                                 <label style="font-weight: bold"
-                                                    >السعر الاضافى</label
+                                                    >{{translations.product.additionalPrice}}</label
                                                 >
                                             </div>
                                             <div class="col-md-9 mt-3">
@@ -484,10 +484,10 @@
                     }"
                     class="btn btn-secondary"
                 >
-                    الغاء
+                    {{translations.general.cancel}}
                 </router-link>
                 <button type="button" @click="editItem" class="btn btn-primary">
-                    تعديل
+                    {{translations.general.edit}}
                 </button>
             </div>
         </div>

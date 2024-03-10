@@ -2,11 +2,11 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">الكوبونات</h5>
+                <h5 style="font-size: 35px">{{translations.copoun.copouns}}</h5>
                 <router-link
                     to="/admin/coupon/create"
                     class="btn btn-outline-primary float-right">
-                    اضافة جديد
+                    {{translations.general.add}}
                 </router-link>
             </div>
             <div class="card-body table-border-style">
@@ -15,15 +15,15 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الكود</th>
-                            <th>كل المستخدمين</th>
-                            <th>نسبة مئوية</th>
-                            <th>القيمة</th>
-                            <th>أقصى عدد للإستخدام</th>
-                            <th>عدد مرات الاستخدام</th>
-                            <th>قيمة الطلب</th>
+                            <th>{{translations.copoun.code}}</th>
+                            <th>{{translations.copoun.allUsers}}</th>
+                            <th>{{translations.copoun.percentage}}</th>
+                            <th>{{translations.copoun.value}}</th>
+                            <th>{{translations.copoun.maximumNumberOfUsage}}</th>
+                            <th>{{translations.copoun.numberOfTimesUsed}}</th>
+                            <th>{{translations.copoun.orderValue}}</th>
                             <!--<th>min Total</th>-->
-                            <th>الخيارات</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,10 +37,10 @@
                                         {{user}} - {{phone}}
                                     </li>
                                 </ul>
-                                <p v-else>كل المستخدمين</p>
+                                <p v-else>{{translations.copoun.allUsers}}</p>
                             </td>
                             <td>{{item.is_percentage === 1 ? 'نعم' : 'لا'}}</td>
-                            <td>{{item.value }}  {{item.is_percentage === 1 ? '%' : 'جنيه '}}</td>
+                            <td>{{item.value }}  {{item.is_percentage === 1 ? '%' : 'Pound '}}</td>
                             <td>{{item.max_usage}}</td>
                             <td>{{item.used_times}}</td>
                             <td>{{item.min_total}}</td>
@@ -50,11 +50,11 @@
                                 <router-link
                                     :to="{path:'/admin/coupon/edit/' +item.id,params: { id: item.id }}"
                                     class="btn btn-outline-warning"
-                                >تعديل
+                                >{{translations.general.edit}}
                                 </router-link>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">{{translations.general.delete}}
                                 </button>
                             </td>
                         </tr>

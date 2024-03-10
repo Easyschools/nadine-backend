@@ -3,14 +3,14 @@
         <div class="offset-2 col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h5>اضافة جديد توع</h5>
+                    <h5>{{translations.general.add}} {{translations.tag.tags}}</h5>
                 </div>
                 <div class="card-body">
                     <form>
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الاسم بالعربية</label>
+                                <label class="col-form-label">{{translations.general.nameAr}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_ar">
@@ -19,7 +19,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الاسم بالانجليزية</label>
+                                <label class="col-form-label">{{translations.general.nameEn}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" v-model="item.name_en">
@@ -32,7 +32,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الشحن داخل القاهرة</label>
+                                <label class="col-form-label">{{translations.tag.shippingWithinCairo}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" v-model="item.cost_inside_cairo">
@@ -46,7 +46,7 @@
                         <div class="row form-group">
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الشحن خارج القاهرة</label>
+                                <label class="col-form-label">{{translations.tag.shippingOutsideCairo}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" v-model="item.cost_outside_cairo">
@@ -61,7 +61,7 @@
 
 
                             <div class="col-sm-3">
-                                <label class="col-form-label">الفئة</label>
+                                <label class="col-form-label">{{translations.category.categories}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" v-model="item.category_id">
@@ -80,7 +80,7 @@
 
 
                             <div class="col-sm-3">
-                                <label class="col-form-label ">الصورة</label>
+                                <label class="col-form-label ">{{translations.general.image}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
@@ -94,8 +94,8 @@
                         </div>
 
                         <div class="text-center mt-5">
-                            <router-link to="/admin/tag" class="btn btn-secondary">الغاء</router-link>
-                            <button type="button" @click="createItem()" class="btn btn-primary">اضافة</button>
+                            <router-link to="/admin/tag" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+                            <button type="button" @click="createItem()" class="btn btn-primary">{{translations.general.add}}</button>
                         </div>
                     </form>
                 </div>

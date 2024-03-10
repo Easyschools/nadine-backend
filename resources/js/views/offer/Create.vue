@@ -3,13 +3,13 @@
     <div class="offset-2 col-md-10">
       <div class="card">
         <div class="card-header">
-          <h5>اضافة جديد عرض</h5>
+          <h5>{{translations.general.add}} {{translations.offer.offer}}</h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالعربية</label>
+                <label class="col-form-label">{{translations.general.nameAr}}</label>
               </div>
 
               <div class="col-sm-9">
@@ -18,7 +18,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الاسم بالانجليزية</label>
+                <label class="col-form-label">{{translations.general.nameEn}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.name_en" />
@@ -26,7 +26,7 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">نسبة مئوية</label>
+                <label class="col-form-label">{{translations.offer.percentage}}</label>
               </div>
               <div class="col-sm-9">
                 <input type="checkbox" class="form-control" v-model="item.is_percentage" />
@@ -35,7 +35,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">التخفيض</label>
+                <label class="col-form-label">{{translations.offer.discount}}</label>
               </div>
               <div class="col-sm-9">
                 <input
@@ -49,7 +49,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">تاريخ الانتهاء</label>
+                <label class="col-form-label">{{translations.offer.expireDate}}</label>
               </div>
               <div class="col-sm-9 text-center">
                 <!-- <date-picker v-model="item.expire_at" type="datetime"></date-picker> -->
@@ -62,7 +62,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">الفئة</label>
+                <label class="col-form-label">{{translations.category.categories}}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" @change="selectTags()" v-model="item.category_id">
@@ -76,7 +76,7 @@
 
             <div class="row form-group" v-show="tags.length > 0">
               <div class="col-sm-3">
-                <label class="col-form-label">الانواع</label>
+                <label class="col-form-label">{{translations.category.types}}</label>
               </div>
               <div class="col-sm-9">
                 <select id="tags_id" class="form-control" multiple v-model="item.tags">
@@ -94,8 +94,8 @@
             </div>
 
             <div class="text-center mt-5">
-              <router-link to="/admin/offer" class="btn btn-secondary">الغاء</router-link>
-              <button type="button" @click="createItem()" class="btn btn-primary">اضافة</button>
+              <router-link to="/admin/offer" class="btn btn-secondary">{{translations.general.cancel}}</router-link>
+              <button type="button" @click="createItem()" class="btn btn-primary">{{translations.general.add}}</button>
             </div>
           </form>
         </div>

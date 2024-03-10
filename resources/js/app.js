@@ -8,8 +8,13 @@ import { PaginationPlugin, FormTagsPlugin } from "bootstrap-vue";
 import store from "./store";
 import axios from "axios"; // Import axios
 
-console.log(router);
+import languageMixin from "./mixins/languageMixin"; // Import the language mixin
 
+console.log(router);
+const savedLanguage = localStorage.getItem('language');
+if (savedLanguage) {
+  store.dispatch('setLanguage', savedLanguage);
+}
 import "./store/subscriber";
 // import {VueEditor} from "vue2-editor";
 
@@ -41,6 +46,8 @@ axios.interceptors.response.use(
 store.dispatch("auth/attempt", localStorage.getItem("token"));
 
 Vue.mixin(alertsMixin);
+Vue.mixin(languageMixin); // Add the language mixin
+
 Vue.component("the-container", container);
 
 const app = new Vue({

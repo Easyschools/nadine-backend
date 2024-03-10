@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card" style="min-height: 720px">
             <div class="card-header">
-                <h5 style="font-size: 35px">الرسائل</h5>
+                <h5 style="font-size: 35px">{{translations.message.message}}</h5>
 
             </div>
             <div class="card-body table-border-style">
@@ -11,13 +11,13 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>الاسم الأول</th>
-                            <th>الاسم الأخير</th>
-                            <th>الهاتف</th>
-                            <th>البريد الإلكتروني</th>
-                            <th>الرسالة</th>
-                            <th>مقروءة</th>
-                            <th>الخيارات</th>
+                            <th>{{translations.message.firstName}}</th>
+                            <th>{{translations.message.lastName}}</th>
+                            <th>{{translations.message.phone}}</th>
+                            <th>{{translations.message.email}}</th>
+                            <th>{{translations.message.message}}</th>
+                            <th>{{translations.message.read}}</th>
+                            <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,16 +30,16 @@
                             <td>
                                 {{ substringMessage(item.message)}}
                             </td>
-                            <td>{{item.is_read ? 'نعم' : 'لا'}}</td>
+                            <td>{{item.is_read ? 'yes' : 'no'}}</td>
                             <td>
                                 <button
                                     @click="showMessage(item.message , item.id)"
                                     class="btn btn-outline-success"
-                                >عرض
+                                >{{translations.general.show}}
                                 </button>
                                 <button type="button"
                                         @click="deleteItem(item.id,index)"
-                                        class="btn btn-outline-danger">حذف
+                                        class="btn btn-outline-danger">{{translations.general.delete}}
                                 </button>
                             </td>
                         </tr>
