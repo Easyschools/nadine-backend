@@ -36,7 +36,8 @@ class ProductApiService extends AppRepository
 
         $this->setSortOrder($request->sort_order ?? 'asc');
         $this->setSortBy($request->sort_by ?? 'sku');
-        $this->setRelations(['material',
+        $this->setRelations([
+            'material',
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
                     'Color:id,name_en,name_ar,code,image',
@@ -142,7 +143,7 @@ class ProductApiService extends AppRepository
                     ->orWhere('name_ar', 'like', '%' . $request->occasional_name . '%');
             });
         }
-    
+
 
         if ($request->color) {
             $colorIDs = explode(',', $request->color);
@@ -207,7 +208,7 @@ class ProductApiService extends AppRepository
     {
         Pixel::viewContent();
         $this->setRelations([
-            
+
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images']);
             },
@@ -233,27 +234,52 @@ class ProductApiService extends AppRepository
      */
     public function createProduct($request)
     {
+        // dd($request->all());
         $request['slug'] = HelperFunctions::makeSlug($request->name_en) . '-' . HelperFunctions::makeSlug($request->sku);
-        $product = Product::create($request->only([
-            'name_ar',
-            'name_en',
-            'description_ar',
-            'description_en',
-            'slug',
-            'stock',
-            'price',
-            'sku',
-            'price_after_discount',
-            'collection_id',
-            'category_id',
-            'tag_id',
-            'material_id',
-            'tag_id',
-            'limited_edition',
-            'best_selling',
-            'new_arrival'
-        ]));
-       
+        // $product = Product::create($request->only([
+        //     'name_ar',
+        //     'name_en',
+        //     'description_ar',
+        //     'description_en',
+        //     'slug',
+        //     'stock',
+        //     'price',
+        //     'sku',
+        //     'price_after_discount',
+        //     'collection_id',
+        //     'category_id',
+        //     'tag_id',
+        //     'material_id',
+        //     'tag_id',
+        //     'limited_edition',
+        //     'best_selling',
+        //     'new_arrival',
+        //     'files'
+        // ]));
+
+        // Create the product with other attributes and include sub_products in the data array
+        $product = Product::create(array_merge(
+            $request->only([
+                'name_ar',
+                'name_en',
+                'description_ar',
+                'description_en',
+                'slug',
+                'stock',
+                'price',
+                'sku',
+                'price_after_discount',
+                'collection_id',
+                'category_id',
+                'tag_id',
+                'material_id',
+                'limited_edition',
+                'best_selling',
+                'new_arrival',
+                'files',
+            ]),
+            ['sub_products' => $request->product_id]
+        ));
 
         foreach ($request->variants as $variant) {
             $variant = $this->createDimension($variant);
@@ -291,6 +317,7 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
+        // dd($request->all());
         $product = $this->find($request->id);
         $product->update($request->only([
             'name_ar',
@@ -308,9 +335,11 @@ class ProductApiService extends AppRepository
             'color_id',
             'limited_edition',
             'best_selling',
-            'new_arrival'
+            'new_arrival',
+            'files'
+
         ]));
-      
+
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
         $arr = [];
@@ -399,7 +428,7 @@ class ProductApiService extends AppRepository
         if ($request->id) {
             $conditions[] = ['id', $request->id];
         }
-        
+
         $this->setConditions($conditions);
         $this->setOrConditions($orConditions);
     }
@@ -458,7 +487,7 @@ class ProductApiService extends AppRepository
             ->limit(5)->get();
     }
 
-  
+
 
     public function getBestSellers($request)
     {
@@ -468,7 +497,7 @@ class ProductApiService extends AppRepository
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
             ])
-            ->where('best_selling',1)
+            ->where('best_selling', 1)
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->paginate();
 
@@ -482,7 +511,7 @@ class ProductApiService extends AppRepository
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
             ])
-            ->where('limited_edition',1)
+            ->where('limited_edition', 1)
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->paginate();
 
@@ -496,11 +525,10 @@ class ProductApiService extends AppRepository
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
             ])
-            ->where('new_arrival',1)
+            ->where('new_arrival', 1)
             ->withCount('orderItems')
             ->orderBy('order_items_count', 'desc')->paginate(3);
 
         return $products;
     }
-    
 }

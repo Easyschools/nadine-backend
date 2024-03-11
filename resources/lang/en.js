@@ -137,7 +137,7 @@ export default {
         sku: "sku",
         new: "New",
         LimitedProduct: "Limited product",
-        bestSeller: "New",
+        bestSeller: "Best seller ",
         product: "Product",
         number: "Number",
         type: "Type",

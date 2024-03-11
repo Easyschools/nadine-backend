@@ -30,7 +30,10 @@ class Product extends Model
         'material_id',
         'best_selling',
         'limited_edition',
-        'new_arrival'
+        'new_arrival',
+        'files',
+        'sub_products',
+
     ];
 
     protected $appends = [
@@ -46,7 +49,21 @@ class Product extends Model
         'availability',
         'gm_price',
     ];
+    protected $casts = [
+        'sub_products' => 'array',
+    ];
 
+    public function getFilesAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
+
+    public function setFilesAttribute($value)
+    {
+        if (is_file($value[0])) {
+            $this->attributes['files'] = 'uploads/' . $value[0]->store('Product');
+        }
+    }
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];
@@ -216,6 +233,4 @@ class Product extends Model
             // 'currency' => $this->currency->code,
         ];
     }
-
-  
 }

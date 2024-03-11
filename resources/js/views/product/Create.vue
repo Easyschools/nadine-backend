@@ -33,7 +33,9 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.general.descriptionAr}}</label>
+                <label class="col-form-label">{{
+                  translations.general.descriptionAr
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.description_ar" />
@@ -41,7 +43,9 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.general.descriptionEn}}</label>
+                <label class="col-form-label">{{
+                  translations.general.descriptionEn
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.description_en" />
@@ -50,7 +54,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.product.price}}</label>
+                <label class="col-form-label">{{ translations.product.price }}</label>
               </div>
               <div class="col-sm-9">
                 <!-- <input type="number" v-on:keyup="fillPriceAfterDiscount" class="form-control"
@@ -61,7 +65,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label"> {{translations.product.priceAfterDiscount}}</label>
+                <label class="col-form-label">
+                  {{ translations.product.priceAfterDiscount }}</label
+                >
               </div>
               <div class="col-sm-9">
                 <input
@@ -74,7 +80,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.category.categories}}</label>
+                <label class="col-form-label">{{
+                  translations.category.categories
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <select
@@ -92,7 +100,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.product.type}}</label>
+                <label class="col-form-label">{{ translations.product.type }}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.tag_id">
@@ -104,7 +112,9 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.material.materials}}</label>
+                <label class="col-form-label">{{
+                  translations.material.materials
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.material_id">
@@ -118,7 +128,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.collection.collection}}</label>
+                <label class="col-form-label">{{
+                  translations.collection.collection
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.collection_id">
@@ -162,7 +174,7 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.product.new}}</label>
+                <label class="col-form-label">{{ translations.product.new }}</label>
               </div>
               <div class="col-sm-9">
                 <div class="form-check align-bottom mt-2">
@@ -177,7 +189,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{translations.product.LimitedProduct}}</label>
+                <label class="col-form-label">{{
+                  translations.product.LimitedProduct
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <div class="form-check align-bottom mt-2">
@@ -192,7 +206,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label"> {{translations.product.bestSeller}}</label>
+                <label class="col-form-label">
+                  {{ translations.product.bestSeller }}</label
+                >
               </div>
               <div class="col-sm-9">
                 <div class="form-check align-bottom mt-2">
@@ -204,7 +220,44 @@
                 </div>
               </div>
             </div>
+
+            <div class="row form-group">
+              <div class="col-sm-3">
+                <label class="col-form-label">upload pdf</label>
+              </div>
+              <div class="col-sm-9">
+                <div class="form-check align-bottom mt-2">
+                  <input type="file" class="form-control" @change="handleFileChange" />
+                </div>
+              </div>
+            </div>
           </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>{{ translations.general.add }} {{ translations.product.product }}</h5>
+        </div>
+        <div class="card-body">
+          <!-- <form> -->
+
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <label class="col-form-label">Make</label>
+            </div>
+            <div class="col-sm-9">
+              <select class="form-control" v-model="item.product_id" multiple>
+                <option v-for="product in products" :value="product.id">
+                  {{ product.name_ar }} -
+                  {{ product.name_en }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- </form> -->
         </div>
       </div>
     </div>
@@ -212,7 +265,8 @@
     <div class="col-sm-12">
       <div class="col-md-12 text-right">
         <button class="btn btn-secondary mb-3" type="button" @click="addVariant()">
-          {{translations.general.add}} {{translations.product.new}} {{translations.product.product}}
+          {{ translations.general.add }} {{ translations.product.new }}
+          {{ translations.product.product }}
         </button>
       </div>
 
@@ -236,7 +290,7 @@
                     aria-controls="v-pills-home"
                     aria-selected="true"
                   >
-                    {{translations.product.type}} {{ index }}
+                    {{ translations.product.type }} {{ index }}
                   </a>
                 </li>
               </ul>
@@ -253,7 +307,7 @@
                   <div>
                     <div class="row mb-4">
                       <strong class="col-md-5 text-capitalize" style="font-size: 18px">
-                        {{translations.product.type}} {{ index }}
+                        {{ translations.product.type }} {{ index }}
                       </strong>
 
                       <button
@@ -284,9 +338,9 @@
 
                         <div class="row form-group">
                           <div class="col-sm-3">
-                            <label style="font-weight: bold" class="col-form-label"
-                              >{{translations.general.image}}</label
-                            >
+                            <label style="font-weight: bold" class="col-form-label">{{
+                              translations.general.image
+                            }}</label>
                           </div>
 
                           <div class="col-md-9">
@@ -301,7 +355,9 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold">{{translations.color.colors}}</label>
+                        <label style="font-weight: bold">{{
+                          translations.color.colors
+                        }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <select class="form-control" v-model="variant.color_id">
@@ -313,7 +369,9 @@
                         </select>
                       </div>
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold">{{translations.size.sizes}}</label>
+                        <label style="font-weight: bold">{{
+                          translations.size.size
+                        }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input
@@ -324,7 +382,9 @@
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold">{{translations.product.additionalPrice}}</label>
+                        <label style="font-weight: bold">{{
+                          translations.product.additionalPrice
+                        }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
                         <input
@@ -345,7 +405,7 @@
       </div>
       <div class="text-center">
         <router-link v-if="!disableButton" to="/admin/product" class="btn btn-secondary">
-          {{translations.general.cancel}}
+          {{ translations.general.cancel }}
         </router-link>
         <button
           v-if="!disableButton"
@@ -353,7 +413,7 @@
           @click="createItem"
           class="btn btn-primary"
         >
-          {{translations.general.add}}
+          {{ translations.general.add }}
         </button>
       </div>
     </div>
@@ -371,6 +431,7 @@ export default {
 
       show: true,
       item: {
+        product_id: [], // Initialize as an empty array for multiple selections
         name_ar: "",
         name_en: "",
         sku: "",
@@ -385,7 +446,7 @@ export default {
         limited_edition: 0,
         // product_details_image: null,
         // product_details: null,
-        // image: null,
+        files: null,
         variants: [
           {
             image: null,
@@ -397,6 +458,13 @@ export default {
         ],
       },
       categories: [
+        {
+          id: null,
+          name_en: null,
+          name_ar: null,
+        },
+      ],
+      products: [
         {
           id: null,
           name_en: null,
@@ -438,6 +506,7 @@ export default {
   },
   created() {
     this.getCategory();
+    this.getProduct();
     this.getTag();
     this.getMaterial();
     this.getCollection();
@@ -445,6 +514,11 @@ export default {
     this.getDimension();
   },
   methods: {
+    handleFileChange(event) {
+      const files = event.target.files;
+      // Store the selected files in your component's data
+      this.item.files = files;
+    },
     // handleFileChange(event) {
     //     const file = event.target.files[0];
 
@@ -479,6 +553,17 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+
+    getProduct() {
+      axios
+        .get("product/all")
+        .then((response) => {
+          console.log("product", response.data.data.data);
+          this.products = response.data.data.data;
+        })
+        .catch((err) => console.log(err));
+    },
+
     getDimension() {
       axios
         .get("dimension/all")
