@@ -148,6 +148,8 @@ export default {
         quantity: "Quantity",
         unitPrice: "Unit price",
         totalPrice: "Total Price",
+        subProduct: "Sub product ",
+        
     },
     copoun: {
         copouns: "Copouns",

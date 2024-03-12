@@ -238,7 +238,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>{{ translations.general.add }} {{ translations.product.product }}</h5>
+          <h5>{{ translations.general.add }} {{ translations.product.subProduct }}</h5>
         </div>
         <div class="card-body">
           <!-- <form> -->

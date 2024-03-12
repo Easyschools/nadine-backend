@@ -141,6 +141,8 @@ export default {
     quantity: "الكمية",
     unitPrice: "سعر القطعة",
     totalPrice: "السهر الكلى",
+    subProduct: "المنتج الفرعي",
+
 
   },
   coupon: {
