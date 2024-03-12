@@ -319,26 +319,49 @@ class ProductApiService extends AppRepository
     {
         // dd($request->all());
         $product = $this->find($request->id);
-        $product->update($request->only([
-            'name_ar',
-            'name_en',
-            'description_ar',
-            'description_en',
-            'slug',
-            'stock',
-            'price',
-            'sku',
-            'price_after_discount',
-            'collection_id',
-            'tag_id',
-            'material_id',
-            'color_id',
-            'limited_edition',
-            'best_selling',
-            'new_arrival',
-            'files'
+        // $product->update($request->only([
+        //     'name_ar',
+        //     'name_en',
+        //     'description_ar',
+        //     'description_en',
+        //     'slug',
+        //     'stock',
+        //     'price',
+        //     'sku',
+        //     'price_after_discount',
+        //     'collection_id',
+        //     'tag_id',
+        //     'material_id',
+        //     'color_id',
+        //     'limited_edition',
+        //     'best_selling',
+        //     'new_arrival',
+        //     'files'
 
-        ]));
+        // ]));
+        $product->update(array_merge(
+            $request->only([
+                'name_ar',
+                'name_en',
+                'description_ar',
+                'description_en',
+                'slug',
+                'stock',
+                'price',
+                'sku',
+                'price_after_discount',
+                'collection_id',
+                'tag_id',
+                'material_id',
+                'color_id',
+                'limited_edition',
+                'best_selling',
+                'new_arrival',
+                'files',
+            ]),
+            ['sub_products' => $request->sub_products]
+        ));
+        
 
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();
