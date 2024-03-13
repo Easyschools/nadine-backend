@@ -128,4 +128,10 @@ class ProductApiController extends Controller
         Excel::store(new ProductsExport, $path, 'public');
         return $this->sendResponse(url('storage/' . $path), 'Products list url.');
     }
+
+    public function getSubProduct(ProductRequest $request)
+    {
+        $process = $this->productApiService->getSubProduct($request);
+        return $this->sendResponse($process);
+    }
 }

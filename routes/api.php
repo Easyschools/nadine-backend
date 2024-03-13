@@ -319,6 +319,8 @@ Route::group([
         Route::get('new-arrival', [ProductApiController::class, 'getNewArrival']);
         Route::post('import', [ProductApiController::class, 'import']);
         Route::get('export', [ProductApiController::class, 'export']);
+        Route::get('get-sub-product', [ProductApiController::class, 'getSubProduct']);
+
     });
 
     Route::group([

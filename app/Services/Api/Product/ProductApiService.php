@@ -232,6 +232,42 @@ class ProductApiService extends AppRepository
      * @param $request
      * @return mixed
      */
+    public function getSubProduct($request)
+    {
+
+        $this->setRelations([
+            'variants' => function ($variant) {
+                $variant->with(['color', 'dimension', 'images']);
+            },
+            'tag',
+        ]);
+        if ($request->slug) {
+            $product = $this->findByColumn('slug', $request->slug);
+        } else {
+            $product = $this->find($request->id);
+        }
+        // Extract sub_products array from the retrieved product
+        $subProducts = $product->sub_products;
+        // Retrieve products where sub_products column contains any of the values in $subProducts array
+        $products = Product::whereIn('id', $subProducts)->get();
+        foreach ($products as $product) {
+            if ($product !== null) {
+                foreach ($product->variants as $variant) {
+                    if ($variant->dimension) {
+                        $variant['dimension_value'] = $variant->dimension->dimension;
+                    }
+                }
+            }
+        }
+
+        return $products;
+    }
+
+
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function createProduct($request)
     {
         // dd($request->all());
@@ -361,7 +397,7 @@ class ProductApiService extends AppRepository
             ]),
             ['sub_products' => $request->sub_products]
         ));
-        
+
 
 
         $oldVariantsIds = $product->variants()->pluck('id')->toArray();

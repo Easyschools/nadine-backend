@@ -23,6 +23,7 @@
                class="dropdown-menu dropdown-menu-right profile-notification"
               :style="{
                 left: currentLanguage === 'en' ? '0 !important' : 'auto',
+                position: currentLanguage === 'en' ? 'static !important' : 'static',
                 right: currentLanguage === 'ar' ? '0 !important' : 'auto',
                 minWidth: 'auto',
               }"

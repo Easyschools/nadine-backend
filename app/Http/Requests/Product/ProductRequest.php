@@ -42,6 +42,8 @@ class ProductRequest extends FormRequest
                 return $this->searchValidation();
             case 'import':
                 return $this->importValidation();
+            case 'getSubProduct':
+                return $this->getSubProduct();
             default:
                 return [];
         }
@@ -74,7 +76,7 @@ class ProductRequest extends FormRequest
             'variants.*.images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'variants.*.dimension' => 'nullable',
             'variants.*.additional_price' => 'required|numeric',
-            
+
         ];
     }
 
@@ -102,7 +104,7 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
-            
+
             // 'variants.*.images' => 'nullable|array',
             // 'variants.*.images.*' => 'image',
             // 'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
@@ -142,4 +144,12 @@ class ProductRequest extends FormRequest
                 'file' => 'required|file|mimes:xlsx,xls,csv'
             ];
     }
+    private function getSubProduct()
+    {
+        return
+            [
+                'id' => ['required','exists:products,id']
+            ];
+    }
+    
 }

@@ -245,7 +245,7 @@
 
           <div class="row form-group">
             <div class="col-sm-3">
-              <label class="col-form-label">Make</label>
+              <label class="col-form-label">Make a look</label>
             </div>
             <div class="col-sm-9">
               <select class="form-control" v-model="item.product_id" multiple>
