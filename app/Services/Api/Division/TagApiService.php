@@ -64,13 +64,13 @@ class TagApiService extends AppRepository
                 'category_id' => $request->category_id,
             ]
         );
-        if ($request->cost_inside_cairo || $request->cost_outside_cairo) {
-            $this->customTagShippingPriceApiService->model->create([
-                'tag_id' => $tag->id,
-                'cost_inside_cairo' => $request->cost_inside_cairo,
-                'cost_outside_cairo' => $request->cost_outside_cairo,
-            ]);
-        }
+        // if ($request->cost_inside_cairo || $request->cost_outside_cairo) {
+        //     $this->customTagShippingPriceApiService->model->create([
+        //         'tag_id' => $tag->id,
+        //         'cost_inside_cairo' => $request->cost_inside_cairo,
+        //         'cost_outside_cairo' => $request->cost_outside_cairo,
+        //     ]);
+        // }
         return $tag;
     }
 

@@ -374,12 +374,21 @@
                         }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
+                        <select class="form-control" v-model="variant.dimension_id">
+                          <option value=""></option>
+                          <option v-for="dimension in dimensions" :value="dimension.id">
+                            {{ dimension.dimension }} 
+                          </option>
+                        </select>
+                      </div>
+
+                      <!-- <div class="col-md-9 mt-3">
                         <input
                           type="text"
                           v-model="variant.dimension"
                           class="form-control"
                         />
-                      </div>
+                      </div> -->
 
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
@@ -452,6 +461,7 @@ export default {
             image: null,
             additional_price: 0,
             color_id: null,
+            dimensions_id: null,
             dimension_id: null,
             images: [],
           },
@@ -494,7 +504,13 @@ export default {
           name_ar: null,
         },
       ],
-      dimensions: [{}],
+      dimensions: [
+        {
+          id: null,
+          name_en: null,
+          name_ar: null,
+        },
+      ],
       colors: [
         {
           id: null,

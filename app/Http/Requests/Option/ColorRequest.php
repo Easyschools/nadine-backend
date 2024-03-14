@@ -46,7 +46,7 @@ class ColorRequest extends FormRequest
         return [
             'name_en' => 'required|min:2|unique:colors,name_en',
             'name_ar' => 'required|min:2|unique:colors,name_ar',
-            'image' => 'required|mimes:png,jpg,jpeg',
+            // 'image' => 'required|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -56,7 +56,7 @@ class ColorRequest extends FormRequest
             'id' => 'required|exists:colors,id',
             'name_en' => 'min:2|unique:colors,name_en,' . $this->id,
             'name_ar' => 'min:2|unique:colors,name_ar,' . $this->id,
-            'image' => 'required',
+            // 'image' => 'required',
         ];
     }
 

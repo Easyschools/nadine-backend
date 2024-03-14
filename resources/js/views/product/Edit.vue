@@ -279,7 +279,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>{{ translations.general.add }}  {{ translations.product.subProduct }}</h5>
+          <h5>{{ translations.general.add }} {{ translations.product.subProduct }}</h5>
         </div>
         <div class="card-body">
           <!-- <form> -->
@@ -420,7 +420,21 @@
                           </option>
                         </select>
                       </div>
+
                       <div class="col-md-3 mt-4 mb-3">
+                        <label style="font-weight: bold">{{
+                          translations.size.size
+                        }}</label>
+                      </div>
+                      <div class="col-md-9 mt-3">
+                        <select class="form-control" v-model="variant.dimension_id">
+                          <option value=""></option>
+                          <option v-for="dimension in dimensions" :value="dimension.id">
+                            {{ dimension.dimension }}
+                          </option>
+                        </select>
+                      </div>
+                      <!-- <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
                           translations.size.sizes
                         }}</label>
@@ -431,7 +445,7 @@
                           v-model="variant.dimension_value"
                           class="form-control"
                         />
-                      </div>
+                      </div> -->
 
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
@@ -561,7 +575,13 @@ export default {
           name_ar: null,
         },
       ],
-      dimensions: [{}],
+      dimensions: [
+        {
+          id: null,
+          name_en: null,
+          name_ar: null,
+        },
+      ],
       colors: [
         {
           id: null,

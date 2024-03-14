@@ -23,17 +23,17 @@
                                 <input type="text" class="form-control" v-model="item.name_en">
                             </div>
                         </div>
-
+<!-- 
                         <div class="row form-group " v-if="item.image">
                             <img :src="item.image" ref="imageDisplay" class="mr-auto imageDisplay"/>
-                        </div>
+                        </div> -->
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-form-label">{{translations.general.image}}:</label>
                             <input type="file" ref="myImage" v-on:change="attachImage"
                                    class="form-control"
                                    id="recipient-image">
-                        </div>
+                        </div> -->
 
                         <div class="text-center mt-5">
                             <router-link to="/admin/color" class="btn btn-secondary">{{translations.general.cancel}}</router-link>

@@ -28,33 +28,33 @@
                                 <!--</select>-->
                             </div>
                         </div>
-
+<!-- 
                         <div class="row form-group">
 
                             <div class="col-sm-3">
                                 <label class="col-form-label">{{translations.tag.shippingWithinCairo}}</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.cost_inside_cairo">
+                                <input type="number" class="form-control" v-model="item.cost_inside_cairo"> -->
                                 <!--<select class="form-control" v-model="item.name_en">-->
                                 <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
                                 <!--</select>-->
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
 
-
+<!-- 
                         <div class="row form-group">
 
                             <div class="col-sm-3">
                                 <label class="col-form-label">{{translations.tag.shippingOutsideCairo}}</label>
                             </div>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" v-model="item.cost_outside_cairo">
+                                <input type="number" class="form-control" v-model="item.cost_outside_cairo"> -->
                                 <!--<select class="form-control" v-model="item.name_en">-->
                                 <!--<option v-for="type in types" :value="type.id">{{type.name}}</option>-->
                                 <!--</select>-->
-                            </div>
-                        </div>
+                            <!-- </div>
+                        </div> -->
 
 
                         <div class="row form-group">
@@ -71,27 +71,27 @@
                                 </select>
                             </div>
                         </div>
-
+<!-- 
                         <div class="row form-group " v-if="item.image">
                             <img src="" ref="imageDisplay" class="mr-auto imageDisplay"/>
-                        </div>
+                        </div> -->
 
-                        <div class="row form-group">
+                        <!-- <div class="row form-group"> -->
 
 
-                            <div class="col-sm-3">
+                            <!-- <div class="col-sm-3">
                                 <label class="col-form-label ">{{translations.general.image}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div>
+                            </div> -->
                             <!--<div class="col-sm-9">-->
                             <!--<b-form-tags input-id="tags-basic" v-model="item.text" class="mb-2"></b-form-tags>-->
                             <!--</div>-->
                             <!--<div class="col-sm-3">-->
                             <!--<label class="col-form-label">النص</label>-->
                             <!--</div>-->
-                        </div>
+                        <!-- </div> -->
 
                         <div class="text-center mt-5">
                             <router-link to="/admin/tag" class="btn btn-secondary">{{translations.general.cancel}}</router-link>

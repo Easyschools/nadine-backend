@@ -20,7 +20,7 @@
                             <th>#</th>
                             <th>{{translations.general.nameAr}}</th>
                             <th>{{translations.general.nameEn}}</th>
-                            <th>{{translations.general.image}}</th>
+                            <!-- <th>{{translations.general.image}}</th> -->
                             <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
@@ -31,9 +31,9 @@
                             <td>
                                 {{ item.name_en }}
                             </td>
-                            <td>
+                            <!-- <td>
                                 <img :src="item.image" width="100px" height="100px"/>
-                            </td>
+                            </td> -->
                             <!--<td class="DisplayColor">-->
                             <!--<div class="myDisplayDiv" v-bind:style="{ backgroundColor: item.code}">-->
                             <!--&lt;!&ndash;                                {{ item.color }}&ndash;&gt;-->
@@ -86,7 +86,7 @@
                                            id="recipient-name_ar">
 
                                 </div>
-
+<!-- 
                                 <div class="row form-group " v-if="newItem.image">
                                     <img src="" ref="imageDisplay" class="mr-auto imageDisplay"/>
                                 </div>
@@ -96,7 +96,7 @@
                                     <input type="file" ref="myImage" v-on:change="attachImage"
                                            class="form-control"
                                            id="recipient-image">
-                                </div>
+                                </div> -->
 
                                 <!--<div class="form-group">-->
                                 <!--<label class="col-form-label">Color:</label>-->
@@ -137,13 +137,13 @@
                 item: {
                     id: null,
                     name_ar: '',
-                    image: null,
+                    // image: null,
                     name_en: '',
                 },
                 newItem: {
                     name_ar: null,
                     name_en: null,
-                    image: null
+                    // image: null
                 }
             }
         },
@@ -173,7 +173,8 @@
                 }
                 axios.post('color/create', formData).then(response => {
                     console.log(response.data.data);
-                    this.newItem = {name_ar: null, name_en: null, image: null};
+                    this.newItem = {name_ar: null, name_en: null};
+                    // this.newItem = {name_ar: null, name_en: null, image: null};
                     this.getAll();
                     // this.items.unshift(this.newItem);
                     $('#exampleModal').modal('hide');
@@ -207,15 +208,15 @@
                     }
                 });
             },
-            attachImage() {
-                this.newItem.image = this.$refs.myImage.files[0];
-                let reader = new FileReader();
-                reader.addEventListener('load', function () {
-                    this.$refs.imageDisplay.src = reader.result;
-                }.bind(this), false);
+            // attachImage() {
+            //     this.newItem.image = this.$refs.myImage.files[0];
+            //     let reader = new FileReader();
+            //     reader.addEventListener('load', function () {
+            //         this.$refs.imageDisplay.src = reader.result;
+            //     }.bind(this), false);
 
-                reader.readAsDataURL(this.newItem.image);
-            },
+            //     reader.readAsDataURL(this.newItem.image);
+            // },
         }
     }
 </script>
