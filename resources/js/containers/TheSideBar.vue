@@ -75,7 +75,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-tags"></i>
               </span>
-              <span class="pcoded-mtext">{{translations.sidebar.types}}</span>
+              <span class="pcoded-mtext">{{translations.sidebar.tags}}</span>
             </router-link>
           </li>
 

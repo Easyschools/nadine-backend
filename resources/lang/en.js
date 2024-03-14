@@ -63,7 +63,7 @@ export default {
         contact: "Contact",
         material: "Material",
         favourite:"Favourite",
-        // types: "Tags",
+        tags: "Sub category",
         types: "types",
         categories: "Categories",
         degreeOfِcidification: "Degree of acidification",
@@ -110,7 +110,7 @@ export default {
     },
 
     tag: {
-        tags: "Tags",
+        tags: "Sub category",
         shippingWithinCairo: "Shipping within Cairo",
         shippingOutsideCairo: "Shipping outside Cairo",
 
