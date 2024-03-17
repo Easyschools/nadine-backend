@@ -533,7 +533,7 @@ export default {
             additional_price: 0,
             color_id: null,
             dimension_id: null,
-            dimension_value: null,
+            // dimension_value: null,
             images: [null],
           },
         ],
@@ -578,8 +578,9 @@ export default {
       dimensions: [
         {
           id: null,
-          name_en: null,
-          name_ar: null,
+          dimension: null,
+          // dimension_value:null,
+          // name_ar: null,
         },
       ],
       colors: [
@@ -703,6 +704,7 @@ export default {
         .then((response) => {
           this.item = response.data.data;
           this.item.product_details = this.item.product_detail.details;
+          
           // console.log(this.item.product_detail.details);
           // this.item.images = [];
           // this.item.dimension = response.data.data.dimension.dimension;
@@ -772,7 +774,7 @@ export default {
         color_id: null,
         dimension_id: null,
         images: [],
-        dimension: null,
+        // dimension: null,
       });
     },
     getFormData(formData) {

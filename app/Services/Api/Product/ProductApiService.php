@@ -318,8 +318,7 @@ class ProductApiService extends AppRepository
         ));
 
         foreach ($request->variants as $variant) {
-            $variant = $this->createDimension($variant);
-
+            // $variant = $this->createDimension($variant);
             $variantModel = Variant::firstOrCreate([
                 'color_id' => $variant['color_id'],
                 'additional_price' => $variant['additional_price'],
@@ -429,7 +428,7 @@ class ProductApiService extends AppRepository
 
         foreach ($request->variants as $index => $variant) {
 
-            $variant = $this->createDimension($variant, 'dimension_value');
+            // $variant = $this->createDimension($variant, 'dimension_value');
             if ($variant['id']) {
 
                 $variantModel = $this->variantRepo->find($variant['id']);
