@@ -235,7 +235,7 @@
               <span class="pcoded-micon">
                 <i class="fas fa-mail-bulk"></i>
               </span>
-              <span class="pcoded-mtext">رسائل</span>
+              <span class="pcoded-mtext">{{translations.sidebar.message}}</span>
               <span
                 v-if="cnt"
                 class="unread"
