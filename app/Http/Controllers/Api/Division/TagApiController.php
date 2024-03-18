@@ -64,6 +64,7 @@ class TagApiController extends Controller
 
     public function all(Request $request)
     {
+
         $validator = Validator($request->all(), [
             'is_paginate' => 'in:0,1',
 
@@ -76,6 +77,10 @@ class TagApiController extends Controller
             'customTagShippingPrice',
 
         )->withCount('products');
+
+        if($request->category_id){
+            $Tag = $Tag->where('category_id',$request->category_id);
+        }
 
         if (!$request->is_paginate) {
             $Tag = $Tag->get();

@@ -3,6 +3,7 @@
 namespace App\Models\Option;
 
 use App\Models\Product\Product;
+use App\Models\Product\Variant;
 use Illuminate\Database\Eloquent\Model;
 
 class Material extends Model
@@ -26,6 +27,10 @@ class Material extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
     }
 
 }

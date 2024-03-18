@@ -87,10 +87,14 @@
               <div class="col-sm-9">
                 <select
                   class="form-control"
-                  v-on:change="selectCategory"
+                  @change="selectTags()"
                   v-model="item.category_id"
                 >
-                  <option v-for="category in categories" :value="category.id">
+                  <option
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    :value="category.id"
+                  >
                     {{ category.name_ar }} -
                     {{ category.name_en }}
                   </option>
@@ -103,14 +107,19 @@
                 <label class="col-form-label">{{ translations.product.type }}</label>
               </div>
               <div class="col-sm-9">
-                <select class="form-control" v-model="item.tag_id">
+                <!-- <select class="form-control" v-model="item.tag_id">
                   <option v-for="tag in tags" :value="tag.id">
                     {{ tag.name_ar }} - {{ tag.name_en }}
+                  </option>
+                </select> -->
+                <select id="tags_id" class="form-control" v-model="item.tag_id">
+                  <option v-for="(item, index) in tags" :key="index" :value="item.id">
+                    {{ item.name_ar }} - {{ item.name_en }}
                   </option>
                 </select>
               </div>
             </div>
-            <div class="row form-group">
+            <!-- <div class="row form-group">
               <div class="col-sm-3">
                 <label class="col-form-label">{{
                   translations.material.materials
@@ -124,7 +133,7 @@
                   </option>
                 </select>
               </div>
-            </div>
+            </div> -->
 
             <div class="row form-group">
               <div class="col-sm-3">
@@ -377,10 +386,24 @@
                         <select class="form-control" v-model="variant.dimension_id">
                           <option value=""></option>
                           <option v-for="dimension in dimensions" :value="dimension.id">
-                            {{ dimension.dimension }} 
+                            {{ dimension.dimension }}
                           </option>
                         </select>
                       </div>
+
+                        <div class="col-md-3 mt-3">
+                          <label class="col-form-label">{{
+                            translations.material.materials
+                          }}</label>
+                        </div>
+                        <div class="col-md-9 mt-3">
+                          <select class="form-control" v-model="variant.material_id">
+                            <option v-for="material in materials" :value="material.id">
+                              {{ material.name_ar }} -
+                              {{ material.name_en }}
+                            </option>
+                          </select>
+                        </div>
 
                       <!-- <div class="col-md-9 mt-3">
                         <input
@@ -458,6 +481,7 @@ export default {
         files: null,
         variants: [
           {
+            material_id: null,
             image: null,
             additional_price: 0,
             color_id: null,
@@ -523,13 +547,26 @@ export default {
   created() {
     this.getCategory();
     this.getProduct();
-    this.getTag();
+    // this.getTag();
     this.getMaterial();
     this.getCollection();
     this.getColor();
     this.getDimension();
   },
   methods: {
+    async selectTags() {
+      const selected = await this.categories.find(
+        (item) => item.id == this.item.category_id
+      );
+      this.tags = selected?.tags ?? [];
+      // Clear the existing tags in item.tags array before pushing new tags
+      this.item.tags = [];
+      this.tags.forEach((item) => {
+        this.item.tags.push(item.id);
+      });
+      // Focus on the select element after updating its options
+      document.getElementById("tags_id").focus();
+    },
     handleFileChange(event) {
       const files = event.target.files;
       // Store the selected files in your component's data
@@ -596,14 +633,14 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getTag(value = null) {
-      axios
-        .get("tag/all?category_id=" + (value ? value : 0))
-        .then((response) => {
-          this.tags = response.data.data;
-        })
-        .catch((err) => console.log(err));
-    },
+    // getTag(value = null) {
+    //   axios
+    //     .get("tag/all?category_id=" + (value ? value : 0))
+    //     .then((response) => {
+    //       this.tags = response.data.data;
+    //     })
+    //     .catch((err) => console.log(err));
+    // },
     getMaterial() {
       axios
         .get("material/all")
@@ -643,6 +680,7 @@ export default {
         image: null,
         additional_price: 0,
         stock: 1,
+        material_id: null,
         color_id: null,
         dimension_id: null,
         images: [],

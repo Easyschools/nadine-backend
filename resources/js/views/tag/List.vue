@@ -17,10 +17,10 @@
                             <th>#</th>
                             <th>{{translations.general.nameAr}}</th>
                             <th>{{translations.general.nameEn}}</th>
-                            <th>{{translations.category.category}}</th>
-                            <th>{{translations.general.image}}</th>
+                            <th>{{translations.category.categories}}</th>
+                            <!-- <th>{{translations.general.image}}</th>
                             <th>{{translations.tag.shippingWithinCairo}}</th>
-                            <th>{{translations.tag.shippingOutsideCairo}}</th>
+                            <th>{{translations.tag.shippingOutsideCairo}}</th> -->
                             <th>{{translations.general.options}}</th>
                         </tr>
                         </thead>
@@ -30,13 +30,13 @@
                             <td>{{item.name_ar}}</td>
                             <td>{{item.name_en}}</td>
                             <td>{{item.category.name}}</td>
-                            <td>
+                            <!-- <td>
                                 <img v-if="item.image" :src="item.image" class=" imageDisplay" alt="no Image"/>
                                 <img v-else src="../../../images/no_image.jpg" class=" imageDisplay"
                                      alt="no Image"/>
                             </td>
                             <td>{{item.custom_tag_shipping_price ? item.custom_tag_shipping_price.cost_inside_cairo : ''}}</td>
-                            <td>{{item.custom_tag_shipping_price ? item.custom_tag_shipping_price.cost_outside_cairo : ''}}</td>
+                            <td>{{item.custom_tag_shipping_price ? item.custom_tag_shipping_price.cost_outside_cairo : ''}}</td> -->
 
                             <td>
                                 <router-link

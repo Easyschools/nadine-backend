@@ -89,23 +89,14 @@
               <div class="col-sm-9">
                 <select
                   class="form-control"
-                  v-if="item.tag"
-                  v-on:change="selectCategory"
+                  @change="selectTags()"
                   v-model="item.tag.category_id"
                 >
-                  <option v-for="category in categories" :value="category.id">
-                    {{ category.name_ar }} -
-                    {{ category.name_en }}
-                  </option>
-                </select>
-
-                <select
-                  class="form-control"
-                  v-else
-                  v-on:change="selectCategory"
-                  v-model="item.category_id"
-                >
-                  <option v-for="category in categories" :value="category.id">
+                  <option
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    :value="category.id"
+                  >
                     {{ category.name_ar }} -
                     {{ category.name_en }}
                   </option>
@@ -118,15 +109,20 @@
                 <label class="col-form-label">{{ translations.product.type }}</label>
               </div>
               <div class="col-sm-9">
-                <select class="form-control" v-model="item.tag_id">
+                <!-- <select class="form-control" v-model="item.tag_id">
+                  <option v-for="tag in tags" :value="tag.id">
+                    {{ tag.name_ar }} - {{ tag.name_en }}
+                  </option>
+                </select> -->
+                <select id="tags_id" class="form-control" v-model="item.tag_id">
                   <option v-for="tag in tags" :value="tag.id">
                     {{ tag.name_ar }} - {{ tag.name_en }}
                   </option>
                 </select>
               </div>
             </div>
-            <div class="row form-group">
-              <div class="col-sm-3">
+            <!-- <div class="row form-group"> -->
+            <!-- <div class="col-sm-3">
                 <label class="col-form-label">{{
                   translations.material.materials
                 }}</label>
@@ -138,8 +134,8 @@
                     {{ material.name_en }}
                   </option>
                 </select>
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
 
             <div class="row form-group">
               <div class="col-sm-3">
@@ -421,6 +417,20 @@
                         </select>
                       </div>
 
+                      <div class="col-md-3">
+                        <label class="col-form-label">{{
+                          translations.material.materials
+                        }}</label>
+                      </div>
+                      <div class="col-md-9">
+                        <select class="form-control" v-model="variant.material_id">
+                          <option v-for="material in materials" :value="material.id">
+                            {{ material.name_ar }} -
+                            {{ material.name_en }}
+                          </option>
+                        </select>
+                      </div>
+
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
                           translations.size.size
@@ -512,6 +522,7 @@ export default {
         best_selling: "",
         limited_edition: "",
         files: null, // Assuming file data will be stored here
+        tag: "",
 
         // product_details_image: null,
         // product_details: null,
@@ -641,6 +652,19 @@ export default {
 
     //     reader.readAsDataURL(file);
     // },
+    async selectTags() {
+      try {
+        // Fetch tags based on the selected category
+        const categoryId = this.item.tag.category_id; // Get the selected category ID
+        const response = await axios.get(`tag/all?category_id=${categoryId}`);
+        console.log('response',  response);
+        this.tags = response.data.data;
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+        this.tags = []; // Clear tags array on error
+      }
+    },
+
     getCategory() {
       axios
         .get("category/all")
@@ -704,7 +728,7 @@ export default {
         .then((response) => {
           this.item = response.data.data;
           this.item.product_details = this.item.product_detail.details;
-          
+
           // console.log(this.item.product_detail.details);
           // this.item.images = [];
           // this.item.dimension = response.data.data.dimension.dimension;
@@ -714,10 +738,7 @@ export default {
           console.log(err);
         });
     },
-    selectCategory: function (e) {
-      this.getTag(e.target.value);
-      // console.log(e.target.value);
-    },
+
     editItem() {
       this.disableButton = true;
       let formData = new FormData();

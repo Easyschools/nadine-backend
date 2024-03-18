@@ -39,7 +39,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
             'material',
             'variants' => function ($variant) {
-                $variant->select('product_id', 'color_id', 'dimension_id', 'id')->with(
+                $variant->select('product_id', 'color_id', 'dimension_id','material_id', 'id')->with(
                     'Color:id,name_en,name_ar,code,image',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
@@ -78,7 +78,8 @@ class ProductApiService extends AppRepository
         $this->setSortBy('sku');
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id', 'dimension_id', 'id')->with(
+                $variant->select('product_id', 'dimension_id','material_id', 'id')->with(
+                    'material:id,name_en',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
                 );
@@ -210,7 +211,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images']);
+                $variant->with(['color', 'dimension', 'images','material']);
             },
             'tag',
         ]);
@@ -237,7 +238,7 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images']);
+                $variant->with(['color', 'dimension', 'images','material']);
             },
             'tag',
         ]);
@@ -308,7 +309,6 @@ class ProductApiService extends AppRepository
                 'collection_id',
                 'category_id',
                 'tag_id',
-                'material_id',
                 'limited_edition',
                 'best_selling',
                 'new_arrival',
@@ -321,6 +321,7 @@ class ProductApiService extends AppRepository
             // $variant = $this->createDimension($variant);
             $variantModel = Variant::firstOrCreate([
                 'color_id' => $variant['color_id'],
+                'material_id' => $variant['material_id'],
                 'additional_price' => $variant['additional_price'],
                 'dimension_id' => $variant['dimension_id'],
                 'product_id' => $product->id,
@@ -387,7 +388,7 @@ class ProductApiService extends AppRepository
                 'price_after_discount',
                 'collection_id',
                 'tag_id',
-                'material_id',
+                // 'material_id',
                 'color_id',
                 'limited_edition',
                 'best_selling',
