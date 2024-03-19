@@ -59,7 +59,10 @@
             <div class="offset-3 col-md-6">
                 <b-pagination
                     v-if="show" v-model="currentPage" @input="getAll" :total-rows="rows" :per-page="perPage"
-                    first-text="الاولى" prev-text="السابق" next-text="التالى" last-text="الاخير"
+                                       :first-text="translations.general.first"
+          :prev-text="translations.general.previous"
+          :next-text="translations.general.next"
+          :last-text="translations.general.last"
                 ></b-pagination>
             </div>
 

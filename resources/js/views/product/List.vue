@@ -2,11 +2,12 @@
   <div class="col-md-12">
     <div class="card" style="min-height: 720px">
       <div class="card-header">
-        <h5 style="font-size: 35px">{{translations.product.product}}</h5>
+        <h5 style="font-size: 35px">{{ translations.product.product }}</h5>
         <router-link
           to="/admin/product/create"
           class="btn btn-outline-primary float-right"
-        >{{translations.general.add}}</router-link>
+          >{{ translations.general.add }}</router-link
+        >
       </div>
       <div class="card-body table-border-style">
         <div class="table-responsive text-center">
@@ -14,7 +15,7 @@
             <div class="col-md-4">
               <div id="report-2" class="dataTables_filter">
                 <label>
-                  {{translations.product.number}}:
+                  {{ translations.product.number }}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -29,7 +30,7 @@
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
                 <label>
-                  {{translations.general.name}}:
+                  {{ translations.general.name }}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -44,7 +45,7 @@
             <div class="col-md-4">
               <div id class="dataTables_filter">
                 <label>
-                  {{translations.category.categories}}:
+                  {{ translations.category.categories }}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -59,7 +60,7 @@
             <div class="col-md-4">
               <div id class="dataTables_filter">
                 <label>
-                  {{translations.product.type}}:
+                  {{ translations.product.type }}:
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -76,27 +77,32 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{translations.product.sku}}</th>
-                <th>{{translations.general.nameAr}}</th>
-                <th>{{translations.general.nameEn}}</th>
-                <th>{{translations.product.type}}</th>
-                <th>{{translations.category.categories}}</th>
-                <th>{{translations.product.price}}</th>
-                <th>{{translations.general.image}}</th>
-                <th>{{translations.general.options}}</th>
+                <th>{{ translations.product.sku }}</th>
+                <th>{{ translations.general.nameAr }}</th>
+                <th>{{ translations.general.nameEn }}</th>
+                <th>{{ translations.product.type }}</th>
+                <th>{{ translations.category.categories }}</th>
+                <th>{{ translations.product.price }}</th>
+                <th>{{ translations.general.image }}</th>
+                <th>{{ translations.general.options }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in items" :key="index">
+              <tr v-for="(item, index) in items" :key="index">
                 <td>{{ item.id }}</td>
                 <td>{{ item.sku }}</td>
                 <td>{{ item.name_ar }}</td>
                 <td>{{ item.name_en }}</td>
-                <td>{{ item.tag ? item.tag.name : '' }}</td>
-                <td>{{ item.category ? item.category.name : '' }}</td>
+                <td>{{ item.tag ? item.tag.name : "" }}</td>
+                <td>{{ item.category ? item.category.name : "" }}</td>
                 <td>{{ item.price }}</td>
                 <td>
-                  <img v-if="item.image" :src="item.image" class="imageDisplay" alt="no Image" />
+                  <img
+                    v-if="item.image"
+                    :src="item.image"
+                    class="imageDisplay"
+                    alt="no Image"
+                  />
                   <img
                     v-else
                     src="../../../images/no_image.jpg"
@@ -106,17 +112,23 @@
                 </td>
                 <td>
                   <router-link
-                    :to="{path:'/admin/product/edit/' +item.slug +'/'+currentPage,params: {
-                                     slug: item.slug,
-                                     page: currentPage,
-                                     }}"
+                    :to="{
+                      path: '/admin/product/edit/' + item.slug + '/' + currentPage,
+                      params: {
+                        slug: item.slug,
+                        page: currentPage,
+                      },
+                    }"
                     class="btn btn-outline-warning"
-                  >{{translations.general.edit}}</router-link>
+                    >{{ translations.general.edit }}</router-link
+                  >
                   <button
                     type="button"
-                    @click="deleteItem(item.id,index)"
+                    @click="deleteItem(item.id, index)"
                     class="btn btn-outline-danger"
-                  >{{translations.general.delete}}</button>
+                  >
+                    {{ translations.general.delete }}
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -131,10 +143,10 @@
           @input="getAll"
           :total-rows="rows"
           :per-page="perPage"
-          first-text="الاولى"
-          prev-text="السابق"
-          next-text="التالى"
-          last-text="الاخير"
+          :first-text="translations.general.first"
+          :prev-text="translations.general.previous"
+          :next-text="translations.general.next"
+          :last-text="translations.general.last"
         ></b-pagination>
       </div>
     </div>
@@ -251,5 +263,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

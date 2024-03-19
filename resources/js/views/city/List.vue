@@ -3,7 +3,11 @@
     <div class="card" style="min-height: 720px">
       <div class="card-header">
         <h5 style="font-size: 35px">{{ translations.city.cities }}</h5>
-        <router-link to="/admin/city/create" class="btn btn-outline-primary float-right">{{ translations.general.add }}</router-link>
+        <router-link
+          to="/admin/city/create"
+          class="btn btn-outline-primary float-right"
+          >{{ translations.general.add }}</router-link
+        >
       </div>
       <div class="card-body table-border-style">
         <div class="table-responsive text-center">
@@ -11,7 +15,7 @@
             <div class="col-md-4">
               <div id="report-table_filter" class="dataTables_filter">
                 <label>
-                  {{ translations.general.name}} :
+                  {{ translations.general.name }} :
                   <input
                     type="search"
                     class="form-control form-control-sm"
@@ -28,14 +32,14 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>{{ translations.general.nameAr}}</th>
-                <th>{{ translations.general.nameEn}}</th>
-                <th>{{ translations.city.shippingCharges}}</th>
-                <th>{{ translations.general.options}}</th>
+                <th>{{ translations.general.nameAr }}</th>
+                <th>{{ translations.general.nameEn }}</th>
+                <th>{{ translations.city.shippingCharges }}</th>
+                <th>{{ translations.general.options }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in items" :key="index">
+              <tr v-for="(item, index) in items" :key="index">
                 <td>{{ item.id }}</td>
                 <td>{{ item.name_ar }}</td>
                 <td>{{ item.name_en }}</td>
@@ -43,14 +47,17 @@
 
                 <td>
                   <router-link
-                    :to="{path:'/admin/city/edit/' +item.id,params: { id: item.id }}"
+                    :to="{ path: '/admin/city/edit/' + item.id, params: { id: item.id } }"
                     class="btn btn-outline-warning"
-                  >{{ translations.general.edit}}</router-link>
+                    >{{ translations.general.edit }}</router-link
+                  >
                   <button
                     type="button"
-                    @click="deleteItem(item.id,index)"
+                    @click="deleteItem(item.id, index)"
                     class="btn btn-outline-danger"
-                  >{{ translations.general.delete}}</button>
+                  >
+                    {{ translations.general.delete }}
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -64,16 +71,15 @@
           @input="getAll"
           :total-rows="rows"
           :per-page="perPage"
-          first-text="الاولى"
-          prev-text="السابق"
-          next-text="التالى"
-          last-text="الاخير"
+          :first-text="translations.general.first"
+          :prev-text="translations.general.previous"
+          :next-text="translations.general.next"
+          :last-text="translations.general.last"
         ></b-pagination>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 // $('#report-table').DataTable();
@@ -148,5 +154,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
