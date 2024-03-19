@@ -39,7 +39,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
             'material',
             'variants' => function ($variant) {
-                $variant->select('product_id', 'color_id', 'dimension_id','material_id', 'id')->with(
+                $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
                     'Color:id,name_en,name_ar,code,image',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
@@ -78,7 +78,7 @@ class ProductApiService extends AppRepository
         $this->setSortBy('sku');
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->select('product_id', 'dimension_id','material_id', 'id')->with(
+                $variant->select('product_id', 'dimension_id', 'material_id', 'id')->with(
                     'material:id,name_en',
                     'Dimension:id,dimension',
                     'images:id,variant_id,image'
@@ -211,7 +211,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images','material']);
+                $variant->with(['color', 'dimension', 'images', 'material']);
             },
             'tag',
         ]);
@@ -238,7 +238,7 @@ class ProductApiService extends AppRepository
 
         $this->setRelations([
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images','material']);
+                $variant->with(['color', 'dimension', 'images', 'material']);
             },
             'tag',
         ]);
@@ -312,9 +312,11 @@ class ProductApiService extends AppRepository
                 'limited_edition',
                 'best_selling',
                 'new_arrival',
-                'files',
             ]),
-            ['sub_products' => $request->product_id]
+            [
+                'sub_products' => $request->product_id,
+                'files' => $request->files ?? null
+            ]
         ));
 
         foreach ($request->variants as $variant) {
@@ -393,9 +395,11 @@ class ProductApiService extends AppRepository
                 'limited_edition',
                 'best_selling',
                 'new_arrival',
-                'files',
             ]),
-            ['sub_products' => $request->sub_products]
+            [
+                'sub_products' => $request->sub_products,
+                'files' => $request->files ?? null
+            ]
         ));
 
 

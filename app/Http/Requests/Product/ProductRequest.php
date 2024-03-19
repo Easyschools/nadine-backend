@@ -70,6 +70,7 @@ class ProductRequest extends FormRequest
             'limited_edition' => 'nullable|numeric',
             'best_selling' => 'nullable|numeric',
             'price_after_discount' => 'required|numeric|min:0',
+            'files' => 'nullable',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
             'variants.*.material_id' => 'nullable|exists:materials,id',
@@ -104,6 +105,7 @@ class ProductRequest extends FormRequest
             'limited_edition' => 'nullable|numeric',
             'best_selling' => 'nullable|numeric',
             'price_after_discount' => 'required|numeric|min:0',
+            'files' => 'nullable',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|exists:colors,id',
             'variants.*.material_id' => 'nullable|exists:materials,id',
@@ -151,8 +153,7 @@ class ProductRequest extends FormRequest
     {
         return
             [
-                'id' => ['required','exists:products,id']
+                'id' => ['required', 'exists:products,id']
             ];
     }
-    
 }

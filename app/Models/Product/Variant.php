@@ -4,6 +4,7 @@ namespace App\Models\Product;
 
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
+use App\Models\Option\Material;
 use Illuminate\Database\Eloquent\Model;
 
 class Variant extends Model
@@ -13,6 +14,7 @@ class Variant extends Model
         'color_id',
         'product_id',
         'dimension_id',
+        'material_id',
     ];
 
     protected $appends = [
@@ -46,4 +48,9 @@ class Variant extends Model
         return $this->hasMany(VariantImage::class);
     }
 
+    public function material()
+    {
+        return $this->belongsTo(Material::class);
+    }
+    
 }
