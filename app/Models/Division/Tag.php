@@ -16,6 +16,10 @@ class Tag extends Model
         'slug',
         'category_id',
         'image',
+        'category'
+    ];
+    protected $casts = [
+        'category' => 'array',
     ];
 
     protected $appends = [
@@ -39,10 +43,15 @@ class Tag extends Model
         return $this['name_' . app()->getLocale()];
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
-    }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class, 'category_id');
+    // }
+  
+    // public function category()
+    // {
+    //     return $this->belongsToMany(Category::class);
+    // }
 
     public function products()
     {

@@ -32,7 +32,7 @@
               </div>
             </div>
 
-            <div class="row form-group">
+            <!-- <div class="row form-group">
               <div class="col-sm-3">
                 <label class="col-form-label">{{translations.tag.shippingWithinCairo}}</label>
               </div>
@@ -61,19 +61,15 @@
                   "
                 />
               </div>
-            </div>
+            </div> -->
 
             <div class="row form-group">
               <div class="col-sm-3">
                 <label class="col-form-label">{{translations.category.categories}}</label>
               </div>
               <div class="col-sm-9">
-                <select class="form-control" v-model="item.category_id">
-                  <option
-                    v-for="category in categories"
-                    :value="category.id"
-                    :key="category.id"
-                  >
+              <select class="form-control" v-model="item.category" multiple>
+                  <option v-for="category in categories" :value="category.id">
                     {{ category.name_ar }} -
                     {{ category.name_en }}
                   </option>
@@ -81,7 +77,7 @@
               </div>
             </div>
 
-            <div class="row form-group" v-if="item.image">
+            <!-- <div class="row form-group" v-if="item.image">
               <img
                 :src="item.image"
                 ref="imageDisplay"
@@ -101,7 +97,7 @@
                   class="form-control"
                 />
               </div>
-            </div>
+            </div> -->
             <div class="text-center mt-5">
               <router-link to="/admin/tag" class="btn btn-secondary"
                 >{{translations.general.cancel}}</router-link
@@ -126,7 +122,7 @@ export default {
       show: false,
       image_is_changed: false,
       item: {
-        category_id: null,
+        category_id: [], // Initialize array to store selected category IDs
         id: null,
         name_ar: null,
         name_en: null,
@@ -134,9 +130,11 @@ export default {
           cost_inside_cairo: 0,
           cost_outside_cairo: 0,
         },
+        category: [], // This is already an array to handle multiple selections
+
         image: null,
       },
-      categories: [{ id: null, name_ar: null, name_en: null }],
+      categories: [], // Initialize array to hold category options
     };
   },
   created() {
@@ -157,7 +155,8 @@ export default {
       axios
         .get("/tag/get?id=" + this.item.id)
         .then((response) => {
-          this.item = response.data.data;
+          this.item = response.data.data.data;
+
           if (this.item.custom_tag_shipping_price !== null) {
             this.item.custom_tag_shipping_price_copy =
               this.item.custom_tag_shipping_price;
@@ -166,6 +165,15 @@ export default {
             cost_inside_cairo: null,
             cost_outside_cairo: null,
           };
+
+          
+          // Push selected category IDs to category_id array
+          if (this.item.category) {
+            this.item.category.forEach((categoryId) => {
+              this.item.category_id.push(categoryId);
+            });
+          }
+
           // console.log(this.item)
         })
         .catch((err) => console.log(err));
@@ -181,6 +189,10 @@ export default {
           data.append(property, this.item[property]);
         }
       }
+        // Append the selected category IDs
+  this.item.category.forEach((categoryId) => {
+    data.append('category[]', categoryId);
+  });
 
       // data.append('id', this.item.id);
       axios

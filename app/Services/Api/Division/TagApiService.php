@@ -43,11 +43,21 @@ class TagApiService extends AppRepository
     public function get($request)
     {
         $this->setRelations([
-            'category',
             'customTagShippingPrice:id,tag_id,cost_inside_cairo,cost_outside_cairo'
         ]);
-        return $this->find($request->id);
+
+        $tag = $this->find($request->id);
+        $categoriesData = Category::whereIn('id', $tag->category)->get();
+
+        // Construct the response data
+        $responseData = $tag->toArray();
+        $responseData['category_data'] = $categoriesData->toArray();
+
+        return [
+            'data' => $responseData,
+        ];
     }
+
 
     /**
      * @param $request
@@ -61,7 +71,9 @@ class TagApiService extends AppRepository
                 'name_en' => $request->name_en,
                 'slug' => \Illuminate\Support\Str::slug($request->name_en),
                 'image' => $request->image,
-                'category_id' => $request->category_id,
+                'category' => [$request->category],
+                'category_id' => $request->category[0],
+
             ]
         );
         // if ($request->cost_inside_cairo || $request->cost_outside_cairo) {
@@ -81,6 +93,7 @@ class TagApiService extends AppRepository
      */
     public function editTag($request)
     {
+        
         $tag = $this->find($request->id);
         if ($tag->customTagShippingPrice) {
             $tag->customTagShippingPrice->update([
@@ -94,6 +107,8 @@ class TagApiService extends AppRepository
             'slug' => $request->name_en ? \Illuminate\Support\Str::slug($request->name_en) : $tag->slug,
             'image' => $request->image ?? $tag->image,
             'category_id' => $request->category_id ?? $tag->category_id,
+            'category' => $request->category ?? $tag->category,
+
         ]);
     }
 
