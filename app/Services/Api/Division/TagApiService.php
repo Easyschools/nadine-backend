@@ -21,20 +21,20 @@ class TagApiService extends AppRepository
      * @param $request
      * @return mixed
      */
-    // public function index($request)
-    // {
-    //     $this->filter($request);
+    public function index($request)
+    {
+        $this->filter($request);
 
-    //     $this->setRelations([
-    //         'category',
-    //         'customTagShippingPrice'
-    //     ]);
+        $this->setRelations([
+            'category',
+            'customTagShippingPrice'
+        ]);
 
-    //     if ($request->is_paginate == 1) {
-    //         return $this->paginate();
-    //     }
-    //     return $this->all()->count();
-    // }
+        if ($request->is_paginate == 1) {
+            return $this->paginate();
+        }
+        return $this->all()->count();
+    }
 
     /**
      * @param $request
@@ -65,14 +65,18 @@ class TagApiService extends AppRepository
      */
     public function createTag($request)
     {
+        // dd(($request->category));
+        $categoryArray = explode(',', $request->category);
+        // dd( $categoryArray[0]);
+
         $tag = $this->model->create(
             [
                 'name_ar' => $request->name_ar,
                 'name_en' => $request->name_en,
                 'slug' => \Illuminate\Support\Str::slug($request->name_en),
                 'image' => $request->image,
-                'category' => [$request->category],
-                'category_id' => $request->category[0],
+                'category' =>  $categoryArray,
+                'category_id' => $categoryArray[0],
 
             ]
         );

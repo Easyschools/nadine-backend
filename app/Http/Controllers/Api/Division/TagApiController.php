@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\Division\Tag;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Division\TagRequest;
+use App\Models\Division\Category;
 use App\Services\Api\Division\TagApiService;
 
 class TagApiController extends Controller
@@ -72,14 +73,15 @@ class TagApiController extends Controller
         if ($validator->fails()) {
             return $this->sendError('error validation', $validator->errors());
         }
-        $Tag = Tag::with(
-            'category',
-            'customTagShippingPrice',
+        // $Tag = Tag::with(
+        //     'category',
+        //     'customTagShippingPrice',
 
-        )->withCount('products');
+        // )->withCount('products');
+        $Tag = Tag::query()->with('customTagShippingPrice')->withCount('products');
 
-        if($request->category_id){
-            $Tag = $Tag->where('category_id',$request->category_id);
+        if ($request->category_id) {
+            $Tag = $Tag->where('category_id', $request->category_id);
         }
 
         if (!$request->is_paginate) {
@@ -87,8 +89,16 @@ class TagApiController extends Controller
         } else {
             $Tag = $Tag->paginate(15);
         }
+        // Extracting category IDs from the paginated tags
+        // Fetching categories for each tag
+        $Tag->each(function ($tag) {
+            $categoryIds = $tag->category; // Assuming 'category' is the name of the column storing category IDs
+            $tag->categories = Category::whereIn('id', $categoryIds)->get();
+        });
+        // Fetching categories using the extracted IDs
         return $this->sendResponse($Tag, "Tag Seen Successfully");
     }
+
 
     public function getTop(Request $request)
     {
