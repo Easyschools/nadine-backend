@@ -68,12 +68,13 @@ class TagApiService extends AppRepository
         // dd(($request->category));
         $categoryArray = explode(',', $request->category);
         // dd( $categoryArray[0]);
+        $randomNumber = mt_rand(1000, 9999); // Generate a random 4-digit number
 
         $tag = $this->model->create(
             [
                 'name_ar' => $request->name_ar,
                 'name_en' => $request->name_en,
-                'slug' => \Illuminate\Support\Str::slug($request->name_en),
+                'slug' => \Illuminate\Support\Str::slug($request->name_en). '-' . $randomNumber,
                 'image' => $request->image,
                 'category' =>  $categoryArray,
                 'category_id' => $categoryArray[0],

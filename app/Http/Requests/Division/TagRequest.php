@@ -44,8 +44,10 @@ class TagRequest extends FormRequest
     private function createValidation()
     {
         return [
-            'name_en' => 'required|min:2|unique:tags,name_en',
-            'name_ar' => 'required|min:2|unique:tags,name_ar',
+            'name_en' => 'required|min:2',
+            'name_ar' => 'required|min:2',
+            // 'name_en' => 'required|min:2|unique:tags,name_en',
+            // 'name_ar' => 'required|min:2|unique:tags,name_ar',
             // 'image' => 'required|mimes:jpg,png,jpeg',
         ];
     }
