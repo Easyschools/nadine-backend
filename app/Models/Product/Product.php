@@ -147,6 +147,7 @@ class Product extends Model
     //     dd($this->category );
     //     return $this->category ? $this->category->name : '';
     // }
+    
     public function getTypeAttribute()
     {
         $categoryNames = [];
