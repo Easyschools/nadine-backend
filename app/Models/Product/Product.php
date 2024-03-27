@@ -142,12 +142,23 @@ class Product extends Model
         // return $this->attributes['price'];
     }
 
+    // public function getTypeAttribute()
+    // {
+    //     dd($this->category );
+    //     return $this->category ? $this->category->name : '';
+    // }
     public function getTypeAttribute()
     {
-        dd($this->category );
-        return $this->category ? $this->category->name : '';
+        $categoryNames = [];
+        foreach ($this->category as $categoryId) {
+            $category = Category::find($categoryId);
+            if ($category) {
+                $categoryNames[] = $category->name;
+            }
+        }
+        return implode(', ', $categoryNames);
     }
-
+    
     public function getTagsAttribute()
     {
         $arr = [];
