@@ -43,10 +43,10 @@ class Tag extends Model
         return $this['name_' . app()->getLocale()];
     }
 
-    // public function category()
-    // {
-    //     return $this->belongsTo(Category::class, 'category_id');
-    // }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
   
     // public function category()
     // {
