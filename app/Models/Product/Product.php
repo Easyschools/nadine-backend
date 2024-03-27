@@ -150,14 +150,17 @@ class Product extends Model
     public function getTypeAttribute()
     {
         $categoryNames = [];
-        foreach ($this->category as $categoryId) {
-            $category = Category::find($categoryId);
-            if ($category) {
-                $categoryNames[] = $category->name;
+        if ($this->category) {
+            foreach ($this->category as $categoryId) {
+                $category = Category::find($categoryId);
+                if ($category) {
+                    $categoryNames[] = $category->name;
+                }
             }
         }
         return implode(', ', $categoryNames);
     }
+    
     
     public function getTagsAttribute()
     {
