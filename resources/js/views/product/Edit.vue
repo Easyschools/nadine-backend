@@ -87,9 +87,9 @@
                 }}</label>
               </div>
               <div class="col-sm-9">
-                <select
+                <!-- <select
                   class="form-control"
-                  @change="selectTags()"
+                  @change="selectTags(item.tag.category_id)"
                   v-model="item.tag.category_id"
                 >
                   <option
@@ -99,6 +99,19 @@
                   >
                     {{ category.name_ar }} -
                     {{ category.name_en }}
+                  </option>
+                </select> -->
+                <select
+                  class="form-control"
+                  @change="selectCategory()"
+                  v-model="item.tag.category_id"
+                >
+                  <option
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    :value="category.id"
+                  >
+                    {{ category.name_ar }} - {{ category.name_en }}
                   </option>
                 </select>
               </div>
@@ -152,36 +165,6 @@
                 </select>
               </div>
             </div>
-
-            <!-- <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label class="col-form-label"
-                                    >تفاصيل المنتج
-                                </label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    v-model="item.product_details"
-                                />
-                            </div>
-                        </div> -->
-
-            <!-- <div class="row form-group">
-                            <div class="col-sm-3">
-                                <label class="col-form-label"
-                                    >صورة المنتج
-                                </label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input
-                                    type="file"
-                                    class="form-control"
-                                    @change="handleFileChange"
-                                />
-                            </div>
-                        </div> -->
 
             <div class="row form-group">
               <div class="col-sm-3">
@@ -391,17 +374,6 @@
                         </div>
                       </div>
 
-                      <!--                                            &lt;!&ndash;                                            <div class="col-md-">&ndash;&gt;-->
-                      <!--                                            <div class="col-md-3">-->
-
-                      <!--                                                <label-->
-                      <!--                                                    style="font-weight: bold;margin-left: 0px;">Image</label>-->
-                      <!--                                            </div>-->
-                      <!--                                            <div class="col-md-9">-->
-                      <!--                                                <input type="file" :ref="'variant'+index"-->
-                      <!--                                                       @change="uploadVariantImage(index)">-->
-                      <!--                                            </div>-->
-                      <!--                                            &lt;!&ndash;                                            </div>&ndash;&gt;-->
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
                           translations.color.colors
@@ -444,18 +416,6 @@
                           </option>
                         </select>
                       </div>
-                      <!-- <div class="col-md-3 mt-4 mb-3">
-                        <label style="font-weight: bold">{{
-                          translations.size.sizes
-                        }}</label>
-                      </div>
-                      <div class="col-md-9 mt-3">
-                        <input
-                          type="text"
-                          v-model="variant.dimension_value"
-                          class="form-control"
-                        />
-                      </div> -->
 
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
@@ -523,10 +483,14 @@ export default {
         limited_edition: "",
         files: null, // Assuming file data will be stored here
         tag: "",
-
+        category_id: null, // Initialize with null or default value
+        tags: [], // Initialize tags array
         // product_details_image: null,
         // product_details: null,
+        tag_id: null, // Initialize tag_id
+
         tag: {
+
           category: {
             id: null,
           },
@@ -534,7 +498,6 @@ export default {
         category: "",
         collection: "",
         category_id: "",
-        tag_id: "",
         price: 1,
         price_after_discount: 1,
         variants: [
@@ -549,13 +512,13 @@ export default {
           },
         ],
       },
-      categories: [
-        {
-          id: null,
-          name_en: null,
-          name_ar: null,
-        },
-      ],
+      // categories: [
+      //   {
+      //     id: null,
+      //     name_en: null,
+      //     name_ar: null,
+      //   },
+      // ],
       products: [
         {
           id: null,
@@ -563,14 +526,18 @@ export default {
           name_ar: null,
         },
       ],
-      tags: [
-        {
-          id: null,
-          name_en: null,
-          name_ar: null,
-          category_id: null,
-        },
-      ],
+      // tags: [
+      //   {
+      //     id: null,
+      //     name_en: null,
+      //     name_ar: null,
+      //     category_id: null,
+      //   },
+      // ],
+      categories: [],
+      tags: [], // Store all tags here
+      selectedCategory: null,
+      selectedTags: [],
       materials: [
         {
           id: null,
@@ -610,11 +577,12 @@ export default {
     this.getItem();
     this.getCategory();
     this.getProduct();
-    this.getTag();
+    // this.getTag();
     this.getMaterial();
     this.getCollection();
     this.getColor();
     this.getDimension();
+    // this.selectCategory(category.id); // Call selectCategory with initial category_id
   },
   methods: {
     openFileInput() {
@@ -652,16 +620,51 @@ export default {
 
     //     reader.readAsDataURL(file);
     // },
-    async selectTags() {
-      try {
-        // Fetch tags based on the selected category
-        const categoryId = this.item.tag.category_id; // Get the selected category ID
-        const response = await axios.get(`tag/all?category_id=${categoryId}`);
-        console.log('response',  response);
-        this.tags = response.data.data;
-      } catch (error) {
-        console.error("Error fetching tags:", error);
-        this.tags = []; // Clear tags array on error
+    // selectTags() {
+    //   try {
+    //     // Fetch tags based on the selected category
+    //     console.log(this.item.tag);
+    //     const categoryId = this.item.tag.category_id; // Get the selected category ID
+    //     axios
+    //       .get(`tag/all?category_id=${categoryId}`)
+    //       .then((response) => {
+    //         this.tags = response.data.data;
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error fetching tags:", error);
+    //         this.tags = []; // Clear tags array on error
+    //       });
+    //   } catch (error) {
+    //     console.error("Error fetching tags:", error);
+    //     this.tags = []; // Clear tags array on error
+    //   }
+    // },
+    selectCategory() {
+      // Find the selected category object based on the tag category_id
+      const selectedCategory = this.categories.find(
+        (cat) => cat.id === this.item.tag.category_id
+      );
+
+      if (selectedCategory) {
+        // If a category is selected, fetch tags associated with that category
+        this.selectedCategory = selectedCategory; // Store the selected category
+        axios
+          .get("tag/all?categoryId=" + selectedCategory.id)
+          .then((response) => {
+            this.tags = response.data.data;
+            this.item.tags = []; // Clear existing tags
+            this.tags.forEach((tag) => {
+              this.item.tags.push(tag.id); // Populate item.tags with tag IDs
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        // If no category is selected, clear tags and item.tags
+        this.selectedCategory = null;
+        this.tags = [];
+        this.item.tags = [];
       }
     },
 
@@ -728,6 +731,17 @@ export default {
         .then((response) => {
           this.item = response.data.data;
           this.item.product_details = this.item.product_detail.details;
+          // Map category IDs to category objects
+          if (this.item.category && Array.isArray(this.item.category)) {
+            this.item.category.forEach((categoryId, index) => {
+              // Assuming you have access to categories data
+              const category = this.categories.find((cat) => cat.id === categoryId);
+              if (category) {
+                // Replace category ID with category object
+                this.item.category[index] = category;
+              }
+            });
+          }
 
           // console.log(this.item.product_detail.details);
           // this.item.images = [];

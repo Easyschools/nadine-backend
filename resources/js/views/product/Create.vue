@@ -85,7 +85,7 @@
                 }}</label>
               </div>
               <div class="col-sm-9">
-                <select
+                <!-- <select
                   class="form-control"
                   @change="selectTags()"
                   v-model="item.category_id"
@@ -97,6 +97,20 @@
                   >
                     {{ category.name_ar }} -
                     {{ category.name_en }}
+                  </option>
+                </select> -->
+                <!-- Inside your template -->
+                <select
+                  class="form-control"
+                  @change="selectCategory"
+                  v-model="item.category_id"
+                >
+                  <option
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    :value="category.id"
+                  >
+                    {{ category.name_ar }} - {{ category.name_en }}
                   </option>
                 </select>
               </div>
@@ -391,19 +405,19 @@
                         </select>
                       </div>
 
-                        <div class="col-md-3 mt-3">
-                          <label class="col-form-label">{{
-                            translations.material.materials
-                          }}</label>
-                        </div>
-                        <div class="col-md-9 mt-3">
-                          <select class="form-control" v-model="variant.material_id">
-                            <option v-for="material in materials" :value="material.id">
-                              {{ material.name_ar }} -
-                              {{ material.name_en }}
-                            </option>
-                          </select>
-                        </div>
+                      <div class="col-md-3 mt-3">
+                        <label class="col-form-label">{{
+                          translations.material.materials
+                        }}</label>
+                      </div>
+                      <div class="col-md-9 mt-3">
+                        <select class="form-control" v-model="variant.material_id">
+                          <option v-for="material in materials" :value="material.id">
+                            {{ material.name_ar }} -
+                            {{ material.name_en }}
+                          </option>
+                        </select>
+                      </div>
 
                       <!-- <div class="col-md-9 mt-3">
                         <input
@@ -476,6 +490,8 @@ export default {
         new_arrival: 0,
         best_selling: 0,
         limited_edition: 0,
+        category_id: null, // Initialize with null or default value
+        tags: [], // Initialize tags array
         // product_details_image: null,
         // product_details: null,
         files: null,
@@ -491,13 +507,13 @@ export default {
           },
         ],
       },
-      categories: [
-        {
-          id: null,
-          name_en: null,
-          name_ar: null,
-        },
-      ],
+      // categories: [
+      //   {
+      //     id: null,
+      //     name_en: null,
+      //     name_ar: null,
+      //   },
+      // ],
       products: [
         {
           id: null,
@@ -505,14 +521,16 @@ export default {
           name_ar: null,
         },
       ],
-      tags: [
-        {
-          id: null,
-          name_en: null,
-          name_ar: null,
-          category_id: null,
-        },
-      ],
+      // tags: [
+      //   {
+      //     id: null,
+      //     name_en: null,
+      //     name_ar: null,
+      //     category_id: null,
+      //   },
+      // ],
+      categories: [],
+      tags: [], // Store all tags here
       materials: [
         {
           id: null,
@@ -555,6 +573,8 @@ export default {
   },
   methods: {
     async selectTags() {
+      console.log("this.item.category_id", this.item.category_id);
+      console.log("this.categories", this.item);
       const selected = await this.categories.find(
         (item) => item.id == this.item.category_id
       );
@@ -633,14 +653,14 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    // getTag(value = null) {
-    //   axios
-    //     .get("tag/all?category_id=" + (value ? value : 0))
-    //     .then((response) => {
-    //       this.tags = response.data.data;
-    //     })
-    //     .catch((err) => console.log(err));
-    // },
+    getTag(value = null) {
+      axios
+        .get("tag/all?category_id=" + (value ? value : 0))
+        .then((response) => {
+          this.tags = response.data.data;
+        })
+        .catch((err) => console.log(err));
+    },
     getMaterial() {
       axios
         .get("material/all")
@@ -686,9 +706,35 @@ export default {
         images: [],
       });
     },
-    selectCategory: function (e) {
-      this.getTag(e.target.value);
-      // console.log(e.target.value);
+    // selectCategory: function (e) {
+    //   this.getTag(e.target.value);
+    //   // console.log(e.target.value);
+    // },
+    selectCategory() {
+      const selectedCategory = this.categories.find(
+        (cat) => cat.id === this.item.category_id
+      );
+      if (selectedCategory) {
+        // .get("tag/all?category_id=" + (value ? value : 0))
+
+        axios
+          .get("tag/all?categoryId=" + (selectedCategory.id ? selectedCategory.id : 0))
+          // axios.get(`tags?category_id=${selectedCategory.id}`)
+          .then((response) => {
+            this.tags = response.data.data;
+            console.log("response.data", response.data.data);
+            this.item.tags = []; // Clear existing tags
+            this.tags.forEach((tag) => {
+              this.item.tags.push(tag.id);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.tags = [];
+        this.item.tags = [];
+      }
     },
 
     uploadVariantImage(index) {

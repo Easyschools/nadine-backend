@@ -65,7 +65,6 @@ class TagApiController extends Controller
 
     public function all(Request $request)
     {
-
         $validator = Validator($request->all(), [
             'is_paginate' => 'in:0,1',
 
@@ -83,6 +82,11 @@ class TagApiController extends Controller
         if ($request->category_id) {
             $Tag = $Tag->where('category_id', $request->category_id);
         }
+        if ($request->categoryId) {
+            $Tag =$Tag->whereJsonContains('category',$request->categoryId);
+            // $Tag = $Tag->where('category', $request->categoryId);
+        }
+        
 
         if (!$request->is_paginate) {
             $Tag = $Tag->get();

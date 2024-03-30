@@ -113,7 +113,7 @@
                 <td>
                   <router-link
                     :to="{
-                      path: '/admin/product/edit/' + item.slug + '/' + currentPage,
+                      path: '/admin/product/edit/' + item.slug + '/' + item.id,
                       params: {
                         slug: item.slug,
                         page: currentPage,
