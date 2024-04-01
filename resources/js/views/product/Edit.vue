@@ -127,7 +127,7 @@
                     {{ tag.name_ar }} - {{ tag.name_en }}
                   </option>
                 </select> -->
-                <select id="tags_id" class="form-control" v-model="item.tag_id">
+                <select class="form-control" v-model="item.tag_id">
                   <option v-for="tag in tags" :value="tag.id">
                     {{ tag.name_ar }} - {{ tag.name_en }}
                   </option>
@@ -482,15 +482,15 @@ export default {
         best_selling: "",
         limited_edition: "",
         files: null, // Assuming file data will be stored here
-        tag: "",
-        category_id: null, // Initialize with null or default value
+        // tag: "",
+        // category_id: null, // Initialize with null or default value
         tags: [], // Initialize tags array
         // product_details_image: null,
         // product_details: null,
         tag_id: null, // Initialize tag_id
 
         tag: {
-
+          category_id: null,
           category: {
             id: null,
           },
@@ -577,17 +577,34 @@ export default {
     this.getItem();
     this.getCategory();
     this.getProduct();
-    // this.getTag();
+    this.getTags();
     this.getMaterial();
     this.getCollection();
     this.getColor();
     this.getDimension();
     // this.selectCategory(category.id); // Call selectCategory with initial category_id
+
+    // this.fetchTags(this.item.tag.category_id);
   },
   methods: {
     openFileInput() {
       this.$refs.fileInput.click(); // Trigger the file input click event
     },
+    // Fetch tags based on the selected category
+    // fetchTags(categoryId) {
+    //   axios
+    //     .get("tag/all?categoryId=" + categoryId)
+    //     .then((response) => {
+    //       this.tags = response.data.data;
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching tags:", error);
+    //     });
+    // },
+    // Handle category change event
+    // onCategoryChange() {
+    //   this.fetchTags(this.item.tag.category_id);
+    // },
     handleFileChange(event) {
       const file = event.target.files; // Get the selected file
       if (file) {
@@ -639,29 +656,52 @@ export default {
     //     this.tags = []; // Clear tags array on error
     //   }
     // },
+    // selectCategory() {
+    //   // Find the selected category object based on the tag category_id
+    //   const selectedCategory = this.categories.find(
+    //     (cat) => cat.id === this.item.tag.category_id
+    //   );
+
+    //   if (selectedCategory) {
+    //     // If a category is selected, fetch tags associated with that category
+    //     this.selectedCategory = selectedCategory; // Store the selected category
+    //     axios
+    //       .get("tag/all?categoryId=" + selectedCategory.id)
+    //       .then((response) => {
+    //         this.tags = response.data.data;
+    //         this.item.tags = []; // Clear existing tags
+    //         this.tags.forEach((tag) => {
+    //           this.item.tags.push(tag.id); // Populate item.tags with tag IDs
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   } else {
+    //     // If no category is selected, clear tags and item.tags
+    //     this.selectedCategory = null;
+    //     this.tags = [];
+    //     this.item.tags = [];
+    //   }
+    // },
     selectCategory() {
-      // Find the selected category object based on the tag category_id
       const selectedCategory = this.categories.find(
         (cat) => cat.id === this.item.tag.category_id
       );
 
       if (selectedCategory) {
-        // If a category is selected, fetch tags associated with that category
-        this.selectedCategory = selectedCategory; // Store the selected category
+        this.selectedCategory = selectedCategory;
         axios
           .get("tag/all?categoryId=" + selectedCategory.id)
           .then((response) => {
             this.tags = response.data.data;
-            this.item.tags = []; // Clear existing tags
-            this.tags.forEach((tag) => {
-              this.item.tags.push(tag.id); // Populate item.tags with tag IDs
-            });
+            // Populate item.tags with default tag IDs
+            this.item.tags = this.tags.map((tag) => tag.id);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
-        // If no category is selected, clear tags and item.tags
         this.selectedCategory = null;
         this.tags = [];
         this.item.tags = [];
@@ -701,13 +741,31 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getTag(value = null) {
+    getTags() {
+      // axios
+      //   .get("tag/all?category_id=" + (value ? value : 0))
+      //   .then((response) => {
+      //     this.tags = response.data.data;
+      //   })
+      //   .catch((err) => console.log(err));
+
       axios
-        .get("tag/all?category_id=" + (value ? value : 0))
+        .get("tag/all?categoryId=9")
+        // .get("tag/all?categoryId=" + this.item.tag.category_id)
         .then((response) => {
           this.tags = response.data.data;
+          // Populate item.tags with default tag IDs
+          this.item.tags = this.tags.map((tag) => tag.id);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
+      // } else {
+      //   this.selectedCategory = null;
+      //   this.tags = [];
+      //   this.item.tags = [];
+      // }
+      // },
     },
     getMaterial() {
       axios
@@ -730,6 +788,8 @@ export default {
         .get("/product/get?slug=" + this.item.slug)
         .then((response) => {
           this.item = response.data.data;
+          this.item.tag_id = response.data.data.tag_id;
+          console.log("this.item.tag_id", this.item.tag_id);
           this.item.product_details = this.item.product_detail.details;
           // Map category IDs to category objects
           if (this.item.category && Array.isArray(this.item.category)) {
