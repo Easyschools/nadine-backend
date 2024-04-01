@@ -87,20 +87,6 @@
                 }}</label>
               </div>
               <div class="col-sm-9">
-                <!-- <select
-                  class="form-control"
-                  @change="selectTags(item.tag.category_id)"
-                  v-model="item.tag.category_id"
-                >
-                  <option
-                    v-for="(category, index) in categories"
-                    :key="index"
-                    :value="category.id"
-                  >
-                    {{ category.name_ar }} -
-                    {{ category.name_en }}
-                  </option>
-                </select> -->
                 <select
                   class="form-control"
                   @change="selectCategory()"
@@ -134,21 +120,6 @@
                 </select>
               </div>
             </div>
-            <!-- <div class="row form-group"> -->
-            <!-- <div class="col-sm-3">
-                <label class="col-form-label">{{
-                  translations.material.materials
-                }}</label>
-              </div>
-              <div class="col-sm-9">
-                <select class="form-control" v-model="item.material_id">
-                  <option v-for="material in materials" :value="material.id">
-                    {{ material.name_ar }} -
-                    {{ material.name_en }}
-                  </option>
-                </select>
-              </div> -->
-            <!-- </div> -->
 
             <div class="row form-group">
               <div class="col-sm-3">
@@ -482,11 +453,7 @@ export default {
         best_selling: "",
         limited_edition: "",
         files: null, // Assuming file data will be stored here
-        // tag: "",
-        // category_id: null, // Initialize with null or default value
         tags: [], // Initialize tags array
-        // product_details_image: null,
-        // product_details: null,
         tag_id: null, // Initialize tag_id
 
         tag: {
@@ -497,7 +464,6 @@ export default {
         },
         category: "",
         collection: "",
-        category_id: "",
         price: 1,
         price_after_discount: 1,
         variants: [
@@ -512,13 +478,7 @@ export default {
           },
         ],
       },
-      // categories: [
-      //   {
-      //     id: null,
-      //     name_en: null,
-      //     name_ar: null,
-      //   },
-      // ],
+
       products: [
         {
           id: null,
@@ -526,14 +486,7 @@ export default {
           name_ar: null,
         },
       ],
-      // tags: [
-      //   {
-      //     id: null,
-      //     name_en: null,
-      //     name_ar: null,
-      //     category_id: null,
-      //   },
-      // ],
+
       categories: [],
       tags: [], // Store all tags here
       selectedCategory: null,
@@ -577,7 +530,7 @@ export default {
     this.getItem();
     this.getCategory();
     this.getProduct();
-    this.getTags();
+    // this.getTags();
     this.getMaterial();
     this.getCollection();
     this.getColor();
@@ -684,6 +637,32 @@ export default {
     //     this.item.tags = [];
     //   }
     // },
+
+    //   selectCategory() {
+    //   const selectedCategory = this.categories.find(cat => cat.id === this.item.tag.category_id);
+
+    //   if (selectedCategory) {
+    //     this.selectedCategory = selectedCategory;
+    //     axios
+    //       .get("tag/all?categoryId=" + selectedCategory.id)
+    //       .then((response) => {
+    //         this.tags = response.data.data;
+    //         // Populate item.tags with default tag IDs
+    //         this.item.tags = this.tags.map((tag) => tag.id);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+
+    //     // Call getTags here
+    //     this.getTags();
+    //   } else {
+    //     this.selectedCategory = null;
+    //     this.tags = [];
+    //     this.item.tags = [];
+    //   }
+    // }
+
     selectCategory() {
       const selectedCategory = this.categories.find(
         (cat) => cat.id === this.item.tag.category_id
@@ -741,17 +720,12 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getTags() {
-      // axios
-      //   .get("tag/all?category_id=" + (value ? value : 0))
-      //   .then((response) => {
-      //     this.tags = response.data.data;
-      //   })
-      //   .catch((err) => console.log(err));
+    getTags(category_id) {
+      console.log("this.item.tag.category_id fistt =" + category_id);
 
       axios
-        .get("tag/all?categoryId=9")
-        // .get("tag/all?categoryId=" + this.item.tag.category_id)
+        //   .get("tag/all?categoryId=" + this.item.category[0])
+        .get("tag/all?categoryId=" + category_id)
         .then((response) => {
           this.tags = response.data.data;
           // Populate item.tags with default tag IDs
@@ -760,6 +734,19 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+
+      //  axios
+      //   .get("tag/all?categoryId=" + this.item.category[0])
+      //   .then((response) => {
+      //     console.log('this.item.tag.category_id'+this.item.tag.category_id);
+      //     this.tags = response.data.data;
+      //     // Populate item.tags with default tag IDs
+      //     this.item.tags = this.tags.map((tag) => tag.id);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
       // } else {
       //   this.selectedCategory = null;
       //   this.tags = [];
@@ -789,7 +776,11 @@ export default {
         .then((response) => {
           this.item = response.data.data;
           this.item.tag_id = response.data.data.tag_id;
-          console.log("this.item.tag_id", this.item.tag_id);
+          this.item.category_id = response.data.data.tag.category_id;
+          // console.log(this.item.category_id);
+          console.log("getIrem", this.item.category_id);
+      this.getTags(response.data.data.tag.category_id);
+        
           this.item.product_details = this.item.product_detail.details;
           // Map category IDs to category objects
           if (this.item.category && Array.isArray(this.item.category)) {
@@ -800,17 +791,17 @@ export default {
                 // Replace category ID with category object
                 this.item.category[index] = category;
               }
+              // Call getTags after category_id is set
             });
           }
 
-          // console.log(this.item.product_detail.details);
-          // this.item.images = [];
-          // this.item.dimension = response.data.data.dimension.dimension;
+          // Call getTags() here
         })
         .catch((err) => {
           this.errorMessages(err.response.data);
           console.log(err);
         });
+
     },
 
     editItem() {
@@ -876,25 +867,6 @@ export default {
       this.buildFormData(formData, this.item, null);
       return formData;
     },
-
-    // uploadVariantImage(index) {
-    //     const input = this.$refs["mainImages" + index][0];
-    //     const images = input.files;
-
-    //     // Check if images were uploaded
-    //     if (images && images.length > 0) {
-    //         this.item.variants[index].images = [];
-    //         Array.from(images).forEach((item, indx) => {
-    //             this.item.variants[index].images.push(item);
-    //         });
-    //         console.log(this.item.variants[index].images);
-    //     } else {
-    //         // If no images are uploaded, set images to an empty array or handle accordingly
-    //         this.item.variants[index].images = [];
-    //         console.log("No images uploaded for variant " + index);
-    //     }
-    // },
-
     uploadVariantImage(index) {
       // console.log(this.$refs['mainImages'+index][index].files[0])
       console.log(this.$refs["mainImages" + index][0]);
@@ -904,30 +876,6 @@ export default {
       });
     },
 
-    //     uploadVariantImage(index) {
-    //         // console.log(this.$refs['mainImages'+index][index].files[0])
-    //         // console.log(this.$refs['mainImages' + index][0])
-    //         const images = this.$refs["mainImages" + index][0].files;
-
-    // // Filter valid image files (JPEG, PNG, GIF)
-    // const validImageFiles = Array.from(images).filter(image => {
-    //     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    //     return allowedTypes.includes(image.type);
-    // });
-
-    // // Update the images array in item.variants[index]
-    // this.item.variants[index].images = validImageFiles;
-
-    // // Log the updated images array for debugging
-    // console.log(this.item.variants[index].images);
-    //         /////////
-    //         // Array.from(this.$refs["mainImages" + index][0].files).forEach(
-    //         //     (item, indx) => {
-    //         //         this.item.variants[index].images.push(item);
-    //         //         console.log(this.item.variants[index].images);
-    //         //     }
-    //         // );
-    //     },
     buildFormData(formData, data, parentKey) {
       if (
         data &&
