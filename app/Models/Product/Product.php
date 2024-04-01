@@ -60,7 +60,7 @@ class Product extends Model
 
     public function setFilesAttribute($value)
     {
-        dd($value[0]);
+        dd($value);
         if ( $value->count() > 0) {
             if (is_file($value[0]) ) {
                 $this->attributes['files'] = 'uploads/' . $value[0]->store('Product');
