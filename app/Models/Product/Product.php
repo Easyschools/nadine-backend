@@ -60,7 +60,6 @@ class Product extends Model
 
     public function setFilesAttribute($value)
     {
-        dd($value);
 
        // Check if $value is an instance of UploadedFile
        if ($value instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
