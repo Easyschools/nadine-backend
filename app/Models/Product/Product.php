@@ -92,10 +92,10 @@ class Product extends Model
                     $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
     
                     // Move the uploaded file to the desired directory
-                    $file->move('uploads', $fileName);
+                    $file->move('uploads/Product', $fileName);
     
                     // Store the file path
-                    $filePaths = 'uploads/' . $fileName;
+                    $filePaths = 'uploads/Product/' . $fileName;
                 }
     
                 // Serialize the array of file paths into a JSON string
