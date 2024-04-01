@@ -62,12 +62,16 @@ class Product extends Model
     {
         dd($value);
 
-        if (is_file($value)) {
-            $this->attributes['files'] = 'uploads/' . $value->store('Product');
-        }else{
-            $this->attributes['files'] = null;
-
-        }
+       // Check if $value is an instance of UploadedFile
+       if ($value instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+        // Store the file and get its path
+        $filePath = 'uploads/' . $value->store('Product');
+        // Set the file path in the attribute
+        $this->attributes['files'] = $filePath;
+    } else {
+        // Handle the case when $value is not an UploadedFile
+        $this->attributes['files'] = null;
+    }
         // // dd($value);
         // if ( $value->count() > 0) {
         //     // if (is_file($value[0]) ) {
