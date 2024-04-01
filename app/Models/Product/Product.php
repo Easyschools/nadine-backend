@@ -61,10 +61,10 @@ class Product extends Model
     public function setFilesAttribute($value)
     {
         if ( $value->count() > 0) {
-            dd($value[0]);
-            if (is_file($value) ) {
+            // dd($value[0]);
+            // if (is_file($value) ) {
                 $this->attributes['files'] = 'uploads/' . $value->store('Product');
-            }
+            // }
         } 
     }
     public function getNameAttribute()
