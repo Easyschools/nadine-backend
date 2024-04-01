@@ -58,26 +58,61 @@ class Product extends Model
         return ($value) ? url($value) : $value;
     }
 
+    // public function setFilesAttribute($value)
+    // {
+
+    //     if (is_file($value)) {
+    //         $this->attributes['files'] = 'uploads/' . $value->store('Product');
+    //     }else{
+    //         $this->attributes['files'] = null;
+
+    //     }
+    //     // // dd($value);
+    //     // if ( $value->count() > 0) {
+    //     //     // if (is_file($value[0]) ) {
+    //     //         $this->attributes['files'] = 'uploads/' . $value->store('Product');
+    //     //     // }
+    //     // } 
+    // }
     public function setFilesAttribute($value)
     {
+        // Check if the provided value is an instance of FileBag
+        if ($value instanceof \Symfony\Component\HttpFoundation\FileBag) {
+            // Get the array of UploadedFile objects from the FileBag
+            $files = $value->get('files');
+    
+            // Check if files exist and if the array is not empty
+            if ($files && count($files) > 0) {
+                // Initialize an empty array to store file paths
+                // $filePaths = [];
+    
+                // Iterate over each uploaded file
+                foreach ($files as $file) {
+                    // Generate a unique file name
+                    $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+    
+                    // Move the uploaded file to the desired directory
+                    $file->move('uploads', $fileName);
+    
+                    // Store the file path
+                    $filePaths = 'uploads/' . $fileName;
+                }
+    
+                // Serialize the array of file paths into a JSON string
+                // $serializedFiles = json_encode($filePaths);
+    
+                // Assign the serialized JSON string to the 'files' attribute
+                $this->attributes['files'] = $filePaths;
+            } else {
+                $this->attributes['files'] = null;
+            }
+        } else {
+            $this->attributes['files'] = null;
+        }
+    }
+    
+    
 
-       // Check if $value is an instance of UploadedFile
-       if ($value instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-        // Store the file and get its path
-        $filePath = 'uploads/' . $value->store('Product');
-        // Set the file path in the attribute
-        $this->attributes['files'] = $filePath;
-    } else {
-        // Handle the case when $value is not an UploadedFile
-        $this->attributes['files'] = null;
-    }
-        // // dd($value);
-        // if ( $value->count() > 0) {
-        //     // if (is_file($value[0]) ) {
-        //         $this->attributes['files'] = 'uploads/' . $value->store('Product');
-        //     // }
-        // } 
-    }
     public function getNameAttribute()
     {
         return $this['name_' . app()->getLocale()];

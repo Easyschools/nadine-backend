@@ -271,6 +271,8 @@ class ProductApiService extends AppRepository
      */
     public function createProduct($request)
     {
+        // dd($request->files);
+        // dd($request->files[0]['originalName']);
         // dd($request->all());
         $request['slug'] = HelperFunctions::makeSlug($request->name_en) . '-' . HelperFunctions::makeSlug($request->sku);
         // $product = Product::create($request->only([
