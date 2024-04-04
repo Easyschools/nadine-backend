@@ -36,6 +36,8 @@ class MaterialRequest extends FormRequest
                 return $this->idValidation();
             case 'all':
                 return $this->allValidation();
+                case 'get-material-variants':
+                    return $this->getMaterialVariantsValidation();
             default:
                 return [];
         }
@@ -72,4 +74,13 @@ class MaterialRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
+    
+    private function getMaterialVariantsValidation()
+    {
+        return [
+            'product_id' => 'required|exists:products,id',
+            'material_id' => 'required|exists:materials,id',
+        ];
+    }
+    
 }

@@ -13,6 +13,7 @@ use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 use App\ThirdParty\Pixel;
 use App\Traits\HelperFunctions;
+use Illuminate\Support\Facades\Storage;
 
 class ProductApiService extends AppRepository
 {
@@ -226,6 +227,19 @@ class ProductApiService extends AppRepository
                 $variant['dimension_value'] = $variant->dimension->dimension;
             }
         }
+        $materialDetails = [];
+
+        foreach ($product->variants as $variant) {
+            if ($variant->material) {
+                $materialDetails = [
+                    'id' => $variant->material->id,
+                    'name' => $variant->material->name_ . app()->getLocale(),
+                ];
+                // $product['materials'][] = $materialDetails;
+            }
+        }
+        $product['materials'] = $materialDetails;
+
         return $product;
     }
 
@@ -323,18 +337,37 @@ class ProductApiService extends AppRepository
 
         foreach ($request->variants as $variant) {
             // $variant = $this->createDimension($variant);
-            $variantModel = Variant::firstOrCreate([
-                'color_id' => $variant['color_id'],
-                'material_id' => $variant['material_id'],
-                'additional_price' => $variant['additional_price'],
-                'dimension_id' => $variant['dimension_id'],
+            // $variantModel = Variant::firstOrCreate([
+            //     'color_id' => $variant['color_id'],
+            //     'material_id' => $variant['material_id'],
+            //     'additional_price' => $variant['additional_price'],
+            //     'dimension_id' => $variant['dimension_id'],
+            //     'product_id' => $product->id,
+            // ], []);
+            $variantModel = Variant::create(array_merge($variant, [
                 'product_id' => $product->id,
-            ], []);
+            ]));
 
-            if (isset($variant['images']) && count($variant['images'])) {
+            if (count($variant['images'])) {
                 foreach ($variant['images'] as $img) {
+
+                    $file = explode(";base64,", $img);
+                    $file1 = explode('/', $file[0]);
+                    $file_exe = end($file1);
+                    $file_name = uniqid() . date('-Ymd-his.') . $file_exe;
+                    $image_data = str_replace('.', '', $file[1]);
+
+                    Storage::put('uploads/Variant/' . $file_name, base64_decode($image_data));
+
+
+                    // $image_data = $request->input('image_data');
+                    // $image = base64_decode($img);
+                    // $image_name = uniqid('image_') ;
+                    // $image_path = storage_path('app/public/uploads/Variant/' . $image);
+                    // file_put_contents($image_path, $image);
+                    // dd($file_name);
                     $variantModel->images()->firstOrcreate([
-                        'image' => $img,
+                        'image' => 'uploads/Variant/' . $file_name,
                     ]);
                 }
             }

@@ -19,13 +19,13 @@ class VariantImage extends Model
         return ($value) ? url($value) : $value;
     }
 
-    public function setImageAttribute($value)
-    {
-        if (!is_array($value)) {
-            if (is_file($value))
-                $this->attributes['image'] = 'uploads/' . $value->store('Variant');
-        }
-    }
+    // public function setImageAttribute($value)
+    // {
+    //     if (!is_array($value)) {
+    //         if (is_file($value))
+    //             $this->attributes['image'] = 'uploads/' . $value->store('Variant');
+    //     }
+    // }
 
     public function variant()
     {

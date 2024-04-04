@@ -148,18 +148,41 @@ class Product extends Model
         return $this->hasManyThrough(OrderItem::class, Variant::class, 'product_id', 'variant_id', 'id', 'id');
     }
 
+    // public function getImageAttribute()
+    // {
+    //     if (!$this->variants()->exists())
+    //         return "";
+
+    //     return $this->variants()->whereHas('images')->exists() ?
+    //         $this->variants()->whereHas('images', function ($q) {
+    //             $q->whereNotNull('image');
+    //         })->first()->images()->whereNotNull('image')->first()->image
+    //         : "";
+    // }
     public function getImageAttribute()
     {
-        if (!$this->variants()->exists())
-            return "";
-
-        return $this->variants()->whereHas('images')->exists() ?
-            $this->variants()->whereHas('images', function ($q) {
-                $q->whereNotNull('image');
-            })->first()->images()->whereNotNull('image')->first()->image
-            : "";
+        // Check if any variants exist
+        if ($this->variants()->exists()) {
+            // Check if any variant has images
+            if ($this->variants()->whereHas('images')->exists()) {
+                // Retrieve the first variant with images
+                $variantWithImages = $this->variants()->whereHas('images')->first();
+    
+                // Check if the variant with images is not null
+                if ($variantWithImages) {
+                    // Retrieve the first image of the variant
+                    $firstImage = $variantWithImages->images()->whereNotNull('image')->first();
+    
+                    // Return the image path if found, otherwise an empty string
+                    return $firstImage ? $firstImage->image : "";
+                }
+            }
+        }
+    
+        // Return an empty string if no variants or no images found
+        return "";
     }
-
+    
     public function getCurrencyAttribute()
     {
         return 'pound';
