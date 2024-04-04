@@ -38,27 +38,28 @@ class MaterialApiService extends AppRepository
 
     public function getMaterialVariants($request)
     {
-        $variants = Variant::where('product_id',$request->product_id)
-        ->where('material_id',$request->material_id) 
-        ->with('Color','material')->get() ;
-        $materials = [];
+        $variants = Variant::where('product_id', $request->product_id)
+            ->where('material_id', $request->material_id)
+            ->with('Color', 'Dimension')
+            ->get();
+        $dimensions = [];
         $colors = [];
-        
+
         foreach ($variants as $variant) {
-            if ($variant->material) {
-                $materials[] = $variant->material;
+            if ($variant->Dimension) { // Corrected method call to use Dimension()
+                $dimensions[] = $variant->Dimension; // Corrected property name to Dimension
             }
-        
-            if ($variant->color) {
-                $colors[] = $variant->color;
+
+            if ($variant->Color) { // Corrected method call to use Color()
+                $colors[] = $variant->Color; // Corrected property name to Color
             }
         }
-        
+
         $result = [
-            'materials' => $materials,
+            'dimensions' => $dimensions,
             'colors' => $colors
         ];
-        
+
         return $result;
     }
 
