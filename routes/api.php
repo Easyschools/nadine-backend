@@ -399,6 +399,8 @@ Route::group([
     ], function () {
         Route::get('all', [MaterialApiController::class, 'all']);
         Route::get('get', [MaterialApiController::class, 'read']);
+        Route::get('get-material-variants', [MaterialApiController::class, 'getMaterialVariants']);
+        
         Route::delete('delete', [MaterialApiController::class, 'delete']);
         Route::post('create', [MaterialApiController::class, 'create']);
         Route::post('edit', [MaterialApiController::class, 'edit']);

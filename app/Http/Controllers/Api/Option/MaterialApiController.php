@@ -34,6 +34,12 @@ class MaterialApiController extends Controller
         return $this->sendResponse($process);
     }
 
+        public function getMaterialVariants(MaterialRequest $request)
+    {
+        $process = $this->materialApiService->getMaterialVariants($request);
+        return $this->sendResponse($process);
+    }
+
 
     public function all(MaterialRequest $request)
     {
