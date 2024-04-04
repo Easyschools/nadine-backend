@@ -227,19 +227,23 @@ class ProductApiService extends AppRepository
                 $variant['dimension_value'] = $variant->dimension->dimension;
             }
         }
-        $materialDetails = [];
+        $materials = []; // Initialize an empty array to store materials
 
         foreach ($product->variants as $variant) {
             if ($variant->material) {
-                $materialDetails = [
-                    'id' => $variant->material->id,
-                    'name' => $variant->material->name_ . app()->getLocale(),
-                ];
-                // $product['materials'][] = $materialDetails;
+                $materialId = $variant->material->id;
+                if (!isset($materials[$materialId])) { // Check if material ID already exists in array
+                    $materialDetails = [
+                        'id' => $materialId,
+                        'name' => $variant->material->name_ . app()->getLocale(),
+                    ];
+                    $materials[$materialId] = $materialDetails; // Use material ID as key in array
+                }
             }
         }
-        $product['materials'] = $materialDetails;
-
+        
+        $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
+    
         return $product;
     }
 
