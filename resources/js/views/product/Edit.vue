@@ -779,8 +779,8 @@ export default {
           this.item.category_id = response.data.data.tag.category_id;
           // console.log(this.item.category_id);
           console.log("getIrem", this.item.category_id);
-      this.getTags(response.data.data.tag.category_id);
-        
+          this.getTags(response.data.data.tag.category_id);
+
           this.item.product_details = this.item.product_detail.details;
           // Map category IDs to category objects
           if (this.item.category && Array.isArray(this.item.category)) {
@@ -801,7 +801,6 @@ export default {
           this.errorMessages(err.response.data);
           console.log(err);
         });
-
     },
 
     editItem() {
@@ -867,6 +866,14 @@ export default {
       this.buildFormData(formData, this.item, null);
       return formData;
     },
+    // uploadVariantImage(index) {
+    //   // console.log(this.$refs['mainImages'+index][index].files[0])
+    //   console.log(this.$refs["mainImages" + index][0]);
+    //   Array.from(this.$refs["mainImages" + index][0].files).forEach((item, indx) => {
+    //     this.item.variants[index].images.push(item);
+    //     console.log(this.item.variants[index].images);
+    //   });
+    // },
     uploadVariantImage(index) {
       // console.log(this.$refs['mainImages'+index][index].files[0])
       console.log(this.$refs["mainImages" + index][0]);

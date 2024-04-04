@@ -250,7 +250,12 @@
               </div>
               <div class="col-sm-9">
                 <div class="form-check align-bottom mt-2">
-                  <input type="file" class="form-control" @change="handleFileChange" />
+                  <input
+                    type="file"
+                    ref="myFiles"
+                    class="form-control"
+                    @change="handleFileChange"
+                  />
                 </div>
               </div>
             </div>
@@ -343,27 +348,23 @@
                       </button>
                     </div>
                     <div class="row">
-                      <div class="col-md-12">
+                       <div class="col-md-12">
                         <div class="row form-group">
                           <div
                             class="col-md-3 m-2"
                             v-if="variant.images.length > 0"
-                            v-for="image in variant.images"
+                            v-for="(image, imageIndex) in variant.images"
+                            :key="imageIndex"
                           >
-                            <img
-                              v-if="image"
-                              :src="image.image"
-                              width="200px"
-                              height="200px"
-                            />
+                            <img v-if="image" :src="image" width="200px" height="200px" />
                           </div>
                         </div>
 
                         <div class="row form-group">
                           <div class="col-sm-3">
-                            <label style="font-weight: bold" class="col-form-label">{{
-                              translations.general.image
-                            }}</label>
+                            <label style="font-weight: bold" class="col-form-label"
+                              >الصورة</label
+                            >
                           </div>
 
                           <div class="col-md-9">
@@ -592,6 +593,7 @@ export default {
       // Store the selected files in your component's data
       this.item.files = files;
     },
+
     // handleFileChange(event) {
     //     const file = event.target.files[0];
 
@@ -736,25 +738,45 @@ export default {
         this.item.tags = [];
       }
     },
+ uploadVariantImage(index) {
+  const input = this.$refs["mainImages" + index][0];
+  const files = input.files;
 
-    uploadVariantImage(index) {
-      console.log(this.$refs["mainImages" + index][0]);
-      Array.from(this.$refs["mainImages" + index][0].files).forEach((item, indx) => {
-        this.item.variants[index].images.push(item);
-        console.log(this.item.variants[index].images);
-      });
+  if (files && files.length > 0) {
+    // Clear the existing images array before adding new images
+    this.item.variants[index].images = [];
 
-      // this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
-      //
-      // let reader = new FileReader();
-      //
-      // reader.readAsDataURL(this.item.variants[index].image);
-      //
-      // reader.addEventListener('load', function () {
-      //     this.$refs['imageDisplay_' + index][0].src = reader.result;
-      //     console.log(reader);
-      // }.bind(this), false);
-    },
+    // Read and display each selected image
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageSrc = e.target.result;
+        this.item.variants[index].images.push(imageSrc);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+},
+
+    // uploadVariantImage(index) {
+    //   console.log(this.$refs["mainImages" + index][0]);
+    //   Array.from(this.$refs["mainImages" + index][0].files).forEach((item, indx) => {
+    //     this.item.variants[index].images.push(item);
+    //     console.log(this.item.variants[index].images);
+    //   });
+
+    // this.item.variants[index].image = this.$refs['variant' + index][0].files[0];
+    //
+    // let reader = new FileReader();
+    //
+    // reader.readAsDataURL(this.item.variants[index].image);
+    //
+    // reader.addEventListener('load', function () {
+    //     this.$refs['imageDisplay_' + index][0].src = reader.result;
+    //     console.log(reader);
+    // }.bind(this), false);
+    // },
     getFormData() {
       let formData = new FormData();
       this.buildFormData(formData, this.item, null);
