@@ -7,6 +7,8 @@ use App\Models\Division\Tag;
 use App\Models\Feature\Collection;
 use App\Models\Option\Color;
 use App\Models\Option\Dimension;
+use App\Models\Product\ColorVariant;
+use App\Models\Product\DimensionVariant;
 use App\Models\Product\Product;
 use App\Models\Product\ProductDetail;
 use App\Models\Product\Variant;
@@ -214,7 +216,7 @@ class ProductApiService extends AppRepository
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images', 'material']);
             },
-            'tag','collection'
+            'tag', 'collection'
         ]);
         if ($request->slug) {
             $product = $this->findByColumn('slug', $request->slug);
@@ -227,23 +229,23 @@ class ProductApiService extends AppRepository
                 $variant['dimension_value'] = $variant->dimension->dimension;
             }
         }
-        // $materials = []; // Initialize an empty array to store materials
+        $materials = []; // Initialize an empty array to store materials
 
-        // foreach ($product->variants as $variant) {
-        //     if ($variant->material) {
-        //         $materialId = $variant->material->id;
-        //         if (!isset($materials[$materialId])) { // Check if material ID already exists in array
-        //             $materialDetails = [
-        //                 'id' => $materialId,
-        //                 'name' => $variant->material->name_ . app()->getLocale(),
-        //             ];
-        //             $materials[$materialId] = $materialDetails; // Use material ID as key in array
-        //         }
-        //     }
-        // }
-        
-        // $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
-    
+        foreach ($product->variants as $variant) {
+            if ($variant->material) {
+                $materialId = $variant->material->id;
+                if (!isset($materials[$materialId])) { // Check if material ID already exists in array
+                    $materialDetails = [
+                        'id' => $materialId,
+                        'name' => $variant->material->name_ . app()->getLocale(),
+                    ];
+                    $materials[$materialId] = $materialDetails; // Use material ID as key in array
+                }
+            }
+        }
+
+        $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
+
         return $product;
     }
 
@@ -315,6 +317,11 @@ class ProductApiService extends AppRepository
         // ]));
 
         // Create the product with other attributes and include sub_products in the data array
+        // Assuming $request->product_id contains the array you provided
+        $ids = array_column($request->product_id, 'id');
+
+        // dd($request->variants);
+        // Now $ids contains only the IDs from the original array
         $product = Product::create(array_merge(
             $request->only([
                 'name_ar',
@@ -334,23 +341,41 @@ class ProductApiService extends AppRepository
                 'new_arrival',
             ]),
             [
-                'sub_products' => $request->product_id,
+                'sub_products' => $ids,
                 'files' => $request->files ?? null
             ]
         ));
 
         foreach ($request->variants as $variant) {
             // $variant = $this->createDimension($variant);
-            // $variantModel = Variant::firstOrCreate([
-            //     'color_id' => $variant['color_id'],
-            //     'material_id' => $variant['material_id'],
-            //     'additional_price' => $variant['additional_price'],
-            //     'dimension_id' => $variant['dimension_id'],
-            //     'product_id' => $product->id,
-            // ], []);
-            $variantModel = Variant::create(array_merge($variant, [
+            $variantModel = Variant::create([
+                'material_id' => $variant['material_id'],
+                'additional_price' => $variant['additional_price'],
+                // 'dimension_id' => $variant['dimension_id'],
                 'product_id' => $product->id,
-            ]));
+            ]);
+            // $variantModel = Variant::create(array_merge($variant, [
+            //     'product_id' => $product->id,
+            // ]));
+            // Attach colors to the variant
+            if (isset($variant['color_id']) && is_array($variant['color_id'])) {
+                foreach ($variant['color_id'] as $color) {
+                    // Find or create the color variant
+                    $colorVariant = ColorVariant::Create([
+                        'variant_id' => $variantModel->id,
+                        'color_id' => $color['id'],
+                    ]);
+                }
+            }
+            if (isset($variant['dimension_id']) && is_array($variant['dimension_id'])) {
+                foreach ($variant['dimension_id'] as $dimension) {
+                    // Find or create the color variant
+                    $colorVariant = DimensionVariant::Create([
+                        'variant_id' => $variantModel->id,
+                        'dimension_id' => $dimension['id'],
+                    ]);
+                }
+            }
 
             if (count($variant['images'])) {
                 foreach ($variant['images'] as $img) {
