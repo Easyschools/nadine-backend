@@ -214,7 +214,7 @@ class ProductApiService extends AppRepository
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images', 'material']);
             },
-            'tag',
+            'tag','collection'
         ]);
         if ($request->slug) {
             $product = $this->findByColumn('slug', $request->slug);
@@ -227,22 +227,22 @@ class ProductApiService extends AppRepository
                 $variant['dimension_value'] = $variant->dimension->dimension;
             }
         }
-        $materials = []; // Initialize an empty array to store materials
+        // $materials = []; // Initialize an empty array to store materials
 
-        foreach ($product->variants as $variant) {
-            if ($variant->material) {
-                $materialId = $variant->material->id;
-                if (!isset($materials[$materialId])) { // Check if material ID already exists in array
-                    $materialDetails = [
-                        'id' => $materialId,
-                        'name' => $variant->material->name_ . app()->getLocale(),
-                    ];
-                    $materials[$materialId] = $materialDetails; // Use material ID as key in array
-                }
-            }
-        }
+        // foreach ($product->variants as $variant) {
+        //     if ($variant->material) {
+        //         $materialId = $variant->material->id;
+        //         if (!isset($materials[$materialId])) { // Check if material ID already exists in array
+        //             $materialDetails = [
+        //                 'id' => $materialId,
+        //                 'name' => $variant->material->name_ . app()->getLocale(),
+        //             ];
+        //             $materials[$materialId] = $materialDetails; // Use material ID as key in array
+        //         }
+        //     }
+        // }
         
-        $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
+        // $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
     
         return $product;
     }
