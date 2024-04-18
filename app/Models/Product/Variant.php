@@ -39,7 +39,7 @@ class Variant extends Model
 
     public function Color()
     {
-//        return $this->belongsTo(Color::class , 'color_id');
+        //        return $this->belongsTo(Color::class , 'color_id');
         return $this->belongsTo(Color::class);
     }
 
@@ -52,5 +52,20 @@ class Variant extends Model
     {
         return $this->belongsTo(Material::class);
     }
-    
+    public function ColorVariant()
+    {
+        // return $this->hasMany(ColorVariant::class);
+
+        // Define a one-to-many relationship with the ColorVariant model
+
+        return $this->hasManyThrough(Color::class, ColorVariant::class, 'variant_id', 'id', 'id', 'color_id');
+    }
+
+    public function DimensionVariant()
+    {
+        return $this->hasManyThrough(Dimension::class, DimensionVariant::class, 'variant_id', 'id', 'id', 'dimension_id');
+
+        // Define a one-to-many relationship with the DimensionVariant model
+        // return $this->hasMany(DimensionVariant::class);
+    }
 }

@@ -36,6 +36,9 @@ class ProductRequest extends FormRequest
             case 'delete':
             case 'get':
                 return $this->idValidation();
+                case 'get-variants':
+                    return $this->getVariantsValidation();
+                
             case 'all':
                 return $this->allValidation();
             case 'search':
@@ -72,7 +75,9 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'files' => 'nullable',
             'variants' => 'required|array',
-            'variants.*.color_id' => 'nullable|exists:colors,id',
+            'variants.*.color_id' => 'nullable|array',
+            'variants.*.color_id.*.id' => 'nullable',
+            // 'variants.*.color_id' => 'nullable|exists:colors,id',
             'variants.*.material_id' => 'nullable|exists:materials,id',
 
             // 'variants.*.images' => 'nullable|array',
@@ -132,6 +137,17 @@ class ProductRequest extends FormRequest
             'is_paginate' => 'in:0,1',
             'is_banned' => 'in:0,1',
         ];
+    }
+    
+    private function getVariantsValidation()
+    {
+        return [
+            'product_id' => 'required|exists:products,id',
+            'material_id' => 'required|exists:materials,id',
+            'is_paginate' => 'in:0,1',
+            'is_banned' => 'in:0,1',
+        ];
+    
     }
 
     private function searchValidation()

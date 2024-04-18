@@ -204,6 +204,20 @@ class ProductApiService extends AppRepository
         return $name;
     }
 
+ /**
+     * @param $request
+     * @return mixed
+     */
+    public function getVariants($request)
+    {
+        $variant = Variant::where('product_id',$request->product_id)
+        ->where('material_id',$request->material_id)
+        ->with('ColorVariant','DimensionVariant')->first();
+
+        return $variant;
+    }
+
+
     /**
      * @param $request
      * @return mixed
@@ -214,7 +228,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images', 'material']);
+                $variant->with(['color', 'dimension', 'images', 'material','ColorVariant','DimensionVariant']);
             },
             'tag', 'collection'
         ]);

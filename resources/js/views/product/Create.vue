@@ -271,17 +271,44 @@
         <div class="card-body">
           <!-- <form> -->
 
-          <div class="row form-group">
+          <!-- <div class="row form-group">
             <div class="col-sm-3">
               <label class="col-form-label">Make a look</label>
             </div>
             <div class="col-sm-9">
               <select class="form-control" v-model="item.product_id" multiple>
                 <option v-for="product in products" :value="product.id">
-                  {{ product.name_ar }} -
-                  {{ product.name_en }}
+                  {{ product.sku }} - 
+                  {{ product.name }} 
                 </option>
               </select>
+            </div>
+          </div> -->
+
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <label class="col-form-label">Make a look</label>
+            </div>
+            <div class="col-sm-9">
+              <!-- <select2
+              v-model="selectedProducts"
+              :options="selectedProducts"
+              multiple
+              style="width: 100%"
+            ></select2> -->
+              <!-- <vue-select2
+                v-model="selectedProducts"
+                :options="selectedProducts"
+                @change="handleSelectionChange"
+              ></vue-select2> -->
+              <v-select
+                v-model="item.product_id"
+                :options="formattedOptions"
+                multiple
+                searchable
+                label="name"
+                placeholder="Select options..."
+              ></v-select>
             </div>
           </div>
 
@@ -348,7 +375,7 @@
                       </button>
                     </div>
                     <div class="row">
-                       <div class="col-md-12">
+                      <div class="col-md-12">
                         <div class="row form-group">
                           <div
                             class="col-md-3 m-2"
@@ -384,13 +411,22 @@
                         }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
-                        <select class="form-control" v-model="variant.color_id">
+                        <!-- <select class="form-control" v-model="variant.color_id">
                           <option value=""></option>
                           <option v-for="color in colors" :value="color.id">
                             {{ color.name_ar }} -
                             {{ color.name_en }}
                           </option>
-                        </select>
+                        </select> -->
+
+                        <v-select
+                          v-model="variant.color_id"
+                          :options="formattedColor"
+                          multiple
+                          searchable
+                          label="name"
+                          placeholder="Select options..."
+                        ></v-select>
                       </div>
                       <div class="col-md-3 mt-4 mb-3">
                         <label style="font-weight: bold">{{
@@ -398,12 +434,20 @@
                         }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
-                        <select class="form-control" v-model="variant.dimension_id">
+                        <!-- <select class="form-control" v-model="variant.dimension_id">
                           <option value=""></option>
                           <option v-for="dimension in dimensions" :value="dimension.id">
                             {{ dimension.dimension }}
                           </option>
-                        </select>
+                        </select> -->
+                          <v-select
+                          v-model="variant.dimension_id"
+                          :options="formattedDimension"
+                          multiple
+                          searchable
+                          label="name"
+                          placeholder="Select options..."
+                        ></v-select>
                       </div>
 
                       <div class="col-md-3 mt-3">
@@ -418,6 +462,7 @@
                             {{ material.name_en }}
                           </option>
                         </select>
+                     
                       </div>
 
                       <!-- <div class="col-md-9 mt-3">
@@ -469,16 +514,22 @@
 
 <script>
 import alertsMixin from "../../mixins/alertsMixin";
+import vSelect from "vue-select";
 
 export default {
   name: "Create",
+  components: {
+    vSelect,
+  },
   data() {
     return {
       disableButton: false,
 
       show: true,
       item: {
-        product_id: [], // Initialize as an empty array for multiple selections
+        product_id: [], // Holds the selected product IDs
+
+        // product_id: [], // Initialize as an empty array for multiple selections
         name_ar: "",
         name_en: "",
         sku: "",
@@ -515,6 +566,7 @@ export default {
       //     name_ar: null,
       //   },
       // ],
+
       products: [
         {
           id: null,
@@ -562,6 +614,27 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    formattedOptions() {
+      return this.products.map((product) => ({
+        id: product.id,
+        name: `${product.name} - ${product.sku}`, // Concatenate name and SKU
+        // ...product // Include other properties from the product
+      }));
+    },
+    formattedColor() {
+      return this.colors.map((color) => ({
+        id: color.id,
+        name: color.name_en, // You can customize this based on your color object structure
+      }));
+    },
+    formattedDimension() {
+      return this.dimensions.map((dimension) => ({
+        id: dimension.id,
+        name: dimension.dimension, // You can customize this based on your color object structure
+      }));
+    },
   },
   created() {
     this.getCategory();
@@ -738,26 +811,26 @@ export default {
         this.item.tags = [];
       }
     },
- uploadVariantImage(index) {
-  const input = this.$refs["mainImages" + index][0];
-  const files = input.files;
+    uploadVariantImage(index) {
+      const input = this.$refs["mainImages" + index][0];
+      const files = input.files;
 
-  if (files && files.length > 0) {
-    // Clear the existing images array before adding new images
-    this.item.variants[index].images = [];
+      if (files && files.length > 0) {
+        // Clear the existing images array before adding new images
+        this.item.variants[index].images = [];
 
-    // Read and display each selected image
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageSrc = e.target.result;
-        this.item.variants[index].images.push(imageSrc);
-      };
+        // Read and display each selected image
+        Array.from(files).forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const imageSrc = e.target.result;
+            this.item.variants[index].images.push(imageSrc);
+          };
 
-      reader.readAsDataURL(file);
-    });
-  }
-},
+          reader.readAsDataURL(file);
+        });
+      }
+    },
 
     // uploadVariantImage(index) {
     //   console.log(this.$refs["mainImages" + index][0]);
@@ -815,4 +888,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-select {
+  width: 100%; /* Set width to 100% */
+}
+</style>

@@ -34,6 +34,12 @@ class ProductApiController extends Controller
         $process = $this->productApiService->get($request);
         return $this->sendResponse($process);
     }
+    public function getVariants(ProductRequest $request)
+    {
+        $process = $this->productApiService->getVariants($request);
+        return $this->sendResponse($process);
+    }
+    
 
     public function all(ProductRequest $request)
     {

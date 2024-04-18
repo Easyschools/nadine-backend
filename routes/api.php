@@ -306,6 +306,7 @@ Route::group([
         Route::get('all', [ProductApiController::class, 'all']);
         Route::get('offers', [ProductApiController::class, 'offers']);
         Route::get('get', [ProductApiController::class, 'read']);
+        Route::get('get-variants', [ProductApiController::class, 'getVariants']);
         Route::post('create', [ProductApiController::class, 'create']);
         Route::post('update', [ProductApiController::class, 'edit']);
         Route::post('edit', [ProductApiController::class, 'edit']);
