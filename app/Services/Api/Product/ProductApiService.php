@@ -204,15 +204,15 @@ class ProductApiService extends AppRepository
         return $name;
     }
 
- /**
+    /**
      * @param $request
      * @return mixed
      */
     public function getVariants($request)
     {
-        $variant = Variant::where('product_id',$request->product_id)
-        ->where('material_id',$request->material_id)
-        ->with('ColorVariant','DimensionVariant')->first();
+        $variant = Variant::where('product_id', $request->product_id)
+            ->where('material_id', $request->material_id)
+            ->with('ColorVariant', 'DimensionVariant')->first();
 
         return $variant;
     }
@@ -228,7 +228,7 @@ class ProductApiService extends AppRepository
         $this->setRelations([
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images', 'material','ColorVariant','DimensionVariant']);
+                $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant']);
             },
             'tag', 'collection'
         ]);
@@ -332,7 +332,7 @@ class ProductApiService extends AppRepository
 
         // Create the product with other attributes and include sub_products in the data array
         // Assuming $request->product_id contains the array you provided
-        $ids = array_column($request->product_id, 'id');
+        // $ids = array_column($request->product_id, 'id');
 
         // dd($request->variants);
         // Now $ids contains only the IDs from the original array
@@ -355,7 +355,7 @@ class ProductApiService extends AppRepository
                 'new_arrival',
             ]),
             [
-                'sub_products' => $ids,
+                'sub_products' => $request->product_id,
                 'files' => $request->files ?? null
             ]
         ));
@@ -526,6 +526,40 @@ class ProductApiService extends AppRepository
                 ]));
 
                 $this->updateImagesOfVariants($variant, $variantModel);
+            }
+
+
+
+            // Update or create color variants
+            if (isset($variant['color_variant']) && is_array($variant['color_variant'])) {
+                foreach ($variant['color_variant'] as $color) {
+
+                    ColorVariant::updateOrCreate(
+                        [
+                            'variant_id' => $variantModel->id,
+                            'color_id' => $color['id'],
+                        ],
+                        [
+                            'color_id' => $color['id'],
+                        ]
+                    );
+                }
+            }
+
+            // Update or create dimension variants
+            if (isset($variant['dimension_variant']) && is_array($variant['dimension_variant'])) {
+                foreach ($variant['dimension_variant'] as $dimension) {
+                    DimensionVariant::updateOrCreate(
+                        [
+                            'variant_id' => $variantModel->id,
+                            'dimension_id' => $dimension['id'],
+                        ],
+                        [
+                            'dimension_id' => $dimension['id'],
+
+                        ]
+                    );
+                }
             }
         }
 

@@ -108,11 +108,6 @@
                 <label class="col-form-label">{{ translations.product.type }}</label>
               </div>
               <div class="col-sm-9">
-                <!-- <select class="form-control" v-model="item.tag_id">
-                  <option v-for="tag in tags" :value="tag.id">
-                    {{ tag.name_ar }} - {{ tag.name_en }}
-                  </option>
-                </select> -->
                 <select class="form-control" v-model="item.tag_id">
                   <option v-for="tag in tags" :value="tag.id">
                     {{ tag.name_ar }} - {{ tag.name_en }}
@@ -239,12 +234,20 @@
               <label class="col-form-label">Make a look</label>
             </div>
             <div class="col-sm-9">
-              <select class="form-control" v-model="item.sub_products" multiple>
+              <!-- <select class="form-control" v-model="item.sub_products" multiple>
                 <option v-for="product in products" :value="product.id">
                   {{ product.name_ar }} -
                   {{ product.name_en }}
                 </option>
-              </select>
+              </select> -->
+              <v-select
+                v-model="item.sub_products"
+                :options="formattedOptions"
+                multiple
+                searchable
+                label="name"
+                placeholder="Select options..."
+              ></v-select>
             </div>
           </div>
 
@@ -351,13 +354,22 @@
                         }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
-                        <select class="form-control" v-model="variant.color_id">
+                        <!-- <select class="form-control" v-model="variant.color_id">
                           <option value=""></option>
                           <option v-for="color in colors" :value="color.id">
                             {{ color.name_ar }} -
                             {{ color.name_en }}
                           </option>
-                        </select>
+                        </select> -->
+
+                        <v-select
+                          v-model="variant.color_variant"
+                          :options="formattedColor"
+                          multiple
+                          searchable
+                          label="name"
+                          placeholder="Select options..."
+                        ></v-select>
                       </div>
 
                       <div class="col-md-3">
@@ -380,12 +392,20 @@
                         }}</label>
                       </div>
                       <div class="col-md-9 mt-3">
-                        <select class="form-control" v-model="variant.dimension_id">
+                        <v-select
+                          v-model="variant.dimension_variant"
+                          :options="formattedDimension"
+                          multiple
+                          searchable
+                          label="dimension"
+                          placeholder="Select options..."
+                        ></v-select>
+                        <!-- <select class="form-control" v-model="variant.dimension_id">
                           <option value=""></option>
                           <option v-for="dimension in dimensions" :value="dimension.id">
                             {{ dimension.dimension }}
                           </option>
-                        </select>
+                        </select> -->
                       </div>
 
                       <div class="col-md-3 mt-4 mb-3">
@@ -431,14 +451,23 @@
 </template>
 
 <script>
+import vSelect from "vue-select";
+
 export default {
   name: "Edit",
+  components: {
+    vSelect,
+  },
   data() {
     return {
       disableButton: false,
       current_page: 0,
       item: {
+        product_id: [], // Holds the selected product IDs
+
         sub_products: [], // Initialize as an empty array for multiple selections
+        dimension_variant: [], // Initialize as an empty array for multiple selections
+        color_variant: [], // Initialize as an empty array for multiple selections
 
         // fileData: null, // Assuming file data is retrieved from the database and stored here
         sku: "",
@@ -473,6 +502,8 @@ export default {
             additional_price: 0,
             color_id: null,
             dimension_id: null,
+            // color_variant: [null],
+            // dimension_variant: [null],
             // dimension_value: null,
             images: [null],
           },
@@ -523,7 +554,27 @@ export default {
       ],
     };
   },
-
+  computed: {
+    formattedOptions() {
+      return this.products.map((product) => ({
+        id: product.id,
+        name: `${product.name} - ${product.sku}`, // Concatenate name and SKU
+        // ...product // Include other properties from the product
+      }));
+    },
+    formattedColor() {
+      return this.colors.map((color) => ({
+        id: color.id,
+        name: color.name_en, // You can customize this based on your color object structure
+      }));
+    },
+    formattedDimension() {
+      return this.dimensions.map((dimension) => ({
+        id: dimension.id,
+        dimension: dimension.dimension, // You can customize this based on your color object structure
+      }));
+    },
+  },
   created() {
     this.item.slug = this.$route.params.slug;
     this.current_page = this.$route.params.page;
@@ -543,125 +594,13 @@ export default {
     openFileInput() {
       this.$refs.fileInput.click(); // Trigger the file input click event
     },
-    // Fetch tags based on the selected category
-    // fetchTags(categoryId) {
-    //   axios
-    //     .get("tag/all?categoryId=" + categoryId)
-    //     .then((response) => {
-    //       this.tags = response.data.data;
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching tags:", error);
-    //     });
-    // },
-    // Handle category change event
-    // onCategoryChange() {
-    //   this.fetchTags(this.item.tag.category_id);
-    // },
+
     handleFileChange(event) {
       const file = event.target.files; // Get the selected file
       if (file) {
         this.item.files = file; // Store the selected file object
       }
     },
-    //   handleFileChange(event) {
-    //     const file = event.target.files[0];
-
-    //     // Update the data property with the selected file
-    //     this.item.product_details_image = file;
-
-    //     // You can also preview the image if needed
-    //     this.previewImage(file);
-    // },
-
-    // previewImage(file) {
-    //     // Perform image preview logic if needed
-    //     // For example, using FileReader to display a preview
-    //     const reader = new FileReader();
-
-    //     reader.onload = (e) => {
-    //         // Access the image URL
-    //         const imageUrl = e.target.result;
-
-    //         // Update the image preview logic here
-    //         // For example, setting a preview image in your component
-    //         // this.previewImageUrl = imageUrl;
-    //     };
-
-    //     reader.readAsDataURL(file);
-    // },
-    // selectTags() {
-    //   try {
-    //     // Fetch tags based on the selected category
-    //     console.log(this.item.tag);
-    //     const categoryId = this.item.tag.category_id; // Get the selected category ID
-    //     axios
-    //       .get(`tag/all?category_id=${categoryId}`)
-    //       .then((response) => {
-    //         this.tags = response.data.data;
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error fetching tags:", error);
-    //         this.tags = []; // Clear tags array on error
-    //       });
-    //   } catch (error) {
-    //     console.error("Error fetching tags:", error);
-    //     this.tags = []; // Clear tags array on error
-    //   }
-    // },
-    // selectCategory() {
-    //   // Find the selected category object based on the tag category_id
-    //   const selectedCategory = this.categories.find(
-    //     (cat) => cat.id === this.item.tag.category_id
-    //   );
-
-    //   if (selectedCategory) {
-    //     // If a category is selected, fetch tags associated with that category
-    //     this.selectedCategory = selectedCategory; // Store the selected category
-    //     axios
-    //       .get("tag/all?categoryId=" + selectedCategory.id)
-    //       .then((response) => {
-    //         this.tags = response.data.data;
-    //         this.item.tags = []; // Clear existing tags
-    //         this.tags.forEach((tag) => {
-    //           this.item.tags.push(tag.id); // Populate item.tags with tag IDs
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   } else {
-    //     // If no category is selected, clear tags and item.tags
-    //     this.selectedCategory = null;
-    //     this.tags = [];
-    //     this.item.tags = [];
-    //   }
-    // },
-
-    //   selectCategory() {
-    //   const selectedCategory = this.categories.find(cat => cat.id === this.item.tag.category_id);
-
-    //   if (selectedCategory) {
-    //     this.selectedCategory = selectedCategory;
-    //     axios
-    //       .get("tag/all?categoryId=" + selectedCategory.id)
-    //       .then((response) => {
-    //         this.tags = response.data.data;
-    //         // Populate item.tags with default tag IDs
-    //         this.item.tags = this.tags.map((tag) => tag.id);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-
-    //     // Call getTags here
-    //     this.getTags();
-    //   } else {
-    //     this.selectedCategory = null;
-    //     this.tags = [];
-    //     this.item.tags = [];
-    //   }
-    // }
 
     selectCategory() {
       const selectedCategory = this.categories.find(
@@ -866,14 +805,7 @@ export default {
       this.buildFormData(formData, this.item, null);
       return formData;
     },
-    // uploadVariantImage(index) {
-    //   // console.log(this.$refs['mainImages'+index][index].files[0])
-    //   console.log(this.$refs["mainImages" + index][0]);
-    //   Array.from(this.$refs["mainImages" + index][0].files).forEach((item, indx) => {
-    //     this.item.variants[index].images.push(item);
-    //     console.log(this.item.variants[index].images);
-    //   });
-    // },
+
     uploadVariantImage(index) {
       // console.log(this.$refs['mainImages'+index][index].files[0])
       console.log(this.$refs["mainImages" + index][0]);
