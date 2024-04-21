@@ -58,6 +58,18 @@ class Variant extends Model
 
         // Define a one-to-many relationship with the ColorVariant model
 
+        // Color::class: This parameter specifies the related model class that you are trying to access through the intermediate model (ColorVariant). In this case, it refers to the Color model.
+
+        // ColorVariant::class: This parameter specifies the intermediate model class that connects the Variant and Color models. The ColorVariant model holds the relationships between variants and colors.
+
+        // 'variant_id': This parameter indicates the name of the foreign key on the intermediate model (ColorVariant) that references the local key on the originating model (Variant). It establishes the relationship between Variant and ColorVariant.
+
+        // 'id': This parameter specifies the name of the local key on the originating model (Variant). It is the primary key of the variants table.
+
+        // 'color_variant_id': This parameter specifies the name of the foreign key on the related model (Color) that references the local key on the intermediate model (ColorVariant). It establishes the relationship between ColorVariant and Color.
+
+        // 'color_id': This parameter specifies the name of the local key on the related model (Color). It is the primary key of the colors table.
+
         return $this->hasManyThrough(Color::class, ColorVariant::class, 'variant_id', 'id', 'id', 'color_id');
     }
 
