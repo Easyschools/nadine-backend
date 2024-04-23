@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue2';
@@ -11,5 +10,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-
+    resolve: {
+        alias: {
+            // Add alias for vue-select
+            'vue-select': 'vue-select/dist/vue-select.esm.js'
+        }
+    }
 });
