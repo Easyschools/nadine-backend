@@ -13,7 +13,7 @@ export default defineConfig({
     resolve: {
         alias: {
             // Add alias for vue-select
-            'vue-select': 'vue-select/dist/vue-select.js'
+            'vue-select': 'vue-select/dist/vue-select'
         }
     }
 });
