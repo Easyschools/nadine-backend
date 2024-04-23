@@ -1,3 +1,4 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue2';
@@ -10,5 +11,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-
+    build: {
+        rollupOptions: {
+            external: ['vue-select'],
+        },
+    },
 });
