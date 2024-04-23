@@ -13,9 +13,7 @@ export default defineConfig({
     ],
     build: {
         rollupOptions: {
-            external: ['vue-select'],
-            chunkSizeWarningLimit: 1000, // Adjust the limit as needed
-
+            external: ['vue-select']
         }
     }
 });
