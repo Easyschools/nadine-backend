@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue2';
@@ -11,6 +12,10 @@ export default defineConfig({
         }),
     ],
     build: {
-        chunkSizeWarningLimit: 1000, // Adjust the limit as needed
+        rollupOptions: {
+            external: ['vue-select'],
+            chunkSizeWarningLimit: 1000, // Adjust the limit as needed
+
+        }
     }
 });
