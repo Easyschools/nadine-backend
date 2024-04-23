@@ -451,8 +451,10 @@
 </template>
 
 <script>
-// import vSelect from "vue-select";
-import vSelect from "vue-select/dist/vue-select.js";
+import alertsMixin from "../../mixins/alertsMixin";
+
+import vSelect from "vue-select";
+// import vSelect from "vue-select/dist/vue-select.js";
 
 
 export default {
