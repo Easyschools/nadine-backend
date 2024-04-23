@@ -10,10 +10,5 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    resolve: {
-        alias: {
-            // Add alias for vue-select
-            'vue-select': 'vue-select/dist/vue-select'
-        }
-    }
+
 });
