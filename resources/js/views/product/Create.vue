@@ -514,8 +514,8 @@
 
 <script>
 import alertsMixin from "../../mixins/alertsMixin";
-import vSelect from "vue-select";
-// import vSelect from "vue-select/dist/vue-select.js";
+// import vSelect from "vue-select";
+import vSelect from "vue-select/dist/vue-select.esm.js";
 
 export default {
   name: "Create",
