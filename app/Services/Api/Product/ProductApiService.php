@@ -11,6 +11,7 @@ use App\Models\Product\ColorVariant;
 use App\Models\Product\DimensionVariant;
 use App\Models\Product\Product;
 use App\Models\Product\ProductDetail;
+use App\Models\Product\ProductImage;
 use App\Models\Product\Variant;
 use App\Repositories\AppRepository;
 use App\ThirdParty\Pixel;
@@ -40,6 +41,7 @@ class ProductApiService extends AppRepository
         $this->setSortOrder($request->sort_order ?? 'asc');
         $this->setSortBy($request->sort_by ?? 'sku');
         $this->setRelations([
+            'images',
             'material',
             'variants' => function ($variant) {
                 $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
@@ -80,6 +82,8 @@ class ProductApiService extends AppRepository
         $this->setSortOrder('asc');
         $this->setSortBy('sku');
         $this->setRelations([
+            'images',
+
             'variants' => function ($variant) {
                 $variant->select('product_id', 'dimension_id', 'material_id', 'id')->with(
                     'material:id,name_en',
@@ -224,8 +228,9 @@ class ProductApiService extends AppRepository
      */
     public function get($request)
     {
-        Pixel::viewContent();
+        // Pixel::viewContent();
         $this->setRelations([
+            'images',
 
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant']);
@@ -360,6 +365,16 @@ class ProductApiService extends AppRepository
             ]
         ));
 
+        if (count($request->images)) {
+            foreach ($request->images as $img) {
+                // Assuming $img contains the file path of each image
+                $productImage = new ProductImage();
+                $productImage->image = $img; // Set the image attribute
+                $productImage->product_id = $product->id; // Assuming $product is the current product
+                $productImage->save();
+            }
+        }
+
         foreach ($request->variants as $variant) {
             // $variant = $this->createDimension($variant);
             $variantModel = Variant::create([
@@ -391,29 +406,29 @@ class ProductApiService extends AppRepository
                 }
             }
 
-            if (count($variant['images'])) {
-                foreach ($variant['images'] as $img) {
+            // if (count($variant['images'])) {
+            //     foreach ($variant['images'] as $img) {
 
-                    $file = explode(";base64,", $img);
-                    $file1 = explode('/', $file[0]);
-                    $file_exe = end($file1);
-                    $file_name = uniqid() . date('-Ymd-his.') . $file_exe;
-                    $image_data = str_replace('.', '', $file[1]);
+            //         $file = explode(";base64,", $img);
+            //         $file1 = explode('/', $file[0]);
+            //         $file_exe = end($file1);
+            //         $file_name = uniqid() . date('-Ymd-his.') . $file_exe;
+            //         $image_data = str_replace('.', '', $file[1]);
 
-                    Storage::put('uploads/Variant/' . $file_name, base64_decode($image_data));
+            //         Storage::put('uploads/Variant/' . $file_name, base64_decode($image_data));
 
 
-                    // $image_data = $request->input('image_data');
-                    // $image = base64_decode($img);
-                    // $image_name = uniqid('image_') ;
-                    // $image_path = storage_path('app/public/uploads/Variant/' . $image);
-                    // file_put_contents($image_path, $image);
-                    // dd($file_name);
-                    $variantModel->images()->firstOrcreate([
-                        'image' => 'uploads/Variant/' . $file_name,
-                    ]);
-                }
-            }
+            //         // $image_data = $request->input('image_data');
+            //         // $image = base64_decode($img);
+            //         // $image_name = uniqid('image_') ;
+            //         // $image_path = storage_path('app/public/uploads/Variant/' . $image);
+            //         // file_put_contents($image_path, $image);
+            //         // dd($file_name);
+            //         $variantModel->images()->firstOrcreate([
+            //             'image' => 'uploads/Variant/' . $file_name,
+            //         ]);
+            //     }
+            // }
         }
 
         return $product;
@@ -433,7 +448,7 @@ class ProductApiService extends AppRepository
      */
     public function updateProduct($request)
     {
-        // dd($request->all());
+        // dd(isFile($request->imagges[0])?'yes':'no');
         $product = $this->find($request->id);
         // $product->update($request->only([
         //     'name_ar',
@@ -479,6 +494,35 @@ class ProductApiService extends AppRepository
                 'files' => $request->files ?? null
             ]
         ));
+
+        // Update product images
+        if (isset($request->images)) {
+            // Step 1: Delete all existing product images for the product ID
+            ProductImage::where('product_id', $request->id)->delete();
+
+            // Step 2: Insert new images into the database
+            foreach ($request->images as $image) {
+                if ($image instanceof \Illuminate\Http\UploadedFile) {
+                    // New image uploaded by the user
+                    $productImage = new ProductImage();
+                    $productImage->image = $image; // Store the uploaded image and get its path
+                    $productImage->product_id = $request->id;
+                    $productImage->save();
+                } elseif (is_array($image) && isset($image['image']) && !empty($image['image'])) {
+                    // Existing image, insert it
+                    // dd($image['image']);
+                    $productImage = ProductImage::create([
+                        'image' => $image['image'],
+                        'product_id' => $request->id
+                    ]);
+                    // $productImage = new ProductImage();
+
+                    // $productImage->image = $image['image']; // Ensure the 'image' field is assigned a value
+                    // $productImage->product_id = $request->id;
+                    // $productImage->save();
+                }
+            }
+        }
 
 
 

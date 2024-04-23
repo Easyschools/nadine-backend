@@ -77,6 +77,22 @@
                 />
               </div>
             </div>
+            <div class="row form-group">
+              <div class="col-sm-3">
+                <label class="col-form-label"> images</label>
+              </div>
+              <div class="col-sm-9">
+                <div class="form-check align-bottom mt-2">
+                  <input
+                    type="file"
+                    ref="myimages"
+                    class="form-control"
+                    @change="handleImagesForChange"
+                    multiple
+                  />
+                </div>
+              </div>
+            </div>
 
             <div class="row form-group">
               <div class="col-sm-3">
@@ -440,7 +456,7 @@
                             {{ dimension.dimension }}
                           </option>
                         </select> -->
-                          <v-select
+                        <v-select
                           v-model="variant.dimension_id"
                           :options="formattedDimension"
                           multiple
@@ -462,7 +478,6 @@
                             {{ material.name_en }}
                           </option>
                         </select>
-                     
                       </div>
 
                       <!-- <div class="col-md-9 mt-3">
@@ -516,9 +531,6 @@
 import alertsMixin from "../../mixins/alertsMixin";
 import vSelect from "vue-select";
 
-
-
-
 export default {
   name: "Create",
   components: {
@@ -547,6 +559,7 @@ export default {
         limited_edition: 0,
         category_id: null, // Initialize with null or default value
         tags: [], // Initialize tags array
+        images: [], // Initialize tags array
         // product_details_image: null,
         // product_details: null,
         files: null,
@@ -668,6 +681,14 @@ export default {
       const files = event.target.files;
       // Store the selected files in your component's data
       this.item.files = files;
+    },
+    handleImagesForChange(event) {
+      const files = event.target.files;
+      // Store the selected files in your component's data
+      this.item.images = []; // Initialize as an empty array to store multiple files
+      for (let i = 0; i < files.length; i++) {
+        this.item.images.push(files[i]); // Store each file in the array
+      }
     },
 
     // handleFileChange(event) {

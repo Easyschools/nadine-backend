@@ -82,6 +82,53 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
+                <label class="col-form-label">Old Images:</label>
+              </div>
+              <div class="col-sm-9">
+                <div class="form-check align-bottom mt-2">
+                  <!-- Display the name of the old files -->
+                  <div v-if="item.images && item.images.length > 0">
+                    <div
+                      v-for="(image, index) in item.images"
+                      :key="index"
+                      class="image-container"
+                    >
+                      <a :href="image.image" target="_blank">
+                        <img :src="image.image" :alt="'Old Image ' + index" />
+                      </a>
+                      <span class="remove-icon" @click="removeOldImage(index)">
+                        <!-- Add your remove icon here -->
+                        <i class="fas fa-trash-alt"></i>
+                        <!-- Example using Font Awesome -->
+                      </span>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <p>No old images found.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-3">
+                <label class="col-form-label">New Images</label>
+              </div>
+              <div class="col-sm-9">
+                <div class="form-check align-bottom mt-2">
+                  <input
+                    type="file"
+                    ref="myimages"
+                    class="form-control"
+                    @change="handleImagesForChange"
+                    multiple
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-3">
                 <label class="col-form-label">{{
                   translations.category.categories
                 }}</label>
@@ -455,7 +502,6 @@ import alertsMixin from "../../mixins/alertsMixin";
 
 import vSelect from "vue-select";
 
-
 export default {
   name: "Edit",
   components: {
@@ -487,7 +533,6 @@ export default {
         files: null, // Assuming file data will be stored here
         tags: [], // Initialize tags array
         tag_id: null, // Initialize tag_id
-
         tag: {
           category_id: null,
           category: {
@@ -602,6 +647,19 @@ export default {
       const file = event.target.files; // Get the selected file
       if (file) {
         this.item.files = file; // Store the selected file object
+      }
+    },
+    removeOldImage(index) {
+      // Remove the image at the specified index from the item.images array
+      this.item.images.splice(index, 1);
+    },
+    handleImagesForChange(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        // New images are selected, append them to the existing array of old images
+        for (let i = 0; i < files.length; i++) {
+          this.item.images.push(files[i]); // Append each new file to the array
+        }
       }
     },
 
@@ -719,6 +777,8 @@ export default {
           this.item = response.data.data;
           this.item.tag_id = response.data.data.tag_id;
           this.item.category_id = response.data.data.tag.category_id;
+          this.item.images = response.data.item.images; // Populate item.images with old images data
+
           // console.log(this.item.category_id);
           console.log("getIrem", this.item.category_id);
           this.getTags(response.data.data.tag.category_id);

@@ -38,7 +38,7 @@ class Product extends Model
 
     protected $appends = [
         'currency',
-        'image',
+        // 'image',
         'type',
         'name',
         'description',
@@ -137,6 +137,11 @@ class Product extends Model
     {
         return $this->belongsTo(Collection::class);
     }
+    public function images()
+    {
+        return $this->hasMany(productImage::class);
+    }
+
 
     public function variants()
     {
@@ -159,29 +164,29 @@ class Product extends Model
     //         })->first()->images()->whereNotNull('image')->first()->image
     //         : "";
     // }
-    public function getImageAttribute()
-    {
-        // Check if any variants exist
-        if ($this->variants()->exists()) {
-            // Check if any variant has images
-            if ($this->variants()->whereHas('images')->exists()) {
-                // Retrieve the first variant with images
-                $variantWithImages = $this->variants()->whereHas('images')->first();
+    // public function getImageAttribute()
+    // {
+    //     // Check if any variants exist
+    //     if ($this->variants()->exists()) {
+    //         // Check if any variant has images
+    //         if ($this->variants()->whereHas('images')->exists()) {
+    //             // Retrieve the first variant with images
+    //             $variantWithImages = $this->variants()->whereHas('images')->first();
     
-                // Check if the variant with images is not null
-                if ($variantWithImages) {
-                    // Retrieve the first image of the variant
-                    $firstImage = $variantWithImages->images()->whereNotNull('image')->first();
+    //             // Check if the variant with images is not null
+    //             if ($variantWithImages) {
+    //                 // Retrieve the first image of the variant
+    //                 $firstImage = $variantWithImages->images()->whereNotNull('image')->first();
     
-                    // Return the image path if found, otherwise an empty string
-                    return $firstImage ? $firstImage->image : "";
-                }
-            }
-        }
+    //                 // Return the image path if found, otherwise an empty string
+    //                 return $firstImage ? $firstImage->image : "";
+    //             }
+    //         }
+    //     }
     
-        // Return an empty string if no variants or no images found
-        return "";
-    }
+    //     // Return an empty string if no variants or no images found
+    //     return "";
+    // }
     
     public function getCurrencyAttribute()
     {
