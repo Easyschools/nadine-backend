@@ -38,7 +38,7 @@ class ProductApiService extends AppRepository
     {
         $this->filter($request);
 
-        $this->setSortOrder($request->sort_order ?? 'asc');
+        $this->setSortOrder($request->sort_order ?? 'desc');
         $this->setSortBy($request->sort_by ?? 'sku');
         $this->setRelations([
             'images',
@@ -50,7 +50,7 @@ class ProductApiService extends AppRepository
                     'images:id,variant_id,image'
                 );
             },
-            'tag:id,name_en,name_ar,category_id',
+            'tag:id,name_en,name_ar',
         ]);
 
         $this->setAppends([
@@ -59,7 +59,7 @@ class ProductApiService extends AppRepository
             'tags',
             'name',
             'description',
-            'category_id',
+            // 'category_id',
             'category',
         ]);
 
@@ -228,6 +228,8 @@ class ProductApiService extends AppRepository
      */
     public function get($request)
     {
+        $this->setSortOrder($request->sort_order ?? 'desc');
+        
         // Pixel::viewContent();
         $this->setRelations([
             'images',
@@ -339,7 +341,6 @@ class ProductApiService extends AppRepository
         // Assuming $request->product_id contains the array you provided
         // $ids = array_column($request->product_id, 'id');
 
-        // dd($request->variants);
         // Now $ids contains only the IDs from the original array
         $product = Product::create(array_merge(
             $request->only([
@@ -475,6 +476,8 @@ class ProductApiService extends AppRepository
         //     'files'
 
         // ]));
+        // dd($request->category_id);
+
         $product->update(array_merge(
             $request->only([
                 'name_ar',
@@ -488,7 +491,7 @@ class ProductApiService extends AppRepository
                 'price_after_discount',
                 'collection_id',
                 'tag_id',
-                // 'material_id',
+                'category_id',
                 'color_id',
                 'limited_edition',
                 'best_selling',

@@ -137,7 +137,7 @@
                 <select
                   class="form-control"
                   @change="selectCategory()"
-                  v-model="item.tag.category_id"
+                  v-model="item.category_id"
                 >
                   <option
                     v-for="(category, index) in categories"
@@ -776,12 +776,12 @@ export default {
         .then((response) => {
           this.item = response.data.data;
           this.item.tag_id = response.data.data.tag_id;
-          this.item.category_id = response.data.data.tag.category_id;
+          this.item.category_id = response.data.data.category_id;
           this.item.images = response.data.data.images; // Populate item.images with old images data
 
           // console.log(this.item.category_id);
           // console.log("getIrem", response.data);
-          this.getTags(response.data.data.tag.category_id);
+          this.getTags(response.data.data.category_id);
 
           this.item.product_details = this.item.product_detail.details;
           // Map category IDs to category objects

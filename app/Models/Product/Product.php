@@ -33,7 +33,7 @@ class Product extends Model
         'new_arrival',
         'files',
         'sub_products',
-
+        'category_id',
     ];
 
     protected $appends = [
@@ -43,7 +43,7 @@ class Product extends Model
         'name',
         'description',
         'category',
-        'category_id',
+        // 'category_id',
         'active_offer',
         'price_after_offer',
         'availability',
@@ -148,7 +148,7 @@ class Product extends Model
                 } else {
                     $this->attributes['files'] = null;
                 }
-            } 
+            }
             // else {
             //     $this->attributes['files'] = null;
             // }
@@ -196,6 +196,12 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasManyThrough(OrderItem::class, Variant::class, 'product_id', 'variant_id', 'id', 'id');
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+        
     }
 
     // public function getImageAttribute()
@@ -282,7 +288,6 @@ class Product extends Model
         return implode(', ', $categoryNames);
     }
 
-
     public function getTagsAttribute()
     {
         $arr = [];
@@ -320,19 +325,19 @@ class Product extends Model
         return null;
     }
 
-    public function getCategoryIdAttribute()
-    {
-        if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) {
-            return null;
-        }
+    // public function getCategoryIdAttribute()
+    // {
+    //     if (!Auth::check() || (Auth::check() && Auth::user()->type != 1)) {
+    //         return null;
+    //     }
 
-        $tag = $this->tag()->with('category')->first();
-        if ($tag) {
-            return $tag->category;
-        }
+    //     $tag = $this->tag()->with('category')->first();
+    //     if ($tag) {
+    //         return $tag->category;
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     //    public function getCategoryIdAttribute()
     //    {
