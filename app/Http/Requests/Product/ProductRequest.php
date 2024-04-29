@@ -73,6 +73,7 @@ class ProductRequest extends FormRequest
             'limited_edition' => 'nullable|numeric',
             'best_selling' => 'nullable|numeric',
             'price_after_discount' => 'required|numeric|min:0',
+            'images' => 'nullable',
             'files' => 'nullable',
             'variants' => 'required|array',
             'variants.*.color_id' => 'nullable|array',

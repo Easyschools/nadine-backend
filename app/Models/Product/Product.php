@@ -74,6 +74,46 @@ class Product extends Model
     //     //     // }
     //     // } 
     // }
+
+    // start files
+    // public function setFilesAttribute($value)
+    // {
+        
+    //     // Check if the provided value is an instance of FileBag
+    //     if ($value instanceof \Symfony\Component\HttpFoundation\FileBag) {
+    //         dd($value);
+    //         // Get the array of UploadedFile objects from the FileBag
+    //         $files = $value->get('files');
+    
+    //         // Check if files exist and if the array is not empty
+    //         if ($files && count($files) > 0) {
+    //             // Initialize an empty array to store file paths
+    //             // $filePaths = [];
+    
+    //             // Iterate over each uploaded file
+    //             foreach ($files as $file) {
+    //                 // Generate a unique file name
+    //                 $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+    
+    //                 // Move the uploaded file to the desired directory
+    //                 $file->move('uploads/Product', $fileName);
+    
+    //                 // Store the file path
+    //                 $filePaths = 'uploads/Product/' . $fileName;
+    //             }
+    
+    //             // Serialize the array of file paths into a JSON string
+    //             // $serializedFiles = json_encode($filePaths);
+    
+    //             // Assign the serialized JSON string to the 'files' attribute
+    //             $this->attributes['files'] = $filePaths;
+    //         } else {
+    //             $this->attributes['files'] = null;
+    //         }
+    //     } else {
+    //         $this->attributes['files'] = null;
+    //     }
+    // }
     public function setFilesAttribute($value)
     {
         // Check if the provided value is an instance of FileBag
@@ -84,7 +124,7 @@ class Product extends Model
             // Check if files exist and if the array is not empty
             if ($files && count($files) > 0) {
                 // Initialize an empty array to store file paths
-                // $filePaths = [];
+                $filePaths = [];
     
                 // Iterate over each uploaded file
                 foreach ($files as $file) {
@@ -94,15 +134,15 @@ class Product extends Model
                     // Move the uploaded file to the desired directory
                     $file->move('uploads/Product', $fileName);
     
-                    // Store the file path
-                    $filePaths = 'uploads/Product/' . $fileName;
+                    // Store the file path directly into the array
+                    $filePaths[] = 'uploads/Product/' . $fileName;
                 }
     
-                // Serialize the array of file paths into a JSON string
-                // $serializedFiles = json_encode($filePaths);
+                // Concatenate file paths into a single string
+                $concatenatedFiles = implode(',', $filePaths);
     
-                // Assign the serialized JSON string to the 'files' attribute
-                $this->attributes['files'] = $filePaths;
+                // Assign the concatenated string to the 'files' attribute
+                $this->attributes['files'] = $concatenatedFiles;
             } else {
                 $this->attributes['files'] = null;
             }
@@ -111,6 +151,7 @@ class Product extends Model
         }
     }
     
+
     
 
     public function getNameAttribute()

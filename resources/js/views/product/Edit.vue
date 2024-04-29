@@ -498,7 +498,7 @@
 </template>
 
 <script>
-import alertsMixin from "../../mixins/alertsMixin";
+// import alertsMixin from "../../mixins/alertsMixin";
 
 import vSelect from "vue-select";
 
@@ -777,15 +777,17 @@ export default {
           this.item = response.data.data;
           this.item.tag_id = response.data.data.tag_id;
           this.item.category_id = response.data.data.tag.category_id;
-          this.item.images = response.data.item.images; // Populate item.images with old images data
+          this.item.images = response.data.data.images; // Populate item.images with old images data
 
           // console.log(this.item.category_id);
-          console.log("getIrem", this.item.category_id);
+          // console.log("getIrem", response.data);
           this.getTags(response.data.data.tag.category_id);
 
           this.item.product_details = this.item.product_detail.details;
           // Map category IDs to category objects
+          // console.log('this.item.category' .this.item.category_id);
           if (this.item.category && Array.isArray(this.item.category)) {
+          // console.log('this.item.category' .this.item.category);
             this.item.category.forEach((categoryId, index) => {
               // Assuming you have access to categories data
               const category = this.categories.find((cat) => cat.id === categoryId);
@@ -800,7 +802,7 @@ export default {
           // Call getTags() here
         })
         .catch((err) => {
-          this.errorMessages(err.response.data);
+          // this.errorMessages(err.response.data);
           console.log(err);
         });
     },
