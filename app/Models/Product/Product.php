@@ -78,33 +78,33 @@ class Product extends Model
     // start files
     // public function setFilesAttribute($value)
     // {
-        
+
     //     // Check if the provided value is an instance of FileBag
     //     if ($value instanceof \Symfony\Component\HttpFoundation\FileBag) {
     //         dd($value);
     //         // Get the array of UploadedFile objects from the FileBag
     //         $files = $value->get('files');
-    
+
     //         // Check if files exist and if the array is not empty
     //         if ($files && count($files) > 0) {
     //             // Initialize an empty array to store file paths
     //             // $filePaths = [];
-    
+
     //             // Iterate over each uploaded file
     //             foreach ($files as $file) {
     //                 // Generate a unique file name
     //                 $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-    
+
     //                 // Move the uploaded file to the desired directory
     //                 $file->move('uploads/Product', $fileName);
-    
+
     //                 // Store the file path
     //                 $filePaths = 'uploads/Product/' . $fileName;
     //             }
-    
+
     //             // Serialize the array of file paths into a JSON string
     //             // $serializedFiles = json_encode($filePaths);
-    
+
     //             // Assign the serialized JSON string to the 'files' attribute
     //             $this->attributes['files'] = $filePaths;
     //         } else {
@@ -116,43 +116,47 @@ class Product extends Model
     // }
     public function setFilesAttribute($value)
     {
-        // Check if the provided value is an instance of FileBag
-        if ($value instanceof \Symfony\Component\HttpFoundation\FileBag) {
-            // Get the array of UploadedFile objects from the FileBag
-            $files = $value->get('files');
-    
-            // Check if files exist and if the array is not empty
-            if ($files && count($files) > 0) {
-                // Initialize an empty array to store file paths
-                $filePaths = [];
-    
-                // Iterate over each uploaded file
-                foreach ($files as $file) {
-                    // Generate a unique file name
-                    $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-    
-                    // Move the uploaded file to the desired directory
-                    $file->move('uploads/Product', $fileName);
-    
-                    // Store the file path directly into the array
-                    $filePaths[] = 'uploads/Product/' . $fileName;
+        // dd($value);
+        if ($value) {
+            // Check if the provided value is an instance of FileBag
+            if ($value instanceof \Symfony\Component\HttpFoundation\FileBag) {
+                // Get the array of UploadedFile objects from the FileBag
+                $files = $value->get('files');
+
+                // Check if files exist and if the array is not empty
+                if ($files && count($files) > 0) {
+                    // Initialize an empty array to store file paths
+                    $filePaths = [];
+
+                    // Iterate over each uploaded file
+                    foreach ($files as $file) {
+                        // Generate a unique file name
+                        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+                        // Move the uploaded file to the desired directory
+                        $file->move('uploads/Product', $fileName);
+
+                        // Store the file path directly into the array
+                        $filePaths[] = 'uploads/Product/' . $fileName;
+                    }
+
+                    // Concatenate file paths into a single string
+                    $concatenatedFiles = implode(',', $filePaths);
+
+                    // Assign the concatenated string to the 'files' attribute
+                    $this->attributes['files'] = $concatenatedFiles;
+                } else {
+                    $this->attributes['files'] = null;
                 }
-    
-                // Concatenate file paths into a single string
-                $concatenatedFiles = implode(',', $filePaths);
-    
-                // Assign the concatenated string to the 'files' attribute
-                $this->attributes['files'] = $concatenatedFiles;
-            } else {
-                $this->attributes['files'] = null;
-            }
-        } else {
-            $this->attributes['files'] = null;
+            } 
+            // else {
+            //     $this->attributes['files'] = null;
+            // }
         }
     }
-    
 
-    
+
+
 
     public function getNameAttribute()
     {
@@ -213,22 +217,22 @@ class Product extends Model
     //         if ($this->variants()->whereHas('images')->exists()) {
     //             // Retrieve the first variant with images
     //             $variantWithImages = $this->variants()->whereHas('images')->first();
-    
+
     //             // Check if the variant with images is not null
     //             if ($variantWithImages) {
     //                 // Retrieve the first image of the variant
     //                 $firstImage = $variantWithImages->images()->whereNotNull('image')->first();
-    
+
     //                 // Return the image path if found, otherwise an empty string
     //                 return $firstImage ? $firstImage->image : "";
     //             }
     //         }
     //     }
-    
+
     //     // Return an empty string if no variants or no images found
     //     return "";
     // }
-    
+
     public function getCurrencyAttribute()
     {
         return 'pound';
@@ -263,7 +267,7 @@ class Product extends Model
     //     dd($this->category );
     //     return $this->category ? $this->category->name : '';
     // }
-    
+
     public function getTypeAttribute()
     {
         $categoryNames = [];
@@ -277,8 +281,8 @@ class Product extends Model
         }
         return implode(', ', $categoryNames);
     }
-    
-    
+
+
     public function getTagsAttribute()
     {
         $arr = [];

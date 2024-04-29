@@ -450,6 +450,11 @@ class ProductApiService extends AppRepository
     {
         // dd(isFile($request->imagges[0])?'yes':'no');
         $product = $this->find($request->id);
+        if ($request->hasFile('files')) {
+            $files= $request->files;
+        } else {
+            $files = $product->files;
+        }
         // $product->update($request->only([
         //     'name_ar',
         //     'name_en',
@@ -491,7 +496,7 @@ class ProductApiService extends AppRepository
             ]),
             [
                 'sub_products' => $request->sub_products,
-                'files' => $request->files ?? null
+                'files' => $files
             ]
         ));
 
