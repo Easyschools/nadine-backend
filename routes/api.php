@@ -304,6 +304,7 @@ Route::group([
         'namespace' => 'Product',
     ], function () {
         Route::get('all', [ProductApiController::class, 'all']);
+        Route::get('make-look', [ProductApiController::class, 'makeLook']);
         Route::get('offers', [ProductApiController::class, 'offers']);
         Route::get('get', [ProductApiController::class, 'read']);
         Route::get('get-variants', [ProductApiController::class, 'getVariants']);

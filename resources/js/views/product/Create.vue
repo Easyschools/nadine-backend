@@ -633,6 +633,8 @@ export default {
   },
   computed: {
     formattedOptions() {
+      console.log('formattedOptions',this.products);
+
       return this.products.map((product) => ({
         id: product.id,
         name: `${product.name} - ${product.sku}`, // Concatenate name and SKU
@@ -728,10 +730,10 @@ export default {
 
     getProduct() {
       axios
-        .get("product/all")
+        .get("product/make-look")
         .then((response) => {
-          console.log("product", response.data.data.data);
-          this.products = response.data.data.data;
+          console.log("product", response.data.data);
+          this.products = response.data.data;
         })
         .catch((err) => console.log(err));
     },

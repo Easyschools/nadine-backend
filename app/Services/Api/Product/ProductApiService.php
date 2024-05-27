@@ -34,6 +34,53 @@ class ProductApiService extends AppRepository
      * @return mixed
      */
 
+     public function makeLook($request)
+     {
+         $this->filter($request);
+ 
+         $this->setSortOrder($request->sort_order ?? 'desc');
+         $this->setSortBy($request->sort_by ?? 'sku');
+         $this->setRelations([
+             'images',
+             'material',
+             'variants' => function ($variant) {
+                 $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
+                     'Color:id,name_en,name_ar,code,image',
+                     'Dimension:id,dimension',
+                     'images:id,variant_id,image'
+                 );
+             },
+             'tag:id,name_en,name_ar',
+         ]);
+ 
+         $this->setAppends([
+             'currency',
+             'type',
+             'tags',
+             'name',
+             'description',
+             // 'category_id',
+             'category',
+         ]);
+ 
+         $productQuery = $this->filterWithAttributes($request);
+ 
+        //  $products = $productQuery->paginate(16)->appends($this->appendsColumns);
+        $products = $productQuery->get();
+        // $products->appends($this->appendsColumns);
+        
+        //  $custom = collect([
+        //      'min_price' => Product::min('price_after_discount'),
+        //      'max_price' => Product::max('price_after_discount'),
+        //  ]);
+ 
+         return $products;
+     }
+    /**
+     * @param $request
+     * @return mixed
+     */
+
     public function index($request)
     {
         $this->filter($request);

@@ -47,9 +47,20 @@ class ProductApiController extends Controller
         if ($request->sendResponse) {
             return $this->sendResponse($process);
         }
+
         return $this->sendResponse($process);
     }
 
+    public function makeLook(ProductRequest $request)
+    {
+         $process = $this->productApiService->makeLook($request);
+        // if ($request->sendResponse) {
+        //     return $this->sendResponse($process->toArray());
+        // }
+
+        return $this->sendResponse($process->toArray());
+    }
+    
     public function allWeb(ProductRequest $request)
     {
         $process = $this->productApiService->indexWeb($request);

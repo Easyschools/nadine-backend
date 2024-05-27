@@ -36,10 +36,11 @@ class ProductRequest extends FormRequest
             case 'delete':
             case 'get':
                 return $this->idValidation();
-                case 'get-variants':
-                    return $this->getVariantsValidation();
-                
+            case 'get-variants':
+                return $this->getVariantsValidation();
+
             case 'all':
+            case 'make-look':
                 return $this->allValidation();
             case 'search':
                 return $this->searchValidation();
@@ -139,7 +140,7 @@ class ProductRequest extends FormRequest
             'is_banned' => 'in:0,1',
         ];
     }
-    
+
     private function getVariantsValidation()
     {
         return [
@@ -148,7 +149,6 @@ class ProductRequest extends FormRequest
             'is_paginate' => 'in:0,1',
             'is_banned' => 'in:0,1',
         ];
-    
     }
 
     private function searchValidation()

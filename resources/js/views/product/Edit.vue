@@ -697,10 +697,10 @@ export default {
     },
     getProduct() {
       axios
-        .get("product/all")
+        .get("product/make-look")
         .then((response) => {
-          console.log("product", response.data.data.data);
-          this.products = response.data.data.data;
+          console.log("product", response.data.data);
+          this.products = response.data.data;
         })
         .catch((err) => console.log(err));
     },
