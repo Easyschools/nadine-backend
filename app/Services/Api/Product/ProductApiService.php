@@ -305,7 +305,7 @@ class ProductApiService extends AppRepository
                 if (!isset($materials[$materialId])) { // Check if material ID already exists in array
                     $materialDetails = [
                         'id' => $materialId,
-                        'name' => $variant->material->name_ . app()->getLocale(),
+                        'name' => $variant->material->name,
                     ];
                     $materials[$materialId] = $materialDetails; // Use material ID as key in array
                 }
