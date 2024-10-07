@@ -391,7 +391,8 @@ class Product extends Model
             })
             ->with('productImages')
             ->get();
-        return $subProducts->pluck('image')->toArray();
+        $images = $subProducts->pluck('image')->toArray();
+        return count($images) ? $images : [];
     }
     
 }
