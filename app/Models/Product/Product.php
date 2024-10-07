@@ -379,6 +379,6 @@ class Product extends Model
     }
     public function productImages()
     {
-        return $this->belongsTo(ProductImage::class);
+        return $this->hasMany(ProductImage::class);
     }
 }
