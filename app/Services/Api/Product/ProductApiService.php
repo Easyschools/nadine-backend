@@ -315,7 +315,8 @@ class ProductApiService extends AppRepository
 
         $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
 
-        return $product->load('subProductImages');
+        $product['sub_product'] = $product->subProductImages();
+        return $product;
     }
 
     /**
