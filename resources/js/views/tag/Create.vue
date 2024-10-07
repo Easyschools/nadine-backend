@@ -76,12 +76,12 @@
 
             <!-- <div class="row form-group"> -->
 
-            <!-- <div class="col-sm-3">
+            <div class="col-sm-3">
                                 <label class="col-form-label ">{{translations.general.image}}</label>
                             </div>
                             <div class="col-sm-9">
                                 <input type="file" ref="myImage" v-on:change="attachImage" class="form-control">
-                            </div> -->
+                            </div>
             <!--<div class="col-sm-9">-->
             <!--<b-form-tags input-id="tags-basic" v-model="item.text" class="mb-2"></b-form-tags>-->
             <!--</div>-->

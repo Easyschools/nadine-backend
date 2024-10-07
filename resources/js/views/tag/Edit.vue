@@ -77,7 +77,7 @@
               </div>
             </div>
 
-            <!-- <div class="row form-group" v-if="item.image">
+            <div class="row form-group" v-if="item.image">
               <img
                 :src="item.image"
                 ref="imageDisplay"
@@ -97,7 +97,7 @@
                   class="form-control"
                 />
               </div>
-            </div> -->
+            </div>
             <div class="text-center mt-5">
               <router-link to="/admin/tag" class="btn btn-secondary"
                 >{{translations.general.cancel}}</router-link
