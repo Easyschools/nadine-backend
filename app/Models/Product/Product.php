@@ -384,7 +384,7 @@ class Product extends Model
     }
     public function subProductImages()
     {
-        dd(json_encode($this->sub_products));
+        dd(json_encode($this->id));
         // Check for images related to the sub_products (an array of product IDs)
         $subProducts = Product::whereIn('id', array_column($this->sub_products??[], 'id'))
             ->whereHas('productImages', function ($q) {
