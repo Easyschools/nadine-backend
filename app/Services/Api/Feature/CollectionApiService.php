@@ -53,23 +53,36 @@ class CollectionApiService extends AppRepository
     }
 
     // Return all results without pagination
-    return $this->setRelations([
-        'products' => function ($productQuery) use ($request) {
-            // Eager load relations for products with their variants and images
+    $this->setRelations([
+        // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+        //     $productQuery->with([
+        //         'variants' => function ($variant) {
+        //             $variant->with([
+        //                 // 'color',
+        //                 // 'dimension',
+        //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
+        //             ]);
+        //         }
+        //     ]);
+        'products' => function ($productQuery) use ($request, $categoryTagsIds) {
             $productQuery->with([
                 'images',
                 'variants' => function ($variant) {
                     $variant->with([
-                        'color',
-                        'dimension',
-                        'material',
-                        'ColorVariant',
-                        'DimensionVariant',
+                        // 'color',
+                        // 'dimension',
+                        'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
                     ]);
                 }
             ]);
+
+
+            $productQuery->orderBy($this->sortKey, 'desc');
         }
-    ])->get();
+    ])
+    ->get();
 }
 
 
