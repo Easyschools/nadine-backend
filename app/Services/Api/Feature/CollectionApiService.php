@@ -51,7 +51,6 @@ class CollectionApiService extends AppRepository
             }
         ])->paginate();
     }
-    $categoryTagsIds = [];
 
     // Return all results without pagination
     $this->setRelations([
@@ -71,8 +70,8 @@ class CollectionApiService extends AppRepository
 
             $productQuery->orderBy($this->sortKey, 'desc');
         }
-    ])
-    ->get();
+    ]);
+    return $this->all();
 }
 
 
