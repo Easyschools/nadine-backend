@@ -385,7 +385,7 @@ class Product extends Model
     public function subProductImages()
     {
         // Check for images related to the sub_products (an array of product IDs)
-        $subProducts = Product::whereIn('id', array_column($this->sub_products, 'id'))
+        $subProducts = Product::whereIn('id', array_column($this->sub_products??[], 'id'))
             ->whereHas('productImages', function ($q) {
                 $q->whereNotNull('image');
             })  
