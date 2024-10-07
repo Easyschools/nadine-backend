@@ -72,8 +72,10 @@ class CollectionApiService extends AppRepository
                 $productQuery->with([
                     'variants' => function ($variant) {
                         $variant->with([
-                            'color',
-                            'dimension',
+                            // 'color',
+                            // 'dimension',
+                            'color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant',
+
                         ]);
                     }
                 ]);
