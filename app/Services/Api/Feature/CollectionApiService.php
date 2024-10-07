@@ -51,21 +51,11 @@ class CollectionApiService extends AppRepository
             }
         ])->paginate();
     }
+    $categoryTagsIds = [];
 
     // Return all results without pagination
     $this->setRelations([
-        // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-        //     $productQuery->with([
-        //         'variants' => function ($variant) {
-        //             $variant->with([
-        //                 // 'color',
-        //                 // 'dimension',
-        //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
-
-        //             ]);
-        //         }
-        //     ]);
-        'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+        'products' => function ($productQuery)  {
             $productQuery->with([
                 'images',
                 'variants' => function ($variant) {
