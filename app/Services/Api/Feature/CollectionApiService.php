@@ -21,49 +21,57 @@ class CollectionApiService extends AppRepository
      * @param $request
      * @return mixed
      */
+    // public function index($request)
+    // {
+
+    //     if ($request->is_paginate == 1) {
+    //         return $this->paginate();
+    //     }
+    //     return $this->all();
+    // }
     public function index($request)
-    {
-
-        if ($request->is_paginate == 1) {
-            return $this->setRelations([
-                // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                //     $productQuery->with([
-                //         'variants' => function ($variant) {
-                //             $variant->with([
-                //                 // 'color',
-                //                 // 'dimension',
-                //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
-
-                //             ]);
-                //         }
-                //     ]);
-                'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                    $productQuery->with([
-                        'images',
-                        'variants' => function ($variant) {
-                            $variant->with([
-                                // 'color',
-                                // 'dimension',
-                                'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
-
-                            ]);
-                        }
-                    ]);
-            ])->paginate();
-        }
+{
+    // Check if pagination is required
+    if ($request->is_paginate == 1) {
         return $this->setRelations([
-            'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+            'products' => function ($productQuery) use ($request) {
+                // Eager load relations for products with their variants and images
                 $productQuery->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
-                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+                            'color',
+                            'dimension',
+                            'material',
+                            'ColorVariant',
+                            'DimensionVariant',
                         ]);
                     }
                 ]);
             }
-        ])->all();
+        ])->paginate();
     }
+
+    // Return all results without pagination
+    return $this->setRelations([
+        'products' => function ($productQuery) use ($request) {
+            // Eager load relations for products with their variants and images
+            $productQuery->with([
+                'images',
+                'variants' => function ($variant) {
+                    $variant->with([
+                        'color',
+                        'dimension',
+                        'material',
+                        'ColorVariant',
+                        'DimensionVariant',
+                    ]);
+                }
+            ]);
+        }
+    ])->get();
+}
+
 
     /**
      * @param $request
