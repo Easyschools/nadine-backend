@@ -385,9 +385,8 @@ class Product extends Model
     public function subProductImages()
     {
         // Check for images related to the sub_products (an array of product IDs)
-        return  $subProducts = Product::whereIn('id', [$this->sub_products])
-           
-            ->get();
+        return Product::whereIn('id', $this->sub_products ?? [])->get();
+
         // $images = $subProducts ? $subProducts->pluck('image')->toArray() : [];
         // return count($images) ? $images : [];
     }
