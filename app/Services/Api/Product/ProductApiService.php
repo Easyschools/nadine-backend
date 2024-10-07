@@ -285,7 +285,7 @@ class ProductApiService extends AppRepository
                 $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant',
             ]);
             },
-            'tag', 'collection','subProductImages'
+            'tag', 'collection'
         ]);
         if ($request->slug) {
             $product = $this->findByColumn('slug', $request->slug);
