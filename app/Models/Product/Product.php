@@ -392,12 +392,17 @@ class Product extends Model
             ->with('productImages')
             ->get();
         // $images = $subProducts ? $subProducts->pluck('image')->toArray() : [];
-        $images = [];
+        $records = [];
         foreach ($subProducts as $subProduct) {
+            $records = [
+                'id' => $subProduct->id,
+                'images' => $subProduct->productImages->pluck('image')->toArray(),
+                'name' => $subProduct->name
+            ];
             
-            $images = array_merge($images, $subProduct->productImages->pluck('image')->toArray());
+            // $records['images'] = $subProduct->productImages->pluck('image')->toArray();
         }
-        return count($images) ? $images : [];
+        return count($records) ? $records : [];
     }
     
 }
