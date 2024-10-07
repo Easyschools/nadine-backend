@@ -53,6 +53,15 @@ class Product extends Model
         'sub_products' => 'array',
     ];
 
+/*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * If the files attribute has a value, return the URL of the file,
+     * otherwise return the value as is.
+     *
+     * @param  string  $value
+     * @return string
+     */
+/******  2e778a75-c330-4cc7-bc77-b53f7d773985  *******/
     public function getFilesAttribute($value)
     {
         return ($value) ? url($value) : $value;
@@ -381,4 +390,8 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class);
     }
+    public function subProductImages()
+{
+    return $this->hasMany(ProductImage::class, 'sub_product_id');
+}
 }
