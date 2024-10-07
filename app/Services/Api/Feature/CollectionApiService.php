@@ -25,9 +25,44 @@ class CollectionApiService extends AppRepository
     {
 
         if ($request->is_paginate == 1) {
-            return $this->paginate();
+            return $this->setRelations([
+                // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+                //     $productQuery->with([
+                //         'variants' => function ($variant) {
+                //             $variant->with([
+                //                 // 'color',
+                //                 // 'dimension',
+                //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
+                //             ]);
+                //         }
+                //     ]);
+                'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+                    $productQuery->with([
+                        'images',
+                        'variants' => function ($variant) {
+                            $variant->with([
+                                // 'color',
+                                // 'dimension',
+                                'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
+                            ]);
+                        }
+                    ]);
+            ])->paginate();
         }
-        return $this->all();
+        return $this->setRelations([
+            'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+                $productQuery->with([
+                    'images',
+                    'variants' => function ($variant) {
+                        $variant->with([
+                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+                        ]);
+                    }
+                ]);
+            }
+        ])->all();
     }
 
     /**
