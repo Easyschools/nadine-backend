@@ -282,7 +282,8 @@ class ProductApiService extends AppRepository
             'images',
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant']);
+                $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant',
+            ]);
             },
             'tag', 'collection'
         ]);
@@ -325,6 +326,7 @@ class ProductApiService extends AppRepository
     {
 
         $this->setRelations([
+            'images',
             'variants' => function ($variant) {
                 $variant->with(['color', 'dimension', 'images', 'material']);
             },
@@ -454,29 +456,29 @@ class ProductApiService extends AppRepository
                 }
             }
 
-            // if (count($variant['images'])) {
-            //     foreach ($variant['images'] as $img) {
+            if (count($variant['images'])) {
+                foreach ($variant['images'] as $img) {
 
-            //         $file = explode(";base64,", $img);
-            //         $file1 = explode('/', $file[0]);
-            //         $file_exe = end($file1);
-            //         $file_name = uniqid() . date('-Ymd-his.') . $file_exe;
-            //         $image_data = str_replace('.', '', $file[1]);
+                    $file = explode(";base64,", $img);
+                    $file1 = explode('/', $file[0]);
+                    $file_exe = end($file1);
+                    $file_name = uniqid() . date('-Ymd-his.') . $file_exe;
+                    $image_data = str_replace('.', '', $file[1]);
 
-            //         Storage::put('uploads/Variant/' . $file_name, base64_decode($image_data));
+                    Storage::put('uploads/Variant/' . $file_name, base64_decode($image_data));
 
 
-            //         // $image_data = $request->input('image_data');
-            //         // $image = base64_decode($img);
-            //         // $image_name = uniqid('image_') ;
-            //         // $image_path = storage_path('app/public/uploads/Variant/' . $image);
-            //         // file_put_contents($image_path, $image);
-            //         // dd($file_name);
-            //         $variantModel->images()->firstOrcreate([
-            //             'image' => 'uploads/Variant/' . $file_name,
-            //         ]);
-            //     }
-            // }
+                    // $image_data = $request->input('image_data');
+                    // $image = base64_decode($img);
+                    // $image_name = uniqid('image_') ;
+                    // $image_path = storage_path('app/public/uploads/Variant/' . $image);
+                    // file_put_contents($image_path, $image);
+                    // dd($file_name);
+                    $variantModel->images()->firstOrcreate([
+                        'image' => 'uploads/Variant/' . $file_name,
+                    ]);
+                }
+            }
         }
 
         return $product;
