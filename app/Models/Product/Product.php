@@ -384,7 +384,6 @@ class Product extends Model
     }
     public function subProductImages()
     {
-        dd( $this->sub_products,array_column($this->sub_products??[], 'id'));
         // Check for images related to the sub_products (an array of product IDs)
         $subProducts = Product::whereIn('id', array_column($this->sub_products??[], 'id'))
             ->whereHas('productImages', function ($q) {
@@ -392,7 +391,12 @@ class Product extends Model
             })  
             ->with('productImages')
             ->get();
-        $images = $subProducts ? $subProducts->pluck('image')->toArray() : [];
+        // $images = $subProducts ? $subProducts->pluck('image')->toArray() : [];
+        $images = [];
+        foreach ($subProducts as $subProduct) {
+            
+            $images = array_merge($images, $subProduct->productImages->pluck('image')->toArray());
+        }
         return count($images) ? $images : [];
     }
     
