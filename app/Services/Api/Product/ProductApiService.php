@@ -553,8 +553,8 @@ class ProductApiService extends AppRepository
         // Update product images
         if (isset($request->images)) {
             // Step 1: Delete all existing product images for the product ID
-            ProductImage::where('product_id', $request->id)->delete();
-
+          $productImage=  ProductImage::where('product_id', $request->id)->delete();
+// dd($request->images,$productImage);
             // Step 2: Insert new images into the database
             foreach ($request->images as $image) {
                 if ($image instanceof \Illuminate\Http\UploadedFile) {
@@ -794,7 +794,7 @@ class ProductApiService extends AppRepository
     public function getNewArrival($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
-            ->with([
+            ->with(['productImages',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',

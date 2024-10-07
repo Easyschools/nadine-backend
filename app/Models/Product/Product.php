@@ -349,6 +349,7 @@ class Product extends Model
     //        return null;
     //    }
 
+
     public function getActiveOfferAttribute()
     {
         $tag_id = $this->tag_id;
@@ -375,5 +376,9 @@ class Product extends Model
             'value' => $this->price,
             // 'currency' => $this->currency->code,
         ];
+    }
+    public function productImages()
+    {
+        return $this->belongsTo(ProductImage::class);
     }
 }
