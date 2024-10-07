@@ -33,23 +33,23 @@ class CollectionApiService extends AppRepository
 {
     // Check if pagination is required
     if ($request->is_paginate == 1) {
-        return $this->setRelations([
-            'products' => function ($productQuery) use ($request) {
-                // Eager load relations for products with their variants and images
+        $this->setRelations([
+            'products' => function ($productQuery)  {
                 $productQuery->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
-                            'color',
-                            'dimension',
-                            'material',
-                            'ColorVariant',
-                            'DimensionVariant',
+                            // 'color',
+                            // 'dimension',
+                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+    
                         ]);
                     }
                 ]);
+    
             }
-        ])->paginate();
+        ]);
+        return $this->paginate();
     }
 
     // Return all results without pagination
