@@ -67,8 +67,6 @@ class CollectionApiService extends AppRepository
                 }
             ]);
 
-
-            $productQuery->orderBy($this->sortKey, 'desc');
         }
     ]);
     return $this->all();
