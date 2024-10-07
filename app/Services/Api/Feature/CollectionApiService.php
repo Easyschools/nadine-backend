@@ -68,13 +68,25 @@ class CollectionApiService extends AppRepository
         $productQuery = $this->paginateQuery();
 
         $this->setRelations([
+            // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+            //     $productQuery->with([
+            //         'variants' => function ($variant) {
+            //             $variant->with([
+            //                 // 'color',
+            //                 // 'dimension',
+            //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
+            //             ]);
+            //         }
+            //     ]);
             'products' => function ($productQuery) use ($request, $categoryTagsIds) {
                 $productQuery->with([
+                    'images',
                     'variants' => function ($variant) {
                         $variant->with([
                             // 'color',
                             // 'dimension',
-                            'color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant',
+                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
 
                         ]);
                     }
