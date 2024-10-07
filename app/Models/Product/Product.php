@@ -394,9 +394,9 @@ class Product extends Model
         // $images = $subProducts ? $subProducts->pluck('image')->toArray() : [];
         $records = [];
         foreach ($subProducts as $subProduct) {
-            $records = [
+            $records[] = [
                 'id' => $subProduct->id,
-                'images' => $subProduct->productImages->pluck('image')->toArray(),
+                'images' => $subProduct->productImages->toArray(),
                 'name' => $subProduct->name
             ];
             
