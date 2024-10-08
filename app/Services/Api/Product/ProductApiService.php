@@ -273,27 +273,27 @@ class ProductApiService extends AppRepository
             $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
         }
 
-        if ($request->category) {
-            if ($request->category == 'discounts') {
+        // if ($request->category) {
+        //     if ($request->category == 'discounts') {
 
-                $productQuery = $productQuery->WhereHas('offer')->orWhere('price_after_discount', '!=', 0);
-            } else {
+        //         $productQuery = $productQuery->WhereHas('offer')->orWhere('price_after_discount', '!=', 0);
+        //     } else {
 
-                $category = explode(',', $request->category);
-                $category = $this->replaceDashWithSpace($category);
-                $tags_ids = [];
+        //         $category = explode(',', $request->category);
+        //         $category = $this->replaceDashWithSpace($category);
+        //         $tags_ids = [];
 
-                foreach ($category as $cat) {
-                    $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
-                        $q->where('name_en', 'like', '%' . $cat . '%')
-                            ->orWhere('name_ar', 'like', '%' . $cat . '%');
-                    })->pluck('id')->toArray());
-                }
-                $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
-                    $q->whereIn('id', $tags_ids);
-                });
-            }
-        }
+        //         foreach ($category as $cat) {
+        //             $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
+        //                 $q->where('name_en', 'like', '%' . $cat . '%')
+        //                     ->orWhere('name_ar', 'like', '%' . $cat . '%');
+        //             })->pluck('id')->toArray());
+        //         }
+        //         $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
+        //             $q->whereIn('id', $tags_ids);
+        //         });
+        //     }
+        // }
         //        dd($productQuery->toSql());
         return $productQuery;
     }
