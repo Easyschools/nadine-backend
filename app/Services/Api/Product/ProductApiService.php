@@ -123,6 +123,48 @@ class ProductApiService extends AppRepository
         return $custom->merge($products);
     }
 
+    public function highEnd($request)
+    {
+        $this->filter($request);
+
+        $this->setSortOrder($request->sort_order ?? 'desc');
+        $this->setSortBy($request->sort_by ?? 'sku');
+        $this->setRelations([
+            'images',
+            'material',
+            'variants' => function ($variant) {
+                $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
+                    'Color:id,name_en,name_ar,code,image',
+                    'Dimension:id,dimension',
+                    'images:id,variant_id,image'
+                );
+            },
+            'tag:id,name_en,name_ar',
+        ]);
+
+        $this->setAppends([
+            'currency',
+            'type',
+            'tags',
+            'name',
+            'description',
+            // 'category_id',
+            'category',
+        ]);
+
+        $productQuery = $this->filterWithAttributes($request);
+        $productQuery->where('sku', 'like', '%h%');
+
+        $products = $productQuery->paginate(16)->appends($this->appendsColumns);
+
+        $custom = collect([
+            'min_price' => Product::min('price_after_discount'),
+            'max_price' => Product::max('price_after_discount'),
+        ]);
+
+        return $custom->merge($products);
+    }
+
     public function indexWeb($request)
     {
         $this->filter($request);

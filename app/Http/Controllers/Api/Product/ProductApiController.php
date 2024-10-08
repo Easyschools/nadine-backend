@@ -51,6 +51,16 @@ class ProductApiController extends Controller
         return $this->sendResponse($process);
     }
 
+    public function highEnd(ProductRequest $request)
+    {
+        $process = $this->productApiService->highEnd($request);
+        if ($request->sendResponse) {
+            return $this->sendResponse($process);
+        }
+
+        return $this->sendResponse($process);
+    }
+
     public function makeLook(ProductRequest $request)
     {
          $process = $this->productApiService->makeLook($request);
