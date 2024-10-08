@@ -34,48 +34,48 @@ class ProductApiService extends AppRepository
      * @return mixed
      */
 
-     public function makeLook($request)
-     {
-         $this->filter($request);
- 
-         $this->setSortOrder($request->sort_order ?? 'desc');
-         $this->setSortBy($request->sort_by ?? 'sku');
-         $this->setRelations([
-             'images',
-             'material',
-             'variants' => function ($variant) {
-                 $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
-                     'Color:id,name_en,name_ar,code,image',
-                     'Dimension:id,dimension',
-                     'images:id,variant_id,image'
-                 );
-             },
-             'tag:id,name_en,name_ar',
-         ]);
- 
-         $this->setAppends([
-             'currency',
-             'type',
-             'tags',
-             'name',
-             'description',
-             // 'category_id',
-             'category',
-         ]);
- 
-         $productQuery = $this->filterWithAttributes($request);
- 
+    public function makeLook($request)
+    {
+        $this->filter($request);
+
+        $this->setSortOrder($request->sort_order ?? 'desc');
+        $this->setSortBy($request->sort_by ?? 'sku');
+        $this->setRelations([
+            'images',
+            'material',
+            'variants' => function ($variant) {
+                $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
+                    'Color:id,name_en,name_ar,code,image',
+                    'Dimension:id,dimension',
+                    'images:id,variant_id,image'
+                );
+            },
+            'tag:id,name_en,name_ar',
+        ]);
+
+        $this->setAppends([
+            'currency',
+            'type',
+            'tags',
+            'name',
+            'description',
+            // 'category_id',
+            'category',
+        ]);
+
+        $productQuery = $this->filterWithAttributes($request);
+
         //  $products = $productQuery->paginate(16)->appends($this->appendsColumns);
         $products = $productQuery->get();
         // $products->appends($this->appendsColumns);
-        
+
         //  $custom = collect([
         //      'min_price' => Product::min('price_after_discount'),
         //      'max_price' => Product::max('price_after_discount'),
         //  ]);
- 
-         return $products;
-     }
+
+        return $products;
+    }
     /**
      * @param $request
      * @return mixed
@@ -327,16 +327,23 @@ class ProductApiService extends AppRepository
     public function get($request)
     {
         $this->setSortOrder($request->sort_order ?? 'desc');
-        
+
         // Pixel::viewContent();
         $this->setRelations([
             'images',
 
             'variants' => function ($variant) {
-                $variant->with(['color', 'dimension', 'images', 'material', 'ColorVariant', 'DimensionVariant',
-            ]);
+                $variant->with([
+                    'color',
+                    'dimension',
+                    'images',
+                    'material',
+                    'ColorVariant',
+                    'DimensionVariant',
+                ]);
             },
-            'tag', 'collection'
+            'tag',
+            'collection'
         ]);
         if ($request->slug) {
             $product = $this->findByColumn('slug', $request->slug);
@@ -553,7 +560,7 @@ class ProductApiService extends AppRepository
         // dd(isFile($request->imagges[0])?'yes':'no');
         $product = $this->find($request->id);
         if ($request->hasFile('files')) {
-            $files= $request->files;
+            $files = $request->files;
         } else {
             $files = $product->files;
         }
@@ -607,8 +614,8 @@ class ProductApiService extends AppRepository
         // Update product images
         if (isset($request->images)) {
             // Step 1: Delete all existing product images for the product ID
-          $productImage=  ProductImage::where('product_id', $request->id)->delete();
-// dd($request->images,$productImage);
+            $productImage =  ProductImage::where('product_id', $request->id)->delete();
+            // dd($request->images,$productImage);
             // Step 2: Insert new images into the database
             foreach ($request->images as $image) {
                 if ($image instanceof \Illuminate\Http\UploadedFile) {
@@ -821,6 +828,8 @@ class ProductApiService extends AppRepository
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
             ->with([
+                'images',
+
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
@@ -835,6 +844,8 @@ class ProductApiService extends AppRepository
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
             ->with([
+                'images',
+
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
@@ -848,7 +859,8 @@ class ProductApiService extends AppRepository
     public function getNewArrival($request)
     {
         $products = Product::select('id', 'slug', 'name_en', 'name_ar')
-            ->with(['productImages',
+            ->with([
+                'productImages',
                 'variants:id,color_id,dimension_id,additional_price,product_id',
                 'variants.color:id,name_en,name_ar',
                 'variants.dimension:id,dimension',
