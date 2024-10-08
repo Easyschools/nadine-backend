@@ -30,47 +30,53 @@ class CollectionApiService extends AppRepository
     //     return $this->all();
     // }
     public function index($request)
-{
-    // Check if pagination is required
-    if ($request->is_paginate == 1) {
+    {
+        // Check if pagination is required
+        if ($request->is_paginate == 1) {
+            $this->setRelations([
+                'products' => function ($productQuery) {
+                    $productQuery->with([
+                        'images',
+                        'variants' => function ($variant) {
+                            $variant->with([
+                                // 'color',
+                                // 'dimension',
+                                'color',
+                                'dimension',
+                                'material',
+                                'ColorVariant',
+                                'DimensionVariant',
+
+                            ]);
+                        }
+                    ]);
+                }
+            ]);
+            return $this->paginate();
+        }
+
+        // Return all results without pagination
         $this->setRelations([
-            'products' => function ($productQuery)  {
+            'products' => function ($productQuery) {
                 $productQuery->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
                             // 'color',
                             // 'dimension',
-                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
-    
+                            'color',
+                            'dimension',
+                            'material',
+                            'ColorVariant',
+                            'DimensionVariant',
+
                         ]);
                     }
                 ]);
-    
             }
         ]);
-        return $this->paginate();
+        return $this->all();
     }
-
-    // Return all results without pagination
-    $this->setRelations([
-        'products' => function ($productQuery)  {
-            $productQuery->with([
-                'images',
-                'variants' => function ($variant) {
-                    $variant->with([
-                        // 'color',
-                        // 'dimension',
-                        'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
-
-                    ]);
-                }
-            ]);
-
-        }
-    ]);
-    return $this->all();
-}
 
 
     /**
@@ -129,7 +135,11 @@ class CollectionApiService extends AppRepository
                         $variant->with([
                             // 'color',
                             // 'dimension',
-                            'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+                            'color',
+                            'dimension',
+                            'material',
+                            'ColorVariant',
+                            'DimensionVariant',
 
                         ]);
                     }
@@ -209,6 +219,7 @@ class CollectionApiService extends AppRepository
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'slug' => \Illuminate\Support\Str::slug($request->name_en),
+            'image' => $request->image,
         ]);
     }
 
@@ -225,6 +236,8 @@ class CollectionApiService extends AppRepository
                 'name_ar' => $request->name_ar ?? $collection->name_ar,
                 'name_en' => $request->name_en ?? $collection->name_en,
                 'slug' => $request->name_en ? \Illuminate\Support\Str::slug($request->name_en) : $collection->slug,
+                'image' => $request->image ?? $collection->name_ar,
+
             ]
         );
     }
@@ -238,8 +251,8 @@ class CollectionApiService extends AppRepository
     }
 
     protected function getDiscountCategoryTagIds()
-{
-    // Replace this with your actual logic to retrieve tag ids for discounts category
-    return Tag::where('name_en', 'like', '%discount%')->orWhere('name_ar', 'like', '%خصم%')->pluck('id')->toArray();
-}
+    {
+        // Replace this with your actual logic to retrieve tag ids for discounts category
+        return Tag::where('name_en', 'like', '%discount%')->orWhere('name_ar', 'like', '%خصم%')->pluck('id')->toArray();
+    }
 }

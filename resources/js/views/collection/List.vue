@@ -25,6 +25,7 @@
                 <th>#</th>
                 <th>{{ translations.general.nameAr }}</th>
                 <th>{{ translations.general.nameEn }}</th>
+                <th>{{translations.general.image}}</th>
                 <th>{{ translations.general.options }}</th>
               </tr>
             </thead>
@@ -34,6 +35,14 @@
                 <td>{{ item.name_ar }}</td>
                 <td>
                   {{ item.name_en }}
+                </td>
+                <td>
+                  <img
+                    v-if="item.image"
+                    :src="item.image"
+                    class="imageDisplay"
+                    alt="no Image"
+                  />
                 </td>
                 <td>
                   <router-link
