@@ -826,7 +826,7 @@ class ProductApiService extends AppRepository
 
     public function getBestSellers($request)
     {
-        $products = Product::select('id', 'slug', 'name_en', 'name_ar')
+        $products = Product::select('id', 'price','price_after_discount','slug', 'name_en', 'name_ar')
             ->with([
                 'images',
 
@@ -842,7 +842,7 @@ class ProductApiService extends AppRepository
     }
     public function getLimitedEdtion($request)
     {
-        $products = Product::select('id', 'slug', 'name_en', 'name_ar')
+        $products = Product::select('id',  'price','price_after_discount','slug', 'name_en', 'name_ar')
             ->with([
                 'images',
 
