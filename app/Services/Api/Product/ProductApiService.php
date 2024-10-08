@@ -219,22 +219,30 @@ class ProductApiService extends AppRepository
                 $q->join('offers', 'offers.id', '=', 'offer_tags.offer_id')->where('offers.expire_at', '>', now());
             })->with('offer');
         }
-        if ($request->tag || $request->brand) {
-            $tag = $request->tag ?? $request->brand;
-            $tag = explode(',', $tag);
-            $tag_names = $this->replaceDashWithSpace($tag);
+        // if ($request->tag || $request->brand) {
+        //     $tag = $request->tag ?? $request->brand;
+        //     $tag = explode(',', $tag);
+        //     $tag_names = $this->replaceDashWithSpace($tag);
 
-            $tag_ids = [];
+        //     $tag_ids = [];
 
-            foreach ($tag_names as $tag_name) {
-                $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
-                $tag_ids = array_merge($tag_ids, $arr);
-            }
+        //     foreach ($tag_names as $tag_name) {
+        //         $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
+        //         $tag_ids = array_merge($tag_ids, $arr);
+        //     }
 
-            $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
-                $q->whereIn('id', $tag_ids);
-            });
+        //     $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
+        //         $q->whereIn('id', $tag_ids);
+        //     });
+        // }
+        if ($request->tag) {
+            $productQuery = $productQuery->whereIn('tag_id', $request->tag);
         }
+        if ($request->category) {
+            $productQuery = $productQuery->whereIn('category_id', $request->category);
+        }
+
+
         if ($request->occasional_name) {
             $productQuery = $productQuery->whereHas('material', function ($q) use ($request) {
                 $q->where('name_en', 'like', '%' . $request->occasional_name . '%')
