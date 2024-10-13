@@ -110,10 +110,13 @@ class OrderApiService extends AppRepository
      */
     public function getOfferPrice($item)
     {
-               dd($item->variant->product->category);
-        //        dd($item->variant);
+        // $offer = $item->variant->product->category->offers()
+        // ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
+
         $offer = $item->variant->product->category->offers()
-            ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
+            ->where('expire_at', '>=', Carbon::now()->toDateTimeString())
+            ->whereIn('id', $item->variant->product->category->offers->pluck('id')->toArray())
+            ->first();
 
         $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
 
