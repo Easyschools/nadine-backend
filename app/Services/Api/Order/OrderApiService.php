@@ -110,9 +110,9 @@ class OrderApiService extends AppRepository
      */
     public function getOfferPrice($item)
     {
-        //        dd($item->variant->product->category->offers()->first()->expire_at);
+               dd($item->variant->product->category);
         //        dd($item->variant);
-        $offer = $item->variant->product->category->offers
+        $offer = $item->variant->product->category->offers()
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
@@ -122,9 +122,8 @@ class OrderApiService extends AppRepository
         if ($offer) {
             if ($offer->is_percentage) {
                 $offerItemPrice = $productPrice - ($offer->discount * $productPrice / 100);
-                               dd($offerItemPrice);
+                //                dd($offerItemPrice);
             } else {
-                dd('s');
                 $offerItemPrice = $productPrice - $offer->discount;
             }
         }
