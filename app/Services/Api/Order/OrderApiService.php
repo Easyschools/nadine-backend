@@ -112,14 +112,15 @@ class OrderApiService extends AppRepository
     {
         //        dd($item->variant->product->category->offers()->first()->expire_at);
         //        dd($item->variant);
-          // $offer = $item->variant->product->category->offers()
+        // $offer = $item->variant->product->category->offers()
         // ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $offer = $item->with([
             // 'variant.product.images',
             'variant.product.category.offers' => function ($q) {
-            $q->where('expire_at', '>=', Carbon::now()->toDateTimeString());
-        }])->first();
+                $q->where('expire_at', '>=', Carbon::now()->toDateTimeString());
+            }
+        ])->first();
         // $offer = $item->variant->product->category->offers()
         //     ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
@@ -151,12 +152,12 @@ class OrderApiService extends AppRepository
             ['user_id', Auth::id()],
             ['checkout', 0],
         ])->with([
-            'images:id,product_id,image',
             'variant' => function ($variant) {
                 $variant->select('id', 'product_id', 'color_id', 'dimension_id', 'additional_price')
                     ->with([
                         'dimension',
                         'color',
+
                         'product' => function ($product) {
                             $product->select(
                                 'id',
@@ -167,7 +168,10 @@ class OrderApiService extends AppRepository
                                 'tag_id',
                                 'slug'
                             )
-                                ->with('tag:id,name_en,name_ar');
+                                ->with(
+                                    'tag:id,name_en,name_ar',
+                                    'images:id,product_id,image',
+                                );
                         },
                         'images:variant_id,image',
                     ]);
