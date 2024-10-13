@@ -151,6 +151,7 @@ class OrderApiService extends AppRepository
             ['user_id', Auth::id()],
             ['checkout', 0],
         ])->with([
+            'images:id,product_id,image',
             'variant' => function ($variant) {
                 $variant->select('id', 'product_id', 'color_id', 'dimension_id', 'additional_price')
                     ->with([
