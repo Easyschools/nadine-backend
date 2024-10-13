@@ -122,8 +122,9 @@ class OrderApiService extends AppRepository
         if ($offer) {
             if ($offer->is_percentage) {
                 $offerItemPrice = $productPrice - ($offer->discount * $productPrice / 100);
-                //                dd($offerItemPrice);
+                               dd($offerItemPrice);
             } else {
+                dd('s');
                 $offerItemPrice = $productPrice - $offer->discount;
             }
         }
