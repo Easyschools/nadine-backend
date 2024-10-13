@@ -116,7 +116,7 @@ class OrderApiService extends AppRepository
         // ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $offer = $item->with([
-            'variant.product.images',
+            // 'variant.product.images',
             'variant.product.category.offers' => function ($q) {
             $q->where('expire_at', '>=', Carbon::now()->toDateTimeString());
         }])->first();
