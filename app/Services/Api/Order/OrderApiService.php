@@ -112,7 +112,7 @@ class OrderApiService extends AppRepository
     {
         //        dd($item->variant->product->category->offers()->first()->expire_at);
         //        dd($item->variant);
-        $offer = $item->variant->product->category->offers()
+        $offer = $item->variant->product->category->offers
             ->where('expire_at', '>=', Carbon::now()->toDateTimeString())->first();
 
         $productPrice = $item->variant->product->price_after_discount + $item->variant->additional_price;
