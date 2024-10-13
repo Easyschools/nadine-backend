@@ -79,6 +79,104 @@ class CollectionApiService extends AppRepository
     }
 
 
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function getHighEnd($request)
+    {
+        $tagIds = [];
+        $categoryTagsIds = [];
+
+        if ($request->tag) {
+            $tagNames = $this->replaceDashWithSpace(explode(',', $request->tag));
+
+            foreach ($tagNames as $tagName) {
+                $tagIds = array_merge($tagIds, Tag::where('name_ar', $tagName)->orWhere('name_en', $tagName)->pluck('id')->toArray());
+            }
+        }
+
+        if ($request->category) {
+            if ($request->category == 'discounts') {
+                $categoryTagsIds = $this->getDiscountCategoryTagIds();
+            } else {
+                $categoryTags = $this->replaceDashWithSpace(explode(',', $request->category));
+
+                foreach ($categoryTags as $categoryTag) {
+                    $categoryTagsIds = array_merge($categoryTagsIds, Tag::whereHas('category', function ($q) use ($categoryTag) {
+                        $q->where('name_en', 'like', '%' . $categoryTag . '%')->orWhere('name_ar', 'like', '%' . $categoryTag . '%');
+                    })->pluck('id')->toArray());
+                }
+            }
+        }
+
+        $this->tags = isset($tagIds) ? $tagIds : [];
+
+        $this->sortKey = $request->input('sort_by', 'created_at');
+
+        $productQuery = $this->paginateQuery();
+
+        $this->setRelations([
+            // 'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+            //     $productQuery->with([
+            //         'variants' => function ($variant) {
+            //             $variant->with([
+            //                 // 'color',
+            //                 // 'dimension',
+            //                 'color', 'dimension', 'material', 'ColorVariant', 'DimensionVariant',
+
+            //             ]);
+            //         }
+            //     ]);
+            'products' => function ($productQuery) use ($request, $categoryTagsIds) {
+                $productQuery->whereHas('variants', function ($variantQuery) {
+                    $variantQuery->where('sku', 'like', '%h%');
+                })->with([
+                    'images',
+                    'variants' => function ($variant) {
+                        $variant->with([
+                            // 'color',
+                            // 'dimension',
+                            'color',
+                            'dimension',
+                            'material',
+                            'ColorVariant',
+                            'DimensionVariant',
+
+                        ]);
+                    }
+                ]);
+
+                // Filter by tags if 'tag' parameter is present
+                if ($request->tag) {
+                    $productQuery->whereIn('tag_id', $this->tags);
+                }
+
+                // Filter by occasional material
+                if ($request->occasional) {
+                    $productQuery->whereHas('material', function ($q) use ($request) {
+                        $q->where('id', $request->occasional);
+                    });
+                }
+
+                // Filter by category tags
+                if ($request->category) {
+                    $productQuery->whereIn('tag_id', $categoryTagsIds);
+                }
+
+                // Filter by discounts
+                if ($request->category == 'discounts') {
+                    $productQuery->whereHas('offer')->orWhere('price_after_discount', '!=', 0);
+                }
+
+                $productQuery->orderBy($this->sortKey, 'desc');
+            }
+        ]);
+
+        return $this->find($request->id);
+    }
+
     /**
      * @param $request
      * @return mixed
@@ -129,7 +227,9 @@ class CollectionApiService extends AppRepository
             //         }
             //     ]);
             'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                $productQuery->with([
+                $productQuery->whereHas('variants', function ($variantQuery) {
+                    $variantQuery->where('sku', 'not like', '%h%');
+                })->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([

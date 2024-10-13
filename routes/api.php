@@ -348,6 +348,8 @@ Route::group([
     ], function () {
         Route::get('all', [CollectionApiController::class, 'all']);
         Route::get('get', [CollectionApiController::class, 'read']);
+        Route::get('get-high-end', [CollectionApiController::class, 'getHighEnd']);
+        
         Route::delete('delete', [CollectionApiController::class, 'delete']);
         Route::post('create', [CollectionApiController::class, 'create']);
         Route::post('edit', [CollectionApiController::class, 'edit']);

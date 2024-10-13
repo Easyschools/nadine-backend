@@ -33,6 +33,13 @@ class CollectionApiController extends Controller
         $process = $this->collectionApiService->get($request);
         return $this->sendResponse($process);
     }
+    public function getHighEnd(CollectionRequest $request)
+    {
+        $process = $this->collectionApiService->getHighEnd($request);
+        return $this->sendResponse($process);
+    }
+
+
 
 
     public function getBySlug(CollectionRequest $request)
