@@ -18,6 +18,7 @@ export default {
         image: "Image",
         mainImage: "Main Image",
         show: "Show",
+        sizeGuide: "Size Guide",
     },
     celebrities: {
         celebrities: "Celebrities",

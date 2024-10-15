@@ -260,6 +260,25 @@
               </div>
             </div>
 
+            <div class="row form-group" v-if="item.image">
+              <img src="" ref="imageDisplay" class="mr-auto imageDisplay" />
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-3">
+                <label class="col-form-label">{{ translations.general.sizeGuide }}</label>
+              </div>
+
+              <div class="col-sm-9">
+                <input
+                  type="file"
+                  ref="myImage"
+                  v-on:change="attachImage"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
             <div class="row form-group">
               <div class="col-sm-3">
                 <label class="col-form-label">upload pdf</label>
@@ -560,6 +579,7 @@ export default {
         category_id: null, // Initialize with null or default value
         tags: [], // Initialize tags array
         images: [], // Initialize tags array
+        image: null,
         // product_details_image: null,
         // product_details: null,
         files: null,
@@ -633,7 +653,7 @@ export default {
   },
   computed: {
     formattedOptions() {
-      console.log('formattedOptions',this.products);
+      console.log("formattedOptions", this.products);
 
       return this.products.map((product) => ({
         id: product.id,
@@ -876,6 +896,19 @@ export default {
     //     console.log(reader);
     // }.bind(this), false);
     // },
+    attachImage() {
+      this.item.image = this.$refs.myImage.files[0];
+      let reader = new FileReader();
+      reader.addEventListener(
+        "load",
+        function () {
+          this.$refs.imageDisplay.src = reader.result;
+        }.bind(this),
+        false
+      );
+
+      reader.readAsDataURL(this.item.image);
+    },
     getFormData() {
       let formData = new FormData();
       this.buildFormData(formData, this.item, null);

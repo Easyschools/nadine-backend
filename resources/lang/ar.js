@@ -18,6 +18,7 @@ export default {
     image: "صورة",
     mainImage: "الصوره الاساسية",
     show: "عرض",
+    sizeGuide: "تقرير الحجم",
   },
   celebrities: {
     celebrities: "مشاهير",

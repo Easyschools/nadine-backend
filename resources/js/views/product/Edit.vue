@@ -3,13 +3,17 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>{{ translations.general.edit }} {{ translations.product.product }}</h5>
+          <h5>
+            {{ translations.general.edit }} {{ translations.product.product }}
+          </h5>
         </div>
         <div class="card-body">
           <form>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.product.sku }}</label>
+                <label class="col-form-label">{{
+                  translations.product.sku
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <input type="text" class="form-control" v-model="item.sku" />
@@ -17,18 +21,30 @@
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.general.nameAr }}</label>
+                <label class="col-form-label">{{
+                  translations.general.nameAr
+                }}</label>
               </div>
               <div class="col-sm-9">
-                <input type="text" class="form-control" v-model="item.name_ar" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="item.name_ar"
+                />
               </div>
             </div>
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.general.nameEn }}</label>
+                <label class="col-form-label">{{
+                  translations.general.nameEn
+                }}</label>
               </div>
               <div class="col-sm-9">
-                <input type="text" class="form-control" v-model="item.name_en" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="item.name_en"
+                />
               </div>
             </div>
             <div class="row form-group">
@@ -38,7 +54,11 @@
                 }}</label>
               </div>
               <div class="col-sm-9">
-                <input type="text" class="form-control" v-model="item.description_ar" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="item.description_ar"
+                />
               </div>
             </div>
             <div class="row form-group">
@@ -48,13 +68,19 @@
                 }}</label>
               </div>
               <div class="col-sm-9">
-                <input type="text" class="form-control" v-model="item.description_en" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="item.description_en"
+                />
               </div>
             </div>
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.product.price }}</label>
+                <label class="col-form-label">{{
+                  translations.product.price
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <input
@@ -152,7 +178,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.product.type }}</label>
+                <label class="col-form-label">{{
+                  translations.product.type
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.tag_id">
@@ -171,7 +199,10 @@
               </div>
               <div class="col-sm-9">
                 <select class="form-control" v-model="item.collection_id">
-                  <option v-for="collection in collections" :value="collection.id">
+                  <option
+                    v-for="collection in collections"
+                    :value="collection.id"
+                  >
                     {{ collection.name_ar }} -
                     {{ collection.name_en }}
                   </option>
@@ -181,7 +212,9 @@
 
             <div class="row form-group">
               <div class="col-sm-3">
-                <label class="col-form-label">{{ translations.product.new }}</label>
+                <label class="col-form-label">{{
+                  translations.product.new
+                }}</label>
               </div>
               <div class="col-sm-9">
                 <div class="form-check align-bottom mt-2">
@@ -236,10 +269,28 @@
                   <!-- Display the name of the old file -->
                   <div v-if="item.files">
                     <p>
-                      <a :download="item.files" :href="item.files"> {{ item.files }}</a>
+                      <a :download="item.files" :href="item.files">
+                        {{ item.files }}</a
+                      >
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-3">
+                <label class="col-form-label">{{
+                  translations.general.image
+                }}</label>
+              </div>
+              <div class="col-sm-9">
+                <input
+                  type="file"
+                  ref="myImage"
+                  v-on:change="attachImage"
+                  class="form-control"
+                />
               </div>
             </div>
 
@@ -271,7 +322,9 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h5>{{ translations.general.add }} {{ translations.product.subProduct }}</h5>
+          <h5>
+            {{ translations.general.add }} {{ translations.product.subProduct }}
+          </h5>
         </div>
         <div class="card-body">
           <!-- <form> -->
@@ -305,7 +358,11 @@
 
     <div class="col-sm-12">
       <div class="col-md-12 text-right">
-        <button class="btn btn-secondary mb-3" type="button" @click="addVariant()">
+        <button
+          class="btn btn-secondary mb-3"
+          type="button"
+          @click="addVariant()"
+        >
           {{ translations.general.add }} {{ translations.general.new }}
           {{ translations.general.product }}
         </button>
@@ -323,7 +380,9 @@
               >
                 <li v-for="(variant, index) in item.variants">
                   <a
-                    :class="index ? 'nav-link text-left' : 'nav-link text-left active'"
+                    :class="
+                      index ? 'nav-link text-left' : 'nav-link text-left active'
+                    "
                     id="v-pills-home-tab"
                     data-toggle="pill"
                     :href="'#variant' + index"
@@ -340,14 +399,19 @@
               <div class="tab-content" id="v-pills-tabContent">
                 <div
                   v-for="(variant, index) in item.variants"
-                  :class="index == 0 ? 'tab-pane fade active show' : 'tab-pane fade'"
+                  :class="
+                    index == 0 ? 'tab-pane fade active show' : 'tab-pane fade'
+                  "
                   :id="'variant' + index"
                   role="tabpanel"
                   aria-labelledby="v-pills-home-tab"
                 >
                   <div>
                     <div class="row mb-4">
-                      <strong class="col-md-5 text-capitalize" style="font-size: 18px">
+                      <strong
+                        class="col-md-5 text-capitalize"
+                        style="font-size: 18px"
+                      >
                         {{ translations.product.type }} {{ index }}
                       </strong>
 
@@ -379,9 +443,11 @@
 
                         <div class="row form-group">
                           <div class="col-sm-3">
-                            <label style="font-weight: bold" class="col-form-label">{{
-                              translations.general.image
-                            }}</label>
+                            <label
+                              style="font-weight: bold"
+                              class="col-form-label"
+                              >{{ translations.general.image }}</label
+                            >
                           </div>
 
                           <div class="col-md-9">
@@ -425,8 +491,14 @@
                         }}</label>
                       </div>
                       <div class="col-md-9">
-                        <select class="form-control" v-model="variant.material_id">
-                          <option v-for="material in materials" :value="material.id">
+                        <select
+                          class="form-control"
+                          v-model="variant.material_id"
+                        >
+                          <option
+                            v-for="material in materials"
+                            :value="material.id"
+                          >
                             {{ material.name_ar }} -
                             {{ material.name_en }}
                           </option>
@@ -509,6 +581,11 @@ export default {
   },
   data() {
     return {
+      show: false,
+      url: null,
+
+      image_is_changed: false,
+
       disableButton: false,
       current_page: 0,
       item: {
@@ -526,6 +603,7 @@ export default {
         description_en: "",
         slug: "",
         images: [],
+        image: null,
         weight: 0,
         new_arrival: "",
         best_selling: "",
@@ -662,7 +740,21 @@ export default {
         }
       }
     },
+    attachImage() {
+      this.item.image = this.$refs.myImage.files[0];
+      let reader = new FileReader();
+      reader.addEventListener(
+        "load",
+        function () {
+          this.$refs.imageDisplay.src = reader.result;
+        }.bind(this),
+        false
+      );
 
+      reader.readAsDataURL(this.item.image);
+      this.image_is_changed = true;
+      this.url = URL.createObjectURL(this.item.image);
+    },
     selectCategory() {
       const selectedCategory = this.categories.find(
         (cat) => cat.id === this.item.tag.category_id
@@ -778,6 +870,7 @@ export default {
           this.item.tag_id = response.data.data.tag_id;
           this.item.category_id = response.data.data.category_id;
           this.item.images = response.data.data.images; // Populate item.images with old images data
+          this.item.image = response.data.data.image; // Populate item.images with old images data
 
           // console.log(this.item.category_id);
           // console.log("getIrem", response.data);
@@ -787,10 +880,12 @@ export default {
           // Map category IDs to category objects
           // console.log('this.item.category' .this.item.category_id);
           if (this.item.category && Array.isArray(this.item.category)) {
-          // console.log('this.item.category' .this.item.category);
+            // console.log('this.item.category' .this.item.category);
             this.item.category.forEach((categoryId, index) => {
               // Assuming you have access to categories data
-              const category = this.categories.find((cat) => cat.id === categoryId);
+              const category = this.categories.find(
+                (cat) => cat.id === categoryId
+              );
               if (category) {
                 // Replace category ID with category object
                 this.item.category[index] = category;
@@ -811,7 +906,14 @@ export default {
       this.disableButton = true;
       let formData = new FormData();
       let data = this.getFormData(formData);
-
+      for (const property in this.item) {
+        if (!this.image_is_changed && property == "image") {
+          break;
+        }
+        if (this.item[property] != null) {
+          data.append(property, this.item[property]);
+        }
+      }
       if (data.variants && Array.isArray(data.variants)) {
         console.log("yes");
         data.variants.forEach((variant, variantIndex) => {
@@ -874,10 +976,12 @@ export default {
     uploadVariantImage(index) {
       // console.log(this.$refs['mainImages'+index][index].files[0])
       console.log(this.$refs["mainImages" + index][0]);
-      Array.from(this.$refs["mainImages" + index][0].files).forEach((item, indx) => {
-        this.item.variants[index].images.push(item);
-        console.log(this.item.variants[index].images);
-      });
+      Array.from(this.$refs["mainImages" + index][0].files).forEach(
+        (item, indx) => {
+          this.item.variants[index].images.push(item);
+          console.log(this.item.variants[index].images);
+        }
+      );
     },
 
     buildFormData(formData, data, parentKey) {

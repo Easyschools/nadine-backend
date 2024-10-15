@@ -34,6 +34,7 @@ class Product extends Model
         'files',
         'sub_products',
         'category_id',
+        'image'
     ];
 
     protected $appends = [
@@ -52,7 +53,17 @@ class Product extends Model
     protected $casts = [
         'sub_products' => 'array',
     ];
+    public function getImageAttribute($value)
+    {
+        return ($value) ? url($value) : $value;
+    }
 
+    public function setImageAttribute($value)
+    {
+        if (is_file($value)) {
+            $this->attributes['image'] = 'uploads/' . $value->store('Product/Image');
+        }
+    }
 
     public function getFilesAttribute($value)
     {
