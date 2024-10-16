@@ -356,7 +356,7 @@ class OrderApiService extends AppRepository
 
             $this->order->orderItems()->create([
                 'variant_id' => $item->variant_id,
-                'offer_id' => $item->variant?->product?->category?->offer_id ?? 0,
+                'offer_id' => $item->variant?->product?->category?->offer_id ?? null,
                 'item_price' => $item->item_price,
                 'quantity' => $item->quantity,
                 'total_item_price' => $item->total_item_price,
