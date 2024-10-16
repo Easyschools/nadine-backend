@@ -353,10 +353,10 @@ class OrderApiService extends AppRepository
     {
         foreach ($orderItems as $item) {
             //            dd($item->toArray());
-
+            
             $this->order->orderItems()->create([
                 'variant_id' => $item->variant_id,
-                'offer_id' => $item->variant->product->category->offer_id,
+                'offer_id' => $item->variant->product->category?$item->variant->product->category->offer_id:0,
                 'item_price' => $item->item_price,
                 'quantity' => $item->quantity,
                 'total_item_price' => $item->total_item_price,
