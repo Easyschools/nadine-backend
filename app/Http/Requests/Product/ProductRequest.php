@@ -92,6 +92,7 @@ class ProductRequest extends FormRequest
 
     private function updateValidation()
     {
+        // dd($this->request);
         return [
             'id' => 'required|exists:products,id',
             'sku' => 'required|min:2',
@@ -114,13 +115,14 @@ class ProductRequest extends FormRequest
             'price_after_discount' => 'required|numeric|min:0',
             'files' => 'nullable',
             'variants' => 'required|array',
-            'variants.*.color_id' => 'nullable|exists:colors,id',
+            'variants.*.color_id' => 'nullable|array',
+            'variants.*.color_id.*.id' => 'nullable',
+            // 'variants.*.color_id' => 'nullable|exists:colors,id',
             'variants.*.material_id' => 'nullable|exists:materials,id',
 
             // 'variants.*.images' => 'nullable|array',
-            // 'variants.*.images.*' => 'image',
-            // 'variants.*.images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'variants.*.dimension_value' => 'nullable',
+            // 'variants.*.images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'variants.*.dimension' => 'nullable',
             'variants.*.additional_price' => 'required|numeric',
         ];
     }

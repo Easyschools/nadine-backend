@@ -281,7 +281,7 @@
             <div class="row form-group">
               <div class="col-sm-3">
                 <label class="col-form-label">{{
-                  translations.general.image
+                  translations.general.sizeGuide
                 }}</label>
               </div>
               <div class="col-sm-9">
@@ -906,14 +906,16 @@ export default {
       this.disableButton = true;
       let formData = new FormData();
       let data = this.getFormData(formData);
-      for (const property in this.item) {
-        if (!this.image_is_changed && property == "image") {
-          break;
-        }
-        if (this.item[property] != null) {
-          data.append(property, this.item[property]);
-        }
-      }
+      // for (const property in this.item) {
+      //   if (!this.image_is_changed && property == "image") {
+      //     break;
+      //   }
+      //   if (this.item[property] != null) {
+      //     data.append(property, this.item[property]);
+      //   }
+      // }
+                data.append('image', this.item.image);
+
       if (data.variants && Array.isArray(data.variants)) {
         console.log("yes");
         data.variants.forEach((variant, variantIndex) => {

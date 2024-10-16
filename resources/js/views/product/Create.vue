@@ -818,7 +818,7 @@ export default {
     },
     addVariant() {
       this.item.variants.push({
-        image: null,
+        // image: null,
         additional_price: 0,
         stock: 1,
         material_id: null,
