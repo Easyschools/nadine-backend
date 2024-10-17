@@ -374,7 +374,7 @@ class ProductApiService extends AppRepository
 
         $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
         dd($product['sub_product']);
-        if (!is_object($product['sub_product'])) {
+        if ($product['sub_product'] != null) {
             // If it's not an object, assign it to sub_product directly
         $product['sub_product'] = $product->subProductImages();
     }
