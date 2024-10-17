@@ -60,8 +60,15 @@ class Product extends Model
 
     public function setImageAttribute($value)
     {
+        // if (is_file($value)) {
+            // $this->attributes['image'] = 'uploads/' . $value->store('Product/Image');
+        // }
+        
         if (is_file($value)) {
             $this->attributes['image'] = 'uploads/' . $value->store('Product/Image');
+        }else{
+            $this->attributes['image'] = null;
+
         }
     }
 

@@ -373,7 +373,7 @@ class ProductApiService extends AppRepository
         }
 
         $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
-
+dd($product['sub_product']);
         $product['sub_product'] = $product->subProductImages();
         return $product;
     }
