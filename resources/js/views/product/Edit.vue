@@ -94,7 +94,8 @@
                       class="image-container"
                     >
                       <a :href="image.image" target="_blank">
-                        <img :src="image.image" :alt="'Old Image ' + index" />
+                        <img     width="100px"
+                        height="100px" :src="image.image" :alt="'Old Image ' + index" />
                       </a>
                       <span class="remove-icon" @click="removeOldImage(index)">
                         <!-- Add your remove icon here -->
@@ -383,10 +384,11 @@
                             v-for="image in variant.images"
                           >
                             <img
+                             
                               v-if="image"
                               :src="image.image"
-                              width="200px"
-                              height="200px"
+                              width="100px"
+                              height="100px"
                             />
                           </div>
                         </div>
