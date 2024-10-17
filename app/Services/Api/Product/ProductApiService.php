@@ -457,6 +457,7 @@ class ProductApiService extends AppRepository
         $product = Product::create(array_merge(
             $request->only([
                 'name_ar',
+                'image',
                 'name_en',
                 'description_ar',
                 'description_en',
