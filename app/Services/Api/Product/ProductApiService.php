@@ -454,11 +454,9 @@ class ProductApiService extends AppRepository
         // $ids = array_column($request->product_id, 'id');
 
         // Now $ids contains only the IDs from the original array
-        dd($request->image);
         $product = Product::create(array_merge(
             $request->only([
                 'name_ar',
-                'image',
                 'name_en',
                 'description_ar',
                 'description_en',
@@ -473,6 +471,7 @@ class ProductApiService extends AppRepository
                 'limited_edition',
                 'best_selling',
                 'new_arrival',
+                'image',
             ]),
             [
                 'sub_products' => $request->product_id,
@@ -609,6 +608,7 @@ class ProductApiService extends AppRepository
                 'limited_edition',
                 'best_selling',
                 'new_arrival',
+                'image',
             ]),
             [
                 'sub_products' => $request->sub_products,
