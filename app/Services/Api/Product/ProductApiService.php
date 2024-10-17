@@ -589,7 +589,6 @@ class ProductApiService extends AppRepository
 
         // ]));
         // dd($request->category_id);
-// dd($request->all());
         $product->update(array_merge(
             $request->only([
                 'name_ar',
