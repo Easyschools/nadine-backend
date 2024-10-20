@@ -219,6 +219,7 @@ export default {
       axios
         .get("product/all", {
           params: {
+            web:1,
             page: this.currentPage,
             name: this.search.name,
             tag: this.search.tag,
