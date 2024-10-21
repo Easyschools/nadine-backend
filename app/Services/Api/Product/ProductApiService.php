@@ -376,10 +376,10 @@ class ProductApiService extends AppRepository
         }
 
         $product['materials'] = array_values($materials); // Re-index the array keys and assign to the product
-        if ($product['sub_product'] != null) {
-            // If it's not an object, assign it to sub_product directly
-        $product['sub_product'] = $product->subProductImages();
-    }
+        // if ($product['sub_product'] != null) {
+        // If it's not an object, assign it to sub_product directly
+        $product['sub_product'] = $product->subProductImages() ?? [];
+        // }
         // $product['sub_product'] = $product->subProductImages();
         return $product;
     }
@@ -834,7 +834,7 @@ class ProductApiService extends AppRepository
 
     public function getBestSellers($request)
     {
-        $products = Product::select('id', 'price','price_after_discount','slug', 'name_en', 'name_ar')
+        $products = Product::select('id', 'price', 'price_after_discount', 'slug', 'name_en', 'name_ar')
             ->with([
                 'images',
 
@@ -850,7 +850,7 @@ class ProductApiService extends AppRepository
     }
     public function getLimitedEdtion($request)
     {
-        $products = Product::select('id',  'price','price_after_discount','slug', 'name_en', 'name_ar')
+        $products = Product::select('id',  'price', 'price_after_discount', 'slug', 'name_en', 'name_ar')
             ->with([
                 'images',
 
