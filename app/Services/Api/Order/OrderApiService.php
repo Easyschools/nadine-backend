@@ -302,7 +302,7 @@ class OrderApiService extends AppRepository
 
         Pixel::purchase($grandTotal['grand_total']);
 
-        $this->addOrderItems($this->items);
+        $this->addOrderItems($this->items, $request->color_id, $request->dimension_id, $request->material_id);
 
         if ($this->coupon) {
             $this->coupon->user()->attach(Auth::id());
@@ -349,7 +349,7 @@ class OrderApiService extends AppRepository
      * add items to order
      * @param $orderItems
      */
-    private function addOrderItems($orderItems)
+    private function addOrderItems($orderItems, $color_id, $dimension_id, $material_id)
     {
         foreach ($orderItems as $item) {
             //            dd($item->toArray());
@@ -360,6 +360,9 @@ class OrderApiService extends AppRepository
                 'item_price' => $item->item_price,
                 'quantity' => $item->quantity,
                 'total_item_price' => $item->total_item_price,
+                'dimension_id' => $dimension_id ?? null,
+                'color_id' => $color_id ?? null,
+                'material_id' => $material_id ?? null,
             ]);
         }
     }
