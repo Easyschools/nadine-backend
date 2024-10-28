@@ -16,6 +16,9 @@ class OrderItem extends Model
         'quantity',
         'item_price',
         'total_item_price',
+        'color_id',
+        'dimension_id',
+        'material_id',
     ];
 
     public function offer()

@@ -80,6 +80,9 @@ class CartApiService extends AppRepository
                     'variant_id' => $variant['variantId'],
                     'user_id' => $request->user_id,
                     'quantity' => $variant['qty'],
+                    'dimension_id' => $request->dimension_id?? null,
+                    'color_id' => $request->color_id ?? null,
+                    'material_id' => $request->material_id ?? null,
                 ]);
             }
         } else {
@@ -87,6 +90,9 @@ class CartApiService extends AppRepository
                 'variant_id' => $request['variantId'],
                 'user_id' => $request->user_id,
                 'quantity' => $request['qty'],
+                'dimension_id' => $request->dimension_id?? null,
+                'color_id' => $request->color_id ?? null,
+                'material_id' => $request->material_id ?? null,
             ]);
         }
         return true;

@@ -14,6 +14,9 @@ class Cart extends Model
         'variant_id',
         'quantity',
         'checkout',
+        'color_id',
+        'dimension_id',
+        'material_id',
     ];
 
     public function user()
