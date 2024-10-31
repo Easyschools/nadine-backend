@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Mail\ResetPasswordMail;
 use App\ThirdParty\SmsMasr;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Mail;
 
 
 trait HelpersTrait
@@ -37,9 +37,9 @@ trait HelpersTrait
     }
 
     public function sendMail($mail,$code,  $msg = 'Activation code: '){
-        
         $data = [ 'msg' => $msg . ' '. $code];
-        return  Mail::to($mail)->send(new ResetPasswordMail($data));
+        \Mail::to($mail)->send(new ResetPasswordMail($data));
+
         return true;
     }
 }
