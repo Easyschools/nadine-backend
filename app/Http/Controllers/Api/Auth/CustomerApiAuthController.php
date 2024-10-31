@@ -71,13 +71,13 @@ class CustomerApiAuthController extends Controller
         $email = $this->authService->forgetPassword($request, $this->verified_code);
 
         $msg = 'Reset password code: ';
-dd($email);
 
         if ($email == false) {
             return $this->sendError(
                 'Something went wrong.'
             );
         }
+        dd($email,$this->verified_code,$msg);
         try {
             $res = $this->sendMail($email, $this->verified_code, $msg);
             return $this->sendResponse([
