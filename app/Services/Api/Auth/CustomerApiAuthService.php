@@ -111,7 +111,6 @@ class CustomerApiAuthService extends AppRepository
             'token' => $verified_code
         ]);
 
-        dd($user);
         return $user->email;
     }
 
