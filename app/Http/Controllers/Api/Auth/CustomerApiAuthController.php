@@ -79,7 +79,6 @@ class CustomerApiAuthController extends Controller
         }
         try {
             $res = $this->sendMail($email, $this->verified_code, $msg);
-            dd($res);
             return $this->sendResponse([
                 'code sending via mail'
                 // 'phone' => $phone,
