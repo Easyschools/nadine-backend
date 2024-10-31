@@ -102,7 +102,6 @@ class CustomerApiAuthService extends AppRepository
     public function forgetPassword(Request $request, $verified_code = 0)
     {
         $user = $this->findByColumn('email', $request->email);
-dd($user->type);
         if ($user->type != 2) {
             return false;
         }
@@ -111,6 +110,8 @@ dd($user->type);
         ], [
             'token' => $verified_code
         ]);
+
+        dd($user);
         return $user->email;
     }
 
