@@ -39,7 +39,7 @@ trait HelpersTrait
     public function sendMail($mail,$code,  $msg = 'Activation code: '){
         
         $data = [ 'msg' => $msg . ' '. $code];
-        Mail::to($mail)->send(new ResetPasswordMail($data));
+        return  Mail::to($mail)->send(new ResetPasswordMail($data));
         return true;
     }
 }
