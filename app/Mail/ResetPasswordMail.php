@@ -25,6 +25,7 @@ class ResetPasswordMail extends Mailable
     public function build()
     {
         $codeMessage = $this->data['msg'];
+        dd($codeMessage);
         return $this
             ->subject('Reset Password Code')
             ->view('email.resetPasswordCode', compact('codeMessage'));
