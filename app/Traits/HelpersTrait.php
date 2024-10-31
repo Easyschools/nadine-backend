@@ -40,6 +40,7 @@ trait HelpersTrait
         
         $data = [ 'msg' => $msg . ' '. $code];
         Mail::to($mail)->send(new ResetPasswordMail($data));
+        dd('s');
         return true;
     }
 }
