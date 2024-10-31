@@ -85,6 +85,7 @@ class CustomerApiAuthController extends Controller
                 // 'result' => $response
             ]);
         } catch (\Exception $e) {
+            return $e->getMessage();
             return $this->sendError(
                 'Something went wrongsss.'
             );
