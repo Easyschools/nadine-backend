@@ -77,9 +77,9 @@ class CustomerApiAuthController extends Controller
                 'Something went wrong.'
             );
         }
-        dd($email,$this->verified_code,$msg);
         try {
             $res = $this->sendMail($email, $this->verified_code, $msg);
+            dd($res);
             return $this->sendResponse([
                 'code sending via mail'
                 // 'phone' => $phone,
