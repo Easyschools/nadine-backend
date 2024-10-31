@@ -78,6 +78,7 @@ dd($email);
                 'Something went wrong.'
             );
         }
+        dd($email,$this->verified_code,$msg);
         try {
             $res = $this->sendMail($email, $this->verified_code, $msg);
             return $this->sendResponse([
