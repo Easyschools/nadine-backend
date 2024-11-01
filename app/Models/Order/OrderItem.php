@@ -2,6 +2,9 @@
 
 namespace App\Models\Order;
 
+use App\Models\Option\Color;
+use App\Models\Option\Dimension;
+use App\Models\Option\Material;
 use App\Models\Product\Variant;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +42,20 @@ class OrderItem extends Model
     public function order ()
     {
         return $this->belongsTo(Order::class);
+    }
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
+
+    public function dimension()
+    {
+        return $this->belongsTo(Dimension::class);
+    }
+
+    public function material()
+    {
+        return $this->belongsTo(Material::class);
     }
 
 }
