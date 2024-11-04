@@ -53,6 +53,9 @@ class OrderInfoApiService
         $this->order->setRelations([
             'orderItems' => function ($item) {
                 $item->with([
+                    'color',
+                    'dimension',
+                    'material',
                     'variant' => function ($variant) {
                         $variant->with([
                             'product' => function ($product) {

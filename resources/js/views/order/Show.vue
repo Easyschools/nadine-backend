@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="col-md-12">
-      <h1 class="card-header" v-if="item.order_items.length > 0">{{translations.product.product}}</h1>
+      <h1 class="card-header" v-if="item.order_items.length > 0">{{translations.order.orders}}</h1>
       <div class="card" v-for="(item, index) in item.order_items" :key="index">
         <div class="form-group row">
           <div class="col-sm-3">
@@ -138,6 +138,41 @@
             >{{item.variant.product.name_en}} - {{item.variant.product.name_ar}}</div>
           </div>
         </div>
+
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <label class="col-form-label">Color </label>
+          </div>
+          <div class="col-sm-9">
+            <div
+              class="form-control"
+            >{{item.color.name}}</div>
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <label class="col-form-label">material </label>
+          </div>
+          <div class="col-sm-9">
+            <div
+              class="form-control"
+            >{{item.material.name}}</div>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <label class="col-form-label">dimension </label>
+          </div>
+          <div class="col-sm-9">
+            <div
+              class="form-control"
+            >{{item.dimension.dimension}}</div>
+          </div>
+        </div>
+
         <div class="form-group row">
           <div class="col-sm-3">
             <label class="col-form-label">{{translations.product.product}} {{translations.general.image}}</label>
