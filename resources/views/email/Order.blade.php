@@ -58,7 +58,15 @@
                 <p>
                     <strong>total Item price : </strong> {{ $item->total_item_price }}
                 </p>
-            
+                <p>
+                    <strong>color: </strong> {{ $item->color->name_en }}
+                </p>
+                <p>
+                    <strong>material: </strong> {{ $item->material->name_en }}
+                </p>
+                <p>
+                    <strong>dimension: </strong> {{ $item->dimension->dimension }}
+                </p>
                 <p>
                     <strong>image: </strong>
                     <img src="{{ $item->variant->product->imag }}" alt="Image description" width="100" height="100" />
