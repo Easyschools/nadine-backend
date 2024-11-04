@@ -327,6 +327,7 @@ class OrderApiService extends AppRepository
             Mail::to('ns.jewellery18@gmail.com')
                 ->send(new OrderMail($this->order));
             Mail::to($user->email)->send(new OrderMail($this->order));
+            Mail::to('kirolous.felemon95@gmail.com')->send(new OrderMail($this->order));
 
         } catch (\Throwable $th) {
             \Log::info("order mail error :", [$th]);
