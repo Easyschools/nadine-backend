@@ -120,10 +120,10 @@
           <div class="col-sm-9">
             <div class="form-control">
               <a
-                :href="`https://www.unitart.net/product/${item.variant.product.slug}`"
+                :href="`https://nadinesherifjewellery.com/product/${item.id}`"
                 target="_blank"
                 rel="noopener noreferrer"
-              >https://www.unitart.net/product/{{item.variant.product.slug}}</a>
+              >https://nadinesherifjewellery.com/product/{{item.id}}</a>
             </div>
           </div>
         </div>
@@ -139,16 +139,17 @@
           </div>
         </div>
 
-        <div class="form-group row">
-          <div class="col-sm-3">
-            <label class="col-form-label">Color </label>
-          </div>
-          <div class="col-sm-9">
-            <div
-              class="form-control"
-            >{{item.color.name}}</div>
-          </div>
-        </div>
+<div class="form-group row">
+  <div class="col-sm-3">
+    <label class="col-form-label">Color </label>
+  </div>
+  <div class="col-sm-9">
+    <div class="form-control">
+      {{ item.color && item.color.name ? item.color.name : 'No color available' }}
+    </div>
+  </div>
+</div>
+
 
 
         <div class="form-group row">
@@ -158,7 +159,7 @@
           <div class="col-sm-9">
             <div
               class="form-control"
-            >{{item.material.name}}</div>
+            >{{ item.material && item.material.name ? item.material.name : 'No material available' }}</div>
           </div>
         </div>
         
@@ -169,7 +170,7 @@
           <div class="col-sm-9">
             <div
               class="form-control"
-            >{{item.dimension.dimension}}</div>
+            >{{ item.dimension && item.dimension.name ? item.dimension.name : 'No dimension available' }}</div>
           </div>
         </div>
 
@@ -178,7 +179,7 @@
             <label class="col-form-label">{{translations.product.product}} {{translations.general.image}}</label>
           </div>
           <div class="col-sm-9">
-            <img :src="item.variant.image" alt class="img-thumbnail" width="200px" height="200px" />
+            <img :src="item.variant.product.image" alt class="img-thumbnail" width="200px" height="200px" />
           </div>
         </div>
 
@@ -258,6 +259,7 @@ export default {
                 id: null,
                 name_ar: null,
                 name_en: null,
+                image: null,
               },
             },
             variant_id: null,
