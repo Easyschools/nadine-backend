@@ -363,7 +363,6 @@ class OrderApiService extends AppRepository
     private function addOrderItems($orderItems, $color_id, $dimension_id, $material_id)
     {
         foreach ($orderItems as $item) {
-            //            dd($item->toArray());
 
             $this->order->orderItems()->create([
                 'variant_id' => $item->variant_id,
@@ -371,9 +370,9 @@ class OrderApiService extends AppRepository
                 'item_price' => $item->item_price,
                 'quantity' => $item->quantity,
                 'total_item_price' => $item->total_item_price,
-                'dimension_id' => $dimension_id ?? null,
-                'color_id' => $color_id ?? null,
-                'material_id' => $material_id ?? null,
+                'dimension_id' => $dimension_id ?? $item->dimension_id,
+                'color_id' => $color_id ?? $item->color_id,
+                'material_id' => $material_id ?? $item->material_id,
             ]);
         }
     }
