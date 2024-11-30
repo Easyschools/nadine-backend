@@ -330,8 +330,10 @@ class OrderApiService extends AppRepository
             Mail::to('kirolous.felemon95@gmail.com')->send(new OrderMail($this->order));
 
         } catch (\Throwable $th) {
+        // } catch (\Throwable $th) {
             \Log::channel('daily')->info("order mail error :", [$th]);
-            //throw $th;
+            \Log::channel('daily')->info("user->email :", [$user->email]);
+            \Log::channel('daily')->info("order detials :", [$this->order]);
         }
 
         return $this->order;

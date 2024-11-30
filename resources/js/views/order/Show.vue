@@ -120,10 +120,10 @@
           <div class="col-sm-9">
             <div class="form-control">
               <a
-                :href="`https://nadinesherifjewellery.com/product/${item.id}`"
+                :href="`https://nadinesherifjewellery.com/product/${item.variant.product.slug}`"
                 target="_blank"
                 rel="noopener noreferrer"
-              >https://nadinesherifjewellery.com/product/{{item.id}}</a>
+              >https://nadinesherifjewellery.com/product/{{item.variant.product.slug}}</a>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@
   </div>
   <div class="col-sm-9">
     <div class="form-control">
-      {{ item.color && item.color.name ? item.color.name : 'No color available' }}
+      {{ (item.color && item.color.name_en) ? item.color.name_en : 'No color available' }}
     </div>
   </div>
 </div>
@@ -159,7 +159,7 @@
           <div class="col-sm-9">
             <div
               class="form-control"
-            >{{ item.material && item.material.name ? item.material.name : 'No material available' }}</div>
+            >{{ (item.material && item.material.name_en) ? item.material.name_en : 'No material available' }}</div>
           </div>
         </div>
         
@@ -170,7 +170,7 @@
           <div class="col-sm-9">
             <div
               class="form-control"
-            >{{ item.dimension && item.dimension.name ? item.dimension.name : 'No dimension available' }}</div>
+            >{{ item.dimension && item.dimension.dimension ? item.dimension.dimension : 'No dimension available' }}</div>
           </div>
         </div>
 
