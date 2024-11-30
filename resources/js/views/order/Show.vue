@@ -179,7 +179,7 @@
             <label class="col-form-label">{{translations.product.product}} {{translations.general.image}}</label>
           </div>
           <div class="col-sm-9">
-            <img :src="item.variant.product.image" alt class="img-thumbnail" width="200px" height="200px" />
+            <img :src="item.variant.product.images[0].image" alt class="img-thumbnail" width="200px" height="200px" />
           </div>
         </div>
 
