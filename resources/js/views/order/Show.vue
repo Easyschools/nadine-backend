@@ -120,10 +120,10 @@
           <div class="col-sm-9">
             <div class="form-control">
               <a
-                :href="`https://nadinesherifjewellery.com/product/${item.variant.product.slug}`"
+                :href="`https://nadinesherifjewellery.com/product/${item.variant.product.id}`"
                 target="_blank"
                 rel="noopener noreferrer"
-              >https://nadinesherifjewellery.com/product/{{item.variant.product.slug}}</a>
+              >https://nadinesherifjewellery.com/product/{{item.variant.product.id}}</a>
             </div>
           </div>
         </div>
