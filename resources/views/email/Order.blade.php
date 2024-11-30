@@ -58,18 +58,19 @@
                 <p>
                     <strong>total Item price : </strong> {{ $item->total_item_price }}
                 </p>
-                <p>
-                    <strong>color: </strong> {{ $item->color->name_en }}
-                </p>
-                <p>
-                    <strong>material: </strong> {{ $item->material->name_en }}
-                </p>
-                <p>
-                    <strong>dimension: </strong> {{ $item->dimension->dimension }}
-                </p>
+<p>
+    <strong>Color: </strong> {{ $item->color->name_en ?? 'No (color available)' }}
+</p>
+<p>
+    <strong>Material: </strong> {{ $item->material->name_en ?? 'No (material available)' }}
+</p>
+<p>
+    <strong>Dimension: </strong> {{ $item->dimension->dimension ?? 'No (dimension available)' }}
+</p>
+
                 <p>
                     <strong>image: </strong>
-                    <img src="{{ $item->variant->product->imag }}" alt="Image description" width="100" height="100" />
+                    <img src="{{ $item->variant->product->images[0]->image }}" alt="Image description" width="100" height="100" />
                 </p>
             @endforeach
         </p>
