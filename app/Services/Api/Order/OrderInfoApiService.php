@@ -60,6 +60,7 @@ class OrderInfoApiService
                         $variant->with([
                             'product' => function ($product) {
                                 $product->with([
+                                    'images',
                                     'variants' => function ($variantNest1) {
                                         $variantNest1->with('color', 'dimension');
                                     },
