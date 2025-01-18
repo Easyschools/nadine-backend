@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use Laravel\Passport\Passport;
 
 
@@ -28,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Passport::routes();
-        //
+        if (!$this->app->routesAreCached()) {
+            Passport::ignoreRoutes();
+        }
     }
 }

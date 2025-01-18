@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequest;
 use App\Services\Api\Order\OrderApiService;
+use App\Services\Api\Payment\PaymobOrderService;
+use Illuminate\Support\Facades\DB;
 
 class OrderApiController extends Controller
 {
     private $orderApiService;
+    private $paymobOrderService;
 
-    public function __construct(OrderApiService $orderApiService)
+
+    public function __construct(OrderApiService $orderApiService,  PaymobOrderService $paymobOrderService)
     {
         $this->middleware('auth:api');
         $this->middleware('check.role:1')
@@ -22,6 +26,7 @@ class OrderApiController extends Controller
         //     ->only('checkout');
 
         $this->orderApiService = $orderApiService;
+        $this->paymobOrderService = $paymobOrderService;
     }
 
     public function calculate()
@@ -50,13 +55,27 @@ class OrderApiController extends Controller
 
     public function checkout(OrderRequest $request)
     {
+        DB::beginTransaction();
+        try {
+            $order = $this->orderApiService->checkout($request);
+            if (!$order) {
+                return $this->sendError('Failed to create order');
+            }
+            if ($request->payment_type_id === 2 || 3) {
+                $paymentUrl = $this->paymobOrderService->processPayment($order);
+                DB::commit();
+                return $this->sendResponse([
+                    'order'       => $order,
+                    'payment_url' => $paymentUrl
+                ]);
+            }
 
-        $process = $this->orderApiService->checkout($request);
-        if (!$process) {
-            return $this->sendError($process);
+            DB::commit();
+            return $this->sendResponse($order);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->sendError($e->getMessage());
         }
-        return $this->sendResponse($process);
-        // $this->orderApiService->storePaymentData($order, $request);
     }
 
     public function delete(OrderRequest $request)

@@ -11,6 +11,8 @@ use App\Observers\OfferObserver;
 use App\Observers\TagObserver;
 use App\Observers\UserObserver;
 use App\Observers\VariantImageObserver;
+use App\Services\Api\Payment\PaymobOrderService;
+use App\Services\Api\Payment\PaymobPaymentService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -23,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(PaymobPaymentService::class);
+        $this->app->singleton(PaymobOrderService::class);
     }
 
     /**

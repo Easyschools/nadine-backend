@@ -99,6 +99,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'paymob'    => [
+            'driver' => 'single',
+            'path'   => storage_path('logs/paymob.log'),
+            'level'  => 'debug',
+        ],
     ],
 
 ];

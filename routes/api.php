@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\CustomerApiAuthController;
 use App\Http\Controllers\Api\Auth\CustomerApiController;
 use App\Http\Controllers\Api\Auth\FavouriteApiController;
 use App\Http\Controllers\Api\Celebrity\CelebrityController;
+use App\Http\Controllers\Api\Webhook\PaymobWebhookController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Api\Division\CategoryApiController;
 use App\Http\Controllers\Api\Division\TagApiController;
@@ -349,7 +350,7 @@ Route::group([
         Route::get('all', [CollectionApiController::class, 'all']);
         Route::get('get', [CollectionApiController::class, 'read']);
         Route::get('get-high-end', [CollectionApiController::class, 'getHighEnd']);
-        
+
         Route::delete('delete', [CollectionApiController::class, 'delete']);
         Route::post('create', [CollectionApiController::class, 'create']);
         Route::post('edit', [CollectionApiController::class, 'edit']);
@@ -405,7 +406,7 @@ Route::group([
         Route::get('all', [MaterialApiController::class, 'all']);
         Route::get('get', [MaterialApiController::class, 'read']);
         Route::get('get-material-variants', [MaterialApiController::class, 'getMaterialVariants']);
-        
+
         Route::delete('delete', [MaterialApiController::class, 'delete']);
         Route::post('create', [MaterialApiController::class, 'create']);
         Route::post('edit', [MaterialApiController::class, 'edit']);
@@ -673,6 +674,13 @@ Route::group([
         Route::delete('/delete', [OrderApiController::class, 'delete']);
     });
 });
+    Route::group([
+        'prefix'    => 'payment',
+        'namespace' => 'Order',
+    ], function () {
+        Route::get('/webhooks/pay', [PaymobWebhookController::class, 'processPaymentWebhook'])
+             ->withoutMiddleware(['auth']);
+    });
 
 //////////////////////google sheet/////////////////////////////////////
 Route::get('sheet', [GoogleSheetController::class, 'updateSheet']);

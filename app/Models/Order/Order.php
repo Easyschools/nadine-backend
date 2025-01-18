@@ -21,6 +21,10 @@ class Order extends Model
         'shipping_price',
         'grand_total',
         'notes',
+        'payment_status',
+        'transaction_id',
+        'payment_integration_id',
+        'payment_response'
     ];
 
     public function coupon()

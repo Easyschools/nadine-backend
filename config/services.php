@@ -13,7 +13,10 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'paymob' => [
+        'api_key' => env('PAYMOB_API_KEY'),
+        'webhook_secret' => env('PAYMOB_API_KEY'),
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
