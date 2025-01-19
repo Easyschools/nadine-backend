@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ApiLoggerMiddleware;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\ForceJsonResponse;
@@ -24,6 +25,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        ApiLoggerMiddleware::class,
         Localization::class,
 
     ];
