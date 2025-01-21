@@ -195,8 +195,7 @@ class OrderApiService extends AppRepository
 
             $itemPrice = ($offerItemPrice > 0 ? $offerItemPrice : $item->variant->product->price_after_discount);
 
-            $item['total_item_price'] = $item->quantity * ($itemPrice + $item->variant->additional_price);
-
+            $item['total_item_price'] = $item->quantity * ($itemPrice);
             $item['item_price'] = $itemPrice;
 
             $this->subtotal += $item['total_item_price'];
