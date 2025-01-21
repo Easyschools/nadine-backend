@@ -92,11 +92,11 @@ class PaymobOrderService
 
     private function handlePaymentTransaction($payload)
     {
-//        $transaction = $payload['obj'] ?? [];
-//        $orderData = $transaction['order'] ?? [];
-        $orderId       = $payload['merchant_order_id'] ?? null;
-        $transactionId = $payload['id'] ?? null;
-        $amount        = ($payload['amount_cents'] ?? 0) / 100;
+        $transaction = $payload['obj'] ?? [];
+        $orderData = $transaction['order'] ?? [];
+        $orderId       = $orderData['merchant_order_id'] ?? null;
+        $transactionId = $orderData['id'] ?? null;
+        $amount        = ($orderData['amount_cents'] ?? 0) / 100;
 //        $isSuccess     = filter_var($transaction['success'] ?? false, FILTER_VALIDATE_BOOLEAN);
         $status        = $this->determinePaymentStatus($payload);
         if (!$orderId || !$transactionId) {
@@ -136,10 +136,56 @@ class PaymobOrderService
         }
     }
 
+//    private function handlePaymentTransaction($payload)
+//    {
+////        $transaction = $payload['obj'] ?? [];
+////        $orderData = $transaction['order'] ?? [];
+//        $orderId       = $payload['merchant_order_id'] ?? null;
+//        $transactionId = $payload['id'] ?? null;
+//        $amount        = ($payload['amount_cents'] ?? 0) / 100;
+////        $isSuccess     = filter_var($transaction['success'] ?? false, FILTER_VALIDATE_BOOLEAN);
+//        $status        = $this->determinePaymentStatus($payload);
+//        if (!$orderId || !$transactionId) {
+//            Log::warning('Incomplete payment transfer data', [
+//                'payload' => $payload
+//            ]);
+//            return response()->json(['status' => 'incomplete'], 200);
+//        }
+//
+//        if ($orderId !== null) {
+//            $orderId = substr($orderId, 3);
+//        }
+//
+//        $order = Order::find($orderId);
+//        if (!$order) {
+//            Log::warning('Order not found for payment webhook', [
+//                'order_id' => $orderId
+//            ]);
+//            return response()->json(['status' => 'order_not_found'], 200);
+//        }
+//
+//        try {
+//            $order->update([
+//                'payment_status'   => $status,
+//                'transaction_id'   => $transactionId,
+//                'amount_paid'      => $amount,
+//                'payment_response' => $payload
+//            ]);
+//            return response()->json(['status' => 'Completed'], 200);
+//        } catch (\Exception $e) {
+//            Log::error('Error updating order after payment webhook', [
+//                'message'  => $e->getMessage(),
+//                'order_id' => $orderId
+//            ]);
+//
+//            return response()->json(['status' => 'processing_error'], 400);
+//        }
+//    }
+
 
     private function determinePaymentStatus($payload)
     {
-        if (filter_var($payload['success'], FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var($payload['obj']['success'], FILTER_VALIDATE_BOOLEAN)) {
             return 'completed';
         }
 
@@ -153,5 +199,22 @@ class PaymobOrderService
 
         return 'failed';
     }
+
+//    private function determinePaymentStatus($payload)
+//    {
+//        if (filter_var($payload['success'], FILTER_VALIDATE_BOOLEAN)) {
+//            return 'completed';
+//        }
+//
+//        if (filter_var($payload['is_refunded'], FILTER_VALIDATE_BOOLEAN)) {
+//            return 'refunded';
+//        }
+//
+//        if (filter_var($payload['is_voided'], FILTER_VALIDATE_BOOLEAN)) {
+//            return 'voided';
+//        }
+//
+//        return 'failed';
+//    }
 
 }
