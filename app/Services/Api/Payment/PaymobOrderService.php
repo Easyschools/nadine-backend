@@ -90,13 +90,13 @@ class PaymobOrderService
         }
     }
 
-    private function handlePaymentTransaction($payload)
+     private function handlePaymentTransaction($payload)
     {
-//        $transaction = $payload['obj'] ?? [];
-//        $orderData = $transaction['order'] ?? [];
-        $orderId       = $payload['merchant_order_id'] ?? null;
-        $transactionId = $payload['id'] ?? null;
-        $amount        = ($payload['amount_cents'] ?? 0) / 100;
+        $transaction = $payload['obj'] ?? [];
+        $orderData = $transaction['order'] ?? [];
+        $orderId       = $orderData['merchant_order_id'] ?? null;
+        $transactionId = $orderData['id'] ?? null;
+        $amount        = ($orderData['amount_cents'] ?? 0) / 100;
 //        $isSuccess     = filter_var($transaction['success'] ?? false, FILTER_VALIDATE_BOOLEAN);
         $status        = $this->determinePaymentStatus($payload);
         if (!$orderId || !$transactionId) {
@@ -137,9 +137,9 @@ class PaymobOrderService
     }
 
 
-    private function determinePaymentStatus($payload)
+     private function determinePaymentStatus($payload)
     {
-        if (filter_var($payload['success'], FILTER_VALIDATE_BOOLEAN)) {
+        if (filter_var($payload['obj']['success'], FILTER_VALIDATE_BOOLEAN)) {
             return 'completed';
         }
 

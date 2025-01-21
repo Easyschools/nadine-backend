@@ -34,7 +34,9 @@
         <p>
             <strong>shiping in :</strong> {{ $order->address->address }}
         </p>
-
+        <p>
+            <strong>Payment status :</strong> {{ $order->payment_status }}
+        </p>
 
 
         <p>

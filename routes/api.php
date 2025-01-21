@@ -678,8 +678,8 @@ Route::group([
         'prefix'    => 'payment',
         'namespace' => 'Order',
     ], function () {
-        Route::get('/webhooks/pay', [PaymobWebhookController::class, 'processPaymentWebhook'])
-             ->withoutMiddleware(['auth']);
+         Route::match(['POST', 'GET'], '/webhooks/pay', [PaymobWebhookController::class, 'processPaymentWebhook'])
+        ->withoutMiddleware(['auth']);
     });
 
 //////////////////////google sheet/////////////////////////////////////

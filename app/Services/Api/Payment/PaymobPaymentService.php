@@ -31,7 +31,6 @@ class PaymobPaymentService extends BasePaymentService implements PaymentGatewayI
     {
         try {
             $response = $this->buildRequest('POST', '/api/auth/tokens', ['api_key' => $this->api_key]);
-
             if ($response->getData(true)['success']) {
                 return $response->getData(true)['data']['token'];
             }

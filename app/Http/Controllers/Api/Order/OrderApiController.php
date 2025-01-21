@@ -61,7 +61,7 @@ class OrderApiController extends Controller
             if (!$order) {
                 return $this->sendError('Failed to create order');
             }
-            if ($request->payment_type_id === 2 || 3) {
+            if ($request->payment_type_id === 2 || $request->payment_type_id === 3) {
                 $paymentUrl = $this->paymobOrderService->processPayment($order);
                 DB::commit();
                 return $this->sendResponse([
