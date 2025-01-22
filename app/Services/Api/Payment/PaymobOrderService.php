@@ -2,10 +2,12 @@
 
 namespace App\Services\Api\Payment;
 
+use App\Mail\OrderMail;
 use App\Models\Order\Order;
 use App\Services\Api\Order\OrderApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PaymobOrderService
 {
@@ -94,11 +96,11 @@ class PaymobOrderService
     {
         $transaction = $payload['obj'] ?? [];
         $orderData = $transaction['order'] ?? [];
-        $orderId       = $orderData['merchant_order_id'] ?? null;
+        $orderId = $orderData['merchant_order_id'] ?? null;
         $transactionId = $orderData['id'] ?? null;
-        $amount        = ($orderData['amount_cents'] ?? 0) / 100;
-//        $isSuccess     = filter_var($transaction['success'] ?? false, FILTER_VALIDATE_BOOLEAN);
-        $status        = $this->determinePaymentStatus($payload);
+        $amount = ($orderData['amount_cents'] ?? 0) / 100;
+        $status = $this->determinePaymentStatus($payload);
+
         if (!$orderId || !$transactionId) {
             Log::warning('Incomplete payment transfer data', [
                 'payload' => $payload
@@ -125,6 +127,23 @@ class PaymobOrderService
                 'amount_paid'      => $amount,
                 'payment_response' => $payload
             ]);
+
+            if ($status === 'completed') {
+
+                $user = $order->user;
+                try {
+                    Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($order));
+                    Mail::to($user->email)->send(new OrderMail($order));
+                    Mail::to('ahmedawaad.aa83@gmail.com')->send(new OrderMail($order));
+
+                    Log::channel('daily')->info("Order mail sent successfully for order: " . $order->id);
+                } catch (\Throwable $th) {
+                    Log::channel('daily')->info("Order mail error: ", [$th]);
+                    Log::channel('daily')->info("User email: ", [$user->email]);
+                    Log::channel('daily')->info("Order details: ", [$order]);
+                }
+            }
+
             return response()->json(['status' => 'Completed'], 200);
         } catch (\Exception $e) {
             Log::error('Error updating order after payment webhook', [
