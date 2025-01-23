@@ -132,7 +132,6 @@ class PaymobOrderService
 
                 $user = $order->user;
                 try {
-                    Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($order));
                     Mail::to($user->email)->send(new OrderMail($order));
                     Mail::to('ahmedawaad.aa83@gmail.com')->send(new OrderMail($order));
 
