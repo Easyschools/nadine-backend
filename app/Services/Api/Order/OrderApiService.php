@@ -314,8 +314,8 @@ class OrderApiService extends AppRepository
             ]);
         }
         // $this->createWaybill($this->address, $this->order, $this->description);
-        Cart::where('user_id', $this->user_id)
-            ->delete();
+//        Cart::where('user_id', $this->user_id)
+//            ->delete();
 
         // create email based on order
         Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($this->order));

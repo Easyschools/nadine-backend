@@ -3,6 +3,7 @@
 namespace App\Services\Api\Payment;
 
 use App\Mail\OrderMail;
+use App\Models\Order\Cart;
 use App\Models\Order\Order;
 use App\Services\Api\Order\OrderApiService;
 use Illuminate\Http\Request;
@@ -131,6 +132,9 @@ class PaymobOrderService
             if ($status === 'completed') {
 
                 $user = $order->user;
+
+                Cart::where('user_id', $user->id)
+                    ->delete();
                 try {
                     Mail::to($user->email)->send(new OrderMail($order));
                     Mail::to('ahmedawaad.aa83@gmail.com')->send(new OrderMail($order));
