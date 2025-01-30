@@ -136,7 +136,7 @@ class PaymobOrderService
                 Cart::where('user_id', $user->id)
                     ->delete();
                 try {
-                    Mail::to('unitart4@gmail.com')->send(new OrderMail($order));
+                    Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($order));
                     Mail::to($user->email)->send(new OrderMail($order));
 
                     Log::channel('daily')->info("Order mail sent successfully for order: " . $order->id);

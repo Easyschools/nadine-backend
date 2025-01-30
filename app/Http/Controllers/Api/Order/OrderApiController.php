@@ -75,7 +75,7 @@ class OrderApiController extends Controller
             if ($request->payment_type_id === 1)
             {
                 $user = $order->user;
-                Mail::to('unitart4@gmail.com')->send(new OrderMail($order));
+                Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($order));
                 Mail::to($user->email)->send(new OrderMail($order));
             }
             DB::commit();
