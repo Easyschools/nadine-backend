@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequest;
+use App\Mail\OrderMail;
 use App\Services\Api\Order\OrderApiService;
 use App\Services\Api\Payment\PaymobOrderService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderApiController extends Controller
 {
@@ -70,7 +72,12 @@ class OrderApiController extends Controller
                     'payment_url' => $paymentUrl
                 ]);
             }
-
+            if ($request->payment_type_id === 1)
+            {
+                $user = $order->user;
+                Mail::to('unitart4@gmail.com')->send(new OrderMail($order));
+                Mail::to($user->email)->send(new OrderMail($order));
+            }
             DB::commit();
             return $this->sendResponse($order);
         } catch (\Exception $e) {

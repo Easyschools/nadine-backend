@@ -318,8 +318,8 @@ class OrderApiService extends AppRepository
 //            ->delete();
 
         // create email based on order
-        Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($this->order));
-        Mail::to('ahmedawaad.aa83@gmail.com')->send(new OrderMail($this->order));
+//        Mail::to('ns.jewellery18@gmail.com')->send(new OrderMail($this->order));
+//        Mail::to('ahmedawaad.aa83@gmail.com')->send(new OrderMail($this->order));
 
 
 
