@@ -28,9 +28,9 @@ class PaymobOrderService
 
 
         if ($order->payment_type_id == 2) {
-            $integration_id = 1657492;
+            $integration_id = 3515484;
         } elseif ($order->payment_type_id == 3) {
-            $integration_id = 1773286;
+            $integration_id = 2576719;
         }
 
         return [
