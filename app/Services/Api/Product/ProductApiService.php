@@ -204,103 +204,118 @@ class ProductApiService extends AppRepository
         return $custom->merge($products);
         //        dd($max_price , $min_price);
     }
+public function filterWithAttributes($request)
+{
+    $productQuery = $this->paginateQuery();
 
-    public function filterWithAttributes($request)
-    {
-        //        dd(implode(',',Color::pluck('id')->toArray()) );
-
-        $productQuery = $this->paginateQuery();
-        //        dd($request->all());
-        if ($request->collection_name && $request->collection_name != 'sale') {
-            $collection_name = str_replace('-', ' ', $request->collection_name);
-            $productQuery = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
-                $q->where('name_en', $collection_name)->orWhere('name_ar', $collection_name);
-            });
-        }
-
-        if ($request->collection_name && $request->collection_name == 'sale') {
-            $productQuery = $productQuery->whereHas('offer', function ($q) {
-                $q->join('offers', 'offers.id', '=', 'offer_tags.offer_id')->where('offers.expire_at', '>', now());
-            })->with('offer');
-        }
-        // if ($request->tag || $request->brand) {
-        //     $tag = $request->tag ?? $request->brand;
-        //     $tag = explode(',', $tag);
-        //     $tag_names = $this->replaceDashWithSpace($tag);
-
-        //     $tag_ids = [];
-
-        //     foreach ($tag_names as $tag_name) {
-        //         $arr = Tag::where('name_ar', $tag_name)->orWhere('name_en', $tag_name)->pluck('id')->toArray();
-        //         $tag_ids = array_merge($tag_ids, $arr);
-        //     }
-
-        //     $productQuery = $productQuery->whereHas('tag', function ($q) use ($tag_ids) {
-        //         $q->whereIn('id', $tag_ids);
-        //     });
-        // }
-        if ($request->tag) {
-            $productQuery = $productQuery->whereIn('tag_id', $request->tag);
-        }
-        if ($request->category) {
-            $productQuery = $productQuery->whereIn('category_id', $request->category);
-        }
-
-
-        if ($request->occasional_name) {
-            $productQuery = $productQuery->whereHas('material', function ($q) use ($request) {
-                $q->where('name_en', 'like', '%' . $request->occasional_name . '%')
-                    ->orWhere('name_ar', 'like', '%' . $request->occasional_name . '%');
-            });
-        }
-
-
-        if ($request->color) {
-            $colorIDs = explode(',', $request->color);
-
-            $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
-                $q->whereIn('color_id', $colorIDs);
-            });
-        }
-        if ($request->sizes) {
-            $sizeIDs = explode(',', $request->sizes);
-
-            $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
-                $q->whereIn('dimension_id', $sizeIDs);
-            });
-        }
-        if ($request->min_price || $request->max_price) {
-
-            $request->min_price = $request->min_price ?? 0;
-            $request->max_price = $request->max_price ?? 0;
-
-            $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
-        }
-
-        // if ($request->category) {
-        //     if ($request->category == 'discounts') {
-
-        //         $productQuery = $productQuery->WhereHas('offer')->orWhere('price_after_discount', '!=', 0);
-        //     } else {
-
-        //         $category = explode(',', $request->category);
-        //         $category = $this->replaceDashWithSpace($category);
-        //         $tags_ids = [];
-
-        //         foreach ($category as $cat) {
-        //             $tags_ids = array_merge($tags_ids, Tag::whereHas('category', function ($q) use ($cat) {
-        //                 $q->where('name_en', 'like', '%' . $cat . '%')
-        //                     ->orWhere('name_ar', 'like', '%' . $cat . '%');
-        //             })->pluck('id')->toArray());
-        //         }
-        //         $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags_ids) {
-        //             $q->whereIn('id', $tags_ids);
-        //         });
-        //     }
-        // }
-        //        dd($productQuery->toSql());
-        return $productQuery;
+    // Filter by collection name
+    if ($request->collection_name && $request->collection_name != 'sale') {
+        $collection_name = str_replace('-', ' ', $request->collection_name);
+        $productQuery = $productQuery->whereHas('collection', function ($q) use ($collection_name) {
+            $q->where('name_en', $collection_name)->orWhere('name_ar', $collection_name);
+        });
     }
+
+    // Filter by sale collection
+    if ($request->collection_name && $request->collection_name == 'sale') {
+        $productQuery = $productQuery->whereHas('offer', function ($q) {
+            $q->join('offers', 'offers.id', '=', 'offer_tags.offer_id')->where('offers.expire_at', '>', now());
+        })->with('offer');
+    }
+
+// Filter by tag
+if ($request->has('tag') && !empty($request->tag)) {
+    \Log::info('Tag Parameter:', ['tag' => $request->tag]); // Log the tag parameter
+    $tags = is_array($request->tag) ? $request->tag : explode(',', $request->tag);
+    $tags = $this->replaceDashWithSpace($tags);
+
+    // Check if the first tag is numeric (indicating an ID search)
+    $searchById = is_numeric($tags[0]);
+
+    // Apply the tag filter
+    $productQuery = $productQuery->whereHas('tag', function ($q) use ($tags, $searchById) {
+        $q->where(function ($query) use ($tags, $searchById) {
+            foreach ($tags as $tag) {
+                if ($searchById) {
+                    // Search by tag ID
+                    $query->orWhere('id', $tag);
+                } else {
+                    // Search by tag name (name_en or name_ar)
+                    $query->orWhere('name_en', $tag)
+                          ->orWhere('name_ar', $tag);
+                }
+            }
+        });
+    });
+}
+
+// Filter by category
+if ($request->has('category') && !empty($request->category)) {
+    \Log::info('Category Parameter:', ['category' => $request->category]); // Log the category parameter
+    $categories = is_array($request->category) ? $request->category : explode(',', $request->category);
+
+    // Log the processed categories
+    \Log::info('Processed Categories:', ['categories' => $categories]);
+
+    // Check if the first category is numeric (indicating an ID search)
+    $searchById = is_numeric($categories[0]);
+
+    // Apply the category filter
+    if ($searchById) {
+        // Search by category ID
+        $productQuery = $productQuery->whereIn('category_id', $categories);
+    } else {
+        // Search by category name (name_en or name_ar)
+        $productQuery = $productQuery->whereHas('category', function ($q) use ($categories) {
+            $q->where(function ($query) use ($categories) {
+                foreach ($categories as $category) {
+                    $query-->orWhere('name_en', $category)
+                          ->orWhere('name_ar', $category);
+                }
+            });
+        });
+    }
+}
+
+    // Filter by occasional name
+    if ($request->occasional_name) {
+        $productQuery = $productQuery->whereHas('material', function ($q) use ($request) {
+            $q->where('name_en', 'like', '%' . $request->occasional_name . '%')
+              ->orWhere('name_ar', 'like', '%' . $request->occasional_name . '%');
+        });
+    }
+
+    // Filter by color
+    if ($request->color) {
+        $colorIDs = explode(',', $request->color);
+        $productQuery = $productQuery->whereHas('variants', function ($q) use ($colorIDs) {
+            $q->whereIn('color_id', $colorIDs);
+        });
+    }
+
+    // Filter by sizes
+    if ($request->sizes) {
+        $sizeIDs = explode(',', $request->sizes);
+        $productQuery = $productQuery->whereHas('variants', function ($q) use ($sizeIDs) {
+            $q->whereIn('dimension_id', $sizeIDs);
+        });
+    }
+
+    // Filter by price range
+    if ($request->min_price || $request->max_price) {
+        $request->min_price = $request->min_price ?? 0;
+        $request->max_price = $request->max_price ?? 0;
+        $productQuery = $productQuery->whereBetween('price_after_discount', [$request->min_price, $request->max_price]);
+    }
+
+    // Log the final query
+    \Log::info('Final Query:', [
+        'sql' => $productQuery->toSql(),
+        'bindings' => $productQuery->getBindings()
+    ]);
+
+    return $productQuery;
+}
 
     public function replaceDashWithSpace($name)
     {
