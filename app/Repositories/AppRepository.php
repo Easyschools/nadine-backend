@@ -47,6 +47,7 @@ class AppRepository
             ->orWhere($this->orConditions)
             ->select($this->columns)
             ->first();
+            dd($this->conditions);
 
         if (!$data) {
             throw ValidationException::withMessages([
