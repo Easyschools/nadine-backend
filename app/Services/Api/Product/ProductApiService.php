@@ -82,75 +82,86 @@ class ProductApiService extends AppRepository
       * @param $request
       * @return mixed
       */
-     public function index($request)
-     {
-         $this->filter($request);
-     
-         $this->setSortOrder($request->sort_order ?? 'desc');
-         $this->setSortBy($request->sort_by ?? 'sku');
-         $this->setRelations([
-             'images',
-             'material',
-             'variants' => function ($variant) {
-                 $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
-                     'Color:id,name_en,name_ar,code,image',
-                     'Dimension:id,dimension',
-                     'images:id,variant_id,image'
-                 );
-             },
-             'tag:id,name_en,name_ar',
-         ]);
-     
-         $this->setAppends([
-             'currency',
-             'type',
-             'tags',
-             'name',
-             'description',
-             'category',
-         ]);
-     
-         $productQuery = $this->filterWithAttributes($request);
-     
-         // Fetch all products matching query
-         $allProducts = $productQuery->get();
-     
-         // Separate into those without 'h' in sku, and those with it
-         $productsWithoutH = $allProducts->filter(function ($product) {
-             return stripos($product->sku, 'h') === false;
-         });
-     
-         $productsWithH = $allProducts->filter(function ($product) {
-             return stripos($product->sku, 'h') !== false;
-         });
-     
-         // Merge: no-h products first, then h-products
-         $merged = $productsWithoutH->merge($productsWithH)->values();
-     
-         // Paginate manually
-         $perPage = 16;
-         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-         $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage)->values(); // ✅ fix applied here
-     
-         $products = new LengthAwarePaginator(
-             $currentItems,
-             $merged->count(),
-             $perPage,
-             $currentPage,
-             ['path' => request()->url(), 'query' => request()->query()]
-         );
-     
-         $custom = collect([
-             'min_price' => Product::min('price_after_discount'),
-             'max_price' => Product::max('price_after_discount'),
-         ]);
-     
-         // Return merged result directly (no double-wrapping)
-         return array_merge(
-             $custom->toArray(),
-             $products->toArray()
-         );
-     }
+      public function index($request)
+      {
+          $this->filter($request);
+      
+          $this->setSortOrder($request->sort_order ?? 'desc');
+          $this->setSortBy($request->sort_by ?? 'sku');
+          $this->setRelations([
+              'images',
+              'material',
+              'variants' => function ($variant) {
+                  $variant->select('product_id', 'color_id', 'dimension_id', 'material_id', 'id')->with(
+                      'Color:id,name_en,name_ar,code,image',
+                      'Dimension:id,dimension',
+                      'images:id,variant_id,image'
+                  );
+              },
+              'tag:id,name_en,name_ar',
+          ]);
+      
+          $this->setAppends([
+              'currency',
+              'type',
+              'tags',
+              'name',
+              'description',
+              'category',
+          ]);
+      
+          $productQuery = $this->filterWithAttributes($request);
+      
+          if ($request->web != 1) {
+              $productQuery->where('sku', 'not like', '%h%');
+          }
+      
+          // Get all products
+          $allProducts = $productQuery->get();
+      
+          // Separate SKUs with and without 'h'
+          $productsWithoutH = $allProducts->filter(function ($product) {
+              return stripos($product->sku, 'h') === false;
+          });
+      
+          $productsWithH = $allProducts->filter(function ($product) {
+              return stripos($product->sku, 'h') !== false;
+          });
+      
+          // Merge non-H first, then H
+          $merged = $productsWithoutH->merge($productsWithH)->values();
+      
+          // Sort the merged collection if sort_by is 'price'
+          if ($request->sort_by === 'price') {
+              $sortOrder = strtolower($request->sort_order ?? 'desc');
+              $merged = $merged->sortBy(function ($item) {
+                  return $item->price_after_discount;
+              }, SORT_REGULAR, $sortOrder === 'desc')->values();
+          }
+      
+          // Manual pagination
+          $perPage = 16;
+          $currentPage = LengthAwarePaginator::resolveCurrentPage();
+          $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage)->values();
+      
+          $products = new LengthAwarePaginator(
+              $currentItems,
+              $merged->count(),
+              $perPage,
+              $currentPage,
+              ['path' => request()->url(), 'query' => request()->query()]
+          );
+      
+          $custom = collect([
+              'min_price' => Product::min('price_after_discount'),
+              'max_price' => Product::max('price_after_discount'),
+          ]);
+      
+          return array_merge(
+              $custom->toArray(),
+              $products->toArray()
+          );
+      }
      
     public function highEnd($request)
     {
