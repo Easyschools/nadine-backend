@@ -83,7 +83,7 @@ class ProductApiService extends AppRepository
      * @return mixed
      */
 
-     use Illuminate\Pagination\LengthAwarePaginator;
+
 
      public function index($request)
      {
