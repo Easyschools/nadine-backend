@@ -19,7 +19,6 @@ use App\Traits\HelperFunctions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-
 class ProductApiService extends AppRepository
 {
 
@@ -82,8 +81,6 @@ class ProductApiService extends AppRepository
      * @param $request
      * @return mixed
      */
-
-
 
      public function index($request)
      {
@@ -148,7 +145,12 @@ class ProductApiService extends AppRepository
              'max_price' => Product::max('price_after_discount'),
          ]);
      
-         return $custom->merge($products);
+         // Merge custom data with paginated data and include the current page explicitly
+         return $custom->merge([
+             'data' => $products,
+             'current_page' => $currentPage,
+             'per_page' => $perPage,
+         ]);
      }
      
 
