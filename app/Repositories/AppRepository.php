@@ -41,15 +41,15 @@ class AppRepository
 
     public function find($id)
     {
+        dd($this->conditions);
+
         $data = $this->model->where('id', $id)
             ->with($this->relations)
             ->where($this->conditions)
             ->orWhere($this->orConditions)
             ->select($this->columns)
             ->first();
-            dd($this->conditions);
-            
-            
+    
 
         if (!$data) {
             throw ValidationException::withMessages([
