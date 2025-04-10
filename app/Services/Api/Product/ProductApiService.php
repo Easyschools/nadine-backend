@@ -106,21 +106,31 @@ class ProductApiService extends AppRepository
              'tags',
              'name',
              'description',
-             // 'category_id',
              'category',
          ]);
      
          $productQuery = $this->filterWithAttributes($request);
      
          if ($request->web != 1) {
-             // 1. Exclude SKUs with a comma
-             $productQuery->where('sku', 'not like', '%,%');
+             $productQueryWithoutH = clone $productQuery;
+             $productQueryWithH = clone $productQuery;
      
-             // 2. Push SKUs containing 'h' to the end
-             $productQuery->orderByRaw("sku LIKE '%h%'");
+             $productQueryWithoutH->where('sku', 'not like', '%h%');
+             $productQueryWithH->where('sku', 'like', '%h%');
+     
+             // First, try to get products without 'h'
+             $productsWithoutH = $productQueryWithoutH->paginate(16)->appends($this->appendsColumns);
+     
+             // If no more results in non-h list and we're on a later page, get h-products
+             if ($productsWithoutH->isEmpty() && $request->page > 1) {
+                 $products = $productQueryWithH->paginate(16)->appends($this->appendsColumns);
+             } else {
+                 $products = $productsWithoutH;
+             }
+         } else {
+             // Normal query when request->web == 1
+             $products = $productQuery->paginate(16)->appends($this->appendsColumns);
          }
-     
-         $products = $productQuery->paginate(16)->appends($this->appendsColumns);
      
          $custom = collect([
              'min_price' => Product::min('price_after_discount'),
