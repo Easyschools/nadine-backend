@@ -17,6 +17,8 @@ use App\Repositories\AppRepository;
 use App\ThirdParty\Pixel;
 use App\Traits\HelperFunctions;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class ProductApiService extends AppRepository
 {
