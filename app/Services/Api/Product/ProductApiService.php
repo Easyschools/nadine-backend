@@ -112,41 +112,37 @@ class ProductApiService extends AppRepository
       
           $productQuery = $this->filterWithAttributes($request);
       
-          if ($request->web != 1) {
-              $productQuery->where('sku', 'not like', '%h%');
-          }
-      
-          // Get all products
+          // Get all products regardless of SKU type
           $allProducts = $productQuery->get();
       
-          // Separate SKUs with and without 'h'
-          $productsWithoutH = $allProducts->filter(function ($product) {
-              return stripos($product->sku, 'h') === false;
-          });
-      
-          $productsWithH = $allProducts->filter(function ($product) {
-              return stripos($product->sku, 'h') !== false;
-          });
-      
-          // Merge non-H first, then H
-          $merged = $productsWithoutH->merge($productsWithH)->values();
-      
-          // Sort the merged collection if sort_by is 'price'
+          // Handle sorting logic
           if ($request->sort_by === 'price') {
+              // Sort all products by price
               $sortOrder = strtolower($request->sort_order ?? 'desc');
-              $merged = $merged->sortBy(function ($item) {
-                  return $item->price_after_discount;
+              $sorted = $allProducts->sortBy(function ($product) {
+                  return $product->price_after_discount;
               }, SORT_REGULAR, $sortOrder === 'desc')->values();
+          } else {
+              // If not sorting by price, move 'h' SKUs to the end
+              $productsWithoutH = $allProducts->filter(function ($product) {
+                  return stripos($product->sku, 'h') === false;
+              });
+      
+              $productsWithH = $allProducts->filter(function ($product) {
+                  return stripos($product->sku, 'h') !== false;
+              });
+      
+              $sorted = $productsWithoutH->merge($productsWithH)->values();
           }
       
           // Manual pagination
           $perPage = 16;
           $currentPage = LengthAwarePaginator::resolveCurrentPage();
-          $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage)->values();
+          $currentItems = $sorted->slice(($currentPage - 1) * $perPage, $perPage)->values();
       
           $products = new LengthAwarePaginator(
               $currentItems,
-              $merged->count(),
+              $sorted->count(),
               $perPage,
               $currentPage,
               ['path' => request()->url(), 'query' => request()->query()]
@@ -162,7 +158,7 @@ class ProductApiService extends AppRepository
               $products->toArray()
           );
       }
-     
+      
     public function highEnd($request)
     {
         $this->filter($request);
