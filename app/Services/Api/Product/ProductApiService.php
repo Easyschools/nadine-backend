@@ -81,6 +81,8 @@ class ProductApiService extends AppRepository
      * @return mixed
      */
 
+     use Illuminate\Pagination\LengthAwarePaginator;
+
      public function index($request)
      {
          $this->filter($request);
@@ -111,26 +113,33 @@ class ProductApiService extends AppRepository
      
          $productQuery = $this->filterWithAttributes($request);
      
-         if ($request->web != 1) {
-             $productQueryWithoutH = clone $productQuery;
-             $productQueryWithH = clone $productQuery;
+         // Fetch all products matching query
+         $allProducts = $productQuery->get();
      
-             $productQueryWithoutH->where('sku', 'not like', '%h%');
-             $productQueryWithH->where('sku', 'like', '%h%');
+         // Separate into those without 'h' in sku, and those with it
+         $productsWithoutH = $allProducts->filter(function ($product) {
+             return stripos($product->sku, 'h') === false;
+         });
      
-             // First, try to get products without 'h'
-             $productsWithoutH = $productQueryWithoutH->paginate(16)->appends($this->appendsColumns);
+         $productsWithH = $allProducts->filter(function ($product) {
+             return stripos($product->sku, 'h') !== false;
+         });
      
-             // If no more results in non-h list and we're on a later page, get h-products
-             if ($productsWithoutH->isEmpty() && $request->page > 1) {
-                 $products = $productQueryWithH->paginate(16)->appends($this->appendsColumns);
-             } else {
-                 $products = $productsWithoutH;
-             }
-         } else {
-             // Normal query when request->web == 1
-             $products = $productQuery->paginate(16)->appends($this->appendsColumns);
-         }
+         // Merge: no-h products first, then h-products
+         $merged = $productsWithoutH->merge($productsWithH)->values();
+     
+         // Paginate manually
+         $perPage = 16;
+         $currentPage = LengthAwarePaginator::resolveCurrentPage();
+         $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage);
+     
+         $products = new LengthAwarePaginator(
+             $currentItems,
+             $merged->count(),
+             $perPage,
+             $currentPage,
+             ['path' => request()->url(), 'query' => request()->query()]
+         );
      
          $custom = collect([
              'min_price' => Product::min('price_after_discount'),
