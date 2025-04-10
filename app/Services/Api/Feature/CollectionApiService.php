@@ -130,9 +130,12 @@ class CollectionApiService extends AppRepository
             //         }
             //     ]);
             'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                // $productQuery->whereHas('variants', function ($variantQuery) {
+                $productQuery->whereHas('variants', function ($variantQuery) 
+                // {
                 //     $variantQuery->where('sku', 'like', '%h%');
-                // })->with([
+                // }
+                
+                )->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
