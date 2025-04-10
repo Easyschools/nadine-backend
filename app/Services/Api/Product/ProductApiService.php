@@ -82,6 +82,12 @@ class ProductApiService extends AppRepository
      * @return mixed
      */
 
+     use Illuminate\Pagination\LengthAwarePaginator;
+
+     /**
+      * @param $request
+      * @return mixed
+      */
      public function index($request)
      {
          $this->filter($request);
@@ -130,7 +136,7 @@ class ProductApiService extends AppRepository
          // Paginate manually
          $perPage = 16;
          $currentPage = LengthAwarePaginator::resolveCurrentPage();
-         $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage);
+         $currentItems = $merged->slice(($currentPage - 1) * $perPage, $perPage)->values(); // ✅ fix applied here
      
          $products = new LengthAwarePaginator(
              $currentItems,
@@ -145,15 +151,13 @@ class ProductApiService extends AppRepository
              'max_price' => Product::max('price_after_discount'),
          ]);
      
-         // Merge custom data with paginated data and include the current page explicitly
+         // Return merged result directly (no double-wrapping)
          return array_merge(
-            $custom->toArray(),
-            $products->toArray()
-        );
-        
+             $custom->toArray(),
+             $products->toArray()
+         );
      }
      
-
     public function highEnd($request)
     {
         $this->filter($request);
