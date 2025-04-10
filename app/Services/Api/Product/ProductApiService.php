@@ -113,7 +113,7 @@ class ProductApiService extends AppRepository
         $productQuery = $this->filterWithAttributes($request);
         if ($request->web != 1) {
             # code...
-            $productQuery->where('sku', 'not like', '%h%');
+            $productQuery->where('sku', 'not like', '%,%');
         }
 
         $products = $productQuery->paginate(16)->appends($this->appendsColumns);
