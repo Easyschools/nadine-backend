@@ -77,12 +77,6 @@ class ProductApiService extends AppRepository
 
         return $products;
     }
-    /**
-     * @param $request
-     * @return mixed
-     */
-
-     use Illuminate\Pagination\LengthAwarePaginator;
 
      /**
       * @param $request
