@@ -146,11 +146,11 @@ class ProductApiService extends AppRepository
          ]);
      
          // Merge custom data with paginated data and include the current page explicitly
-         return $custom->merge([
-             'data' => $products,
-             'current_page' => $currentPage,
-             'per_page' => $perPage,
-         ]);
+         return response()->json(array_merge(
+            $custom->toArray(),
+            $products->toArray()
+        ));
+        
      }
      
 
