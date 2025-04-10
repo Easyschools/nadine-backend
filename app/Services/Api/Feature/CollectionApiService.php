@@ -130,9 +130,9 @@ class CollectionApiService extends AppRepository
             //         }
             //     ]);
             'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                $productQuery->whereHas('variants', function ($variantQuery) {
-                    $variantQuery->where('sku', 'like', '%h%');
-                })->with([
+                // $productQuery->whereHas('variants', function ($variantQuery) {
+                //     $variantQuery->where('sku', 'like', '%h%');
+                // })->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
@@ -227,9 +227,9 @@ class CollectionApiService extends AppRepository
             //         }
             //     ]);
             'products' => function ($productQuery) use ($request, $categoryTagsIds) {
-                $productQuery->whereHas('variants', function ($variantQuery) {
-                    $variantQuery->where('sku', 'not like', '%h%');
-                })->with([
+                // $productQuery->whereHas('variants', function ($variantQuery) {
+                //     $variantQuery->where('sku', 'not like', '%h%');
+                // })->with([
                     'images',
                     'variants' => function ($variant) {
                         $variant->with([
