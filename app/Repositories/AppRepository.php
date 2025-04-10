@@ -48,6 +48,8 @@ class AppRepository
             ->select($this->columns)
             ->first();
             dd($this->conditions);
+            
+            
 
         if (!$data) {
             throw ValidationException::withMessages([
